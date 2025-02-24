@@ -13,6 +13,16 @@ apis:
     description: >-
       Helping developers create next generation digital experiences using
       secure, innovative APIs 
+  - aid: barclays:barclaycard-smartpay-connect-api
+    name: Barclaycard Smartpay Connect API
+    description: >-
+      Barclaycard Smartpay Connect API provides the interface for face-to-face
+      Card Present transactions, enabling card payments to be taken via card
+      reader and processed through the Smartpay Advance payment gateway.
+    humanURL: >-
+      https://developer.barclays.com/apis/barclaycard-smartpay-connect/1b93e68c-dd6a-49de-a68c-f3f24205a588.bdn/documentation
+    tags: []
+    properties: []
 name: Barclays
 tags:
   - Credit Cards
@@ -36,3 +46,8 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
+common:
+  - name: Barclays API Exchange
+    description: 'null'
+    url: https://developer.barclays.com/
+    type: Portal
