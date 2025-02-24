@@ -2,16 +2,6 @@ aid: barclays
 url: >-
   https://raw.githubusercontent.com/api-evangelist/barclays/refs/heads/main/apis.yml
 apis:
-  - aid: barclays:barclaycard-smartpay-connect-api
-    name: Barclaycard Smartpay Connect API
-    tags: []
-    humanURL: >-
-      https://developer.barclays.com/apis/barclaycard-smartpay-connect/1b93e68c-dd6a-49de-a68c-f3f24205a588.bdn/documentation
-    properties: []
-    description: >-
-      Barclaycard Smartpay Connect API provides the interface for face-to-face
-      Card Present transactions, enabling card payments to be taken via card
-      reader and processed through the Smartpay Advance payment gateway.
   - aid: barclays:barclaycard-smartpay-web-payment-api
     name: Barclaycard Smartpay Web Payment API
     tags: []
