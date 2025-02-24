@@ -2,194 +2,188 @@ aid: barclays
 url: >-
   https://raw.githubusercontent.com/api-evangelist/barclays/refs/heads/main/apis.yml
 apis:
-  - aid: barclays:barclays
-    name: Barclays
-    tags:
-      - API
-    humanURL: ' https://developer.barclays.com/'
-    properties:
-      - url: ' https://developer.barclays.com/'
-        type: Documentation
-    description: >-
-      Helping developers create next generation digital experiences using
-      secure, innovative APIs 
   - aid: barclays:barclaycard-smartpay-connect-api
     name: Barclaycard Smartpay Connect API
+    tags: []
+    humanURL: >-
+      https://developer.barclays.com/apis/barclaycard-smartpay-connect/1b93e68c-dd6a-49de-a68c-f3f24205a588.bdn/documentation
+    properties: []
     description: >-
       Barclaycard Smartpay Connect API provides the interface for face-to-face
       Card Present transactions, enabling card payments to be taken via card
       reader and processed through the Smartpay Advance payment gateway.
-    humanURL: >-
-      https://developer.barclays.com/apis/barclaycard-smartpay-connect/1b93e68c-dd6a-49de-a68c-f3f24205a588.bdn/documentation
-    tags: []
-    properties: []
   - aid: barclays:barclaycard-smartpay-web-payment-api
     name: Barclaycard Smartpay Web Payment API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:barclays-bank-ireland-confirmation-of-funds-api
     name: Barclays Bank Ireland Confirmation of Funds API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/barclays-bank-ireland-confirmation-of-funds/8cd8be1f-4bdc-45fe-8fef-c7a569cfe603.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:account-and-transactions-api
     name: Account and Transactions API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/account-and-transactions/20e74071-13fb-44eb-b98f-2c89d6251ad8.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:barclays-bank-ireland-account-information-api
     name: Barclays Bank Ireland Account Information API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/barclays-bank-ireland-account-information/696e2ef6-255f-481c-9546-4b5bda44b2e4.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:barclays-bank-ireland-payment-initiation-api
     name: Barclays Bank Ireland Payment Initiation API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/barclays-bank-ireland-payment-initiation/d41f070a-3b3b-4f2d-b28a-6afdc690a42d.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:confirmation-of-funds-api
     name: Confirmation of Funds API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/confirmation-of-funds/1c914db2-e592-4e5c-89c8-7b9e76d53303.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:consent-api
     name: Consent API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/consent/41fde785-67a0-47e6-9a34-263d22a08028.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:dynamic-client-registration-api
     name: Dynamic Client Registration API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/dynamic-client-registration/ace18310-2523-49f0-a66d-4c6e37aae59f.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:event-notification-api
     name: Event Notification API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/event-notification/d71a398f-620b-4a65-8b85-382ca1eb7ede.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:payment-initiation-api
     name: Payment Initiation API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/payment-initiation/1f6ad5c5-e397-41c0-8d3b-c35446491402.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:atm-locator-api
     name: ATM Locator API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/atm-locator/c9e28aaa-51a1-4c9b-b8d4-f2b7ac090aa7.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:branch-locator-api
     name: Branch Locator API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/branch-locator/d9b83b29-42e2-4cb3-ad8f-100d2c9a6314.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:fca-service-metrics-api
     name: FCA Service Metrics API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/fca-service-metrics/59f96026-03d6-4c4e-9567-c3db4dd83e3a.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:product-details-api
     name: Product Details API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:accounts-api
     name: Accounts API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/accounts/097976bb-311e-4bb1-89b1-c81e2f1de572.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:authentication-api
     name: Authentication API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/authentication/4f4800dd-6a0f-42fe-b6da-5cb2ba8891f5.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:card-application-api
     name: Card Application API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/card-application/372df8da-72cb-4fe5-b4fb-7e0bcaac7d20.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:cryptography-key-exchange-api
     name: Cryptography Key Exchange API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/cryptography-key-exchange/15f2194b-7bda-4e81-b90e-f671efbc28c1.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:digital-wallet-api
     name: Digital Wallet API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/digital-wallet/b55293c3-316f-4932-8ac6-b4e94641382a.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:payments-api
     name: Payments API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/payments/5286713c-e65f-4c16-aceb-493115142bea.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:rewards-loyalty-sync-api
     name: Rewards Loyalty Sync API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/rewards-loyalty-sync/52e2b51b-9937-4f12-901b-3275b0aeb2a8.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:rewards-pay-with-points-api
     name: Rewards Pay with Points API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/rewards-pay-with-points/1941d4a3-35e3-462c-a209-34101c518b7f.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
   - aid: barclays:transactions-api
     name: Transactions API
-    description: 'null'
+    tags: []
     humanURL: >-
       https://developer.barclays.com/apis/transactions/b3b4410d-56a7-403c-863c-3af1e939f1c2.bdn/documentation
-    tags: []
     properties: []
+    description: 'null'
 name: Barclays
 tags:
   - Credit Cards
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
+common:
+  - url: https://developer.barclays.com/
+    name: Barclays API Exchange
+    type: Portal
+    description: 'null'
 created: '2025-02-21'
 modified: '2025-02-24'
 position: Consumer
@@ -207,8 +201,3 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
-common:
-  - name: Barclays API Exchange
-    description: 'null'
-    url: https://developer.barclays.com/
-    type: Portal
