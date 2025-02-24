@@ -7,7 +7,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Smartpay Web Payment API is a tool designed to make online
       transactions easier and more secure for businesses and their customers.
@@ -23,7 +26,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/barclays-bank-ireland-confirmation-of-funds/8cd8be1f-4bdc-45fe-8fef-c7a569cfe603.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/barclays-bank-ireland-confirmation-of-funds/8cd8be1f-4bdc-45fe-8fef-c7a569cfe603.bdn/documentation
+        type: Documentation
     description: >-
       The Barclays Bank Ireland Confirmation of Funds API allows users to verify
       the availability of funds in a bank account in real-time. This API
@@ -40,7 +46,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/account-and-transactions/20e74071-13fb-44eb-b98f-2c89d6251ad8.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/account-and-transactions/20e74071-13fb-44eb-b98f-2c89d6251ad8.bdn/documentation
+        type: Documentation
     description: >-
       The Barclays Account and Transactions API is a powerful tool that allows
       customers to access and manage their account and transaction information
@@ -58,7 +67,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/barclays-bank-ireland-account-information/696e2ef6-255f-481c-9546-4b5bda44b2e4.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/barclays-bank-ireland-account-information/696e2ef6-255f-481c-9546-4b5bda44b2e4.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Bank Ireland Account Information API allows users to securely
       access and retrieve account information from their Barclays Bank Ireland
@@ -74,7 +86,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/barclays-bank-ireland-payment-initiation/d41f070a-3b3b-4f2d-b28a-6afdc690a42d.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/barclays-bank-ireland-payment-initiation/d41f070a-3b3b-4f2d-b28a-6afdc690a42d.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Bank Ireland Payment Initiation API is a tool that allows users
       to initiate payments directly from their own systems. This API streamlines
@@ -90,7 +105,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/confirmation-of-funds/1c914db2-e592-4e5c-89c8-7b9e76d53303.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/confirmation-of-funds/1c914db2-e592-4e5c-89c8-7b9e76d53303.bdn/documentation
+        type: Documentation
     description: >-
       The Barclays Confirmation of Funds API is a service that allows users to
       verify the availability of funds in a Barclays customer's account in
@@ -107,7 +125,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/consent/41fde785-67a0-47e6-9a34-263d22a08028.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/consent/41fde785-67a0-47e6-9a34-263d22a08028.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Consent API is a tool that allows customers to securely share
       their banking data with third-party applications and services. By giving
@@ -124,7 +145,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/dynamic-client-registration/ace18310-2523-49f0-a66d-4c6e37aae59f.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/dynamic-client-registration/ace18310-2523-49f0-a66d-4c6e37aae59f.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Dynamic Client Registration API is a tool designed to streamline
       the client onboarding process for financial institutions. The API allows
@@ -141,7 +165,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/event-notification/d71a398f-620b-4a65-8b85-382ca1eb7ede.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/event-notification/d71a398f-620b-4a65-8b85-382ca1eb7ede.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Event Notification API is a tool that allows users to receive
       real-time updates on events related to their accounts and transactions. By
@@ -158,7 +185,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/payment-initiation/1f6ad5c5-e397-41c0-8d3b-c35446491402.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/payment-initiation/1f6ad5c5-e397-41c0-8d3b-c35446491402.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Payment Initiation API is a powerful tool that enables businesses
       and developers to securely initiate and authorize payments directly from
@@ -177,7 +207,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/atm-locator/c9e28aaa-51a1-4c9b-b8d4-f2b7ac090aa7.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/atm-locator/c9e28aaa-51a1-4c9b-b8d4-f2b7ac090aa7.bdn/documentation
+        type: Documentation
     description: >-
       Barclays ATM Locator API is a service that allows users to easily find the
       nearest Barclays ATM machines in their area. By providing location
@@ -196,7 +229,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/branch-locator/d9b83b29-42e2-4cb3-ad8f-100d2c9a6314.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/branch-locator/d9b83b29-42e2-4cb3-ad8f-100d2c9a6314.bdn/documentation
+        type: Documentation
     description: >-
       The Barclays Branch Locator API is a tool that allows users to easily find
       information about Barclays bank branches and ATMs. By providing the API
@@ -212,7 +248,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/fca-service-metrics/59f96026-03d6-4c4e-9567-c3db4dd83e3a.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/fca-service-metrics/59f96026-03d6-4c4e-9567-c3db4dd83e3a.bdn/documentation
+        type: Documentation
     description: >-
       The Barclays FCA Service Metrics API is a tool designed to measure and
       track key performance indicators for financial services offered by
@@ -230,7 +269,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Product Details API is a tool that allows developers to access
       detailed information about a wide range of products offered by Barclays
@@ -249,7 +291,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/accounts/097976bb-311e-4bb1-89b1-c81e2f1de572.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/accounts/097976bb-311e-4bb1-89b1-c81e2f1de572.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Accounts API is a feature offered by Barclays Bank that allows
       users to securely access and manage their banking information and
@@ -266,7 +311,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/authentication/4f4800dd-6a0f-42fe-b6da-5cb2ba8891f5.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/authentication/4f4800dd-6a0f-42fe-b6da-5cb2ba8891f5.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Authentication API is a platform that provides secure and
       reliable authentication services for users accessing online banking and
@@ -285,7 +333,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/card-application/372df8da-72cb-4fe5-b4fb-7e0bcaac7d20.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/card-application/372df8da-72cb-4fe5-b4fb-7e0bcaac7d20.bdn/documentation
+        type: Documentation
     description: >-
       The Barclays Card Application API is a tool developed by Barclays that
       allows businesses and developers to easily integrate credit card
@@ -303,7 +354,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/cryptography-key-exchange/15f2194b-7bda-4e81-b90e-f671efbc28c1.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/cryptography-key-exchange/15f2194b-7bda-4e81-b90e-f671efbc28c1.bdn/documentation
+        type: Documentation
     description: >-
       Sure. The Barclays Cryptography Key Exchange API is a tool designed to
       facilitate secure communication between parties by enabling the exchange
@@ -320,7 +374,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/digital-wallet/b55293c3-316f-4932-8ac6-b4e94641382a.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/digital-wallet/b55293c3-316f-4932-8ac6-b4e94641382a.bdn/documentation
+        type: Documentation
     description: >-
       The Barclays Digital Wallet API is a secure platform that allows
       developers to easily integrate digital wallet functionality into their
@@ -337,7 +394,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/payments/5286713c-e65f-4c16-aceb-493115142bea.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/payments/5286713c-e65f-4c16-aceb-493115142bea.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Payments API is a digital platform that allows users to securely
       make and receive payments online. This API allows businesses and
@@ -355,7 +415,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/rewards-loyalty-sync/52e2b51b-9937-4f12-901b-3275b0aeb2a8.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/rewards-loyalty-sync/52e2b51b-9937-4f12-901b-3275b0aeb2a8.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Rewards Loyalty Sync API is a robust tool that allows businesses
       to seamlessly integrate loyalty programs into their existing systems. By
@@ -372,7 +435,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/rewards-pay-with-points/1941d4a3-35e3-462c-a209-34101c518b7f.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/rewards-pay-with-points/1941d4a3-35e3-462c-a209-34101c518b7f.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Rewards Pay with Points API is a platform that enables users to
       effortlessly convert their earned rewards points into payments for
@@ -389,7 +455,10 @@ apis:
     tags: []
     humanURL: >-
       https://developer.barclays.com/apis/transactions/b3b4410d-56a7-403c-863c-3af1e939f1c2.bdn/documentation
-    properties: []
+    properties:
+      - url: >-
+          https://developer.barclays.com/apis/transactions/b3b4410d-56a7-403c-863c-3af1e939f1c2.bdn/documentation
+        type: Documentation
     description: >-
       Barclays Transactions API is a powerful tool that allows users to access
       their transaction data from their Barclays bank accounts in a secure and
