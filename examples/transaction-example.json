@@ -1,0 +1,29 @@
+{
+  "Data": {
+    "Transaction": [
+      {
+        "AccountId": "22289",
+        "TransactionId": "TXN-001234",
+        "CreditDebitIndicator": "Debit",
+        "Status": "Booked",
+        "BookingDateTime": "2026-04-15T14:23:00Z",
+        "ValueDateTime": "2026-04-15T14:23:00Z",
+        "Amount": {
+          "Amount": "12.50",
+          "Currency": "GBP"
+        },
+        "MerchantDetails": {
+          "MerchantName": "TESCO STORES LTD",
+          "MerchantCategoryCode": "5411"
+        },
+        "TransactionInformation": "TESCO STORES 3417 LONDON"
+      }
+    ]
+  },
+  "Links": {
+    "Self": "https://api.alphabank.com/open-banking/v3.1/aisp/accounts/22289/transactions"
+  },
+  "Meta": {
+    "TotalPages": 1
+  }
+}

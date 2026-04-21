@@ -1,0 +1,79 @@
+rules:
+  barclays-api-has-documentation:
+    description: All Barclays API entries must have a Documentation property.
+    message: "{{description}}"
+    severity: error
+    given: "$.apis[*]"
+    then:
+      field: properties
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: object
+            properties:
+              type:
+                const: Documentation
+            required:
+              - type
+
+  barclays-api-has-description:
+    description: All Barclays API entries must have a description.
+    message: "{{description}}"
+    severity: error
+    given: "$.apis[*]"
+    then:
+      field: description
+      function: truthy
+
+  barclays-api-has-name:
+    description: All Barclays API entries must have a name.
+    message: "{{description}}"
+    severity: error
+    given: "$.apis[*]"
+    then:
+      field: name
+      function: truthy
+
+  barclays-api-has-human-url:
+    description: All Barclays API entries must have a humanURL.
+    message: "{{description}}"
+    severity: error
+    given: "$.apis[*]"
+    then:
+      field: humanURL
+      function: truthy
+
+  barclays-api-has-tags:
+    description: All Barclays API entries must have tags.
+    message: "{{description}}"
+    severity: warn
+    given: "$.apis[*]"
+    then:
+      field: tags
+      function: truthy
+
+  barclays-open-banking-has-psd2-tag:
+    description: Barclays Open Banking APIs should be tagged with Open Banking or PSD2.
+    message: "{{description}}"
+    severity: info
+    given: "$.apis[?(@.name =~ /Open Banking|Account|Payment|Confirmation/i)]"
+    then:
+      field: tags
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: string
+            pattern: "Open Banking|PSD2"
+
+  barclays-apis-json-has-description:
+    description: Barclays APIs.json must have a description.
+    message: "{{description}}"
+    severity: error
+    given: "$"
+    then:
+      field: description
+      function: truthy

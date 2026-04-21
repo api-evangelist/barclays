@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/barclays/json-schema/transaction-schema.json",
+  "title": "Transaction",
+  "description": "A Barclays account transaction as returned by the Transactions API.",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "Account identifier the transaction belongs to."
+    },
+    "transactionId": {
+      "type": "string",
+      "description": "Unique transaction identifier."
+    },
+    "creditDebitIndicator": {
+      "type": "string",
+      "enum": ["Credit", "Debit"],
+      "description": "Whether the transaction credits or debits the account."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Booked", "Pending"],
+      "description": "Settlement status of the transaction."
+    },
+    "bookingDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the transaction was booked."
+    },
+    "valueDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Value date and time of the transaction."
+    },
+    "amount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d{2}$"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        }
+      },
+      "required": ["amount", "currency"]
+    },
+    "merchantDetails": {
+      "type": "object",
+      "properties": {
+        "merchantName": {
+          "type": "string"
+        },
+        "merchantCategoryCode": {
+          "type": "string"
+        }
+      }
+    },
+    "transactionInformation": {
+      "type": "string",
+      "description": "Narrative description of the transaction."
+    }
+  },
+  "required": ["accountId", "transactionId", "creditDebitIndicator", "status", "amount"]
+}

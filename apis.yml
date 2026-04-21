@@ -13,7 +13,7 @@ type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2025-02-21'
-modified: '2026-04-19'
+modified: '2026-04-21'
 position: Consumer
 description: >-
   Barclays is a multinational financial services company providing retail and commercial
@@ -296,6 +296,14 @@ common:
   - url: https://developer.barclays.com/privacy-policy
     name: Privacy Policy
     type: PrivacyPolicy
+  - type: SpectralRules
+    url: rules/barclays-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/barclays-vocabulary.yaml
+  - type: NaftikoCapability
+    url: capabilities/open-banking.yaml
+  - type: JSON-LD
+    url: json-ld/barclays-context.jsonld
   - name: Features
     type: Features
     data:

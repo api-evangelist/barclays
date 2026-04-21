@@ -1,0 +1,79 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "barclays": "https://developer.barclays.com/vocab/",
+    "schema": "https://schema.org/",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/FND/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Account": {
+      "@id": "barclays:Account",
+      "@type": "@id"
+    },
+    "Transaction": {
+      "@id": "barclays:Transaction",
+      "@type": "@id"
+    },
+    "Payment": {
+      "@id": "barclays:Payment",
+      "@type": "@id"
+    },
+    "Consent": {
+      "@id": "barclays:Consent",
+      "@type": "@id"
+    },
+    "PaymentConsent": {
+      "@id": "barclays:PaymentConsent",
+      "@type": "@id"
+    },
+    "AccountConsent": {
+      "@id": "barclays:AccountConsent",
+      "@type": "@id"
+    },
+    "FundsConfirmation": {
+      "@id": "barclays:FundsConfirmation",
+      "@type": "@id"
+    },
+    "accountId": {
+      "@id": "barclays:accountId",
+      "@type": "xsd:string"
+    },
+    "balance": {
+      "@id": "barclays:balance",
+      "@type": "xsd:decimal"
+    },
+    "currency": {
+      "@id": "barclays:currency",
+      "@type": "xsd:string"
+    },
+    "amount": {
+      "@id": "barclays:amount",
+      "@type": "xsd:decimal"
+    },
+    "transactionId": {
+      "@id": "barclays:transactionId",
+      "@type": "xsd:string"
+    },
+    "creditorAccount": {
+      "@id": "barclays:creditorAccount",
+      "@type": "@id"
+    },
+    "debtorAccount": {
+      "@id": "barclays:debtorAccount",
+      "@type": "@id"
+    },
+    "fundsAvailable": {
+      "@id": "barclays:fundsAvailable",
+      "@type": "xsd:boolean"
+    },
+    "consentId": {
+      "@id": "barclays:consentId",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "barclays:status",
+      "@type": "xsd:string"
+    },
+    "name": "schema:name",
+    "description": "schema:description"
+  }
+}

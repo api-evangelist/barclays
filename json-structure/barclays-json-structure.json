@@ -1,0 +1,76 @@
+{
+  "name": "Barclays Open Banking API Structure",
+  "description": "Core data structures for Barclays Open Banking APIs including accounts, transactions, and payments.",
+  "structure": {
+    "AccountsResponse": {
+      "Data": {
+        "Account": [
+          {
+            "AccountId": "string - Unique account identifier",
+            "Currency": "string - ISO 4217 currency code",
+            "AccountType": "string - Personal | Business | Savings | CreditCard",
+            "AccountSubType": "string - CurrentAccount | Savings | CreditCard",
+            "Nickname": "string - Customer nickname",
+            "Account": [
+              {
+                "SchemeName": "string - UK.OBIE.SortCodeAccountNumber | UK.OBIE.IBAN",
+                "Identification": "string - Account number",
+                "Name": "string - Account holder name"
+              }
+            ]
+          }
+        ]
+      },
+      "Links": {
+        "Self": "string - URL of this response"
+      },
+      "Meta": {
+        "TotalPages": "integer"
+      }
+    },
+    "TransactionsResponse": {
+      "Data": {
+        "Transaction": [
+          {
+            "AccountId": "string",
+            "TransactionId": "string",
+            "CreditDebitIndicator": "string - Credit | Debit",
+            "Status": "string - Booked | Pending",
+            "BookingDateTime": "string - ISO 8601 datetime",
+            "ValueDateTime": "string - ISO 8601 datetime",
+            "Amount": {
+              "Amount": "string - Decimal value",
+              "Currency": "string - ISO 4217"
+            },
+            "MerchantDetails": {
+              "MerchantName": "string",
+              "MerchantCategoryCode": "string"
+            },
+            "TransactionInformation": "string - Narrative"
+          }
+        ]
+      }
+    },
+    "PaymentConsentResponse": {
+      "Data": {
+        "ConsentId": "string - Unique consent identifier",
+        "Status": "string - AwaitingAuthorisation | Authorised | Consumed | Rejected",
+        "CreationDateTime": "string - ISO 8601 datetime",
+        "StatusUpdateDateTime": "string - ISO 8601 datetime",
+        "Initiation": {
+          "InstructionIdentification": "string",
+          "EndToEndIdentification": "string",
+          "InstructedAmount": {
+            "Amount": "string",
+            "Currency": "string"
+          },
+          "CreditorAccount": {
+            "SchemeName": "string",
+            "Identification": "string",
+            "Name": "string"
+          }
+        }
+      }
+    }
+  }
+}

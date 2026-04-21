@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/barclays/json-schema/account-schema.json",
+  "title": "Account",
+  "description": "A Barclays bank account as returned by the Open Banking Account Information API.",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "Unique identifier for the account."
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code."
+    },
+    "accountType": {
+      "type": "string",
+      "enum": ["Personal", "Business", "Savings", "CreditCard"],
+      "description": "Type of the account."
+    },
+    "accountSubType": {
+      "type": "string",
+      "enum": ["CurrentAccount", "Savings", "CreditCard", "Loan"],
+      "description": "Sub-type of the account."
+    },
+    "nickname": {
+      "type": "string",
+      "description": "Customer-assigned nickname for the account."
+    },
+    "account": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "schemeName": {
+            "type": "string",
+            "enum": ["UK.OBIE.SortCodeAccountNumber", "UK.OBIE.IBAN"]
+          },
+          "identification": {
+            "type": "string",
+            "description": "Account number or IBAN."
+          },
+          "name": {
+            "type": "string",
+            "description": "Account holder name."
+          }
+        },
+        "required": ["schemeName", "identification"]
+      }
+    },
+    "balances": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Balance"
+      }
+    }
+  },
+  "required": ["accountId", "currency", "accountType"],
+  "definitions": {
+    "Balance": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d{2}$"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            }
+          },
+          "required": ["amount", "currency"]
+        },
+        "creditDebitIndicator": {
+          "type": "string",
+          "enum": ["Credit", "Debit"]
+        },
+        "type": {
+          "type": "string",
+          "enum": ["ClosingAvailable", "ClosingBooked", "ForwardAvailable", "InterimAvailable", "InterimBooked"]
+        },
+        "dateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["amount", "creditDebitIndicator", "type"]
+    }
+  }
+}

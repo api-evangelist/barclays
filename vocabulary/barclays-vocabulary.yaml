@@ -1,0 +1,38 @@
+vocabulary:
+  name: Barclays API Vocabulary
+  description: Terms and concepts used across Barclays Open Banking and financial services APIs.
+  terms:
+    - term: Open Banking
+      definition: UK regulatory framework requiring banks to share customer financial data with authorized third parties via standardized APIs.
+    - term: PSD2
+      definition: EU Payment Services Directive 2, requiring banks to open payment and account services to third-party providers.
+    - term: AISP
+      definition: Account Information Service Provider - a third party authorized to access account information on behalf of a customer.
+    - term: PISP
+      definition: Payment Initiation Service Provider - a third party authorized to initiate payments from a customer's account.
+    - term: CBPII
+      definition: Card-Based Payment Instrument Issuer - a third party authorized to check fund availability for card payments.
+    - term: TPP
+      definition: Third Party Provider - any authorized AISP, PISP, or CBPII accessing Barclays APIs.
+    - term: Confirmation of Funds
+      definition: Real-time check of whether sufficient funds are available in a customer's account for a given payment amount.
+    - term: Payment Initiation
+      definition: The ability for a third party to trigger a payment from a customer's bank account with customer consent.
+    - term: Dynamic Client Registration
+      definition: An automated process for TPPs to register their applications with Barclays without manual onboarding.
+    - term: Consent
+      definition: Customer authorization granted to a TPP to access their account data or initiate payments on their behalf.
+    - term: Smartpay
+      definition: Barclays' e-commerce payment processing solution for online merchants.
+    - term: Barclays Rewards
+      definition: Barclays' loyalty program allowing customers to earn and redeem points through eligible purchases.
+    - term: FCA
+      definition: Financial Conduct Authority - the UK financial services regulatory body that oversees Open Banking compliance.
+    - term: Barclays API Exchange
+      definition: The Barclays developer portal at developer.barclays.com providing access to 22+ APIs.
+    - term: Event Notification
+      definition: A webhook-based mechanism for real-time delivery of account and transaction events to registered TPPs.
+    - term: Access Token
+      definition: OAuth2 token granting a TPP access to a specific customer's data for a defined scope and duration.
+    - term: Refresh Token
+      definition: Long-lived OAuth2 token used to obtain new access tokens without re-prompting customer consent.

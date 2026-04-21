@@ -1,0 +1,104 @@
+name: Barclays Open Banking
+description: >-
+  Naftiko capability for Barclays Open Banking APIs covering account information,
+  payment initiation, confirmation of funds, and event notifications compliant with
+  UK Open Banking and EU PSD2 standards.
+version: '1.0'
+provider: Barclays
+category: Open Banking
+tags:
+  - Open Banking
+  - PSD2
+  - Banking
+  - Payments
+  - Account Information
+humanURL: https://developer.barclays.com/
+actions:
+  - name: Get Account Information
+    description: Retrieve account balance, details, and metadata for an authorized customer account.
+    inputs:
+      - name: accountId
+        type: string
+        required: true
+      - name: accessToken
+        type: string
+        required: true
+    outputs:
+      - name: account
+        type: Account
+  - name: Get Transactions
+    description: Retrieve transaction history for a customer account within a date range.
+    inputs:
+      - name: accountId
+        type: string
+        required: true
+      - name: fromDate
+        type: string
+        format: date
+        required: false
+      - name: toDate
+        type: string
+        format: date
+        required: false
+      - name: accessToken
+        type: string
+        required: true
+    outputs:
+      - name: transactions
+        type: array
+        items: Transaction
+  - name: Initiate Payment
+    description: Initiate a payment from a customer's Barclays account via Open Banking.
+    inputs:
+      - name: paymentRequest
+        type: PaymentRequest
+        required: true
+      - name: accessToken
+        type: string
+        required: true
+    outputs:
+      - name: paymentConsent
+        type: PaymentConsent
+  - name: Confirm Funds
+    description: Check whether a customer account has sufficient funds for a given payment amount.
+    inputs:
+      - name: accountId
+        type: string
+        required: true
+      - name: amount
+        type: number
+        required: true
+      - name: currency
+        type: string
+        required: true
+      - name: accessToken
+        type: string
+        required: true
+    outputs:
+      - name: fundsAvailable
+        type: boolean
+  - name: Register Client
+    description: Dynamically register a TPP client application with Barclays Open Banking.
+    inputs:
+      - name: registrationRequest
+        type: RegistrationRequest
+        required: true
+    outputs:
+      - name: clientId
+        type: string
+      - name: clientSecret
+        type: string
+  - name: Subscribe to Events
+    description: Subscribe to account and transaction event notifications via webhook.
+    inputs:
+      - name: callbackUrl
+        type: string
+        format: uri
+        required: true
+      - name: eventTypes
+        type: array
+        items: string
+        required: true
+    outputs:
+      - name: subscriptionId
+        type: string

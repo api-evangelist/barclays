@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/barclays/json-schema/payment-schema.json",
+  "title": "PaymentRequest",
+  "description": "A domestic payment initiation request for the Barclays Payment Initiation API.",
+  "type": "object",
+  "properties": {
+    "instructionIdentification": {
+      "type": "string",
+      "maxLength": 35,
+      "description": "Unique identifier for the payment instruction assigned by the PISP."
+    },
+    "endToEndIdentification": {
+      "type": "string",
+      "maxLength": 35,
+      "description": "End-to-end reference for the payment."
+    },
+    "instructedAmount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d{2}$"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        }
+      },
+      "required": ["amount", "currency"]
+    },
+    "creditorAccount": {
+      "type": "object",
+      "properties": {
+        "schemeName": {
+          "type": "string",
+          "enum": ["UK.OBIE.SortCodeAccountNumber", "UK.OBIE.IBAN"]
+        },
+        "identification": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": ["schemeName", "identification", "name"]
+    },
+    "remittanceInformation": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string",
+          "maxLength": 35
+        },
+        "unstructured": {
+          "type": "string",
+          "maxLength": 140
+        }
+      }
+    }
+  },
+  "required": ["instructionIdentification", "endToEndIdentification", "instructedAmount", "creditorAccount"]
+}

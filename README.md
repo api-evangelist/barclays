@@ -10,7 +10,7 @@ Barclays is a multinational financial services company providing retail and comm
 ## Timestamps
 
 - **Created:** 2025-02-21
-- **Modified:** 2026-04-19
+- **Modified:** 2026-04-21
 
 ## APIs
 
@@ -45,8 +45,12 @@ Barclays is a multinational financial services company providing retail and comm
 - [Help Guides](https://developer.barclays.com/support/help-guides)
 - [Sign Up](https://drm.developer.barclays.com/s/registration)
 - [Knowledge Base](https://developer.barclays.com/support/knowledge-base)
-- [TermsOfService](https://developer.barclays.com/terms-of-use)
-- [PrivacyPolicy](https://developer.barclays.com/privacy-policy)
+- [Terms of Use](https://developer.barclays.com/terms-of-use)
+- [Privacy Policy](https://developer.barclays.com/privacy-policy)
+- [Spectral Rules](rules/barclays-spectral-rules.yml)
+- [Vocabulary](vocabulary/barclays-vocabulary.yaml)
+- [Naftiko Capability](capabilities/open-banking.yaml)
+- [JSON-LD Context](json-ld/barclays-context.jsonld)
 
 ## Features
 
