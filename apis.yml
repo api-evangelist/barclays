@@ -302,7 +302,7 @@ common:
     url: vocabulary/barclays-vocabulary.yaml
   - type: NaftikoCapability
     url: capabilities/open-banking.yaml
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/barclays-context.jsonld
   - name: Features
     type: Features
