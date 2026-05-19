@@ -272,6 +272,10 @@ apis:
         type: Documentation
     description: Access detailed transaction history and spending analytics for Barclays accounts.
 common:
+  - type: GitHubOrganization
+    url: https://github.com/Barclays
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/barclays-bank
   - url: https://developer.barclays.com/
     name: Barclays API Exchange
     type: Portal
