@@ -290,7 +290,7 @@ common:
     type: Login
   - url: https://drm.developer.barclays.com/s/registration
     name: Registration
-    type: SignUp
+    type: Signup
   - url: https://developer.barclays.com/support/knowledge-base
     name: Knowledge Base
     type: Knowledgebase
@@ -304,7 +304,7 @@ common:
     url: rules/barclays-spectral-rules.yml
   - type: Vocabulary
     url: vocabulary/barclays-vocabulary.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/open-banking.yaml
   - type: JSONLD
     url: json-ld/barclays-context.jsonld
