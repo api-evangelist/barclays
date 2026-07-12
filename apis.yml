@@ -272,6 +272,12 @@ apis:
         type: Documentation
     description: Access detailed transaction history and spending analytics for Barclays accounts.
 common:
+  - type: VulnerabilityDisclosure
+    url: security/barclays-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/barclays-domain-security.yml
+  - url: https://home.barclays/insights/barclays-insights/
+    type: Blog
   - type: GitHubOrganization
     url: https://github.com/Barclays
   - type: LinkedIn
