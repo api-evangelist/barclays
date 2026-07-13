@@ -1,0 +1,14 @@
+{
+  "repo": "barclays",
+  "feeds": [
+    {
+      "source": "https://home.barclays/insights/barclays-insights/",
+      "feed_url": "https://home.barclays/insights/barclays-insights/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 5
+}
