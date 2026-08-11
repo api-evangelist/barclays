@@ -322,8 +322,6 @@ common:
     url: rules/barclays-spectral-rules.yml
   - type: Vocabulary
     url: vocabulary/barclays-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/open-banking.yaml
   - type: JSONLD
     url: json-ld/barclays-context.jsonld
   - name: Features
