@@ -62,6 +62,10 @@ apis:
   - aid: barclays:account-and-transactions-api
     name: Barclays Account and Transactions API
     tags:
+      - Account
+      - Open Banking
+      - Transaction
+    tags_raw:
       - Accounts
       - Open Banking
       - Transactions
@@ -73,6 +77,11 @@ apis:
   - aid: barclays:barclays-bank-ireland-account-information-api
     name: Barclays Bank Ireland Account Information API
     tags:
+      - Account
+      - Ireland
+      - Open Banking
+      - PSD2
+    tags_raw:
       - Accounts
       - Ireland
       - Open Banking
@@ -129,6 +138,11 @@ apis:
   - aid: barclays:event-notification-api
     name: Barclays Event Notification API
     tags:
+      - Event
+      - Notification
+      - Open Banking
+      - Webhook
+    tags_raw:
       - Events
       - Notifications
       - Open Banking
@@ -186,6 +200,9 @@ apis:
     name: Barclays Product Details API
     tags:
       - Open Banking
+      - Product
+    tags_raw:
+      - Open Banking
       - Products
     humanURL: https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation
     properties:
@@ -195,6 +212,9 @@ apis:
   - aid: barclays:accounts-api
     name: Barclays Accounts API
     tags:
+      - Account
+      - Open Banking
+    tags_raw:
       - Accounts
       - Open Banking
     humanURL: https://developer.barclays.com/apis/accounts/097976bb-311e-4bb1-89b1-c81e2f1de572.bdn/documentation
@@ -205,6 +225,9 @@ apis:
   - aid: barclays:authentication-api
     name: Barclays Authentication API
     tags:
+      - Authentication
+      - Security
+    tags_raw:
       - Authentication
       - OAuth
       - Security
@@ -276,6 +299,9 @@ apis:
   - aid: barclays:transactions-api
     name: Barclays Transactions API
     tags:
+      - Open Banking
+      - Transaction
+    tags_raw:
       - Open Banking
       - Transactions
     humanURL: https://developer.barclays.com/apis/transactions/b3b4410d-56a7-403c-863c-3af1e939f1c2.bdn/documentation
