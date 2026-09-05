@@ -1,0 +1,4832 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Card Application",
+  "description": "Enables the user to securely apply for a card within your channel",
+  "version": "4.0"
+ },
+ "tags": [
+  {
+   "name": "applyProductExternalAPI-OAS",
+   "description": "Apply Product External API"
+  }
+ ],
+ "paths": {
+  "/cards/prequal": {
+   "summary": "Pre Qualification Check.Please use Content-Type as application/jose for request, response will be send with Content-Type as application/jose.",
+   "description": "Pre Qualification Check",
+   "post": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "Pre Qualification Check.Please use Content-Type as application/jose for request, response will be send with Content-Type as application/jose.",
+    "description": "Pre Qualification Check",
+    "operationId": "postRequestForPrequalDecision",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "requestBody": {
+     "description": "Prequal Decision Request for an customer",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PrequalRequest"
+       },
+       "examples": {
+        "prescreen-offers-req": {
+         "$ref": "#/components/examples/PrequalRequest"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/PrequalResponse"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/applications/verify": {
+   "summary": "Process the application post challenge verification",
+   "description": "Process the application post challenge verification",
+   "post": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "Process the application post challenge verification",
+    "description": "Process the application post challenge verification",
+    "operationId": "postApiForApplicationVerification",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "requestBody": {
+     "description": "Verification request data",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ApplicationVerificationRequest"
+       },
+       "examples": {
+        "application-verify-req": {
+         "$ref": "#/components/examples/ApplicationVerificationReq"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/ApplicationVerificationResponse"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/prescreen/{prescreenId}/capture": {
+   "summary": "Capture the fact that the offer(s) were displayed to the customer",
+   "description": "Capture the fact that the offer(s) were displayed to the customer",
+   "post": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "Capture the fact that the offer(s) were displayed to the customer",
+    "description": "Capture the fact that the offer(s) were displayed to the customer",
+    "operationId": "postApiForPrescreenOffersCapture",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "prescreenId",
+      "in": "path",
+      "description": "Prescreen Id",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 20,
+       "minLength": 1,
+       "pattern": "^[a-zA-Z0-9]{1,20}$"
+      },
+      "example": "PS12345678"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "requestBody": {
+     "description": "Prescreen Offers capture Request Data",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PrescreenOffersCaptureRequest"
+       },
+       "examples": {
+        "prescreen-offers-capture-req": {
+         "$ref": "#/components/examples/PrescreenOffersCaptureReq"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/PrescreenOffersCaptureRes"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/prescreen": {
+   "summary": "Get all eligible offers for a customer. This operation contains sensitive data. Please use Content-Type as application/jose.",
+   "description": "Get all eligible offers for a customer",
+   "post": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "Get all eligible offers for a customer. This operation contains sensitive data. Please use Content-Type as application/jose for request.",
+    "description": "Get all eligible offers for a customer",
+    "operationId": "postApiForPrescreenOffer",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "requestBody": {
+     "description": "Prescreen Offers Request Data",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PrescreenOffersRequest"
+       },
+       "examples": {
+        "prescreen-offers-req": {
+         "$ref": "#/components/examples/PrescreenOffersReq"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/PrescreenOffersRes"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/accounts/instant-credit": {
+   "summary": "Get card details based on the accountId. This operation contains sensitive data. Expect Content-Type as application/jose.",
+   "description": "Customer need the card details to complete the purchase journey in the instant credit path",
+   "post": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "Get card details based on the accountId. This operation contains sensitive data. Expect response Content-Type as application/jose",
+    "description": "Customer card details will be provided in encrypted form",
+    "operationId": "postApiForInstantCreditCardDetail",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "requestBody": {
+     "description": "Request for InstantCredit detail lookup by accountId .",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/InstantCreditByAccountRequest"
+       },
+       "examples": {
+        "instant-credit-by-account-req": {
+         "$ref": "#/components/examples/InstantCreditByAccountReq"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/InstantCreditByAccountRes"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/app-consent": {
+   "summary": "The API accepts consent from Applicant for various capabilities",
+   "description": "This API is used after the Card Application API (/applications) when applicant consent is needed to proceed.If a card application returns 'DOWNSELL_APPROVED_CONSENT_REQUIRED' or 'DOWNSELL_PENDED_CONSENT_REQUIRED', present the required content to the customer and obtain their consent for the Downsell Product before continuing.The API captures this consent and resumes processing. Once completed, a decision is provided. If approved and instant credit is requested, the Card Member Agreement (CMA) will be included in the response, and its acceptance can be tracked via the InstantCredit (/instant-credit) API.",
+   "post": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "The API accepts consent from Applicant for various capabilities. Expect response Content-Type as application/jose",
+    "description": "This API is used after the Card Application API (/applications) when applicant consent is needed to proceed.If a card application returns 'DOWNSELL_APPROVED_CONSENT_REQUIRED' or 'DOWNSELL_PENDED_CONSENT_REQUIRED', present the required content to the customer and obtain their consent for the Downsell Product before continuing.The API captures this consent and resumes processing. Once completed, a decision is provided. If approved and instant credit is requested, the Card Member Agreement (CMA) will be included in the response, and its acceptance can be tracked via the InstantCredit (/instant-credit) API.",
+    "operationId": "postApiForAppConsent",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "requestBody": {
+     "description": "App consent request data",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ApplicationConsentRequest"
+       },
+       "examples": {
+        "application-consent-accept-req": {
+         "$ref": "#/components/examples/AppConsentReqConsentAccepted"
+        },
+        "application-consent-reject-req": {
+         "$ref": "#/components/examples/AppConsentReqConsentRejected"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/ApplicationConsentResponse"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/applications": {
+   "summary": "Apply for the credit card and get status, T&C and CMA. This operation contains sensitive data. Please use Content-Type as application/jose.",
+   "description": "Apply for the credit card and get status, T&C and CMA",
+   "post": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "Apply for the credit card and get status, T&C and CMA. This operation contains sensitive data. Please use Content-Type as application/jose for request, response will be send with Content-Type as application/jose.",
+    "description": "Apply for credit card",
+    "operationId": "applyPostOperation",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "requestBody": {
+     "description": "Application Request Data",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ApplicationReq"
+       },
+       "examples": {
+        "application-req": {
+         "$ref": "#/components/examples/ApplicationReq"
+        },
+        "application-req-device-verfication-context": {
+         "$ref": "#/components/examples/ApplicationReq-DeviceVerificationContext"
+        },
+        "application-req-balance-transfer": {
+         "$ref": "#/components/examples/ApplicationReq-BalanceTransfer"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/ApplicationRes"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/applications/{applicationId}": {
+   "summary": "Get the status of application",
+   "description": "Get the status of application",
+   "get": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "Get the status of application",
+    "description": "Get the status of application",
+    "operationId": "getApiForApplicationStatus",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "applicationId",
+      "in": "path",
+      "description": "Applicant Application ID.",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "number",
+       "maxLength": 16,
+       "minLength": 15,
+       "pattern": "^[0-9]{15,16}$"
+      },
+      "example": "001346780132564"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/ApplicationStatusRes"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/offer": {
+   "summary": "Accepts meta data to fetch a unique offerId",
+   "description": "Accepts meta data to fetch a unique offerId",
+   "post": {
+    "tags": [
+     "applyProductExternalAPI-OAS"
+    ],
+    "summary": "Accepts meta data to fetch a unique offerId",
+    "description": "Accepts meta data to fetch a unique offerId",
+    "operationId": "postApiForOffer",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 35,
+       "minLength": 16,
+       "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+      },
+      "example": "application/json"
+     },
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "requestBody": {
+     "description": "Offer Request .",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/OfferRequest"
+       },
+       "examples": {
+        "offer-req": {
+         "$ref": "#/components/examples/OfferReq"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/OfferRes"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "ApplicationConsentResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "App consent response data",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplicationConsentResponseAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "DownsellProductInfoAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Downsell Product information will be sent in the response for the application status 'DOWNSELL_APPROVED_CONSENT_REQUIRED' and 'DOWNSELL_PENDED_CONSENT_REQUIRED'.In case of these statuses, the downsell product information should be presented to the Applicant and take consent from the Applicant. Use /app-consent api to send the consent information back to Barclays",
+    "properties": {
+     "downsellProductInfoUrl": {
+      "type": "string",
+      "description": "Access this URL to present the benefits of the downsell product",
+      "example": "https://qa01-www.barclaycardus.com/apply/action/downsellProductInfo/17e3338d-344b-403c-8a87-f7d8006d6e33",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     },
+     "downsellOfferProductId": {
+      "type": "string",
+      "description": "Downsell product for Applicant to review and provide consent. Need to use this ID to call offer details API to get the product information.",
+      "example": "17e3338d-344b-403c-8a87-f7d8006d6e33",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "downsellOfferMappingId": {
+      "type": "string",
+      "description": "Downsell product for Applicant to review and provide consent. Need to use this ID to call offer details API to get the product information.",
+      "example": "17e3338d-344b-403c-8a87-f7d8006d6e33",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     }
+    },
+    "nullable": false
+   },
+   "CasServiceResponseAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "cas service apply response",
+    "properties": {
+     "status": {
+      "type": "string",
+      "description": "cas service status",
+      "example": "SUCCESS",
+      "maxLength": 50,
+      "minLength": 0,
+      "pattern": "^[ A-Za-z0-9_]{0,50}$"
+     }
+    },
+    "nullable": false
+   },
+   "ApplicationStatusResponseAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Application status for applicant",
+    "properties": {
+     "status": {
+      "type": "string",
+      "description": "Application status",
+      "enum": [
+       "PENDING",
+       "APPROVED",
+       "DECLINED",
+       "COMPLETED"
+      ],
+      "example": "COMPLETED"
+     },
+     "accountId": {
+      "type": "string",
+      "description": "Account Id (UUID)",
+      "example": "17e3338d-344b-403c-8a87-f7d8006d6e33",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "approvedAmount": {
+      "type": "string",
+      "description": "approved ammount",
+      "example": "120.40",
+      "maxLength": 200,
+      "minLength": 0,
+      "pattern": "^\\d{3,4}(\\.\\d{1,2})?$"
+     },
+     "createdOn": {
+      "type": "string",
+      "description": "Date Application created on",
+      "example": "20210623",
+      "maxLength": 8,
+      "minLength": 8,
+      "pattern": "^([12]\\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01]))$"
+     },
+     "cmaUrl": {
+      "type": "string",
+      "description": "Card Member Agreemant URL for approved applications",
+      "example": "https://qa01-www.barclaycardus.com/apply/action/rbpcma?approvedProductId=CCVPS71944.jsp",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     },
+     "cmaStatus": {
+      "type": "string",
+      "description": "Indicates if customer has accepted CMA or acceptance is pending",
+      "enum": [
+       "ACCEPTED",
+       "PENDING_ACCEPTANCE"
+      ],
+      "example": "ACCEPTED"
+     },
+     "decisionType": {
+      "type": "string",
+      "description": "Decision Type",
+      "enum": [
+       "INSTANT_CREDIT",
+       "INSTANT_DECISION"
+      ],
+      "example": "INSTANT_CREDIT"
+     },
+     "approvedProductLevel": {
+      "type": "string",
+      "description": "Indicates the approved Product level",
+      "enum": [
+       "PRIMARY",
+       "SECONDARY"
+      ],
+      "example": "PRIMARY"
+     }
+    },
+    "required": [
+     "createdOn",
+     "decisionType",
+     "status"
+    ],
+    "nullable": false
+   },
+   "Address": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Permanent address Info",
+    "properties": {
+     "zip": {
+      "type": "string",
+      "description": "Applicant’s Address Zip",
+      "example": "19801",
+      "maxLength": 9,
+      "minLength": 5,
+      "pattern": "^[0-9]{5,9}$"
+     },
+     "state": {
+      "$ref": "#/components/schemas/StateEnums"
+     },
+     "city": {
+      "type": "string",
+      "description": "Applicant's City",
+      "example": "Wilimgton",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^(?!\\s)[a-zA-Z'\\s]{1,32}(?<!\\s)$"
+     },
+     "addressLine1": {
+      "type": "string",
+      "description": "Applicant's Address line 1",
+      "example": "100 W St",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[\\-\\w#&/`.,\\s]{2,32}$"
+     },
+     "addressLine2": {
+      "type": "string",
+      "description": "Applicant's Address line 2",
+      "example": "100 W St",
+      "maxLength": 32,
+      "minLength": 0,
+      "pattern": "^[\\-\\w#&/`.,\\s]{0,32}$"
+     }
+    },
+    "required": [
+     "addressLine1",
+     "city",
+     "state",
+     "zip"
+    ]
+   },
+   "OfferAttributes": {
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "PartnerAttributes_2": {
+    "type": "array",
+    "description": "Partner specific custom attributes",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "PartnerAttributes_1": {
+    "type": "array",
+    "description": "Partner specific custom attributes",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "ApplyPreScreenCaptureResponseAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Screening capture response",
+    "properties": {
+     "status": {
+      "type": "string",
+      "description": "Screening offer status",
+      "enum": [
+       "SUCCESS"
+      ],
+      "example": "SUCCESS"
+     }
+    },
+    "required": [
+     "status"
+    ],
+    "nullable": false
+   },
+   "Attributes": {
+    "type": "array",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "PrequalResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prequal decision response From apply screening",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/PrequalRes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "TrackingAttributeList": {
+    "type": "array",
+    "description": "Tracking attribute list with respect to application request",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 2
+   },
+   "BalanceTransfersAttributeList": {
+    "type": "array",
+    "description": "Balance transfers with respect to application request",
+    "items": {
+     "$ref": "#/components/schemas/BalanceTransfersAttributes"
+    },
+    "maxItems": 3,
+    "minItems": 0
+   },
+   "PrescreenOffersCaptureRequestAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prescreen offer capture request",
+    "properties": {
+     "termsAcceptCode": {
+      "type": "string",
+      "description": "Terms & Condition Acceptance code",
+      "example": "ACCEPT",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[A-Z_]{2,32}$"
+     }
+    },
+    "required": [
+     "termsAcceptCode"
+    ],
+    "nullable": false
+   },
+   "InstantCreditByAccountResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "InstantCredit look up by accountId API response",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/InstantCreditByAccountResAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "CasServiceResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "SalesForce Apply Response data.",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/CasServiceResponseAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "PartnerDataAttributes_1": {
+    "type": "array",
+    "description": "List of  partner data attributes",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "PrescreenOffersCaptureResponseAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prescreen offer capture response",
+    "properties": {
+     "status": {
+      "type": "string",
+      "description": "Prescreen offer capture status",
+      "enum": [
+       "SUCCESS"
+      ],
+      "example": "SUCCESS"
+     }
+    },
+    "required": [
+     "status"
+    ],
+    "nullable": false
+   },
+   "ValidationError": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Validation Errors",
+    "properties": {
+     "errorKey": {
+      "type": "string",
+      "description": "Error key for the field.",
+      "example": "109",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 ]{1,20}$"
+     },
+     "fieldErrorName": {
+      "type": "string",
+      "description": "Field name for error.",
+      "example": "first name",
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 ]{1,200}$"
+     },
+     "globalErrorName": {
+      "type": "string",
+      "description": "Name of the global error.",
+      "example": "error first name",
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 ]{1,200}$"
+     }
+    }
+   },
+   "BalanceTransfersAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Balance transfer requests",
+    "properties": {
+     "accountNumber": {
+      "type": "string",
+      "description": "Balance Transfer Account Number. Transfers are not permitted for Barclays Bins. Account Numbers must be unique for each possible Balance transfer request",
+      "example": "1234567890",
+      "maxLength": 19,
+      "minLength": 1,
+      "pattern": "^\\d{1,19}$"
+     },
+     "amount": {
+      "type": "string",
+      "description": "Balance Transfer Amount. Minimum of 100 to Maximum of 20000",
+      "example": "15000",
+      "maxLength": 5,
+      "minLength": 1,
+      "pattern": "^\\d{1,5}$"
+     }
+    },
+    "required": [
+     "accountNumber",
+     "amount"
+    ],
+    "nullable": false
+   },
+   "OfferReqAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Offer Request Attributes",
+    "properties": {
+     "brand": {
+      "type": "string",
+      "description": "Brand for which the offer ID needs to be looked up.",
+      "example": "GP",
+      "maxLength": 12,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9]{1,12}$"
+     },
+     "channel": {
+      "type": "string",
+      "description": "Channel for which the offer ID needs to be looked up.",
+      "example": "WEB",
+      "maxLength": 100,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s_-]{1,100}$"
+     },
+     "subChannel": {
+      "type": "string",
+      "description": "Each channel will be mapped with sub-channels which represents the placement of the offers and may have unique offer.",
+      "example": "BANNER",
+      "maxLength": 100,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s_-]{1,100}$"
+     },
+     "productType": {
+      "type": "string",
+      "description": "Product type of the offer ID that needs to be looked up.",
+      "enum": [
+       "CBCC",
+       "PLCC"
+      ],
+      "example": "CBCC"
+     },
+     "market": {
+      "type": "string",
+      "description": "target market for acquisition for this offer.",
+      "enum": [
+       "US"
+      ],
+      "example": "US"
+     },
+     "offerStrategy": {
+      "type": "string",
+      "description": "offer strategy of the offer ID",
+      "enum": [
+       "IPS",
+       "FULL_APP"
+      ],
+      "example": "IPS"
+     },
+     "isTargetedOffer": {
+      "type": "boolean",
+      "description": "Indicates if the expected offer ID is a targeted offer or otherwise.",
+      "example": true
+     },
+     "offerLevel": {
+      "type": "integer",
+      "description": "Indicates if the expected offer ID is a primary offer(1) or secondary offer(2).",
+      "example": 1,
+      "maximum": 10,
+      "minimum": 1
+     },
+     "startDate": {
+      "type": "string",
+      "description": "The date from when the offer will be available in the market ",
+      "example": "2020-07-05",
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^([0-9]{4}[-]?((0[13-9]|1[012])[-]?(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])[-]?31|02[-]?(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00)[-]?02[-]?29)$"
+     },
+     "offerAttributes": {
+      "$ref": "#/components/schemas/OfferAttributes"
+     }
+    },
+    "required": [
+     "brand",
+     "channel",
+     "isTargetedOffer",
+     "market",
+     "offerStrategy",
+     "productType"
+    ],
+    "nullable": false
+   },
+   "DeviceVerificationContextAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Device verification attributes",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "Device verification context id",
+      "example": "65d83b73-108f-4de4-9a64-9ff12f0ceb39",
+      "maxLength": 36,
+      "minLength": 10,
+      "pattern": "^[a-zA-Z0-9-]{10,36}$"
+     },
+     "provider": {
+      "type": "string",
+      "description": "Device verification provider",
+      "example": "THREATMETRIX",
+      "maxLength": 100,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_]{1,100}$"
+     }
+    },
+    "required": [
+     "id",
+     "provider"
+    ],
+    "nullable": false
+   },
+   "PrequalRequestAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "PrequalRequestAttributes object",
+    "properties": {
+     "applicationRequest": {
+      "$ref": "#/components/schemas/ApplicationRequest"
+     },
+     "trackingInfo": {
+      "$ref": "#/components/schemas/TrackingInfo"
+     },
+     "partnerDataAttributes": {
+      "$ref": "#/components/schemas/PartnerDataAttributes_1"
+     },
+     "deviceProfiling": {
+      "$ref": "#/components/schemas/DeviceProfiling"
+     }
+    }
+   },
+   "PrescreenOffersCaptureRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prescreen offer capture request",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/PrescreenOffersCaptureRequestAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "ErrorResponseType": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "An API error response.\n",
+    "properties": {
+     "meta": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Contains Non-standard meta information"
+     },
+     "errors": {
+      "type": "array",
+      "description": "Contains one or more error messages and is mutually exclusive with the data item.\nThis will not be returned in success scenarios.\n",
+      "items": {
+       "$ref": "#/components/schemas/ErrorType"
+      },
+      "maxItems": 50,
+      "minItems": 0
+     }
+    },
+    "nullable": false
+   },
+   "CardNumberAttributes": {
+    "type": "object",
+    "deprecated": false,
+    "description": "response",
+    "properties": {
+     "cardNumber": {
+      "type": "string",
+      "description": "Card number",
+      "example": "1234123412341234",
+      "maxLength": 16,
+      "minLength": 16,
+      "pattern": "^[0-9]{16,16}$"
+     },
+     "expiry": {
+      "type": "string",
+      "description": "Card expiry date",
+      "example": "2309",
+      "maxLength": 4,
+      "minLength": 4,
+      "pattern": "^[0-9]{4,4}$"
+     },
+     "cvv": {
+      "type": "string",
+      "description": "Card CVV",
+      "example": "230",
+      "maxLength": 4,
+      "minLength": 3,
+      "pattern": "^\\d{3,4}$"
+     }
+    },
+    "nullable": false
+   },
+   "DeviceProfiling": {
+    "type": "array",
+    "description": "List of DeviceProfiling",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "ApplicationVerificationResponseAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "response",
+    "properties": {
+     "applicationId": {
+      "type": "string",
+      "description": "Application Id",
+      "example": "123451234512345",
+      "maxLength": 16,
+      "minLength": 8,
+      "pattern": "^[0-9]{8,16}$"
+     },
+     "createdOn": {
+      "type": "string",
+      "description": "Date Application created on",
+      "example": "20210623",
+      "maxLength": 8,
+      "minLength": 8,
+      "pattern": "^([12]\\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01]))$"
+     },
+     "status": {
+      "type": "string",
+      "description": "Decision for the application",
+      "enum": [
+       "APPROVED",
+       "PENDING",
+       "COMPLETED",
+       "DUPLICATE_APPLICATION",
+       "EXISTING_ACCOUNT"
+      ],
+      "example": "PENDING"
+     },
+     "cmaUrl": {
+      "type": "string",
+      "description": "Card Member Agreement URL for approved applications",
+      "example": "https://qa01-www.barclaycardus.com/apply/action/rbpcma?approvedProductId=CCVPS71944.jsp",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     },
+     "approvedAmount": {
+      "type": "string",
+      "description": "Authorized amount for applied credit card",
+      "example": "120.40",
+      "maxLength": 12,
+      "minLength": 4,
+      "pattern": "^(?=(?:,?\\d){1,7}(?:\\.|$))\\d{1,3}(?:,\\d{3}){0,2}(?:\\.\\d{2})$"
+     },
+     "accountId": {
+      "type": "string",
+      "description": "UUID account id",
+      "example": "abce4567-e89b-12d3-a456-426614174056",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "partnerAttributes": {
+      "$ref": "#/components/schemas/PartnerAttributes_1"
+     },
+     "decisionStatusMessage": {
+      "type": "string",
+      "description": "Decision status message",
+      "example": "Call to complete the application process : 877-969-3135",
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\-\\:\\s]{1,200}$"
+     },
+     "approvedProductType": {
+      "type": "string",
+      "description": "Indicates the product type for which that the application is approved",
+      "enum": [
+       "CBCC",
+       "PLCC"
+      ],
+      "example": "CBCC"
+     },
+     "approvedProductLevel": {
+      "type": "integer",
+      "description": "Indicates the product level for which that the application is approved",
+      "example": 1,
+      "maximum": 2,
+      "minimum": 1
+     },
+     "cardDetail": {
+      "$ref": "#/components/schemas/CardDetailAttributes"
+     }
+    },
+    "required": [
+     "status"
+    ],
+    "nullable": false
+   },
+   "ApplicationConsentRequestAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Application Consent Request Attributes",
+    "properties": {
+     "applicationId": {
+      "type": "string",
+      "description": "Application Id",
+      "example": "123451234512345",
+      "maxLength": 16,
+      "minLength": 8,
+      "pattern": "^[0-9]{8,16}$"
+     },
+     "consentType": {
+      "type": "string",
+      "description": "Type of the consent",
+      "example": "DOWNSELL",
+      "maxLength": 15,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_]{1,15}$"
+     },
+     "consentStatus": {
+      "type": "string",
+      "description": "Status of the applicants consent. This will give the information whether the applicant accepted the consent or not.",
+      "example": "CONSENT_ACCEPTED",
+      "maxLength": 16,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_]{1,16}$"
+     },
+     "additionalAttributes": {
+      "$ref": "#/components/schemas/AdditionalAttributes"
+     }
+    },
+    "required": [
+     "applicationId",
+     "consentStatus",
+     "consentType"
+    ],
+    "nullable": false
+   },
+   "ApplicationReqAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Application Request Attributes",
+    "properties": {
+     "emailAddress": {
+      "type": "string",
+      "description": "Applicant's Email Address",
+      "example": "support@barclaycardus.com",
+      "maxLength": 80,
+      "minLength": 5,
+      "pattern": "^(?=.{5,80}$)^((?![\\-\\_\\.])(?!.*[\\-\\_\\.]{2})(?!.*[\\-\\_\\.]$)[\\-\\w\\.]{1,})\\@(([a-zA-Z0-9\\.\\-]{1,}(\\.[a-zA-Z0-9]{1,4})))$"
+     },
+     "ssn": {
+      "type": "string",
+      "description": "Social Security Number",
+      "example": "302445142",
+      "maxLength": 9,
+      "minLength": 5,
+      "pattern": "^[0-9]{5,9}$"
+     },
+     "dateOfBirth": {
+      "type": "string",
+      "description": "Date of birth of secondary applicant",
+      "example": "2020-07-05",
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^([0-9]{4}[-]?((0[13-9]|1[012])[-]?(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])[-]?31|02[-]?(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00)[-]?02[-]?29)$"
+     },
+     "firstName": {
+      "type": "string",
+      "description": "Applicant's First name",
+      "example": "Marty",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+     },
+     "lastName": {
+      "type": "string",
+      "description": "Applicant's Last Name",
+      "example": "McFly",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+     },
+     "middleInitial": {
+      "type": "string",
+      "description": "Applicant's Middle Initial",
+      "example": "J",
+      "maxLength": 2,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z]{1,2}$"
+     },
+     "suffix": {
+      "type": "string",
+      "description": "Applicant's Name Suffix. Accepted values: DDS, DDM, DO, II, III, IV, JR, MD, OD, PHD, SR, V",
+      "example": "Jr",
+      "maxLength": 5,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z]{1,5}$"
+     },
+     "primaryPhoneNumber": {
+      "type": "string",
+      "description": "Applicant's Phone Number",
+      "example": "3024451420",
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^[0-9]{10,10}$"
+     },
+     "permanentAddress": {
+      "$ref": "#/components/schemas/Address"
+     },
+     "trackingAttributes": {
+      "$ref": "#/components/schemas/TrackingAttributeList"
+     },
+     "prescreenId": {
+      "type": "string",
+      "description": "prescreen id for application",
+      "example": "77e3338d",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9]{1,20}$"
+     },
+     "requestId": {
+      "type": "string",
+      "description": "Offer Id or Offer Instance Id or Offer Instance Mapping Id against which the applicant is applying",
+      "example": "c29a74aa-e7a7-4c15-8ea0-697da9057811",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "requestIdType": {
+      "type": "string",
+      "description": "The type of the request ID. Accepted values: OFFER (Request is submitted based on an Offer ID), OFFER_INS (Request is submitted based on an Offer Instance ID), OFFER_INS_MAP (Request is submitted based on an Offer Instance Mapping ID)",
+      "example": "OFFER",
+      "maxLength": 15,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_]{1,15}$"
+     },
+     "cardImageSelected": {
+      "type": "string",
+      "description": "In case of multiple card arts available for the customer to choose from, this is the customer selected card image. If nothing is sent in this attribute, default image will be printed on the card. For single available card images, no need to send anything, by default the available one will be picked up.",
+      "example": "CARD_ART_001",
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9]{1,200}$"
+     },
+     "partnerCustomerId": {
+      "type": "string",
+      "description": "partnerCustomer id for application",
+      "example": "EK245352sd",
+      "maxLength": 15,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9]{1,15}$"
+     },
+     "alternateAddress": {
+      "$ref": "#/components/schemas/Address"
+     },
+     "annualIncome": {
+      "type": "string",
+      "description": "annual income of customer",
+      "example": "1000000",
+      "maxLength": 7,
+      "minLength": 1,
+      "pattern": "^\\d{1,7}$"
+     },
+     "acceptCma": {
+      "type": "boolean",
+      "default": false,
+      "description": "Applicant's cma acceptance.",
+      "example": true
+     },
+     "occupation": {
+      "$ref": "#/components/schemas/OccupationEnum"
+     },
+     "monthlyHousingPayment": {
+      "type": "string",
+      "description": "monthly housing payment for customer",
+      "example": "1000000",
+      "maxLength": 7,
+      "minLength": 1,
+      "pattern": "^\\d{1,7}$"
+     },
+     "eConsentFlag": {
+      "type": "boolean",
+      "description": "flag for eConsent status",
+      "example": true
+     },
+     "productDownSellConsent": {
+      "type": "boolean",
+      "default": false,
+      "description": "To record consent in case of product downSell",
+      "example": false
+     },
+     "incomeFromOtherSources": {
+      "type": "boolean",
+      "description": "income come from income sources such as disability, retirement or social security ?",
+      "example": false
+     },
+     "partnerDataAttributes": {
+      "$ref": "#/components/schemas/PartnerDataAttributes"
+     },
+     "productAttributes": {
+      "$ref": "#/components/schemas/ProductDataAttributes"
+     },
+     "secondaryApplicants": {
+      "type": "array",
+      "description": "Secondary applicants details",
+      "items": {
+       "$ref": "#/components/schemas/ApplicationReqAttributes_secondaryApplicants"
+      },
+      "maxItems": 100,
+      "minItems": 0
+     },
+     "prequalId": {
+      "type": "string",
+      "description": "prequalId id for application",
+      "example": "88e3338d",
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 -]{1,36}$"
+     },
+     "balanceTransfers": {
+      "$ref": "#/components/schemas/BalanceTransfersAttributeList"
+     },
+     "deviceVerificationContext": {
+      "$ref": "#/components/schemas/DeviceVerificationContextAttributes"
+     }
+    },
+    "required": [
+     "annualIncome",
+     "dateOfBirth",
+     "emailAddress",
+     "firstName",
+     "lastName",
+     "monthlyHousingPayment",
+     "permanentAddress",
+     "primaryPhoneNumber",
+     "requestId",
+     "ssn"
+    ],
+    "nullable": false
+   },
+   "ApplyPreScreeningOfferCaptureResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Screening capture response",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplyPreScreenCaptureResponseAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "OfferRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Offer API request",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/OfferReqAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "PrescreenOffersRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prescreen a customer against an existing offer",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/PrescreenOffersRequestAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "Offer": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Offer Object",
+    "properties": {
+     "offerId": {
+      "type": "string",
+      "description": "Offer Instance Id against which the applicant is applying.",
+      "example": "b9cb1f38-26a1-45ab-92f0-67513ad154bb",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "leadMarketingOfferFlag": {
+      "type": "string",
+      "description": "leadMarketingOffer Flag",
+      "example": "Y",
+      "maxLength": 1,
+      "minLength": 1,
+      "pattern": "^[YNFT]$"
+     },
+     "offerInstanceMappingId": {
+      "type": "string",
+      "description": "Offer Instance Id against which the applicant is applying.",
+      "example": "b9cb1f38-26a1-45ab-92f0-67513ad154bb",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "offerOrderNumber": {
+      "type": "string",
+      "description": "Priority Order for the offer.",
+      "example": "1",
+      "maxLength": 1,
+      "minLength": 1,
+      "pattern": "^[0-9]$"
+     },
+     "offerDownsellLevel": {
+      "type": "string",
+      "description": "Downsell level for the secondary offer.",
+      "example": "2",
+      "maxLength": 1,
+      "minLength": 1,
+      "pattern": "^[0-9]$"
+     },
+     "offerRecommendation": {
+      "type": "string",
+      "description": "offer Recommendation Flag",
+      "example": "Y",
+      "maxLength": 1,
+      "minLength": 1,
+      "pattern": "^[YNFT]$"
+     },
+     "tncUrl": {
+      "type": "string",
+      "description": "Terms and Condition URL for the prequal application.",
+      "example": "https://qa01-www.barclaycardus.com/applycontent/frictionlessAppTnCs.jsp?tnc=tc12345",
+      "maxLength": 300,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&\\:\\%]{2,300})$"
+     },
+     "purchaseRate": {
+      "type": "string",
+      "description": "Purchase rate for the application.",
+      "example": "5",
+      "maxLength": 6,
+      "minLength": 1,
+      "pattern": "^[0-9.]$"
+     },
+     "creditLimitAmount": {
+      "type": "string",
+      "description": "Credit limit amount for the application.",
+      "example": "5",
+      "maxLength": 9,
+      "minLength": 1,
+      "pattern": "^[0-9.]$"
+     },
+     "keyBenefitsUrl": {
+      "type": "string",
+      "description": "Key benefits URL for the prequal application.",
+      "example": "https://qa01-cards.barclaycardus.com/banking/credit-card/partner/bcus_storefront/prequal/offers/86a16238-fd3f-4beb-83b0-40f695be2e14.products_0ca25869-4c15-2574-920e-19cfff039c39.benefits",
+      "maxLength": 300,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&\\:\\%]{2,300})$"
+     },
+     "disclosureUrl": {
+      "type": "string",
+      "description": "Disclosure URL for the prequal application.",
+      "example": "https://qa01-cards.barclaycardus.com/banking/credit-card/partner/bcus_storefront/prequal/offers/86a16238-fd3f-4beb-83b0-40f695be2e14.products_0ca25869-4c15-2574-920e-19cfff039c39.disclosure",
+      "maxLength": 300,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&\\:\\%]{2,300})$"
+     }
+    }
+   },
+   "ApplicationReqAttributes_secondaryApplicants": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Secondary applicant details",
+    "properties": {
+     "firstName": {
+      "type": "string",
+      "description": "First name of secondary applicant",
+      "example": "Simon",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+     },
+     "lastName": {
+      "type": "string",
+      "description": "Last name of secondary applicant",
+      "example": "Marty",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+     },
+     "dateOfBirth": {
+      "type": "string",
+      "description": "Date of birth of secondary applicant",
+      "example": "2020-07-05",
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^([0-9]{4}[-]?((0[13-9]|1[012])[-]?(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])[-]?31|02[-]?(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00)[-]?02[-]?29)$"
+     },
+     "permanentAddress": {
+      "$ref": "#/components/schemas/Address"
+     }
+    },
+    "nullable": false
+   },
+   "ProductDataAttributes": {
+    "type": "array",
+    "description": "Product data attribute list with respect to application request",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "InstantCreditByAccountReqAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Instant Credit look up account id request attributes",
+    "properties": {
+     "accountId": {
+      "type": "string",
+      "description": "UUID account id",
+      "example": "abce4567-e89b-12d3-a456-426614174056",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "acceptCma": {
+      "type": "boolean",
+      "default": false,
+      "description": "Applicant's cma acceptance.",
+      "example": true
+     },
+     "attributes": {
+      "$ref": "#/components/schemas/Attributes"
+     }
+    },
+    "required": [
+     "accountId"
+    ],
+    "nullable": false
+   },
+   "PrescreenOffersResponseAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "The best offer for which Prospect customer is eligible for",
+    "properties": {
+     "prescreenId": {
+      "type": "string",
+      "description": "Prescreen id for application",
+      "example": "77e3338d",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9]{1,20}$"
+     },
+     "offerId": {
+      "type": "string",
+      "description": "Offer Id against which customer is pre-screened",
+      "example": "17e3338d-344b-403c-8a87-f7d8006d6e33",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "decisionStatus": {
+      "type": "string",
+      "description": "Decision status",
+      "enum": [
+       "APPROVED",
+       "COMPLETED"
+      ],
+      "example": "APPROVED"
+     },
+     "approvedDecisionExpiryDate": {
+      "type": "string",
+      "description": "Date until when the Prescreen decision is valid.",
+      "example": "2021-06-23",
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^\\d{4}-(02-(0[1-9]|[12][0-9])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))$"
+     },
+     "tncUrl": {
+      "type": "string",
+      "description": "Terms & Condition URL",
+      "example": "https://qa01-www.barclaycardus.com/apply/action/tncContent?prodidreq=CCVPS72014&prescreenId=PS12345678",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     },
+     "optOutURL": {
+      "type": "string",
+      "description": "optOut URL",
+      "example": "https://example.com",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     },
+     "decisionMessage": {
+      "type": "string",
+      "description": "Details of Prescreen decision",
+      "example": "Prescreen approved (new)",
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s\\(\\)]{1,200}$"
+     },
+     "approvedProductType": {
+      "type": "string",
+      "description": "Approved Product Type",
+      "enum": [
+       "CBCC",
+       "PLCC"
+      ],
+      "example": "CBCC"
+     },
+     "approvedProductLevel": {
+      "type": "integer",
+      "description": "Product level approved with prescreen decision",
+      "example": 1,
+      "maximum": 2,
+      "minimum": 1
+     }
+    },
+    "required": [
+     "decisionMessage",
+     "decisionStatus",
+     "offerId",
+     "prescreenId"
+    ],
+    "nullable": false
+   },
+   "ApplicationReq": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Application Request Attributes",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplicationReqAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "ApplicationVerificationRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Verification request data",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplicationVerificationRequestAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "OfferResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Offer API response",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/OfferResAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "OfferResAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "response",
+    "properties": {
+     "offerId": {
+      "type": "string",
+      "description": "Offer Id against which the applicant is applying.",
+      "example": "b9cb1f38-26a1-45ab-92f0-67513ad154bb",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "pvtDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date from when the offer ID will be available to PVT.",
+      "example": "2021-12-07T13:14:15Z"
+     },
+     "availableDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date from when the offer ID will be available in market.",
+      "example": "2021-12-07T13:14:15Z"
+     },
+     "expiryDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date until when the offer ID is active and eligible to apply.",
+      "example": "2021-12-07T13:14:15Z"
+     }
+    },
+    "required": [
+     "offerId"
+    ],
+    "nullable": false
+   },
+   "ApplyPreScreeningOfferCaptureRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Screening offer request",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplyPreScreenCaptureRequestAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "ApplicationVerificationResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Verification response data",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplicationVerificationResponseAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "ErrorType": {
+    "type": "object",
+    "additionalProperties": true,
+    "description": "Message details - additional operation execution information.",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "Generated message identifier for particular request, helping to locate server logs.",
+      "example": "9709-4675-2456-7801",
+      "maxLength": 50,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\-]{1,50}$"
+     },
+     "code": {
+      "type": "string",
+      "description": "Machine readable, unique code of the message related to particular case within operation execution.",
+      "example": "ACCOUNT_NUMBER_NOT_FOUND",
+      "maxLength": 100,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_]{1,100}$"
+     },
+     "title": {
+      "type": "string",
+      "description": "Short description of the error. Not for displaying purposes.",
+      "example": "The authorization credentials required for this request are invalid.",
+      "maxLength": 250,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s\"=,.']{1,250}$"
+     },
+     "detail": {
+      "type": "string",
+      "description": "Provides additional low-level details about the error to assist with troubleshooting. Not for displaying purposes.",
+      "maxLength": 250,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s\"=,.']{1,250}$"
+     },
+     "meta": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Object containing non-standard meta-information about the error."
+     }
+    },
+    "required": [
+     "code",
+     "id",
+     "title"
+    ]
+   },
+   "PartnerAttributes": {
+    "type": "array",
+    "description": "Partner specific custom attributes",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "TokenAttributes": {
+    "type": "object",
+    "deprecated": false,
+    "description": "response",
+    "properties": {
+     "tokenNumber": {
+      "type": "string",
+      "description": "Token number for partner to access the encrypted detail",
+      "example": "2309",
+      "maxLength": 8,
+      "minLength": 4,
+      "pattern": "^[0-9]{4,8}$"
+     },
+     "cardLastFour": {
+      "type": "string",
+      "description": "Last four digital of the card number",
+      "example": "8374",
+      "maxLength": 4,
+      "minLength": 4,
+      "pattern": "^[0-9]{4,4}$"
+     },
+     "expiry": {
+      "type": "string",
+      "description": "Card expiry",
+      "example": "2309",
+      "maxLength": 4,
+      "minLength": 4,
+      "pattern": "^[0-9]{4,4}$"
+     }
+    },
+    "nullable": false
+   },
+   "AdditionalAttributes": {
+    "type": "array",
+    "description": "Any additional attributes that needs to be sent with the request",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "DocumentTypeCategories": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Document type categories",
+    "properties": {
+     "categoryStatus": {
+      "type": "string",
+      "description": "Document category status",
+      "example": "PENDING",
+      "maxLength": 50,
+      "minLength": 0,
+      "pattern": "^[a-zA-Z0-9]{0,50}$"
+     },
+     "documentTypeCategoryId": {
+      "type": "string",
+      "description": "Document category Id",
+      "example": "KYC_BIZ_OWNERSHIP",
+      "maxLength": 255,
+      "minLength": 0,
+      "pattern": "^[ A-Za-z0-9_.,]{0,255}$"
+     },
+     "documentTypeCategory": {
+      "type": "string",
+      "description": "Document type category",
+      "example": "Proof of social security",
+      "maxLength": 255,
+      "minLength": 0,
+      "pattern": "^[ A-Za-z0-9_.]{0,255}$"
+     },
+     "additionalInfo": {
+      "type": "string",
+      "description": "Document additionalInfo",
+      "example": "additional Info",
+      "maxLength": 300,
+      "minLength": 0,
+      "pattern": "^[ A-Za-z0-9.']{0,300}$"
+     },
+     "documentTypes": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/DocumentTypes"
+      },
+      "maxItems": 20,
+      "minItems": 0
+     }
+    }
+   },
+   "TrackingInfo": {
+    "type": "array",
+    "description": "List of tracking information",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "ApplicationRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prequal a customer against for an given offer",
+    "properties": {
+     "offerInstanceId": {
+      "type": "string",
+      "description": "List of Offer Instance Id against which customer needs to be prequal",
+      "example": "17e3338d-344b-403c-8a87-f7d8006d6e33",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "firstName": {
+      "type": "string",
+      "description": "Applicant's First name",
+      "example": "Marty",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+     },
+     "lastName": {
+      "type": "string",
+      "description": "Applicant's Last Name",
+      "example": "McFly",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+     },
+     "primaryPhoneNumber": {
+      "type": "string",
+      "description": "Applicant's Phone Number",
+      "example": "3024451420",
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^[0-9]{10,10}$"
+     },
+     "emailAddress": {
+      "type": "string",
+      "description": "Applicant's Email Address",
+      "example": "support@barclaycardus.com",
+      "maxLength": 80,
+      "minLength": 5,
+      "pattern": "^(?=.{5,80}$)^((?![\\-\\_\\.])(?!.*[\\-\\_\\.]{2})(?!.*[\\-\\_\\.]$)[\\-\\w\\.]{1,})\\@(([a-zA-Z0-9\\.\\-]{1,}(\\.[a-zA-Z0-9]{1,4})))$"
+     },
+     "permanentAddress": {
+      "$ref": "#/components/schemas/Address"
+     },
+     "alternateAddress": {
+      "$ref": "#/components/schemas/Address"
+     },
+     "ssn": {
+      "type": "string",
+      "description": "Social Security Number",
+      "example": "302445142",
+      "maxLength": 9,
+      "minLength": 5,
+      "pattern": "^[0-9]{5,9}$"
+     },
+     "dateOfBirth": {
+      "type": "string",
+      "description": "Date of birth of applicant",
+      "example": "2020-07-05",
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^([0-9]{4}[-]?((0[13-9]|1[012])[-]?(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])[-]?31|02[-]?(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00)[-]?02[-]?29)$"
+     },
+     "incomeOtherSource": {
+      "type": "string",
+      "description": "Income through other source",
+      "example": "F",
+      "maxLength": 1,
+      "minLength": 1,
+      "pattern": "^[YNFT]$"
+     },
+     "annualIncome": {
+      "type": "string",
+      "description": "annual income of customer",
+      "example": "1000000",
+      "maxLength": 7,
+      "minLength": 1,
+      "pattern": "^\\d{1,7}$"
+     },
+     "monthlyHousingPayment": {
+      "type": "string",
+      "description": "monthly housing payment for customer",
+      "example": "1000000",
+      "maxLength": 7,
+      "minLength": 1,
+      "pattern": "^\\d{1,7}$"
+     },
+     "creditInquiryAuthorization": {
+      "type": "string",
+      "description": "Credit Inquiry Authorization Flag",
+      "example": "Y",
+      "maxLength": 1,
+      "minLength": 1,
+      "pattern": "^[Y]$"
+     },
+     "preQualElectronicDeliveryConsent": {
+      "type": "string",
+      "description": "PreQual electronic delivery consent flag",
+      "example": "Y",
+      "maxLength": 1,
+      "minLength": 1,
+      "pattern": "^[Y]$"
+     }
+    },
+    "required": [
+     "firstName",
+     "lastName",
+     "offerInstanceId"
+    ],
+    "nullable": false
+   },
+   "ApplicationVerificationRequestAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Verification Request Attributes",
+    "properties": {
+     "applicationId": {
+      "type": "string",
+      "description": "Application Id",
+      "example": "123451234512345",
+      "maxLength": 16,
+      "minLength": 8,
+      "pattern": "^[0-9]{8,16}$"
+     },
+     "verificationContextId": {
+      "type": "string",
+      "description": "Verification ContextId (UUID)",
+      "example": "17e3338d-344b-403c-8a87-f7d8006d6e33",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     }
+    },
+    "required": [
+     "applicationId",
+     "verificationContextId"
+    ],
+    "nullable": false
+   },
+   "PrescreenOffersCaptureResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prescreen offer capture response",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/PrescreenOffersCaptureResponseAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "ApplicationRes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Application response data",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplicationResAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "CardDetailAttributes": {
+    "type": "object",
+    "deprecated": false,
+    "description": "response",
+    "properties": {
+     "tempCreditLimit": {
+      "type": "string",
+      "description": "Temporary approved credit limit of the application.",
+      "example": "1,200.40",
+      "maxLength": 12,
+      "minLength": 4,
+      "pattern": "^(?=(?:,?\\d){1,7}(?:\\.|$))\\d{1,3}(?:,\\d{3}){0,2}(?:\\.\\d{2})$"
+     },
+     "tempCreditDuration": {
+      "type": "string",
+      "description": "Temporary approved credit limit of the application.",
+      "example": "20211201",
+      "maxLength": 8,
+      "minLength": 8,
+      "pattern": "^[0-9]{8,8}$"
+     },
+     "pan": {
+      "$ref": "#/components/schemas/CardNumberAttributes"
+     },
+     "vcn": {
+      "$ref": "#/components/schemas/CardNumberAttributes"
+     },
+     "token": {
+      "$ref": "#/components/schemas/TokenAttributes"
+     }
+    },
+    "nullable": false
+   },
+   "InstantCreditByAccountRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "InstantCredit look up by accountId API request",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/InstantCreditByAccountReqAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "PartnerDataAttributes": {
+    "type": "array",
+    "description": "Partner Data attribute list with respect to application request",
+    "items": {
+     "$ref": "#/components/schemas/NameValueAttributePair"
+    },
+    "maxItems": 100,
+    "minItems": 0
+   },
+   "CasServiceRequestAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "cas service apply request",
+    "properties": {
+     "applicationId": {
+      "type": "string",
+      "description": "applicationId",
+      "example": "825865636",
+      "maxLength": 50,
+      "minLength": 0,
+      "pattern": "^[a-zA-Z0-9]{0,50}$"
+     },
+     "caseNumber": {
+      "type": "string",
+      "description": "caseNumber",
+      "example": "2s444840",
+      "maxLength": 50,
+      "minLength": 0,
+      "pattern": "^[a-zA-Z0-9]{0,50}$"
+     },
+     "productType": {
+      "type": "string",
+      "description": "productType",
+      "example": "PENDING",
+      "maxLength": 50,
+      "minLength": 0,
+      "pattern": "^[a-zA-Z0-9]{0,50}$"
+     },
+     "caseStatus": {
+      "type": "string",
+      "description": "case status",
+      "example": "OPEN",
+      "maxLength": 50,
+      "minLength": 0,
+      "pattern": "^[a-zA-Z0-9]{0,50}$"
+     },
+     "applicationUUID": {
+      "type": "string",
+      "description": "application uuid",
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "customerType": {
+      "type": "string",
+      "description": "customerType",
+      "example": "PENDING",
+      "maxLength": 100,
+      "minLength": 0,
+      "pattern": "^[a-zA-Z0-9]{0,100}$"
+     },
+     "documentTypeCategories": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/DocumentTypeCategories"
+      },
+      "maxItems": 20,
+      "minItems": 0
+     }
+    },
+    "nullable": false
+   },
+   "ApplyPreScreenCaptureRequestAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Screening capture request",
+    "properties": {
+     "termsAcceptCode": {
+      "type": "string",
+      "description": "Terms & Condition Acceptance code",
+      "example": "ACCEPT",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[A-Z_]{2,32}$"
+     }
+    },
+    "required": [
+     "termsAcceptCode"
+    ],
+    "nullable": false
+   },
+   "PrequalRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prequal decision request for the customer",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/PrequalRequestAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "ApplicationConsentResponseAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Application Consent Response Attributes",
+    "properties": {
+     "applicationId": {
+      "type": "string",
+      "description": "Application Id",
+      "example": "123451234512345",
+      "maxLength": 16,
+      "minLength": 8,
+      "pattern": "^[0-9]{8,16}$"
+     },
+     "createdOn": {
+      "type": "string",
+      "description": "Date Application created on",
+      "example": "20210623",
+      "maxLength": 8,
+      "minLength": 8,
+      "pattern": "^([12]\\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01]))$"
+     },
+     "status": {
+      "type": "string",
+      "description": "Decision for the application",
+      "enum": [
+       "APPROVED",
+       "PENDING",
+       "COMPLETED",
+       "DUPLICATE_APPLICATION",
+       "EXISTING_ACCOUNT"
+      ],
+      "example": "PENDING"
+     },
+     "cmaUrl": {
+      "type": "string",
+      "description": "Card Member Agreement URL for approved applications",
+      "example": "https://qa01-www.barclaycardus.com/apply/action/rbpcma?approvedProductId=CCVPS71944.jsp",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     },
+     "approvedAmount": {
+      "type": "string",
+      "description": "Authorized amount for applied credit card",
+      "example": "120.40",
+      "maxLength": 12,
+      "minLength": 4,
+      "pattern": "^(?=(?:,?\\d){1,7}(?:\\.|$))\\d{1,3}(?:,\\d{3}){0,2}(?:\\.\\d{2})$"
+     },
+     "accountId": {
+      "type": "string",
+      "description": "UUID account id",
+      "example": "abce4567-e89b-12d3-a456-426614174056",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "partnerAttributes": {
+      "$ref": "#/components/schemas/PartnerAttributes_2"
+     },
+     "decisionStatusMessage": {
+      "type": "string",
+      "description": "Decision status message",
+      "example": "Call to complete the application process : 877-969-3135",
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\-\\:\\s]{1,200}$"
+     },
+     "approvedProductType": {
+      "type": "string",
+      "description": "Indicates the product type for which that the application is approved",
+      "enum": [
+       "CBCC",
+       "PLCC"
+      ],
+      "example": "CBCC"
+     },
+     "approvedProductLevel": {
+      "type": "integer",
+      "description": "Indicates the product level for which that the application is approved",
+      "example": 1,
+      "maximum": 2,
+      "minimum": 1
+     },
+     "cardDetail": {
+      "$ref": "#/components/schemas/CardDetailAttributes"
+     }
+    },
+    "required": [
+     "status"
+    ],
+    "nullable": false
+   },
+   "CasServiceRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "cas service request",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/CasServiceRequestAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "InstantCreditByAccountResAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "response",
+    "properties": {
+     "cardDetail": {
+      "$ref": "#/components/schemas/CardDetailAttributes"
+     },
+     "attributes": {
+      "$ref": "#/components/schemas/Attributes"
+     }
+    },
+    "required": [
+     "cardDetail"
+    ],
+    "nullable": false
+   },
+   "StateEnums": {
+    "type": "string",
+    "description": "Applicant's State",
+    "enum": [
+     "AL",
+     "AK",
+     "AA",
+     "AE",
+     "AP",
+     "AZ",
+     "AR",
+     "CA",
+     "CO",
+     "CT",
+     "DE",
+     "DC",
+     "FL",
+     "GA",
+     "HI",
+     "ID",
+     "IL",
+     "IN",
+     "IA",
+     "KS",
+     "KY",
+     "LA",
+     "ME",
+     "MD",
+     "MA",
+     "MI",
+     "MN",
+     "MS",
+     "MO",
+     "MT",
+     "NE",
+     "NV",
+     "NH",
+     "NJ",
+     "NM",
+     "NY",
+     "NC",
+     "ND",
+     "OH",
+     "OK",
+     "OR",
+     "PA",
+     "PR",
+     "RI",
+     "SC",
+     "SD",
+     "TN",
+     "TX",
+     "UT",
+     "VT",
+     "VA",
+     "VI",
+     "WA",
+     "WV",
+     "WI",
+     "WY"
+    ],
+    "example": "PA"
+   },
+   "CreditBureauDetails": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Offer Object",
+    "properties": {
+     "creditBureauName": {
+      "type": "string",
+      "description": "Name of the bureau.",
+      "example": "Transunion",
+      "maxLength": 250,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z]{1,250}$"
+     },
+     "phoneNumber": {
+      "type": "string",
+      "description": "Phone number of the bureau.",
+      "example": "8009168800",
+      "maxLength": 10,
+      "minLength": 1,
+      "pattern": "^[0-9]{1,10}$"
+     },
+     "url": {
+      "type": "string",
+      "description": "website URL of the bureau.",
+      "example": "https://www.TransUnion.com/credit-freeze",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     }
+    }
+   },
+   "NameValueAttributePair": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Name value attributes",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "name of key in <Key,Value> pair",
+      "example": "name",
+      "maxLength": 100,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_]{1,100}$"
+     },
+     "value": {
+      "type": "string",
+      "description": "value of key in <Key,Value> pair",
+      "example": "value",
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[\\w\\!\\@\\#\\$\\&\\*\\(\\)\\+\\=\\'\\\"\\.\\,\\s\\/\\-]{1,200}$"
+     }
+    },
+    "required": [
+     "name",
+     "value"
+    ],
+    "nullable": false
+   },
+   "ApplicationResAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "response",
+    "properties": {
+     "applicationId": {
+      "type": "string",
+      "description": "Application Id",
+      "example": "123451234512345",
+      "maxLength": 16,
+      "minLength": 8,
+      "pattern": "^[0-9]{8,16}$"
+     },
+     "createdOn": {
+      "type": "string",
+      "description": "Date Application created on",
+      "example": "20210623",
+      "maxLength": 8,
+      "minLength": 8,
+      "pattern": "^([12]\\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01]))$"
+     },
+     "status": {
+      "type": "string",
+      "description": "Decision for the application",
+      "enum": [
+       "APPROVED",
+       "PENDING",
+       "COMPLETED",
+       "DUPLICATE_APPLICATION",
+       "EXISTING_ACCOUNT",
+       "CHALLENGED",
+       "DOWNSELL_APPROVED_CONSENT_REQUIRED",
+       "DOWNSELL_PENDED_CONSENT_REQUIRED",
+       "FROZEN_FILE"
+      ],
+      "example": "PENDING"
+     },
+     "cmaUrl": {
+      "type": "string",
+      "description": "Card Member Agreemant URL for approved applications",
+      "example": "https://qa01-www.barclaycardus.com/apply/action/rbpcma?approvedProductId=CCVPS71944.jsp",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     },
+     "approvedAmount": {
+      "type": "string",
+      "description": "Authorized amount for applied credit card",
+      "example": "120.40",
+      "maxLength": 12,
+      "minLength": 4,
+      "pattern": "^(?=(?:,?\\d){1,7}(?:\\.|$))\\d{1,3}(?:,\\d{3}){0,2}(?:\\.\\d{2})$"
+     },
+     "accountId": {
+      "type": "string",
+      "description": "UUID account id",
+      "example": "abce4567-e89b-12d3-a456-426614174056",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "partnerAttributes": {
+      "$ref": "#/components/schemas/PartnerAttributes"
+     },
+     "decisionStatusMessage": {
+      "type": "string",
+      "description": "Decision status message",
+      "example": "Call to complete the application process : 877-969-3135",
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\-\\:\\s]{1,200}$"
+     },
+     "approvedProductType": {
+      "type": "string",
+      "description": "Indicates the product type for which that the application is approved",
+      "enum": [
+       "CBCC",
+       "PLCC"
+      ],
+      "example": "CBCC"
+     },
+     "approvedProductLevel": {
+      "type": "integer",
+      "description": "Indicates the product level for which that the application is approved",
+      "example": 1,
+      "maximum": 2,
+      "minimum": 1
+     },
+     "cardDetail": {
+      "$ref": "#/components/schemas/CardDetailAttributes"
+     },
+     "verificationContextId": {
+      "type": "string",
+      "description": "Application verification context UUID for decision challenge application",
+      "example": "abce4567-e89b-12d3-a456-426614174056",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "verificationChallengeUrl": {
+      "type": "string",
+      "description": "Verification challenge URL for decision challenge application",
+      "example": "https://application-verifychallengeurl.com/apply/action/",
+      "maxLength": 200,
+      "minLength": 2,
+      "pattern": "^(https\\:\\/\\/)([0-9a-zA-Z\\.\\-\\/\\=\\?\\&]{2,200})$"
+     },
+     "downsellProductInfo": {
+      "$ref": "#/components/schemas/DownsellProductInfoAttributes"
+     }
+    },
+    "required": [
+     "status"
+    ],
+    "nullable": false
+   },
+   "ApplicationStatusResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Application status for applicant",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplicationStatusResponseAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "PrequalDecision": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Decision object",
+    "properties": {
+     "offerInstanceId": {
+      "type": "string",
+      "description": "Offer Instance Id against which the applicant is applying.",
+      "example": "b9cb1f38-26a1-45ab-92f0-67513ad154bb",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     },
+     "decisionCode": {
+      "type": "string",
+      "description": "Decision for the prequal application.",
+      "example": "APPROVED",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 ]{1,20}$"
+     },
+     "validationError": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "maxItems": 100,
+      "minItems": 0
+     },
+     "declineReason": {
+      "type": "string",
+      "description": "Reason for declined application.",
+      "example": "CREDIT FREEZE",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9]{1,20}$"
+     },
+     "creditBureauDetails": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/CreditBureauDetails"
+      },
+      "maxItems": 100,
+      "minItems": 0
+     },
+     "approvedOffers": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Offer"
+      },
+      "maxItems": 100,
+      "minItems": 0
+     }
+    }
+   },
+   "DocumentTypes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Document type categories",
+    "properties": {
+     "documentTypeId": {
+      "type": "string",
+      "description": "Document type id",
+      "example": "employment_authorization",
+      "maxLength": 255,
+      "minLength": 0,
+      "pattern": "^[ A-Za-z0-9_]{0,255}$"
+     },
+     "documentType": {
+      "type": "string",
+      "description": "Document type",
+      "example": "KYC_BIZ_OWNERSHIP",
+      "maxLength": 255,
+      "minLength": 0,
+      "pattern": "^[ A-Za-z0-9_]{0,255}$"
+     }
+    }
+   },
+   "OccupationEnum": {
+    "type": "string",
+    "description": "Occupation types",
+    "enum": [
+     "ATM Owner/Operator",
+     "Accountant",
+     "Administration",
+     "Agriculture",
+     "Antiquities/Auctions",
+     "Architect",
+     "Arms/Ammunition Dealer",
+     "Artist/Entertainer",
+     "Attorney/Judge/Legal Services",
+     "Cashier/Clerk/Server",
+     "Casino/Gaming",
+     "Charitable Organization",
+     "Clergy/Pastor",
+     "Construction/Mining/Oil/Gas",
+     "Convenience Store Mgr/Owner",
+     "Doctor/Dentist/Pharmacist",
+     "Education",
+     "Embassy/Foreign Consulate",
+     "Engineer/Scientist",
+     "Executive Professional",
+     "Finance/Banking",
+     "Gas Station/Liquor Store Owner",
+     "Government Employee/Politician",
+     "Health/Fitness",
+     "Homemaker",
+     "Hospitality/Travel",
+     "Import/Export",
+     "Insurance/Real Estate",
+     "Jeweler/Gem/Metal Dealer",
+     "Maintenance/Cleaning/Other Labor",
+     "Management Professional",
+     "Manufacturing",
+     "Money Transmitter/Check Cashing",
+     "Other/Not Listed",
+     "Parking Lot/Garage Owner",
+     "Pawn Broker",
+     "Pilot",
+     "Police/Fire/EMT/Military",
+     "Restaurant Employee",
+     "Retail",
+     "Retired",
+     "Sales",
+     "Securities/Investment Advisor",
+     "Social Worker",
+     "Student",
+     "Technology",
+     "Trade/Plumber/Electrician",
+     "Transportation/Trucking",
+     "Unemployed",
+     "Vehicle Sales (Auto/Plane/Boat)",
+     "Vending Machine Operator"
+    ],
+    "example": "Accountant"
+   },
+   "ApplicationConsentRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "App consent request data",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/ApplicationConsentRequestAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "PrescreenOffersRequestAttributes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Prescreen a customer against an existing offer",
+    "properties": {
+     "offerIds": {
+      "type": "array",
+      "description": "List of Offer Id against which customer needs to be pre-screened",
+      "items": {
+       "type": "string",
+       "example": "17e3338d-344b-403c-8a87-f7d8006d6e33",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      },
+      "maxItems": 100,
+      "minItems": 1
+     },
+     "firstName": {
+      "type": "string",
+      "description": "Applicant's First name",
+      "example": "Marty",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+     },
+     "lastName": {
+      "type": "string",
+      "description": "Applicant's Last Name",
+      "example": "McFly",
+      "maxLength": 32,
+      "minLength": 2,
+      "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+     },
+     "primaryPhoneNumber": {
+      "type": "string",
+      "description": "Applicant's Phone Number",
+      "example": "3024451420",
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^[0-9]{10,10}$"
+     },
+     "emailAddress": {
+      "type": "string",
+      "description": "Applicant's Email Address",
+      "example": "support@barclaycardus.com",
+      "maxLength": 80,
+      "minLength": 5,
+      "pattern": "^(?=.{5,80}$)^((?![\\-\\_\\.])(?!.*[\\-\\_\\.]{2})(?!.*[\\-\\_\\.]$)[\\-\\w\\.]{1,})\\@(([a-zA-Z0-9\\.\\-]{1,}(\\.[a-zA-Z0-9]{1,4})))$"
+     },
+     "address": {
+      "$ref": "#/components/schemas/Address"
+     },
+     "prescreenAttributes": {
+      "type": "array",
+      "description": "Attributes specific to product/partner, if configured to receive during the partner on boarding.",
+      "items": {
+       "$ref": "#/components/schemas/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+     }
+    },
+    "required": [
+     "firstName",
+     "lastName",
+     "offerIds"
+    ],
+    "nullable": false
+   },
+   "PrequalRes": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Decision response for the customer prequal submission",
+    "properties": {
+     "decision": {
+      "$ref": "#/components/schemas/PrequalDecision"
+     },
+     "prequalId": {
+      "type": "string",
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 -]{1,36}$"
+     },
+     "prospectScreenUUID": {
+      "type": "string",
+      "maxLength": 100,
+      "minLength": 1,
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+     }
+    },
+    "nullable": false
+   },
+   "PrescreenOffersResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "The best offer for which Prospect customer is eligible for",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/PrescreenOffersResponseAttributes"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   }
+  },
+  "responses": {
+   "InstantCreditByAccountRes": {
+    "description": "Response for InstantCredit look up by accountId",
+    "headers": {
+     "Correlation-ID": {
+      "$ref": "#/components/headers/Correlation-ID-ResHeader"
+     },
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/InstantCreditByAccountResponse"
+      },
+      "examples": {
+       "instant-credit-by-account-res": {
+        "$ref": "#/components/examples/InstantCreditByAccountRes"
+       }
+      }
+     }
+    }
+   },
+   "ApplicationConsentResponse": {
+    "description": "Response for credit card application consent",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/Location"
+     },
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ApplicationConsentResponse"
+      },
+      "examples": {
+       "application-res-completed": {
+        "$ref": "#/components/examples/AppConsentRespCompleted"
+       },
+       "application-res-approved": {
+        "$ref": "#/components/examples/AppConsentRespApproved"
+       },
+       "application-res-pending": {
+        "$ref": "#/components/examples/AppConsentRespPending"
+       },
+       "application-res-existing": {
+        "$ref": "#/components/examples/AppConsentRespExistingAccount"
+       }
+      }
+     }
+    }
+   },
+   "PrescreenOffersRes": {
+    "description": "Prescreen Offers Response data.",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/PrescreenOffersResponse"
+      },
+      "examples": {
+       "prescreen-offers-res": {
+        "$ref": "#/components/examples/PrescreenOffersRes"
+       }
+      }
+     }
+    }
+   },
+   "Forbidden": {
+    "description": "The user is not permitted to access the requested operation and it cannot be completed.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-403": {
+        "$ref": "#/components/examples/example-error-403"
+       }
+      }
+     }
+    }
+   },
+   "ApplicationStatusRes": {
+    "description": "Get the status of application",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ApplicationStatusResponse"
+      },
+      "examples": {
+       "application-status-res": {
+        "$ref": "#/components/examples/ApplicationStatusRes"
+       }
+      }
+     }
+    }
+   },
+   "PrequalResponse": {
+    "description": "Prequal decision response for cusmtomer submission",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/Location"
+     },
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/PrequalResponse"
+      },
+      "examples": {
+       "prescreen-offers-res": {
+        "$ref": "#/components/examples/PrequalResponse"
+       }
+      }
+     }
+    }
+   },
+   "ApplicationVerificationResponse": {
+    "description": "Response for credit card application verification",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/Location"
+     },
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ApplicationVerificationResponse"
+      },
+      "examples": {
+       "application-res": {
+        "$ref": "#/components/examples/ApplicationVerificationRes"
+       }
+      }
+     }
+    }
+   },
+   "InternalServerError": {
+    "description": "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-500": {
+        "$ref": "#/components/examples/example-error-500"
+       }
+      }
+     }
+    }
+   },
+   "OfferRes": {
+    "description": "Response for offer request with unique offer ID",
+    "headers": {
+     "Correlation-ID": {
+      "$ref": "#/components/headers/Correlation-ID-ResHeader"
+     },
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OfferResponse"
+      },
+      "examples": {
+       "offer-res": {
+        "$ref": "#/components/examples/OfferRes"
+       }
+      }
+     }
+    }
+   },
+   "BadRequest": {
+    "description": "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-400-bad-request": {
+        "$ref": "#/components/examples/example-error-400-bad-request"
+       }
+      }
+     }
+    }
+   },
+   "Unauthorized": {
+    "description": "The user could not be authenticated for this request.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-401": {
+        "$ref": "#/components/examples/example-error-401"
+       }
+      }
+     }
+    }
+   },
+   "ServiceUnavailable": {
+    "description": "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-503": {
+        "$ref": "#/components/examples/example-error-503"
+       }
+      }
+     }
+    }
+   },
+   "PrescreenOffersCaptureRes": {
+    "description": "Prescreen Offers Capture Response data.",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/PrescreenOffersCaptureResponse"
+      },
+      "examples": {
+       "prescreen-offers-capture-res": {
+        "$ref": "#/components/examples/PrescreenOffersCaptureRes"
+       }
+      }
+     }
+    }
+   },
+   "ApplicationRes": {
+    "description": "Response for customer request for credit card application",
+    "headers": {
+     "Location": {
+      "$ref": "#/components/headers/Location"
+     },
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ApplicationRes"
+      },
+      "examples": {
+       "application-res-status-completed": {
+        "$ref": "#/components/examples/ApplicationRes"
+       },
+       "application-res-status-challenged": {
+        "$ref": "#/components/examples/ApplicationResChallenged"
+       },
+       "application-res-approved-consent-required": {
+        "$ref": "#/components/examples/ApplicationResApprovedConsentRequired"
+       },
+       "application-res-pended-consent-required": {
+        "$ref": "#/components/examples/ApplicationResPendedConsentRequired"
+       }
+      }
+     }
+    }
+   },
+   "NotFound": {
+    "description": "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-404": {
+        "$ref": "#/components/examples/example-error-404"
+       }
+      }
+     }
+    }
+   }
+  },
+  "parameters": {
+   "Authorization": {
+    "name": "Authorization",
+    "in": "header",
+    "description": "Bearer Token",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 2048,
+     "minLength": 32,
+     "pattern": "^[A-Za-z0-9\\-_\\.\\ ]{32,2048}$"
+    },
+    "example": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlE4SkRobnd0ODU4eDNlbTRwVVkzd0R2Q3RsRSIsInBpLmF0bSI6IjUybWUifQ.eyJjbGllbnRfaWQiOiJVU0NCSU5UQ0xJRU5UIiwiaXNzIjoiVElBQS1VUyIsImF1ZCI6IlVTQ0IiLCJzdWIiOiJzeXNUSUFBVVNBUFBMWVQiLCJhZGdyb3VwcyI6WyJDTj1mR0xCQ3VzdFByb2R1Y3RITlAsT1U9R3JvdXBzLE9VPUdMQixEQz1JTlRSQU5FVCxEQz1CQVJDQVBJTlQsREM9Y29tIiwiQ049ZkdMQkNycHRQY3NHYXBRQSxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iLCJDTj1mR0xCQWNjdE1nbXROUCxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iLCJDTj1mR0xCVElBQVVTQ0JJbnRyUyxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iXSwiZXhwIjoxNjgzMjYyNzk3fQ.JDw6udt7pegvyz2tD_W0gUR_FXr7XnZIMnb0GeXLGFC7Zcg5yq6vI2bTMaee9pNhtCEJlIbLa5aKvP6xdt1xBfusE74g85Tohb5c-4MF7QNsC3vBCNOlTpnXMPkHR2_aNfXzf_Duvf81ZotsD_KwUF7w8f63BHgpI4itiFSduGEFGzAKlV2OJwcgIIlhDfhstbDtREL931QlFI8v_sj7JjXWOqivrFSOhiuen-rM5SRvFrnm50P9mZvyhs4-228cZ-xv36c5NAsbO9whQCHE5N0rDOhMgCKl65rnCdUr8rktOCe3fMQTWxV-qQqnr4hscgFtcJt9gU07pwP8zvf4xQ"
+   },
+   "Correlation-ID": {
+    "name": "Correlation-ID",
+    "in": "header",
+    "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.\n",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 36,
+     "minLength": 36,
+     "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+   },
+   "OauthClient-ID": {
+    "name": "oauth_clientid",
+    "in": "header",
+    "description": "To be set by Akana ND. It will be removed when published on Akana,\n",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 256,
+     "minLength": 1,
+     "pattern": "^[a-zA-Z0-9.\\-]{1,256}$"
+    },
+    "example": "bdn-68EwxNCdDi65Y2FV6wxupfsoD3ilveYxDqok0LD5"
+   },
+   "PrescreenIdPath": {
+    "name": "prescreenId",
+    "in": "path",
+    "description": "Prescreen Id",
+    "required": true,
+    "deprecated": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 20,
+     "minLength": 1,
+     "pattern": "^[a-zA-Z0-9]{1,20}$"
+    },
+    "example": "PS12345678"
+   },
+   "ApplicationIdPath": {
+    "name": "applicationId",
+    "in": "path",
+    "description": "Applicant Application ID.",
+    "required": true,
+    "deprecated": false,
+    "schema": {
+     "type": "number",
+     "maxLength": 16,
+     "minLength": 15,
+     "pattern": "^[0-9]{15,16}$"
+    },
+    "example": "001346780132564"
+   },
+   "Content-Type": {
+    "name": "Content-Type",
+    "in": "header",
+    "description": "Content-Type",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 35,
+     "minLength": 16,
+     "pattern": "^[a-z0-9A-Z\\-\\/\\;\\=\\ ]{16,35}$"
+    },
+    "example": "application/json"
+   }
+  },
+  "examples": {
+   "ApplicationReq": {
+    "value": {
+     "data": {
+      "securedDetails": "ZYwoFgk/0wNwfSxEC7D8zmzbY+Ef22nmZ4Zy8HVGUNojcTP67Oj",
+      "prescreenId": "77e3338d",
+      "requestId": "c29a74aa-e7a7-4c15-8ea0-697da9057811",
+      "requestIdType": "OFFER",
+      "cardImageSelected": "CARD_ART_001",
+      "partnerCustomerId": "EK245352sd",
+      "alternateAddress": {
+       "addressLine1": "Apt # 5, sdfns",
+       "addressLine2": "kfjnksfgkskdksdf",
+       "city": "Miami",
+       "state": "FL",
+       "zip": "32535"
+      },
+      "annualIncome": "10000",
+      "acceptCma": true,
+      "sourceOfIncome": "Homemaker",
+      "productDownSellConsent": true,
+      "incomeFromOtherSources": false,
+      "occupation": "Attorney",
+      "residenceType": "Own",
+      "monthlyHousingPayment": "1090",
+      "marriedFlag": true,
+      "eConsentFlag": true,
+      "citizenshipCountry": "US",
+      "trackingAttributes": [
+       {
+        "name": "CLIENT_IP_ADDRESS",
+        "value": "123.23.23.2"
+       },
+       {
+        "name": "DEVICE_OS_VERSION",
+        "value": "2.3.4"
+       },
+       {
+        "name": "PARTNER_GENERATED_ID_FOR_DEVICE",
+        "value": "4.1"
+       },
+       {
+        "name": "FRAUD_SCORE_PARTNER_ON_FILE",
+        "value": "23"
+       },
+       {
+        "name": "REFERENCE_NUMBER",
+        "value": "11"
+       }
+      ],
+      "partnerDataAttributes": [
+       {
+        "name": "ATTRB_NAME1",
+        "value": " ATTRB_VALUE1"
+       },
+       {
+        "name": " ATTRB_NAME2",
+        "value": " ATTRB_VALUE2"
+       }
+      ],
+      "productAttributes": [
+       {
+        "name": "agentFirstName",
+        "value": "PTRBARDMU"
+       },
+       {
+        "name": "agentLastName",
+        "value": "Bla bla"
+       }
+      ],
+      "secondaryApplicants": [
+       {
+        "firstName": "FirstNameoneW",
+        "lastName": "LastNameOneD",
+        "dateOfBirth": "2020-07-05",
+        "permanentAddress": {
+         "addressLine1": "Address line23",
+         "addressLine2": "second line",
+         "city": "Miami",
+         "state": "FL",
+         "zip": "32535"
+        }
+       }
+      ]
+     }
+    }
+   },
+   "OfferReq": {
+    "value": {
+     "data": {
+      "brand": "GP",
+      "channel": "WEB",
+      "subChannel": "bag",
+      "productType": "CBCC",
+      "offerStrategy": "IPS",
+      "isTargetedOffer": false,
+      "market": "US",
+      "offerAttributes": [
+       {
+        "key": "value"
+       }
+      ],
+      "startDate": "2022-12-24",
+      "offerLevel": "1"
+     }
+    }
+   },
+   "PrequalResponse": {
+    "value": {
+     "data": {
+      "decision": {
+       "offerInstanceId": "84c16238-fd3f-4beb-83b0-40f855be2e14",
+       "decisionCode": "Approved",
+       "validationError": [],
+       "creditBureauDetails": [],
+       "approvedOffers": [
+        {
+         "offerId": "0ca80169-4c15-4174-920e-19cfff039c39",
+         "leadMarketingOfferFlag": "N",
+         "offerInstanceMappingId": "88e72a98-e62c-4c85-a3eb-3491b2155075",
+         "offerOrderNumber": "1",
+         "offerDownsellLevel": "1",
+         "offerRecommendation": "N",
+         "tncUrl": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc45787%22",
+         "purchaseRate": "5",
+         "creditLimitAmount": "5",
+         "keyBenefitsUrl": "https://qa01-www.barclaycardus.com/apply/benefits",
+         "disclosureUrl": "https://qa01-www.barclaycardus.com/apply/disclosure"
+        }
+       ]
+      },
+      "prequalId": "447339",
+      "prospectScreenUUID": "28cd79cc-d786-3029-8695-521b27cf6ce2"
+     }
+    }
+   },
+   "OfferRes": {
+    "value": {
+     "data": {
+      "offerId": "b9cb1f38-26a1-45ab-92f0-67513ad154bb",
+      "pvtDate": "2021-12-07T13:14:15Z",
+      "availableDate": "2021-12-07T13:14:15Z",
+      "expiryDate": "2021-12-07T13:14:15Z"
+     }
+    }
+   },
+   "ApplicationReq-BalanceTransfer": {
+    "value": {
+     "data": {
+      "dateOfBirth": "1997-09-30",
+      "ssn": "495614769",
+      "emailAddress": "lastcbcc@test.com",
+      "permanentAddress": {
+       "addressLine1": "125 S WEST S",
+       "city": "nocheck",
+       "state": "DE",
+       "zip": "19801"
+      },
+      "firstName": "OTP",
+      "lastName": "AAUCUBA",
+      "middleInitial": "J",
+      "suffix": "Jr",
+      "primaryPhoneNumber": "3024070960",
+      "requestId": "a762c0f0-a8e8-4216-93a5-1713805587ea",
+      "requestIdType": "OFFER",
+      "cardImageSelected": "CARD_ART_001",
+      "acceptCma": false,
+      "annualIncome": "9999933",
+      "monthlyHousingPayment": "5000",
+      "incomeFromOtherSources": true,
+      "eConsentFlag": true,
+      "occupation": "Agriculture",
+      "productAttributes": [
+       {
+        "name": "MOW_Rewards_Option",
+        "value": "reward"
+       }
+      ],
+      "partnerDataAttributes": [
+       {
+        "name": "LAST_ACTIVITY_DT",
+        "value": "2024-04-25"
+       },
+       {
+        "name": "LIFE_TIME_POINTS",
+        "value": "12"
+       },
+       {
+        "name": "MEMBER_SINCE_DT",
+        "value": "2024-04-20"
+       },
+       {
+        "name": "MEMBER_TIER",
+        "value": "B"
+       },
+       {
+        "name": "EMAIL_ADDRESS",
+        "value": "shesan.poudyal@barclays.com"
+       },
+       {
+        "name": "PRIZE_ELIGIBLE_BALANCE",
+        "value": "1775"
+       },
+       {
+        "name": "DEVICE_LOCATION_LAT",
+        "value": "28.4215235230427"
+       },
+       {
+        "name": "DEVICE_LOCATION_LONG",
+        "value": "-81.436245329986"
+       }
+      ],
+      "trackingAttributes": [
+       {
+        "name": "CLIENTIPADDRESS",
+        "value": "-679800"
+       },
+       {
+        "name": "CLIENT_PRODUCT_CODE",
+        "value": "PRV"
+       },
+       {
+        "name": "PARTNER_GENERATED_ID_FOR_DEVICE",
+        "value": "1234"
+       },
+       {
+        "name": "CUSTOMER_USER_ID",
+        "value": "123"
+       }
+      ],
+      "balanceTransfers": [
+       {
+        "accountNumber": "1234567890",
+        "amount": "1500"
+       },
+       {
+        "accountNumber": "34889213",
+        "amount": "5000"
+       },
+       {
+        "accountNumber": "987235621",
+        "amount": "3000"
+       }
+      ],
+      "deviceVerificationContext": {
+       "id": "pc3ieg397xz0oe9kt183l0p7l3aexrzm",
+       "provider": "THREATMATRIX"
+      }
+     }
+    }
+   },
+   "AppConsentRespCompleted": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "createdOn": "20210623",
+      "status": "COMPLETED",
+      "approvedProductType": "CBCC",
+      "approvedProductLevel": 1,
+      "cmaUrl": "https://cards.barclaycardus.com/applycontent/banking/marketing/cma/productid",
+      "approvedAmount": "100.00",
+      "accountId": "123e4567-e89b-12d3-a456-426614174056",
+      "cardDetail": {
+       "tempCreditLimit": "100.00",
+       "tempCreditDuration": "20211201",
+       "pan": {
+        "cardNumber": "4539870092607876",
+        "expiry": "0622"
+       },
+       "vcn": {
+        "cardNumber": "4539870092607876",
+        "expiry": "0622"
+       },
+       "token": {
+        "tokenNumber": "12345",
+        "cardLastFour": "6578",
+        "expiry": "0622"
+       }
+      }
+     }
+    }
+   },
+   "AppConsentRespPending": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "createdOn": "20210623",
+      "status": "PENDING",
+      "decisionStatusMessage": "Call to complete the application process : 877-969-3135"
+     }
+    }
+   },
+   "PrescreenOffersCaptureRes": {
+    "value": {
+     "data": {
+      "status": "SUCCESS"
+     }
+    }
+   },
+   "ApplicationReq-DeviceVerificationContext": {
+    "value": {
+     "data": {
+      "dateOfBirth": "1997-09-30",
+      "ssn": "495614769",
+      "emailAddress": "lastcbcc@test.com",
+      "permanentAddress": {
+       "addressLine1": "125 S WEST S",
+       "city": "nocheck",
+       "state": "DE",
+       "zip": "19801"
+      },
+      "firstName": "OTP",
+      "lastName": "AAUCUBA",
+      "middleInitial": "J",
+      "suffix": "Jr",
+      "primaryPhoneNumber": "3024070960",
+      "requestId": "a762c0f0-a8e8-4216-93a5-1713805587ea",
+      "requestIdType": "OFFER",
+      "cardImageSelected": "CARD_ART_001",
+      "acceptCma": false,
+      "annualIncome": "9999933",
+      "monthlyHousingPayment": "5000",
+      "incomeFromOtherSources": true,
+      "eConsentFlag": true,
+      "occupation": "Agriculture",
+      "productAttributes": [
+       {
+        "name": "MOW_Rewards_Option",
+        "value": "reward"
+       }
+      ],
+      "partnerDataAttributes": [
+       {
+        "name": "LAST_ACTIVITY_DT",
+        "value": "2024-04-25"
+       },
+       {
+        "name": "LIFE_TIME_POINTS",
+        "value": "12"
+       },
+       {
+        "name": "MEMBER_SINCE_DT",
+        "value": "2024-04-20"
+       },
+       {
+        "name": "MEMBER_TIER",
+        "value": "B"
+       },
+       {
+        "name": "EMAIL_ADDRESS",
+        "value": "shesan.poudyal@barclays.com"
+       },
+       {
+        "name": "PRIZE_ELIGIBLE_BALANCE",
+        "value": "1775"
+       },
+       {
+        "name": "DEVICE_LOCATION_LAT",
+        "value": "28.4215235230427"
+       },
+       {
+        "name": "DEVICE_LOCATION_LONG",
+        "value": "-81.436245329986"
+       }
+      ],
+      "trackingAttributes": [
+       {
+        "name": "CLIENTIPADDRESS",
+        "value": "-679800"
+       },
+       {
+        "name": "CLIENT_PRODUCT_CODE",
+        "value": "PRV"
+       },
+       {
+        "name": "PARTNER_GENERATED_ID_FOR_DEVICE",
+        "value": "1234"
+       },
+       {
+        "name": "CUSTOMER_USER_ID",
+        "value": "123"
+       }
+      ],
+      "deviceVerificationContext": {
+       "id": "pc3ieg397xz0oe9kt183l0p7l3aexrzm",
+       "provider": "THREATMETRIX"
+      }
+     }
+    }
+   },
+   "ApplicationRes": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "createdOn": "20210623",
+      "status": "COMPLETED",
+      "approvedProductType": "CBCC",
+      "approvedProductLevel": "1",
+      "cmaUrl": null,
+      "approvedAmount": "10000.00",
+      "accountId": "123e4567-e89b-12d3-a456-426614174056",
+      "cardDetail": {
+       "tempCreditLimit": "1000.00",
+       "tempCreditDuration": "20211201",
+       "pan": {
+        "cardNumber": "4539870092607876",
+        "expiry": "0622"
+       },
+       "vcn": {
+        "cardNumber": "4539870092607876",
+        "expiry": "0622",
+        "cvv": "230"
+       },
+       "token": {
+        "tokenNumber": "ZYwoFgk/0wNwfSxEC7D8zmzbY+Ef22nmZ4Zy8HVGUNojcTP67Oj",
+        "cardLastFour": "6578",
+        "expiry": "0622"
+       }
+      },
+      "partnerAttributes": [
+       {
+        "name": "correlationId",
+        "value": " ATsdfas443524sdfqw"
+       }
+      ]
+     }
+    }
+   },
+   "example-error-404": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "RESOURCE_NOT_FOUND",
+       "title": "The requested operation failed because a resource associated with the request could not be found."
+      }
+     ]
+    }
+   },
+   "example-error-503": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "SERVICE_UNAVAILABLE",
+       "title": "The server is currently unavailable"
+      }
+     ]
+    }
+   },
+   "InstantCreditByAccountRes": {
+    "value": {
+     "data": {
+      "tempCreditLimit": 1000.0,
+      "tempCreditDuration": "20211201",
+      "attributes": [
+       {
+        "name": "test",
+        "value": "test"
+       }
+      ],
+      "cardDetail": {
+       "pan": {
+        "cardNumber": "4539870092607876",
+        "expiry": "0622"
+       },
+       "vcn": {
+        "cardNumber": "4539870092607876",
+        "expiry": "0622",
+        "cvv": "230"
+       },
+       "token": {
+        "tokenNumber": "1234",
+        "cardLastFour": "6578",
+        "expiry": "0622"
+       }
+      }
+     }
+    }
+   },
+   "AppConsentRespExistingAccount": {
+    "value": {
+     "data": {
+      "status": "EXISTING_ACCOUNT",
+      "accountId": "123e4567-e89b-12d3-a456-426614174056"
+     }
+    }
+   },
+   "PrescreenOffersReq": {
+    "value": {
+     "data": {
+      "offerIds": [
+       "17e3338d-344b-403c-8a87-f7d8006d6e13",
+       "17e3338d-244b-403c-4a87-f7d8006d6e43"
+      ],
+      "firstName": "Marty",
+      "lastName": "McFly",
+      "primaryPhoneNumber": "3024451420",
+      "emailAddress": "support@barclaycardus.com",
+      "address": {
+       "zip": "19801",
+       "state": "PA",
+       "city": "Wilimgton",
+       "addressLine1": "100 W St",
+       "addressLine2": "100 W St"
+      },
+      "prescreenAttributes": [
+       {
+        "name": "storeNumber",
+        "value": "G32412"
+       },
+       {
+        "name": "trackingId",
+        "value": "POS23255"
+       },
+       {
+        "name": "brand",
+        "value": "BR"
+       },
+       {
+        "name": "channel",
+        "value": "POS"
+       }
+      ]
+     }
+    }
+   },
+   "PrescreenOffersCaptureReq": {
+    "value": {
+     "data": {
+      "termsAcceptCode": "ACCEPT"
+     }
+    }
+   },
+   "example-error-400-bad-request": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "BAD_REQUEST",
+       "title": "The request is invalid or not properly formed."
+      }
+     ]
+    }
+   },
+   "InstantCreditByAccountReq": {
+    "value": {
+     "data": {
+      "accountId": "e11a00aa-2feb-439d-bdc5-835d14718ff0",
+      "acceptCma": true,
+      "attributes": [
+       {
+        "name": "test",
+        "value": "test"
+       }
+      ]
+     }
+    }
+   },
+   "PrescreenOffersRes": {
+    "value": {
+     "data": {
+      "prescreenId": "PS012345",
+      "approvedOfferId": "17e3338d-344b-403c-8a87-f7d8006d6e13",
+      "approvedProductType": "CBCC",
+      "approvedProductLevel": "1",
+      "decisionStatus": "APPROVED",
+      "decisionMessage": "Prescreen approved(new)",
+      "approvedDecisionExpiryDate": "2021-06-23",
+      "tncUrl": "https://qa01-www.barclaycardus.com/apply/action/tncContent?prodidreq=CCVPS72014&prescreenId=PS12345678",
+      "optOutUrl": "https://example.com"
+     }
+    }
+   },
+   "ApplicationStatusRes": {
+    "value": {
+     "data": {
+      "status": "COMPLETED",
+      "partnerId": "addbbb66-4f08-4ffc-855d-9955ad66b596",
+      "cifAccountId": "4356456",
+      "approvedAmount": "10000.00",
+      "createdOn": "2021-08-06",
+      "cmaUrl": "https://qa01-www.barclaycardus.com/apply/action/rbpcma?approvedProductId=CCVPS71944.jsp",
+      "cmaStatus": "ACCEPTED",
+      "decisionType": "INSTANT_CREDIT"
+     }
+    }
+   },
+   "PrequalRequest": {
+    "value": {
+     "data": {
+      "applicationRequest": {
+       "firstName": "Lfast",
+       "lastName": "Llast",
+       "emailAddress": "kkllert@gmail.com",
+       "primaryPhoneNumber": "3025661116",
+       "permanentAddress": {
+        "addressLine1": "3 Xyz Rd",
+        "addressLine2": "",
+        "city": "FAKEDECISION",
+        "state": "NM",
+        "zip": "88022"
+       },
+       "alternateAddress": {
+        "addressLine1": "3 Xyz Rd",
+        "addressLine2": "",
+        "city": "FAKEDECISION",
+        "state": "NM",
+        "zip": "88022"
+       },
+       "ssn": "765268763",
+       "dateOfBirth": "1990-12-12",
+       "incomeOtherSource": "F",
+       "annualIncome": "6543",
+       "monthlyHousingPayment": "433",
+       "creditInquiryAuthorization": "Y",
+       "preQualElectronicDeliveryConsent": "Y",
+       "offerInstanceId": "84c16238-fd3f-4beb-83b0-40f855be2e14"
+      },
+      "trackingInfo": [
+       {
+        "name": "CLIENT_IP_ADDRESS",
+        "value": ""
+       },
+       {
+        "name": "DEVICE_OS_VERSION",
+        "value": "2.3.4"
+       },
+       {
+        "name": "PARTNER_GENERATED_ID_FOR_DEVICE",
+        "value": "4.1"
+       },
+       {
+        "name": "FRAUD_SCORE_PARTNER_ON_FILE",
+        "value": "23"
+       },
+       {
+        "name": "REFERENCE_NUMBER",
+        "value": "11"
+       }
+      ],
+      "partnerDataAttributes": [],
+      "deviceProfiling": []
+     }
+    }
+   },
+   "ApplicationResChallenged": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "createdOn": "20251111",
+      "verificationContextId": "123e4567-e89b-12d3-a456-426614174056",
+      "status": "CHALLENGED"
+     }
+    }
+   },
+   "ApplicationVerificationRes": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "createdOn": "20210623",
+      "status": "COMPLETED",
+      "approvedProductType": "CBCC",
+      "approvedProductLevel": "1",
+      "cmaUrl": "https://cards.barclaycardus.com/applycontent/banking/marketing/cma/productid",
+      "approvedAmount": "10000.00",
+      "accountId": "123e4567-e89b-12d3-a456-426614174056",
+      "cardDetail": {
+       "tempCreditLimit": "1000.00",
+       "tempCreditDuration": "20211201",
+       "pan": {
+        "cardNumber": "4539870092607876",
+        "expiry": "0622"
+       },
+       "vcn": {
+        "cardNumber": "4539870092607876",
+        "expiry": "0622"
+       },
+       "token": {
+        "tokenNumber": "ZYwoFgk/0wNwfSxEC7D8zmzbY+Ef22nmZ4Zy8HVGUNojcTP67Oj",
+        "cardLastFour": "6578",
+        "expiry": "0622"
+       }
+      },
+      "partnerAttributes": [
+       {
+        "name": "correlationId",
+        "value": " ATsdfas443524sdfqw"
+       }
+      ]
+     }
+    }
+   },
+   "ApplicationVerificationReq": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "verificationContextId": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     }
+    }
+   },
+   "AppConsentReqConsentAccepted": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "consentType": "DOWNSELL",
+      "consentStatus": "CONSENT_ACCEPTED"
+     }
+    }
+   },
+   "AppConsentReqConsentRejected": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "consentType": "DOWNSELL",
+      "consentStatus": "CONSENT_REJECTED"
+     }
+    }
+   },
+   "ApplicationResPendedConsentRequired": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "status": "DOWNSELL_PENDED_CONSENT_REQUIRED",
+      "createdOn": "20251111"
+     }
+    }
+   },
+   "AppConsentRespApproved": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "createdOn": "20210623",
+      "status": "APPROVED",
+      "approvedProductType": "CBCC",
+      "approvedProductLevel": 1
+     }
+    }
+   },
+   "example-error-401": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "AUTHENTICATION_ERROR",
+       "title": "The user could not be authenticated for this request."
+      }
+     ]
+    }
+   },
+   "example-error-500": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "INTERNAL_SERVER_ERROR",
+       "title": "The request failed due to an internal error."
+      }
+     ]
+    }
+   },
+   "ApplicationResApprovedConsentRequired": {
+    "value": {
+     "data": {
+      "applicationId": "123451234512345",
+      "status": "DOWNSELL_APPROVED_CONSENT_REQUIRED",
+      "createdOn": "20251111",
+      "downsellProductInfo": {
+       "downsellProductInfoUrl": "https://qa03-www.barclaycardus.com/applycontent/downsell/product/5ff0fd83-ce84-4348-bbb7-241cc7dfcea3",
+       "downsellOfferProductId": "5ff0fd83-ce84-4348-bbb7-241cc7dfcea3"
+      }
+     }
+    }
+   },
+   "example-error-403": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "ACCESS_FORBIDDEN",
+       "title": "The user is not permitted to access the requested operation and it cannot be completed."
+      }
+     ]
+    }
+   }
+  },
+  "requestBodies": {
+   "ApplicationReq": {
+    "description": "Application Request Data",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ApplicationReq"
+      },
+      "examples": {
+       "application-req": {
+        "$ref": "#/components/examples/ApplicationReq"
+       },
+       "application-req-device-verfication-context": {
+        "$ref": "#/components/examples/ApplicationReq-DeviceVerificationContext"
+       },
+       "application-req-balance-transfer": {
+        "$ref": "#/components/examples/ApplicationReq-BalanceTransfer"
+       }
+      }
+     }
+    },
+    "required": true
+   },
+   "PrescreenOffersReq": {
+    "description": "Prescreen Offers Request Data",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/PrescreenOffersRequest"
+      },
+      "examples": {
+       "prescreen-offers-req": {
+        "$ref": "#/components/examples/PrescreenOffersReq"
+       }
+      }
+     }
+    },
+    "required": true
+   },
+   "PrescreenOffersCaptureReq": {
+    "description": "Prescreen Offers capture Request Data",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/PrescreenOffersCaptureRequest"
+      },
+      "examples": {
+       "prescreen-offers-capture-req": {
+        "$ref": "#/components/examples/PrescreenOffersCaptureReq"
+       }
+      }
+     }
+    },
+    "required": true
+   },
+   "ApplicationVerificationRequest": {
+    "description": "Verification request data",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ApplicationVerificationRequest"
+      },
+      "examples": {
+       "application-verify-req": {
+        "$ref": "#/components/examples/ApplicationVerificationReq"
+       }
+      }
+     }
+    },
+    "required": true
+   },
+   "InstantCreditByAccountReq": {
+    "description": "Request for InstantCredit detail lookup by accountId .",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/InstantCreditByAccountRequest"
+      },
+      "examples": {
+       "instant-credit-by-account-req": {
+        "$ref": "#/components/examples/InstantCreditByAccountReq"
+       }
+      }
+     }
+    },
+    "required": true
+   },
+   "OfferReq": {
+    "description": "Offer Request .",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OfferRequest"
+      },
+      "examples": {
+       "offer-req": {
+        "$ref": "#/components/examples/OfferReq"
+       }
+      }
+     }
+    },
+    "required": true
+   },
+   "ApplicationConsentRequest": {
+    "description": "App consent request data",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ApplicationConsentRequest"
+      },
+      "examples": {
+       "application-consent-accept-req": {
+        "$ref": "#/components/examples/AppConsentReqConsentAccepted"
+       },
+       "application-consent-reject-req": {
+        "$ref": "#/components/examples/AppConsentReqConsentRejected"
+       }
+      }
+     }
+    },
+    "required": true
+   },
+   "PrequalRequest": {
+    "description": "Prequal Decision Request for an customer",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/PrequalRequest"
+      },
+      "examples": {
+       "prescreen-offers-req": {
+        "$ref": "#/components/examples/PrequalRequest"
+       }
+      }
+     }
+    },
+    "required": true
+   }
+  },
+  "headers": {
+   "Cache-Control": {
+    "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+    "schema": {
+     "type": "string",
+     "default": "no-cache, no-store, must-revalidate",
+     "deprecated": false,
+     "example": "no-cache, no-store, must-revalidate",
+     "maxLength": 35,
+     "minLength": 35,
+     "pattern": "^no-cache, no-store, must-revalidate$",
+     "nullable": false
+    }
+   },
+   "Correlation-ID-ResHeader": {
+    "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or\nBatch Job), must generate this unique ID, then this must be passed\nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.\n",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "deprecated": false,
+     "maxLength": 36,
+     "minLength": 36,
+     "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+     "nullable": false
+    },
+    "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+   },
+   "Location": {
+    "description": "/cards/applications/",
+    "schema": {
+     "type": "string",
+     "deprecated": false,
+     "maxLength": 20,
+     "minLength": 1,
+     "pattern": "^[\\S]{1,20}$",
+     "nullable": false
+    },
+    "example": "applications"
+   }
+  },
+  "securitySchemes": {
+   "ExternalTiaaUsCCAuth": {
+    "type": "oauth2",
+    "description": "OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2",
+      "scopes": {
+       "read": "read only",
+       "write": "write only"
+      }
+     }
+    }
+   }
+  }
+ }
+}

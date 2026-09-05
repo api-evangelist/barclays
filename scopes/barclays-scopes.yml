@@ -1,0 +1,415 @@
+generated: '2026-09-04'
+method: searched
+source: https://developer.barclays.com/api/apis/versions/{apiVersionId} (Barclays API Exchange registry, anonymous)
+  + openapi/ (26 first-party OpenAPI 3.1 documents)
+schemes:
+- name: TPPOAuth2Security
+  source: openapi/barclays-account-and-transactions-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://authserver.example/token
+  description: TPP client credential authorisation flow with the ASPSP
+- name: PSUOAuth2Security
+  source: openapi/barclays-account-and-transactions-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://authserver.example/authorization
+    tokenUrl: https://authserver.example/token
+  description: OAuth flow, it is required when the PSU needs to perform SCA with the ASPSP when a TPP wants to access
+    an ASPSP resource owned by the PSU
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-account-management-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-accounts-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-authentication-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-benefits-redemption-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-card-application-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-card-control-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: TPPOAuth2Security
+  source: openapi/barclays-confirmation-of-funds-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://authserver.example/token
+  description: TPP client credential authorisation flow with the ASPSP
+- name: PSUOAuth2Security
+  source: openapi/barclays-confirmation-of-funds-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://authserver.example/authorization
+    tokenUrl: https://authserver.example/token
+  description: OAuth flow, it is required when the PSU needs to perform SCA with the ASPSP when a TPP wants to access
+    an ASPSP resource owned by the PSU
+- name: InternalTiaaUsRopcAuth
+  source: openapi/barclays-cryptography-key-exchange-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Resource Owner Passard Credentials (ROPC) Grant authentication using TIAA-US for internal
+    APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-digital-wallet-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: TPPOAuth2Security
+  source: openapi/barclays-event-notification-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://authserver.example/token
+  description: TPP client credential authorisation flow with the ASPSP
+- name: TPPOAuth2Security
+  source: openapi/barclays-payment-initiation-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://authserver.example/token
+  description: TPP client credential authorisation flow with the ASPSP
+- name: PSUOAuth2Security
+  source: openapi/barclays-payment-initiation-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://authserver.example/authorization
+    tokenUrl: https://authserver.example/token
+  description: OAuth flow, it is required when the PSU needs to perform SCA with the ASPSP when a TPP wants to access
+    an ASPSP resource owned by the PSU
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-payments-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-rewards-earn-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-statements-retriever-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: ExternalTiaaUsCCAuth
+  source: openapi/barclays-transactions-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+  description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+- name: TPPOAuth2Security
+  source: openapi/barclays-variable-recurring-payment-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://authserver.example/token
+  description: TPP client credential authorisation flow with the ASPSP
+- name: PSUOAuth2Security
+  source: openapi/barclays-variable-recurring-payment-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://authserver.example/authorization
+    tokenUrl: https://authserver.example/token
+  description: OAuth flow, it is required when the PSU needs to perform SCA with the ASPSP when a TPP wants to access
+    an ASPSP resource owned by the PSU
+scopes:
+- scope: accounts
+  description: Read account information (UK Open Banking AISP role)
+  apis:
+  - Account and Transactions
+  - Event Notification
+  - Payment Initiation
+  - Variable Recurring Payment
+- scope: ais
+  description: Account Information Service (Berlin Group NextGenPSD2, Barclays Bank Ireland)
+  apis:
+  - Barclays Bank Ireland Account Information
+- scope: fundsconfirmations
+  description: Confirm availability of funds (UK Open Banking CBPII role)
+  apis:
+  - Confirmation of Funds
+  - Event Notification
+- scope: openid
+  description: OpenID Connect authentication of the payment service user
+  apis:
+  - Account and Transactions
+  - Confirmation of Funds
+  - Payment Initiation
+- scope: payments
+  description: Initiate and read payments (UK Open Banking PISP role)
+  apis:
+  - Account and Transactions
+  - Event Notification
+  - Payment Initiation
+  - Variable Recurring Payment
+- scope: piis
+  description: Payment Instrument Issuer Service / confirmation of funds (Berlin Group NextGenPSD2)
+  apis:
+  - Barclays Bank Ireland Confirmation of Funds
+- scope: pis
+  description: Payment Initiation Service (Berlin Group NextGenPSD2, Barclays Bank Ireland)
+  apis:
+  - Barclays Bank Ireland Confirmation of Funds
+  - Barclays Bank Ireland Payment Initiation
+- scope: uscb:apply
+  description: Barclaycard US resource scope
+  apis:
+  - Card Application
+- scope: uscb:authentication
+  description: Barclaycard US resource scope
+  apis:
+  - Authentication
+- scope: uscb:cardaccountinquiry
+  description: Barclaycard US resource scope
+  apis:
+  - Accounts
+- scope: uscb:cardcontrols
+  description: Barclaycard US resource scope
+  apis:
+  - Card Control
+- scope: uscb:cardsaccountmanagement
+  description: Barclaycard US resource scope
+  apis:
+  - Account Management
+- scope: uscb:cardspayment
+  description: Barclaycard US resource scope
+  apis:
+  - Payments
+- scope: uscb:digitalwallet
+  description: Barclaycard US resource scope
+  apis:
+  - Digital Wallet
+- scope: uscb:rewards-earn
+  description: Barclaycard US resource scope
+  apis:
+  - Rewards Earn
+- scope: uscb:rewardsloyaltysynch
+  description: Barclaycard US resource scope
+  apis:
+  - Rewards Loyalty Sync
+- scope: uscb:rewardspwp
+  description: Barclaycard US resource scope
+  apis:
+  - Benefits Redemption
+- scope: uscb:statements
+  description: Barclaycard US resource scope
+  apis:
+  - Statements Retriever
+- scope: uscb:transactions
+  description: Barclaycard US resource scope
+  apis:
+  - Transactions
+docs: https://developer.barclays.com/api/apis
+note: 'The scope names below are the ones Barclays itself publishes per API in its registry, not scopes inferred
+  from the specs. The specs are less useful here: the UK Open Banking securitySchemes carry the OBIE placeholder
+  tokenUrl https://authserver.example/token, and the Barclaycard US schemes carry an internal host (token.tiaa-dev.us.barclays.intranet:8443)
+  that is not reachable from the public internet. Barclays publishes no OpenID discovery document on any host, so
+  the real production token and authorization endpoints are not obtainable anonymously — a registered TPP receives
+  them on onboarding.'
+scope_count: 19
+per_api:
+- api: Confirmation of Funds
+  production_oauth_provider: JWTOAuthLiveDomain
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  oauth2_supported: true
+  scopes:
+  - openid
+  - fundsconfirmations
+- api: Dynamic Client Registration
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Barclays Bank Ireland Account Information
+  production_oauth_provider: JWTOAuthLiveDomain
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  oauth2_supported: true
+  scopes:
+  - ais
+- api: Barclaycard Smartpay Web Payment
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Barclays Bank Ireland Confirmation of Funds
+  production_oauth_provider: JWTOAuthLiveDomain
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  oauth2_supported: true
+  scopes:
+  - pis
+  - piis
+- api: Payment Initiation
+  production_oauth_provider: JWTOAuthLiveDomain
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  oauth2_supported: true
+  scopes:
+  - accounts
+  - payments
+  - openid
+- api: Account and Transactions
+  production_oauth_provider: JWTOAuthLiveDomain
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  oauth2_supported: true
+  scopes:
+  - accounts
+  - payments
+  - openid
+- api: ATM Locator
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Branch Locator
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Product Details
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: FCA Service Metrics
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Event Notification
+  production_oauth_provider: JWTOAuthLiveDomain
+  sandbox_oauth_provider: null
+  oauth2_supported: true
+  scopes:
+  - accounts
+  - payments
+  - fundsconfirmations
+- api: Barclays Bank Ireland Payment Initiation
+  production_oauth_provider: JWTOAuthLiveDomain
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  oauth2_supported: true
+  scopes:
+  - pis
+- api: Digital Wallet
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:digitalwallet
+- api: Barclaycard Smartpay Connect
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Authentication
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:authentication
+- api: Benefits Redemption
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:rewardspwp
+- api: Accounts
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:cardaccountinquiry
+- api: Rewards Loyalty Sync
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:rewardsloyaltysynch
+- api: Transactions
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:transactions
+- api: Card Application
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:apply
+- api: Payments
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:cardspayment
+- api: Cryptography Key Exchange
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Variable Recurring Payment
+  production_oauth_provider: JWTOAuthLiveDomain
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  oauth2_supported: true
+  scopes:
+  - payments
+  - accounts
+- api: Payment Initiation API
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Balances and Transactions Reporting API
+  production_oauth_provider: null
+  sandbox_oauth_provider: null
+  oauth2_supported: null
+  scopes: []
+- api: Rewards Earn
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:rewards-earn
+- api: Card Control
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:cardcontrols
+- api: Account Management
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:cardsaccountmanagement
+- api: Statements Retriever
+  production_oauth_provider: TIAA-US OAuth Provider
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  oauth2_supported: true
+  scopes:
+  - uscb:statements

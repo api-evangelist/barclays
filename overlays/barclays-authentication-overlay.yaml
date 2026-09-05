@@ -1,0 +1,28 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Barclays Authentication
+  version: 1.0.0
+extends: openapi/barclays-authentication-openapi.yml
+x-generated: '2026-09-04'
+x-method: generated
+x-source: https://developer.barclays.com/api/apis/versions/{apiVersionId}/design?specification=oas31
+actions:
+- target: $.info
+  update:
+    x-apis-io-provider: barclays
+    x-apis-io-provider-name: Barclays
+    x-api-exchange-version: '2.0'
+    x-harvested-from: https://developer.barclays.com — Barclays API Exchange (Akana Community Manager) design export
+    x-artifacts:
+      authentication: authentication/barclays-authentication.yml
+      scopes: scopes/barclays-scopes.yml
+      errors: errors/barclays-problem-types.yml
+      conventions: conventions/barclays-conventions.yml
+      conformance: conformance/barclays-conformance.yml
+      lifecycle: lifecycle/barclays-lifecycle.yml
+      rate_limits: rate-limits/barclays-rate-limits.yml
+      data_model: data-model/barclays-data-model.yml
+- target: $
+  update:
+    x-note: This overlay records API Evangelist annotations only. It never mutates the Barclays contract it extends;
+      the underlying document is the provider design export, saved verbatim in openapi/_original/.

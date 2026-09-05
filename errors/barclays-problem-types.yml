@@ -1,0 +1,98 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/ (26 first-party OpenAPI 3.1 documents harvested from developer.barclays.com)
+format: proprietary
+envelope:
+  schema: OBError1 / OBErrorResponse1 (UK Open Banking) on the BUK Open Banking APIs; tppMessages[] (Berlin Group
+    NextGenPSD2) on the Barclays Bank Ireland APIs
+  media_type: application/json
+  fields:
+  - ErrorCode
+  - Message
+  - Path
+  - Url
+  note: Not RFC 9457 application/problem+json. Error bodies follow the UK Open Banking OBError1 structure, whose
+    ErrorCode values are UK.OBIE.* namespaced strings.
+coverage:
+  operations_with_4xx_5xx: 178
+  apis: 24
+  status_codes: 14
+problem_types:
+- status: 400
+  title: Bad Request
+  occurrences: 147
+  description: Bad request
+  remediation: Correct the request body or parameters against the OpenAPI schema before retrying.
+- status: 401
+  title: Unauthorized
+  occurrences: 129
+  description: Unauthorized
+  remediation: Obtain a fresh OAuth 2.0 access token; UK Open Banking calls also require a valid mTLS transport
+    certificate.
+- status: 403
+  title: Forbidden
+  occurrences: 112
+  description: Forbidden
+  remediation: The token is valid but lacks the scope or consent for this resource — re-authorise the PSU with the
+    required scope.
+- status: 404
+  title: Not Found
+  occurrences: 113
+  description: Not found
+  remediation: Verify the resource identifier; on Open Banking consent resources the consent may have expired or
+    been revoked.
+- status: 405
+  title: Method Not Allowed
+  occurrences: 105
+  description: Method Not Allowed
+  remediation: Use one of the HTTP methods the OpenAPI declares for this path.
+- status: 406
+  title: Not Acceptable
+  occurrences: 80
+  description: Not Acceptable
+  remediation: Send an Accept header the operation declares (application/json, or the OBIE opendata media type).
+- status: 408
+  title: Request Timeout
+  occurrences: 10
+  description: Your client has failed to submit a request, and a timeout has occurred.
+  remediation: Retry the request; the client did not finish sending it in time.
+- status: 409
+  title: Conflict
+  occurrences: 19
+  description: Conflict
+  remediation: A conflicting resource or state already exists — re-read the resource before retrying.
+- status: 415
+  title: Unsupported Media Type
+  occurrences: 26
+  description: Unsupported Media Type
+  remediation: 'Send Content-Type: application/json (or the media type declared on the operation).'
+- status: 422
+  title: Unprocessable Entity
+  occurrences: 19
+  description: Unprocessable
+  remediation: The request parsed but failed business validation — read the OBError1 Message and Path fields.
+- status: 428
+  title: Precondition Required
+  occurrences: 5
+  description: Fraud challenge required
+  remediation: A fraud/step-up challenge is required before this operation can complete.
+- status: 429
+  title: Too Many Requests
+  occurrences: 99
+  description: Too Many Requests
+  remediation: Back off and retry; the API returns 429 when a party sends too many requests in a window.
+- status: 500
+  title: Internal Server Error
+  occurrences: 160
+  description: Internal Server Error
+  remediation: Retry with exponential backoff; if it persists, raise it with Barclays developer support.
+- status: 503
+  title: Service Unavailable
+  occurrences: 50
+  description: 'temporary maintenance of service, try again later. The implication is that this is a temporary condition
+    which will be alleviated after some delay. If known, the length of the delay will be indicated '
+  remediation: Temporary maintenance — retry later using exponential backoff.
+response_media_types:
+  application/json: 681
+  application/prs.openbanking.opendata.v2.2+json: 40
+  application/prs.openbanking.opendata.v1.0+json: 10

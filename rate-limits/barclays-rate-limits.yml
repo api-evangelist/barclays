@@ -1,204 +1,35 @@
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Barclays
 providerId: barclays
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Banking
-  - Credit Cards
-  - Finance
-  - Open Banking
-  - Payments
-  - PSD2
-  - UK Banking
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Barclays API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Barclays Smartpay Web Payment API
-      - Barclays Bank Ireland Confirmation of Funds API
-      - Barclays Account and Transactions API
-      - Barclays Bank Ireland Account Information API
-      - Barclays Bank Ireland Payment Initiation API
-      - Barclays Confirmation of Funds API
-      - Barclays Consent API
-      - Barclays Dynamic Client Registration API
-      - Barclays Event Notification API
-      - Barclays Payment Initiation API
-      - Barclays ATM Locator API
-      - Barclays Branch Locator API
-      - Barclays FCA Service Metrics API
-      - Barclays Product Details API
-      - Barclays Accounts API
-      - Barclays Authentication API
-      - Barclays Card Application API
-      - Barclays Cryptography Key Exchange API
-      - Barclays Digital Wallet API
-      - Barclays Payments API
-      - Barclays Rewards Loyalty Sync API
-      - Barclays Rewards Pay with Points API
-      - Barclays Transactions API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Barclays Smartpay Web Payment API
-      - Barclays Bank Ireland Confirmation of Funds API
-      - Barclays Account and Transactions API
-      - Barclays Bank Ireland Account Information API
-      - Barclays Bank Ireland Payment Initiation API
-      - Barclays Confirmation of Funds API
-      - Barclays Consent API
-      - Barclays Dynamic Client Registration API
-      - Barclays Event Notification API
-      - Barclays Payment Initiation API
-      - Barclays ATM Locator API
-      - Barclays Branch Locator API
-      - Barclays FCA Service Metrics API
-      - Barclays Product Details API
-      - Barclays Accounts API
-      - Barclays Authentication API
-      - Barclays Card Application API
-      - Barclays Cryptography Key Exchange API
-      - Barclays Digital Wallet API
-      - Barclays Payments API
-      - Barclays Rewards Loyalty Sync API
-      - Barclays Rewards Pay with Points API
-      - Barclays Transactions API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Barclays Smartpay Web Payment API
-      - Barclays Bank Ireland Confirmation of Funds API
-      - Barclays Account and Transactions API
-      - Barclays Bank Ireland Account Information API
-      - Barclays Bank Ireland Payment Initiation API
-      - Barclays Confirmation of Funds API
-      - Barclays Consent API
-      - Barclays Dynamic Client Registration API
-      - Barclays Event Notification API
-      - Barclays Payment Initiation API
-      - Barclays ATM Locator API
-      - Barclays Branch Locator API
-      - Barclays FCA Service Metrics API
-      - Barclays Product Details API
-      - Barclays Accounts API
-      - Barclays Authentication API
-      - Barclays Card Application API
-      - Barclays Cryptography Key Exchange API
-      - Barclays Digital Wallet API
-      - Barclays Payments API
-      - Barclays Rewards Loyalty Sync API
-      - Barclays Rewards Pay with Points API
-      - Barclays Transactions API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Barclays Smartpay Web Payment API
-      - Barclays Bank Ireland Confirmation of Funds API
-      - Barclays Account and Transactions API
-      - Barclays Bank Ireland Account Information API
-      - Barclays Bank Ireland Payment Initiation API
-      - Barclays Confirmation of Funds API
-      - Barclays Consent API
-      - Barclays Dynamic Client Registration API
-      - Barclays Event Notification API
-      - Barclays Payment Initiation API
-      - Barclays ATM Locator API
-      - Barclays Branch Locator API
-      - Barclays FCA Service Metrics API
-      - Barclays Product Details API
-      - Barclays Accounts API
-      - Barclays Authentication API
-      - Barclays Card Application API
-      - Barclays Cryptography Key Exchange API
-      - Barclays Digital Wallet API
-      - Barclays Payments API
-      - Barclays Rewards Loyalty Sync API
-      - Barclays Rewards Pay with Points API
-      - Barclays Transactions API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Barclays Smartpay Web Payment API
-      - Barclays Bank Ireland Confirmation of Funds API
-      - Barclays Account and Transactions API
-      - Barclays Bank Ireland Account Information API
-      - Barclays Bank Ireland Payment Initiation API
-      - Barclays Confirmation of Funds API
-      - Barclays Consent API
-      - Barclays Dynamic Client Registration API
-      - Barclays Event Notification API
-      - Barclays Payment Initiation API
-      - Barclays ATM Locator API
-      - Barclays Branch Locator API
-      - Barclays FCA Service Metrics API
-      - Barclays Product Details API
-      - Barclays Accounts API
-      - Barclays Authentication API
-      - Barclays Card Application API
-      - Barclays Cryptography Key Exchange API
-      - Barclays Digital Wallet API
-      - Barclays Payments API
-      - Barclays Rewards Loyalty Sync API
-      - Barclays Rewards Pay with Points API
-      - Barclays Transactions API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+generated: '2026-09-04'
+modified: '2026-09-04'
+method: searched
+source: openapi/ (26 first-party OpenAPI 3.1 documents) + https://developer.barclays.com portal search
+limit_count: 0
+limits: []
+documented: false
+note: 'Barclays declares that throttling exists but never says what the limits are. 99 operations across the estate
+  declare an HTTP 429 "Too Many Requests" response — the Confirmation of Funds, Payment Initiation and Account and
+  Transactions contracts describe it as "Server received a large number of requests from a single party in a given
+  amount of time" — but no operation declares a RateLimit-*, X-RateLimit-* or Retry-After response header, and no
+  numeric limit, window, burst or quota is published anywhere on the anonymous surface. An agent can detect exhaustion
+  from the status code and nothing else: it cannot budget ahead of time, and it is not told how long to wait. REPLACES
+  a 2026-05-04 bulk-sweep scaffold that carried invented 10/100/1000 rpm tiers and an invented X-RateLimit-* header
+  set that these contracts do not declare.'
+signals:
+  status_code: 429
+  operations_declaring_429: 99
+  response_headers: []
+  retry_after: false
+  policy_header: false
+evidence:
+- url: https://developer.barclays.com/api/apis/versions/1918e4d6-a63c-4123-a2e6-12b0c7540002.bdn/design?specification=oas31
+  status: 200
+  result: 429 declared, no rate-limit response headers
+- url: https://developer.barclays.com/api/search?q=rate%20limit
+  status: 200
+  result: 41 hits, none a rate-limit policy document
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

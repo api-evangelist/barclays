@@ -1,0 +1,2866 @@
+openapi: 3.1.0
+info:
+  title: Payments
+  description: Enables customers to easily create, update, or cancel payments
+  version: '2.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/41c4465b-4997-4934-93e2-7db9607ad4a0.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-payments-openapi.json. The UK Open Banking documents
+  carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as Barclays implements
+  and publishes it — the API, the registry record and the host are Barclays'.
+tags:
+- name: paymentProductExternalAPI-OneTimePayment
+  description: OAS3 External Onetime Payment APIs
+- name: paymentProductExternalAPI-AutoPay
+  description: OAS3 External AutoPay APIs
+- name: paymentProductExternalAPI-ExternalAccount
+  description: OAS3 External Account APIs
+paths:
+  /cards/accounts/{extAccountId}/payments/subscriptions/{subscriptionId}:
+    summary: Update AutoPay subscription for AccountId from Partner
+    description: Update an AutoPay subscription using this end point
+    patch:
+      tags:
+      - paymentProductExternalAPI-AutoPay
+      summary: Update an AutoPay subscription - update attributes or cancel
+      description: Update the amount, pay option or cancel an AutoPay subscription
+      operationId: updateSubscriptionV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: subscriptionId
+        in: path
+        description: Subscription ID
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 17
+          minLength: 1
+          pattern: ^[0-9]{1,17}$
+        example: 1234
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: application/json
+      requestBody:
+        description: Modify Subscription Request Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifySubscriptionReqData'
+            examples:
+              ModifySubscriptionReq:
+                $ref: '#/components/examples/ModifySubscriptionReq'
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/ModifySubscriptionRes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments/{referenceNumber}:
+    summary: Operations on one time Payment by Reference Number
+    description: Operations on one time Payment by Reference Number for a given account id from partner
+    patch:
+      tags:
+      - paymentProductExternalAPI-OneTimePayment
+      summary: Modify One-time Payment for partner
+      description: 'The API accepts account ID and payment reference number and allows to update a one time payment.
+
+        It allows to update amount, bank account ID, amount option type and payment date for any payment. It also allows
+
+        to cancel a scheduled payment. It  performs certain business validations before the payment is updated or canceled.'
+      operationId: updatePaymentV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: referenceNumber
+        in: path
+        description: Payment Reference Number
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 18
+          minLength: 1
+          pattern: ^[0-9]{1,18}$
+        example: 6897656
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: application/json
+      requestBody:
+        description: Modify Payment Request Data To Update Or Cancel A Payment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyPaymentRequestData'
+            examples:
+              ModifyPaymentReq:
+                $ref: '#/components/examples/ModifyPaymentReq'
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/ModifyPaymentRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments/subscriptions:
+    summary: Manage AutoPay subscription for the account id provided by Partner
+    description: View or Add an AutoPay subscription using this end point
+    get:
+      tags:
+      - paymentProductExternalAPI-AutoPay
+      summary: Retrieve the most recent and active AutoPay subscription
+      description: Retrieve the most recent and active AutoPay subscription for viewing by the customer
+      operationId: getSubscriptionV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/SubscriptionRes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+    post:
+      tags:
+      - paymentProductExternalAPI-AutoPay
+      summary: Create an AutoPay subscription
+      description: Set up a new AutoPay subscription using the options present to the customer
+      operationId: addSubscriptionV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 35
+          minLength: 16
+          pattern: ^[a-zA-Z0-9\-/= ]{16,35}$
+        example: application/json
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      requestBody:
+        description: Create Subscription Request Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSubscriptionReqData'
+            examples:
+              AddSubscriptionReq:
+                $ref: '#/components/examples/AddSubscriptionReq'
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/AddSubscriptionRes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments/external-accounts/{bankAccountId}:
+    summary: External Bank Account management for a given external bank account ID from Partner
+    description: Offers external bank management options for a given external bank account ID
+    get:
+      tags:
+      - paymentProductExternalAPI-ExternalAccount
+      summary: Get an external bank account for partner provided external bank account ID
+      description: Get an external bank account configured for a user
+      operationId: getExternalAccountV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: bankAccountId
+        in: path
+        description: Internal sequence number generated for external account
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 12
+          minLength: 1
+          pattern: ^[0-9]{1,12}$
+        example: 0013467801
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/ExternalAccountResLast4'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments/external-accounts:
+    summary: External Bank Account management
+    description: Offers external bank account management
+    get:
+      tags:
+      - paymentProductExternalAPI-ExternalAccount
+      summary: Get all external bank accounts for partner provided accountId
+      description: Get all external bank accounts configured for a user.
+      operationId: getAllExternalAccountsV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/AllExternalAccountsResLast4'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments/payment-options:
+    summary: Existing endpoint to Get Payment Options for an account
+    description: The API accepts account ID and return all payment options available to a customer on the account. These payment
+      options include date options and amount options. Date options are due date , custom date range to schedule future payments
+      and pay now date. Amount options are minimum due, statement balance, current balance, remaining statement balance and
+      remaining minimum due.
+    get:
+      tags:
+      - paymentProductExternalAPI-OneTimePayment
+      summary: Payment options for the accountId from partner
+      description: Payment options for the accountId from partner
+      operationId: getPaymentOptionsV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/PaymentOptionsRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments:
+    summary: Base Payment Path for v2
+    description: Base Payment Path for v2
+    get:
+      tags:
+      - paymentProductExternalAPI-OneTimePayment
+      summary: Payment activity for the accountId from partner
+      description: Payment activity for the accountId from partner
+      operationId: getPaymentSummaryV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: fromDate
+        in: query
+        description: Start date of date range which customer needs to view payments from
+        required: false
+        deprecated: false
+        schema:
+          type: string
+          format: date
+        example: '2021-02-28'
+      - name: toDate
+        in: query
+        description: End date of date range which customer needs to view payments from
+        required: false
+        deprecated: false
+        schema:
+          type: string
+          format: date
+        example: '2021-02-28'
+      - name: status
+        in: query
+        description: Payment Status to filter out the payments
+        required: false
+        deprecated: false
+        schema:
+          type: string
+          enum:
+          - CANCELLED
+          - IN_PROCESS
+          - RETURNED
+          - UNSUCCESSFUL
+          - SCHEDULED
+          - PAID
+        example: RETURNED
+      - name: paymentInitiationSource
+        in: query
+        description: Inititiation source of payments that could be internal, external or both
+        required: false
+        deprecated: false
+        schema:
+          type: string
+          enum:
+          - INTERNAL
+          - THIRD_PARTY
+          - BOTH
+        example: BOTH
+      - name: size
+        in: query
+        description: Number of items on each page
+        required: false
+        deprecated: false
+        schema:
+          type: integer
+          default: 20
+          maximum: 2147483647
+          minimum: 1
+        example: 10
+      - name: page
+        in: query
+        description: Page index
+        required: false
+        deprecated: false
+        schema:
+          type: integer
+          default: 1
+          maximum: 2147483647
+          minimum: 1
+        example: 10
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/PaymentSummaryRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      deprecated: false
+    post:
+      tags:
+      - paymentProductExternalAPI-OneTimePayment
+      summary: Make a One-time Payment for account id from partner
+      description: 'The API accepts account ID and allows to schedule a onetime payment.
+
+        It also performs certain business validations before the payment is scheduled and
+
+        return certain information such as reference number, projected credit date, payment date and status.'
+      operationId: schedulePaymentV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 35
+          minLength: 16
+          pattern: ^[a-zA-Z0-9\-/= ]{16,35}$
+        example: application/json
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      requestBody:
+        description: Payment Request Data To schedule A Payment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchedulePaymentRequestData'
+            examples:
+              SchedulePaymentReq:
+                $ref: '#/components/examples/SchedulePaymentReq'
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/SchedulePaymentRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments/subscriptions/options:
+    summary: Manage options for setting up an AutoPay subscription for the account id provided by Partner
+    description: 'Manage options for date & payment options (e.g. ''Minimum Due'') using which the customer can
+
+      set up an AutoPay subscription'
+    get:
+      tags:
+      - paymentProductExternalAPI-AutoPay
+      summary: Retrieve options for setting up an AutoPay subscription
+      description: 'Retrieve options for date (e.g. 5 days before Due Date)
+
+        & payment options (e.g. ''Minimum Due'') using which the customer can set up an AutoPay subscription'
+      operationId: getSubscriptionOptionsV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/SubscriptionOptionsRes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /cards/accounts/{extAccountId}/auto-payments/{referenceNumber}:
+    summary: Operations on Autopay Payment by Reference Number
+    description: Operations on auto Payment by Reference Number
+    patch:
+      tags:
+      - paymentProductExternalAPI-OneTimePayment
+      summary: Modify Autopay Payment for current cycle
+      description: 'The API accepts account ID and payment reference number and allows to update an autopay payment.
+
+        It allows to update amount, bank account ID, amount option type and payment date for any payment. It also allows
+
+        to cancel a scheduled autopayment. It  performs certain business validations before the autoPayment is updated or
+        canceled.'
+      operationId: modifyAutoPayPayment
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: referenceNumber
+        in: path
+        description: Payment Reference Number
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 18
+          minLength: 1
+          pattern: ^[0-9]{1,18}$
+        example: 6897656
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: application/json
+      requestBody:
+        description: Modify Payment Request Data to Update Current Cycle AutoPayment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyPaymentRequestData'
+            examples:
+              ModifyPaymentReq:
+                $ref: '#/components/examples/ModifyPaymentReq'
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/ModifyAutoPaymentRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      deprecated: false
+components:
+  schemas:
+    BankName:
+      type: string
+      deprecated: false
+      description: Bank name of the bank account added as payment source
+      example: bankName
+      maxLength: 255
+      minLength: 1
+      pattern: ^([A-Za-z0-9 &,.'#+$=()_/-]{1,255})$
+    AmountOptions_minimumDue:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Minimum due amount that customer needs to pay
+      properties:
+        amount:
+          $ref: '#/components/schemas/amt'
+        currencyCode:
+          $ref: '#/components/schemas/currency'
+      required:
+      - amount
+      - currencyCode
+      nullable: false
+    SchedulePaymentRequestData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Schedule Payment Request Data
+      properties:
+        data:
+          $ref: '#/components/schemas/PaymentRequest'
+      required:
+      - data
+      nullable: false
+    ModifySubscriptionDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information after enrollment
+      properties:
+        subscriptionId:
+          $ref: '#/components/schemas/SubscriptionId'
+        enrolledDate:
+          $ref: '#/components/schemas/DateType'
+        amount:
+          $ref: '#/components/schemas/amt'
+        referenceNumber:
+          $ref: '#/components/schemas/ReferenceNumber'
+        paymentDate:
+          $ref: '#/components/schemas/DateType'
+        lastModifiedDate:
+          $ref: '#/components/schemas/DateType'
+        firstPaymentDate:
+          $ref: '#/components/schemas/DateType'
+        effectiveDate:
+          $ref: '#/components/schemas/DateType'
+      required:
+      - amount
+      - enrolledDate
+      - lastModifiedDate
+      - paymentDate
+      - referenceNumber
+      - subscriptionId
+    AmountOptions_statementBalance:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Statement balance i.e. the amount owed by the customer till the last billing cycle
+      properties:
+        amount:
+          $ref: '#/components/schemas/amt'
+        currencyCode:
+          $ref: '#/components/schemas/currency'
+      required:
+      - amount
+      - currencyCode
+      nullable: false
+    AddSubscriptionResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the response for enrollment for an AutoPay subscription
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        subscriptionDetails:
+          $ref: '#/components/schemas/AddSubscriptionDetails'
+        riskAssessmentDetails:
+          $ref: '#/components/schemas/RiskAssessmentDetails'
+      required:
+      - status
+      nullable: false
+    SubscriptionOptionsData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Subscription options data
+      properties:
+        data:
+          $ref: '#/components/schemas/SubscriptionOptions'
+      required:
+      - data
+      nullable: false
+    ModifyAutoPaymentResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Modify Current Cycle AutoPay Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/ModifyAutoPaymentResponse'
+      required:
+      - data
+      nullable: false
+    AddSubscriptionDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information after enrollment
+      properties:
+        subscriptionId:
+          $ref: '#/components/schemas/SubscriptionId'
+        enrolledDate:
+          $ref: '#/components/schemas/DateType'
+        firstPaymentDate:
+          $ref: '#/components/schemas/DateType'
+        amount:
+          $ref: '#/components/schemas/amt'
+        referenceNumber:
+          $ref: '#/components/schemas/ReferenceNumber'
+        paymentDate:
+          $ref: '#/components/schemas/DateType'
+      required:
+      - amount
+      - enrolledDate
+      - firstPaymentDate
+      - paymentDate
+      - referenceNumber
+      - subscriptionId
+    PaymentSummaryResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Summary Data
+      properties:
+        data:
+          $ref: '#/components/schemas/PaymentSummaryListResponse'
+        meta:
+          $ref: '#/components/schemas/PaymentSummaryMetaResponse'
+      required:
+      - data
+      - meta
+      nullable: false
+    ModifyAutoPaymentRequestData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Modify Current Cycle AutoPay Request Data
+      properties:
+        data:
+          $ref: '#/components/schemas/ModifyAutoPaymentRequest'
+      required:
+      - data
+      nullable: false
+    AmountOptions_remainingMinimumDue:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Remaining minimum due amount if some part of it is already paid
+      properties:
+        amount:
+          $ref: '#/components/schemas/amt'
+        currencyCode:
+          $ref: '#/components/schemas/currency'
+      required:
+      - amount
+      - currencyCode
+      nullable: false
+    ModifyPaymentResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Modify Payment Response
+      properties:
+        status:
+          type: string
+          deprecated: false
+          description: Status describing if payment was modified successfully
+          enum:
+          - SUCCESS
+          - CHALLENGE
+          - DENIED
+          example: SUCCESS
+          nullable: false
+        updatedPaymentDetails:
+          $ref: '#/components/schemas/UpdatedPaymentDetails'
+        riskAssessmentDetails:
+          $ref: '#/components/schemas/RiskAssessmentDetails'
+      required:
+      - status
+      nullable: false
+    DaysBeforeDueDateToProcess:
+      type: integer
+      default: 1
+      description: Days from Due Date from which the subscription was set up
+      example: 12
+      maximum: 99
+      minimum: 0
+    Subscription:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information for an account
+      properties:
+        subscriptionId:
+          $ref: '#/components/schemas/SubscriptionId'
+        amount:
+          $ref: '#/components/schemas/amt'
+        daysBeforeDueDateToProcess:
+          $ref: '#/components/schemas/DaysBeforeDueDateToProcess'
+        repeatPayOptionType:
+          $ref: '#/components/schemas/RepeatPayOptions'
+        dayOfMonth:
+          $ref: '#/components/schemas/DayOfMonth'
+        enrolledDate:
+          $ref: '#/components/schemas/DateType'
+        lastModifiedDate:
+          $ref: '#/components/schemas/DateType'
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+      required:
+      - amount
+      - bankAccountId
+      - dayOfMonth
+      - daysBeforeDueDateToProcess
+      - enrolledDate
+      - lastModifiedDate
+      - repeatPayOptionType
+      - subscriptionId
+      nullable: false
+    DateType:
+      type: string
+      deprecated: false
+      description: Standard Date format
+      example: 02-28-2021
+      maxLength: 10
+      minLength: 10
+      pattern: ^\d{2}-\d{2}-\d{4}$
+      nullable: false
+    Status:
+      type: string
+      deprecated: false
+      description: Fraud verification status
+      enum:
+      - SUCCESS
+      - CHALLENGE
+      - DENIED
+      example: CHALLENGE
+      nullable: false
+    ModifySubscriptionResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the response for updating an AutoPay subscription
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        subscriptionDetails:
+          $ref: '#/components/schemas/ModifySubscriptionDetails'
+        riskAssessmentDetails:
+          $ref: '#/components/schemas/RiskAssessmentDetails'
+      required:
+      - status
+      nullable: false
+    PaymentDate:
+      type: string
+      format: date
+      deprecated: false
+      description: Date on which processing of the payment started
+      example: '2021-02-28'
+      nullable: false
+    ExternalBankAccountDetailsLast4:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Bank account details
+      properties:
+        bankDetails:
+          $ref: '#/components/schemas/ExternalBankDetails'
+        bankAccountNickname:
+          $ref: '#/components/schemas/BankAccountNickname'
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        bankAccountNumberLast4:
+          $ref: '#/components/schemas/BankAccountNumberLast4'
+        bankAccountType:
+          $ref: '#/components/schemas/BankAccountType'
+      nullable: false
+    ReferenceNumber:
+      type: string
+      deprecated: false
+      description: Payment reference number
+      example: '6897656'
+      maxLength: 18
+      minLength: 1
+      pattern: ^([0-9]{1,18})$
+      nullable: false
+    DayOfMonth:
+      type: integer
+      default: 1
+      description: Day of the Month on which the subscription was set up
+      example: 12
+      maximum: 31
+      minimum: 1
+    AuthorizationText:
+      type: string
+      deprecated: false
+      description: Authorization text displayed on the subscription confirmation screen
+      example: By selecting a subscription, I authorize Barclays..
+      maxLength: 4000
+      minLength: 0
+      pattern: ^([A-Za-z0-9\s_().,$"•“”\/-]{0,4000})$
+      nullable: false
+    SubscriptionOptions_dateOptions:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Options for the dates on which the subscription can be set up for
+      properties:
+        dueDate:
+          $ref: '#/components/schemas/DateType'
+        daysBeforeDueDateRange:
+          $ref: '#/components/schemas/SubscriptionOptions_dateOptions_daysBeforeDueDateRange'
+      required:
+      - daysBeforeDueDateRange
+      - dueDate
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    ModifyAutoPaymentRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Modify AutoPay Request
+      properties:
+        action:
+          type: string
+          deprecated: false
+          description: Action describing whether the payment needs to be updated or canceled
+          enum:
+          - UPDATE
+          - CANCEL
+          example: UPDATE
+          nullable: false
+        modifyPaymentDetails:
+          $ref: '#/components/schemas/PaymentRequest'
+      required:
+      - action
+      - modifyPaymentDetails
+      nullable: false
+    MinCustomRangeInterval:
+      type: integer
+      default: 29
+      description: Lower limit for Custom Amount payment option
+      example: 29
+      maximum: 29
+      minimum: 29
+    RepeatPayOptionType:
+      type: array
+      additionalProperties: false
+      deprecated: false
+      description: The amount options customer can choose to pay for the subscription
+      items:
+        $ref: '#/components/schemas/RepeatPayOptions'
+      maxItems: 3
+      minItems: 3
+      nullable: false
+    AmountOptions_remainingStatementBalance:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Remaining statement balance if some part of it is already paid
+      properties:
+        amount:
+          $ref: '#/components/schemas/amt'
+        currencyCode:
+          $ref: '#/components/schemas/currency'
+      required:
+      - amount
+      - currencyCode
+      nullable: false
+    ProjectedCreditDate:
+      type: string
+      format: date
+      deprecated: false
+      description: Projected credit date of payment
+      example: '2021-02-28'
+      nullable: false
+    ExternalBankDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        bankName:
+          $ref: '#/components/schemas/BankName'
+        isValidBank:
+          type: boolean
+          deprecated: false
+          description: Signifies the validity of the bank routing number
+          example: false
+          nullable: false
+        bankNewRoutingNumber:
+          $ref: '#/components/schemas/BankRoutingNumber'
+        bankRoutingNumber:
+          $ref: '#/components/schemas/BankRoutingNumber'
+    BankAccountId:
+      type: string
+      deprecated: false
+      description: ID of bank account added as payment source
+      example: '123456789'
+      maxLength: 12
+      minLength: 1
+      pattern: ^([0-9]{1,12})$
+      nullable: false
+    BankAccountType:
+      type: string
+      deprecated: false
+      description: Account type of the bank account used as payment source
+      enum:
+      - CHECKING
+      - SAVINGS
+      example: CHECKING
+      nullable: false
+    UpdatedPaymentDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Update Payment Response
+      properties:
+        projectedCreditDate:
+          $ref: '#/components/schemas/ProjectedCreditDate'
+        paymentDate:
+          $ref: '#/components/schemas/PaymentDate'
+        amount:
+          $ref: '#/components/schemas/Amount'
+      required:
+      - amount
+      - paymentDate
+      - projectedCreditDate
+      nullable: false
+    BankRoutingNumber:
+      type: string
+      deprecated: false
+      description: Bank routing number of the bank account added as payment source
+      example: '123455645'
+      maxLength: 9
+      minLength: 9
+      pattern: ^([0-9]{9})$
+    GetAllExternalAccountsResponseDataLast4:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: All external bank accounts response data
+      properties:
+        data:
+          $ref: '#/components/schemas/ExternalAccountListLast4'
+      required:
+      - data
+      nullable: false
+    SubscriptionOptions_dateOptions_daysBeforeDueDateRange:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Interval from Due Date within the subscription can be set up
+      properties:
+        minimum:
+          $ref: '#/components/schemas/MinMaxDueDateInterval'
+        maximum:
+          $ref: '#/components/schemas/MinMaxDueDateInterval'
+      required:
+      - maximum
+      - minimum
+      nullable: false
+    sessionLoginTime:
+      type: string
+      format: date-time
+      deprecated: false
+      description: Timestamp when the customer login
+      example: '2021-05-29T08:12:38-04:00'
+      nullable: false
+    BankAccountNickname:
+      type: string
+      deprecated: false
+      description: Nickname for bank account added as payment source
+      example: ASHES
+      maxLength: 24
+      minLength: 1
+      pattern: ^([a-zA-Z0-9 .,&()#'-]{1,24})$
+      nullable: false
+    GetExternalAccountResponseDataLast4:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: external bank account response data
+      properties:
+        data:
+          $ref: '#/components/schemas/ExternalAccountLast4'
+      required:
+      - data
+      nullable: false
+    amt:
+      type: number
+      deprecated: false
+      description: Amount figure of payment amount
+      example: 99.0
+      maximum: 999999.99
+      minimum: 0
+      nullable: false
+    UpdatedAutoPaymentDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Update Auto Payment Response
+      properties:
+        paymentReferenceNumber:
+          $ref: '#/components/schemas/ReferenceNumber'
+        projectedCreditDate:
+          $ref: '#/components/schemas/ProjectedCreditDate'
+        paymentDate:
+          $ref: '#/components/schemas/PaymentDate'
+        amount:
+          $ref: '#/components/schemas/Amount'
+      required:
+      - amount
+      - paymentDate
+      - paymentReferenceNumber
+      - projectedCreditDate
+      nullable: false
+    AmountOptionType:
+      type: string
+      deprecated: false
+      description: Payment amount option type
+      enum:
+      - MINIMUM_DUE
+      - STATEMENT_BALANCE
+      - CURRENT_BALANCE
+      - CUSTOM
+      example: STATEMENT_BALANCE
+      nullable: false
+    ExternalAccountListLast4:
+      type: array
+      additionalProperties: false
+      deprecated: false
+      description: Get all external account list
+      items:
+        $ref: '#/components/schemas/ExternalBankAccountDetailsLast4'
+      maxItems: 2000
+      minItems: 0
+      nullable: false
+    AmountOptions_availableCredit:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Credit available for the card account
+      properties:
+        amount:
+          $ref: '#/components/schemas/amt'
+        currencyCode:
+          $ref: '#/components/schemas/currency'
+      required:
+      - amount
+      - currencyCode
+      nullable: false
+    RiskAssessmentDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Risk summary
+      properties:
+        verificationContextId:
+          type: string
+          deprecated: false
+          description: Fraud verification context id
+          example: e17e3338-344b-403c-8a87-f7d8006d6e33
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+          nullable: false
+      required:
+      - verificationContextId
+      nullable: false
+    ExternalAccountLast4:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Get all external account response
+      properties:
+        bankDetails:
+          $ref: '#/components/schemas/ExternalBankDetails'
+        bankAccountNickname:
+          $ref: '#/components/schemas/BankAccountNickname'
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        bankAccountNumberLast4:
+          $ref: '#/components/schemas/BankAccountNumberLast4'
+        bankAccountType:
+          $ref: '#/components/schemas/BankAccountType'
+      nullable: false
+    DateOptions_customDateRange:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Custom date range for future payments
+      properties:
+        fromDate:
+          type: string
+          deprecated: false
+          description: Start date of custom date range for future payments
+          example: 02-28-2021
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{2}-\d{2}-\d{4}$
+          nullable: false
+        toDate:
+          type: string
+          deprecated: false
+          description: End date of custom date range for future payments
+          example: 02-28-2021
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{2}-\d{2}-\d{4}$
+          nullable: false
+      required:
+      - fromDate
+      - toDate
+      nullable: false
+    PaymentSummaryListResponse:
+      type: array
+      deprecated: false
+      description: List of payments
+      items:
+        $ref: '#/components/schemas/PaymentSummary'
+      maxItems: 255
+      minItems: 0
+      nullable: false
+    SubscriptionRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information for creating/patching an AutoPay subscription
+      properties:
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        amount:
+          $ref: '#/components/schemas/amt'
+        daysBeforeDueDateToProcess:
+          $ref: '#/components/schemas/DaysBeforeDueDateToProcess'
+        repeatPayOptionType:
+          $ref: '#/components/schemas/RepeatPayOptions'
+        sessionLoginTime:
+          $ref: '#/components/schemas/sessionLoginTime'
+        authorizationText:
+          $ref: '#/components/schemas/AuthorizationText'
+        actionSubmittedTime:
+          $ref: '#/components/schemas/actionSubmittedTime'
+      required:
+      - actionSubmittedTime
+      - authorizationText
+      - bankAccountId
+      - daysBeforeDueDateToProcess
+      - repeatPayOptionType
+      nullable: false
+    SubscriptionId:
+      type: integer
+      default: 1
+      description: Unique Identifier for the Subscription
+      example: 12
+      maximum: 999999
+      minimum: 1
+    PaymentSummary:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Summary fields
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        amountOptionType:
+          $ref: '#/components/schemas/AmountOptionType'
+        statusUpdateDate:
+          type: string
+          format: date
+          deprecated: false
+          description: Date of payment status update
+          example: '2021-02-28'
+          nullable: false
+        bankAccountNickname:
+          $ref: '#/components/schemas/BankAccountNickname'
+        projectedCreditDate:
+          $ref: '#/components/schemas/ProjectedCreditDate'
+        channel:
+          type: string
+          deprecated: false
+          description: Channel from which the payment was requested
+          enum:
+          - WEB
+          - DESKTOP
+          - WIRELESS
+          - PHONE
+          - MAIL
+          - BATCH
+          - UNKNOWN
+          example: WEB
+          nullable: false
+        isInternalPayment:
+          type: boolean
+          deprecated: false
+          description: Flag to specify if source of the payment was internal
+          nullable: false
+        referenceNumber:
+          $ref: '#/components/schemas/ReferenceNumber'
+        requestedOn:
+          type: string
+          format: date-time
+          deprecated: false
+          description: Time at which the payment was requested
+          example: '2021-07-08T10:30:00-04:00'
+          nullable: false
+        paymentDate:
+          $ref: '#/components/schemas/PaymentDate'
+        subscriptionId:
+          type: string
+          deprecated: false
+          description: Subscription ID if enrolled in repeat pay
+          example: '123456789'
+          maxLength: 12
+          minLength: 1
+          pattern: ^([0-9]{1,12})$
+          nullable: false
+        status:
+          type: string
+          deprecated: false
+          description: Status of the payment
+          enum:
+          - CANCELLED
+          - IN_PROCESS
+          - RETURNED
+          - UNSUCCESSFUL
+          - SCHEDULED
+          - PAID
+          example: RETURNED
+          nullable: false
+        bankAccountType:
+          $ref: '#/components/schemas/BankAccountType'
+      required:
+      - amount
+      - amountOptionType
+      - bankAccountNickname
+      - bankAccountType
+      - channel
+      - isInternalPayment
+      - paymentDate
+      - projectedCreditDate
+      - referenceNumber
+      - requestedOn
+      - status
+      - statusUpdateDate
+      - subscriptionId
+      nullable: true
+    BankAccountNumberLast4:
+      type: string
+      deprecated: false
+      description: Last 4 digits of Bank account number to be added as a payment source
+      example: '1234'
+      maxLength: 4
+      minLength: 4
+      pattern: ^([a-zA-Z0-9]{4,4})$
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 9709-4675-2456-7801
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]{1,50}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying
+            purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - id
+      - title
+    PaymentOptionsResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: payment options fields
+      properties:
+        dateOptions:
+          $ref: '#/components/schemas/DateOptions'
+        amountOptions:
+          $ref: '#/components/schemas/AmountOptions'
+      required:
+      - amountOptions
+      - dateOptions
+      nullable: false
+    AmountOptions:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: amount options
+      properties:
+        minimumDue:
+          $ref: '#/components/schemas/AmountOptions_minimumDue'
+        statementBalance:
+          $ref: '#/components/schemas/AmountOptions_statementBalance'
+        currentBalance:
+          $ref: '#/components/schemas/AmountOptions_currentBalance'
+        availableCredit:
+          $ref: '#/components/schemas/AmountOptions_availableCredit'
+        creditLimit:
+          $ref: '#/components/schemas/AmountOptions_creditLimit'
+        remainingStatementBalance:
+          $ref: '#/components/schemas/AmountOptions_remainingStatementBalance'
+        remainingMinimumDue:
+          $ref: '#/components/schemas/AmountOptions_remainingMinimumDue'
+      required:
+      - availableCredit
+      - creditLimit
+      - currentBalance
+      - minimumDue
+      - remainingMinimumDue
+      - remainingStatementBalance
+      - statementBalance
+      nullable: false
+    SchedulePaymentResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Schedule Payment Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/SchedulePaymentResponse'
+      required:
+      - data
+      nullable: false
+    ModifySubscriptionReqData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Update a subscription
+      properties:
+        data:
+          $ref: '#/components/schemas/ModifySubscriptionRequest'
+      required:
+      - data
+      nullable: false
+    SubscriptionOptions:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding options for date, payment option type & range for custom amount
+      properties:
+        dateOptions:
+          $ref: '#/components/schemas/SubscriptionOptions_dateOptions'
+        repeatPayOptionType:
+          $ref: '#/components/schemas/RepeatPayOptionType'
+        customAmountRange:
+          $ref: '#/components/schemas/CustomAmountRange'
+      required:
+      - customAmountRange
+      - dateOptions
+      - repeatPayOptionType
+      nullable: false
+    currency:
+      type: string
+      deprecated: false
+      description: Currency of payment amount
+      example: USD
+      maxLength: 3
+      minLength: 3
+      pattern: ^(USD)$
+      nullable: false
+    DateOptions:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Date options available under payment options
+      properties:
+        dueDate:
+          type: string
+          deprecated: false
+          description: Due date by which minimum due amount should be paid
+          example: 02-28-2021
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{2}-\d{2}-\d{4}$
+          nullable: false
+        payNowDate:
+          type: string
+          deprecated: false
+          description: Date when customer chooses to pay now
+          example: 02-28-2021
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{2}-\d{2}-\d{4}$
+          nullable: false
+        effectiveDate:
+          type: string
+          deprecated: false
+          description: Effective date
+          example: 02-28-2021
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{2}-\d{2}-\d{4}$
+          nullable: false
+        statementCloseDate:
+          type: string
+          deprecated: false
+          description: Date when statement was generated for the last billing cycle
+          example: 02-28-2021
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{2}-\d{2}-\d{4}$
+          nullable: false
+        nextStatementCloseDate:
+          type: string
+          deprecated: false
+          description: Upcoming statement date
+          example: 02-28-2021
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{2}-\d{2}-\d{4}$
+          nullable: false
+        customDateRange:
+          $ref: '#/components/schemas/DateOptions_customDateRange'
+      required:
+      - customDateRange
+      - dueDate
+      - effectiveDate
+      - nextStatementCloseDate
+      - payNowDate
+      - statementCloseDate
+      nullable: false
+    AmountOptions_currentBalance:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Current balance i.e. total amount owed by the customer at the given moment 
+      properties:
+        amount:
+          $ref: '#/components/schemas/amt'
+        currencyCode:
+          $ref: '#/components/schemas/currency'
+      required:
+      - amount
+      - currencyCode
+      nullable: false
+    AddSubscriptionReqData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Enroll to a subscription request data
+      properties:
+        data:
+          $ref: '#/components/schemas/SubscriptionRequest'
+      required:
+      - data
+      nullable: false
+    ModifyPaymentRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Modify Payment Request
+      properties:
+        action:
+          type: string
+          deprecated: false
+          description: Action describing whether the payment needs to be updated or canceled
+          enum:
+          - UPDATE
+          - CANCEL
+          example: UPDATE
+          nullable: false
+        modifyPaymentDetails:
+          $ref: '#/components/schemas/PaymentRequest'
+      required:
+      - action
+      - modifyPaymentDetails
+      nullable: false
+    ModifyPaymentResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Modify Payment Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/ModifyPaymentResponse'
+      required:
+      - data
+      nullable: false
+    ModifySubscriptionRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information for updating an AutoPay subscription
+      properties:
+        action:
+          type: string
+          deprecated: false
+          description: Action describing whether the payment needs to be updated or canceled
+          enum:
+          - UPDATE
+          - CANCEL
+          example: UPDATE
+          nullable: false
+        modifySubscriptionDetails:
+          $ref: '#/components/schemas/SubscriptionRequest'
+      required:
+      - action
+      - modifySubscriptionDetails
+      nullable: false
+    Amount:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Amount Object
+      properties:
+        amount:
+          $ref: '#/components/schemas/amt'
+        currencyCode:
+          $ref: '#/components/schemas/currency'
+      required:
+      - amount
+      - currencyCode
+      nullable: false
+    PaymentSummaryMetaResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        totalPages:
+          type: number
+          format: int32
+          deprecated: false
+          description: Total pages in response
+          example: 10
+          maximum: 100
+          minimum: 1
+          nullable: false
+        totalElements:
+          type: number
+          format: int32
+          deprecated: false
+          description: Total elements
+          example: 12
+          maximum: 100
+          minimum: 0
+          nullable: false
+      nullable: false
+    AmountOptions_creditLimit:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Credit limit for the card account
+      properties:
+        amount:
+          $ref: '#/components/schemas/amt'
+        currencyCode:
+          $ref: '#/components/schemas/currency'
+      required:
+      - amount
+      - currencyCode
+      nullable: false
+    CustomAmountRange:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Range allowed for the custom amount payment option
+      properties:
+        minimum:
+          $ref: '#/components/schemas/MinCustomRangeInterval'
+        maximum:
+          $ref: '#/components/schemas/MaxCustomRangeInterval'
+      required:
+      - maximum
+      - minimum
+      nullable: false
+    PaymentOptionsResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Options Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/PaymentOptionsResponse'
+      required:
+      - data
+      nullable: false
+    ModifyPaymentRequestData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Modify Payment Request Data
+      properties:
+        data:
+          $ref: '#/components/schemas/ModifyPaymentRequest'
+      required:
+      - data
+      nullable: false
+    actionSubmittedTime:
+      type: string
+      format: date-time
+      deprecated: false
+      description: Timestamp when the submit button was clicked
+      example: '2021-05-29T08:12:38-04:00'
+      nullable: false
+    SchedulePaymentResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Schedule Payment Response
+      properties:
+        status:
+          type: string
+          deprecated: false
+          description: Status describing if payment was added successfully
+          enum:
+          - SUCCESS
+          - DUPLICATE
+          - CHALLENGE
+          - DENIED
+          example: SUCCESS
+          nullable: false
+        scheduledPaymentDetails:
+          $ref: '#/components/schemas/ScheduledPaymentDetails'
+        riskAssessmentDetails:
+          $ref: '#/components/schemas/RiskAssessmentDetails'
+      required:
+      - status
+      nullable: false
+    RepeatPayOptions:
+      type: string
+      description: The amount options customer can choose to pay for the subscription
+      enum:
+      - MINIMUM_DUE
+      - STATEMENT_BALANCE
+      - CUSTOM
+      example: MINIMUM_DUE
+    ModifyAutoPaymentResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Modify AutoPay Response
+      properties:
+        status:
+          type: string
+          deprecated: false
+          description: Status describing if autopay payment was modified successfully
+          enum:
+          - SUCCESS
+          - CHALLENGE
+          - DENIED
+          example: SUCCESS
+          nullable: false
+        updatedPaymentDetails:
+          $ref: '#/components/schemas/UpdatedAutoPaymentDetails'
+        riskAssessmentDetails:
+          $ref: '#/components/schemas/RiskAssessmentDetails'
+      required:
+      - status
+      nullable: false
+    MinMaxDueDateInterval:
+      type: integer
+      default: 1
+      description: Lower or Upper limit from Due Date within the subscription can be set up
+      example: 12
+      maximum: 99
+      minimum: 0
+    PaymentRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Request
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        amountOptionType:
+          $ref: '#/components/schemas/AmountOptionType'
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        paymentDate:
+          $ref: '#/components/schemas/PaymentDate'
+        sessionLoginTime:
+          $ref: '#/components/schemas/sessionLoginTime'
+        authorizationText:
+          $ref: '#/components/schemas/AuthorizationText'
+        actionSubmittedTime:
+          $ref: '#/components/schemas/actionSubmittedTime'
+      required:
+      - actionSubmittedTime
+      - amount
+      - amountOptionType
+      - authorizationText
+      - bankAccountId
+      - paymentDate
+      - sessionLoginTime
+      nullable: false
+    ModifySubscriptionResData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Response for subscription update
+      properties:
+        data:
+          $ref: '#/components/schemas/ModifySubscriptionResponse'
+      required:
+      - data
+      nullable: false
+    MaxCustomRangeInterval:
+      type: integer
+      default: 999999
+      description: Higher limit for Custom Amount payment option
+      example: 999999
+      maximum: 999999
+      minimum: 1
+    SubscriptionData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Subscription data
+      properties:
+        data:
+          $ref: '#/components/schemas/Subscription'
+      required:
+      - data
+      nullable: false
+    AddSubscriptionResData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Response for subscription enrollment
+      properties:
+        data:
+          $ref: '#/components/schemas/AddSubscriptionResponse'
+      required:
+      - data
+      nullable: false
+    ScheduledPaymentDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Schedule Payment Response
+      properties:
+        referenceNumber:
+          $ref: '#/components/schemas/ReferenceNumber'
+        projectedCreditDate:
+          $ref: '#/components/schemas/ProjectedCreditDate'
+        paymentDate:
+          $ref: '#/components/schemas/PaymentDate'
+        amount:
+          $ref: '#/components/schemas/Amount'
+      required:
+      - amount
+      - paymentDate
+      - projectedCreditDate
+      - referenceNumber
+      nullable: false
+  responses:
+    SubscriptionRes:
+      description: Subscription information.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionData'
+          examples:
+            SubscriptionRes:
+              $ref: '#/components/examples/SubscriptionRes'
+    SchedulePaymentRes:
+      description: Schedule Payment response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SchedulePaymentResponseData'
+          examples:
+            SchedulePaymentRes:
+              $ref: '#/components/examples/SchedulePaymentRes'
+    PaymentSummaryRes:
+      description: Payment Summary response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentSummaryResponseData'
+          examples:
+            PaymentSummaryRes:
+              $ref: '#/components/examples/PaymentSummaryRes'
+    AllExternalAccountsResLast4:
+      description: Gets all external bank accounts
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetAllExternalAccountsResponseDataLast4'
+          examples:
+            AllExternalAccountsRes:
+              $ref: '#/components/examples/AllExternalAccountsResLast4'
+    PaymentOptionsRes:
+      description: Payment Options response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentOptionsResponseData'
+          examples:
+            PaymentOptionsRes:
+              $ref: '#/components/examples/PaymentOptionsRes'
+    ModifyPaymentRes:
+      description: Modify Payment response for update or cancel action.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ModifyPaymentResponseData'
+          examples:
+            ModifyPaymentRes:
+              $ref: '#/components/examples/ModifyPaymentRes'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic\
+        \ error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            InternalServerError:
+              $ref: '#/components/examples/example-error-500'
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat\
+        \ the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            BadRequest:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    SubscriptionOptionsRes:
+      description: Subscription options list.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionOptionsData'
+          examples:
+            SubscriptionOptionsRes:
+              $ref: '#/components/examples/SubscriptionOptionsRes'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Unauthorized:
+              $ref: '#/components/examples/example-error-401'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition\
+        \ which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After\
+        \ header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote:\
+        \ The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers\
+        \ may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            ServiceUnavailable:
+              $ref: '#/components/examples/example-error-503'
+    ModifyAutoPaymentRes:
+      description: Modify Current Cycle AutoPayment Response
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ModifyAutoPaymentResponseData'
+          examples:
+            ModifyAutoPaymentRes:
+              $ref: '#/components/examples/ModifyAutoPaymentRes'
+    ModifySubscriptionRes:
+      description: Subscription enrollment response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ModifySubscriptionResData'
+          examples:
+            ModifySubscriptionRes:
+              $ref: '#/components/examples/ModifySubscriptionRes'
+    AddSubscriptionRes:
+      description: Subscription enrollment response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddSubscriptionResData'
+          examples:
+            AddSubscriptionRes:
+              $ref: '#/components/examples/AddSubscriptionRes'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status\
+        \ code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when\
+        \ no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            NotFound:
+              $ref: '#/components/examples/example-error-404'
+    ExternalAccountResLast4:
+      description: Get an external bank account
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetExternalAccountResponseDataLast4'
+          examples:
+            ExternalAccountRes:
+              $ref: '#/components/examples/ExternalAccountResLast4'
+  parameters:
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this\
+        \ unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the\
+        \ current Barclays REST Standard.\n"
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    ToDateQuery:
+      name: toDate
+      in: query
+      description: End date of date range which customer needs to view payments from
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        format: date
+      example: '2021-02-28'
+    PageQuery:
+      name: page
+      in: query
+      description: Page index
+      required: false
+      deprecated: false
+      schema:
+        type: integer
+        default: 1
+        maximum: 2147483647
+        minimum: 1
+      example: 10
+    ReferenceNumberPath:
+      name: referenceNumber
+      in: path
+      description: Payment Reference Number
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 18
+        minLength: 1
+        pattern: ^[0-9]{1,18}$
+      example: '6897656'
+    FromDateQuery:
+      name: fromDate
+      in: query
+      description: Start date of date range which customer needs to view payments from
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        format: date
+      example: '2021-02-28'
+    X-IDVSessionID:
+      name: X-IDVSessionID
+      in: header
+      description: 'If TIAA token has this value, it is used to perform fraud checks for high-risk transactions.
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    BankAccountIdPath:
+      name: bankAccountId
+      in: path
+      description: Internal sequence number generated for external account
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 12
+        minLength: 1
+        pattern: ^[0-9]{1,12}$
+      example: 0013467801
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer Token
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 2048
+        minLength: 32
+        pattern: ^[A-Za-z0-9\-_\.\ ]{32,2048}$
+      example: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Imctb09kUnc1TWFlTmcwbWpsN1VpczlXT010NCIsInBpLmF0bSI6IjQ2N3YifQ.eyJzY29wZSI6ImFjY291bnRzIiwiY2xpZW50X2lkIjoiR2FwQ2xpZW50IiwiaXNzIjoiVElBQSBERVYiLCJhdWQiOiJCRE4tVVMtREVWIiwianRpIjoia0F0c2JYYW5CdnZOSFBacVd6WEs4TlhzczlPSXozamdBT090IiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiU21pdGgiLCJmcmF1ZFRva2VuIjoiOThjYmVlNWEtOTU4MS00NTdlLTk3NTEtZjVlYzNlNWZiYTUwIiwiZnJhdWRUb2tlbklzc3VlVGltZSI6IjE2MzAwMDMyNTQiLCJhY2NvdW50cyI6WyIxMjM0NTY3OCIsIjk4NzY1NDMyIl0sInBhcnR5SWQiOiIxMjM0NTYiLCJ1c2VybmFtZSI6ImJhcmNsYXlzdXNlciIsImV4cCI6MTYzMDAwMTQ1NX0.Jkgb2A2HAOdLKaion8ff097GedtQkxtAV4Qxea538owLS8zaEvTm9kHBWOxmuNHIgP1V8mx3NUflwbY8A823Ut00wWqbUbB-cSV0idDaQJ2pKWHDFYbipvi5I7yPGj2BR-oHhQao1ZGlW6DyxYuZ12q8IK7LpKVWbCSPZ-fFAlD5HgH_FORq6Avc5oLH--Zcww63fI6gtZ48pwnXX2gM1aiSQ3lfvLXWVQ9fooAlP65LOW1MMjh5HOtrNvA7ObBSYepYzef5ykP2YvIz3OOS4hLhTo-3-iEbUDvkPx_mmz_pi7piXrMqQPfPnz5y2VkLOHTYfQJeQmVg60YTG7uPdw
+    StatusQuery:
+      name: status
+      in: query
+      description: Payment Status to filter out the payments
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        enum:
+        - CANCELLED
+        - IN_PROCESS
+        - RETURNED
+        - UNSUCCESSFUL
+        - SCHEDULED
+        - PAID
+      example: RETURNED
+    PageSizeQuery:
+      name: size
+      in: query
+      description: Number of items on each page
+      required: false
+      deprecated: false
+      schema:
+        type: integer
+        default: 20
+        maximum: 2147483647
+        minimum: 1
+      example: 10
+    ExtAccountIdPath:
+      name: extAccountId
+      in: path
+      description: External Account ID received from the partner
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 1
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+      example: e17e3338-344b-403c-8a87-f7d8006d6e33
+    X-Party-ID:
+      name: X-Party-Id
+      in: header
+      description: 'ID of customer initiating the request
+
+        '
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 20
+        minLength: 1
+        pattern: ^[0-9]{1,20}$
+      example: '100145000'
+    PaymentInitiationSourceQuery:
+      name: paymentInitiationSource
+      in: query
+      description: Inititiation source of payments that could be internal, external or both
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        enum:
+        - INTERNAL
+        - THIRD_PARTY
+        - BOTH
+      example: BOTH
+    SubscriptionIdPath:
+      name: subscriptionId
+      in: path
+      description: Subscription ID
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 17
+        minLength: 1
+        pattern: ^[0-9]{1,17}$
+      example: '1234'
+    Content-Type:
+      name: Content-Type
+      in: header
+      description: Content-Type
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 35
+        minLength: 16
+        pattern: ^[a-zA-Z0-9\-/= ]{16,35}$
+      example: application/json
+  examples:
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    SubscriptionRes:
+      value:
+        data:
+          subscriptionId: 62954
+          amount: 0.88
+          daysBeforeDueDateToProcess: 6
+          repeatPayOptionType: CUSTOM
+          dayOfMonth: 6
+          enrolledDate: 01-01-2026
+          lastModifiedDate: 01-01-2026
+          bankAccountId: '120'
+    SchedulePaymentRes:
+      value:
+        data:
+          status: SUCCESS
+          scheduledPaymentDetails:
+            referenceNumber: '443046388'
+            projectedCreditDate: '2026-03-13'
+            paymentDate: '2026-02-12'
+            amount:
+              amount: 1.11
+              currencyCode: USD
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
+    PaymentSummaryRes:
+      value:
+        data:
+        - amount:
+            amount: 200.0
+            currencyCode: USD
+          amountOptionType: MINIMUM_DUE
+          statusUpdateDate: '2026-01-22'
+          bankAccountNickname: Ashes
+          projectedCreditDate: '2026-01-25'
+          channel: WEB
+          isInternalPayment: true
+          referenceNumber: '1679405965'
+          requestedOn: '2025-07-08T10:30:00-04:00'
+          paymentDate: '2026-01-24'
+          subscriptionId: '87425712'
+          status: CANCELLED
+          bankAccountType: CHECKING
+        meta:
+          totalPages: 1
+          totalElements: 1
+    ModifyPaymentReq:
+      value:
+        data:
+          action: UPDATE
+          modifyPaymentDetails:
+            amount:
+              amount: 7.1
+              currencyCode: USD
+            bankAccountId: '7314174'
+            paymentDate: '2026-07-25'
+            amountOptionType: CUSTOM
+            sessionLoginTime: '2026-05-29T08:02:38.000+05:30'
+            authorizationText: By selecting “Make Payment”, I authorize Barclays..
+            actionSubmittedTime: '2026-05-29T08:12:38.000+05:30'
+    AllExternalAccountsResLast4:
+      value:
+        data:
+        - bankDetails:
+            bankRoutingNumber: '397827963'
+            isValidBank: false
+            bankNewRoutingNumber: '863153389'
+            bankName: TD RETAIL CARD SERVICES
+          bankAccountNickname: 79n#9vn5#)
+          bankAccountId: 08
+          bankAccountNumberLast4: '4110'
+          bankAccountType: SAVINGS
+    PaymentOptionsRes:
+      value:
+        data:
+          dateOptions:
+            dueDate: 04-22-2026
+            payNowDate: 04-03-2026
+            effectiveDate: 04-03-2026
+            statementCloseDate: 14-02-2026
+            nextStatementCloseDate: 14-03-2026
+            customDateRange:
+              fromDate: 04-04-2026
+              toDate: 08-04-2026
+          amountOptions:
+            minimumDue:
+              currencyCode: USD
+              amount: 156.06
+            statementBalance:
+              currencyCode: USD
+              amount: 6312.46
+            currentBalance:
+              currencyCode: USD
+              amount: 6312.46
+            availableCredit:
+              currencyCode: USD
+              amount: 18687.54
+            creditLimit:
+              currencyCode: USD
+              amount: 25000
+            remainingStatementBalance:
+              currencyCode: USD
+              amount: 6312.46
+            remainingMinimumDue:
+              currencyCode: USD
+              amount: 156.06
+    ModifyPaymentRes:
+      value:
+        data:
+          status: SUCCESS
+          updatedPaymentDetails:
+            projectedCreditDate: '2026-03-13'
+            paymentDate: '2026-02-12'
+            amount:
+              amount: 1.11
+              currencyCode: USD
+    ModifySubscriptionReq:
+      value:
+        data:
+          action: UPDATE
+          modifySubscriptionDetails:
+            amount: 12.59
+            bankAccountId: '120'
+            daysBeforeDueDateToProcess: 10
+            repeatPayOptionType: STATEMENT_BALANCE
+            sessionLoginTime: '2026-01-10T15:45:13.922-04:00'
+            authorizationText: sample authorization text
+            actionSubmittedTime: '2026-01-10T15:45:13.922-04:00'
+    SubscriptionOptionsRes:
+      value:
+        data:
+          dateOptions:
+            dueDate: 01-02-2026
+            daysBeforeDueDateRange:
+              maximum: 10
+              minimum: 1
+          repeatPayOptionType:
+          - MINIMUM_DUE
+          - STATEMENT_BALANCE
+          - CUSTOM
+          customAmountRange:
+            maximum: 999999
+            minimum: 29
+    SchedulePaymentReq:
+      value:
+        data:
+          amount:
+            amount: 1.11
+            currencyCode: USD
+          bankAccountId: '7318928'
+          paymentDate: '2026-10-15'
+          amountOptionType: CUSTOM
+          sessionLoginTime: '2026-10-10T08:02:38.000-04:00'
+          authorizationText: By selecting “Make Payment”, I authorize Barclays..
+          actionSubmittedTime: '2026-10-10T08:12:38.000-04:00'
+    ModifyAutoPaymentRes:
+      value:
+        data:
+          status: SUCCESS
+          updatedPaymentDetails:
+            paymentReferenceNumber: '443046388'
+            projectedCreditDate: '2026-02-13'
+            paymentDate: '2026-02-12'
+            amount:
+              amount: 1.11
+              currencyCode: USD
+    ModifySubscriptionRes:
+      value:
+        data:
+          status: SUCCESS
+          subscriptionDetails:
+            subscriptionId: 63
+            enrolledDate: 01-02-2026
+            firstPaymentDate: 02-02-2026
+            amount: 12.59
+            referenceNumber: '4'
+            paymentDate: 02-02-2026
+            lastModifiedDate: 02-02-2026
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    AddSubscriptionRes:
+      value:
+        data:
+          status: SUCCESS
+          subscriptionDetails:
+            subscriptionId: 63
+            enrolledDate: 01-02-2026
+            firstPaymentDate: 02-02-2026
+            amount: 12.59
+            referenceNumber: '4'
+            paymentDate: 02-02-2026
+    AddSubscriptionReq:
+      value:
+        data:
+          amount: 12.59
+          bankAccountId: '120'
+          daysBeforeDueDateToProcess: 10
+          repeatPayOptionType: CUSTOM
+          sessionLoginTime: '2026-01-10T15:45:13.922-04:00'
+          authorizationText: sample authorization text
+          actionSubmittedTime: '2026-01-10T15:45:13.922-04:00'
+    ExternalAccountResLast4:
+      value:
+        data:
+          bankDetails:
+            bankRoutingNumber: '037736634'
+            isValidBank: false
+            bankNewRoutingNumber: '908982053'
+            bankName: TD RETAIL CARD SERVICES
+          bankAccountNickname: 'BX)#C8) '
+          bankAccountId: '414'
+          bankAccountNumberLast4: '4513'
+          bankAccountType: SAVINGS
+  requestBodies:
+    ModifySubscriptionReq:
+      description: Modify Subscription Request Data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ModifySubscriptionReqData'
+          examples:
+            ModifySubscriptionReq:
+              $ref: '#/components/examples/ModifySubscriptionReq'
+      required: true
+    ModifyAutoPaymentReq:
+      description: Modify Payment Request Data to Update Current Cycle AutoPayment
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ModifyPaymentRequestData'
+          examples:
+            ModifyPaymentReq:
+              $ref: '#/components/examples/ModifyPaymentReq'
+      required: true
+    SchedulePaymentReq:
+      description: Payment Request Data To schedule A Payment
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SchedulePaymentRequestData'
+          examples:
+            SchedulePaymentReq:
+              $ref: '#/components/examples/SchedulePaymentReq'
+      required: true
+    ModifyPaymentReq:
+      description: Modify Payment Request Data To Update Or Cancel A Payment
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ModifyPaymentRequestData'
+          examples:
+            ModifyPaymentReq:
+              $ref: '#/components/examples/ModifyPaymentReq'
+      required: true
+    AddSubscriptionReq:
+      description: Create Subscription Request Data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddSubscriptionReqData'
+          examples:
+            AddSubscriptionReq:
+              $ref: '#/components/examples/AddSubscriptionReq'
+      required: true
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

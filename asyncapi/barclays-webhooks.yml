@@ -1,0 +1,47 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/barclays-event-notification-openapi.yml (Event Notification v4.0, harvested from developer.barclays.com)
+asyncapi_published: false
+note: 'Barclays publishes no AsyncAPI document. It does publish an event surface: the UK Open Banking Event Notification
+  API (v3.1 and v4.0), which OBIE also calls the two-way notification of revocation API. It supports both delivery
+  modes in the standard — real-time push to a TPP-registered callback URL, and aggregated polling via POST /events
+  for TPPs that cannot host a callback.'
+delivery:
+- mode: push
+  mechanism: ASPSP POSTs a signed event notification (JWT) to the callback URL the TPP registered
+  registration: POST /event-subscriptions with the TPP callback URL
+- mode: poll
+  mechanism: TPP calls POST /events to retrieve and acknowledge queued events
+  schema: OBEventPolling1 / OBEventPollingResponse1
+operations:
+- operationId: CreateEventSubscriptions
+  method: post
+  path: /event-subscriptions
+  summary: Create Event Subscription
+- operationId: GetEventSubscriptions
+  method: get
+  path: /event-subscriptions
+  summary: Get Event Subscription
+- operationId: ChangeEventSubscriptionsEventSubscriptionId
+  method: put
+  path: /event-subscriptions/{eventSubscriptionId}
+  summary: Change Event Subscription
+- operationId: DeleteEventSubscriptionsEventSubscriptionId
+  method: delete
+  path: /event-subscriptions/{eventSubscriptionId}
+  summary: Delete Event Subscription
+- operationId: CreateEvents
+  method: post
+  path: /events
+  summary: Create Events (aggregated polling)
+scopes:
+- accounts
+- payments
+- fundsconfirmations
+base_url: https://telesto.api.barclays/open-banking/v3.1/event-subscriptions
+base_url_evidence: the example request URL Barclays publishes inside its own Event Notification contract
+subjects:
+- account access consent revocation
+- payment consent revocation
+- funds confirmation consent revocation
+security: TPPOAuth2Security (client_credentials) over mTLS

@@ -1,0 +1,516 @@
+openapi: 3.1.0
+info:
+  title: Rewards Earn
+  description: API for retrieving reward earned information of an account
+  version: '1.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/556aab79-528f-41bf-b75e-29aa4874061a.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-rewards-earn-openapi.json. The UK Open Banking documents
+  carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as Barclays implements
+  and publishes it — the API, the registry record and the host are Barclays'.
+tags:
+- name: RewardsEarnHistory
+  description: Rewards Earn History Details
+paths:
+  /cards/accounts/external/{externalAccountId}/rewards-earn/history:
+    summary: Get Rewards Earn History Details
+    description: Get Rewards Earn History Details
+    get:
+      tags:
+      - RewardsEarnHistory
+      summary: Get Rewards Earn History Details
+      description: "Retrieves a list of reward posted for a specific external account.\n\n**Query Parameters:**\n- `numberOfPastCycles`:\
+        \ Number of past cycles required \n\n**Response includes:**\n- List of Reward Earned"
+      operationId: getRewardsEarnHistoryDetails
+      parameters:
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: externalAccountId
+        in: path
+        description: A unique id (similar to UUID) created for each customer account
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+      - name: numberOfPastCycles
+        in: query
+        description: Number of past billing cycles to retrieve (excluding current cycle). Maximum 24 cycles allowed.
+        required: false
+        schema:
+          type: integer
+          default: 24
+          maximum: 24
+          minimum: 0
+        example: 24
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/RewardEarnHistoryRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      deprecated: false
+components:
+  schemas:
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 9709-4675-2456-7801
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]{1,50}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying
+            purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - id
+      - title
+    RewardInformation:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the reward
+          example: All Off Partner Purchases
+          maxLength: 255
+          minLength: 0
+          pattern: ^[a-zA-Z0-9\s\-.,&()'/]+$
+        type:
+          type: string
+          description: Type of reward
+          enum:
+          - BASE_EARN
+          - BONUS
+          - ADJ
+          example: BASE_EARN
+        earnedAwardValue:
+          type: number
+          format: double
+          description: Reward amount
+          example: 10
+          maximum: 10000000
+          minimum: -10000000
+      required:
+      - description
+      - earnedAwardValue
+      - type
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    RewardsEarnHistoryData:
+      type: object
+      deprecated: false
+      properties:
+        rewardCurrency:
+          type: string
+          description: Currency type for the reward
+          example: cash rewards
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9®™$\s_\-\.]+$
+        rewardHistory:
+          type: array
+          description: List of reward earned by statementDate
+          items:
+            $ref: '#/components/schemas/RewardInformationSummaryResponse'
+          maxItems: 100
+          minItems: 0
+      required:
+      - rewardCurrency
+      - rewardHistory
+      nullable: false
+    RewardInformationSummaryResponse:
+      type: object
+      properties:
+        statementDate:
+          type: string
+          format: date
+          description: Statement date for the cycle
+          example: '2025-11-01'
+        isCurrent:
+          type: boolean
+          description: cycle type
+          example: true
+        totalEarnedAwardValue:
+          type: number
+          format: double
+          description: Reward amount
+          example: 10
+          maximum: 10000000
+          minimum: -10000000
+        rewardInformationList:
+          type: array
+          description: summary of reward earned by award description
+          items:
+            $ref: '#/components/schemas/RewardInformation'
+          maxItems: 200
+          minItems: 0
+      required:
+      - isCurrent
+      - rewardInformationList
+      - statementDate
+      - totalEarnedAwardValue
+    RewardsEarnHistoryResponse:
+      type: object
+      deprecated: false
+      properties:
+        data:
+          $ref: '#/components/schemas/RewardsEarnHistoryData'
+      required:
+      - data
+      nullable: false
+  responses:
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat\
+        \ the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400-bad-request:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    RewardEarnHistoryRes:
+      description: Successful response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RewardsEarnHistoryResponse'
+          examples:
+            multipleRewards:
+              summary: Multiple reward earned
+              $ref: '#/components/examples/rewards-earn-history'
+    TooManyRequests:
+      description: "When a server is under attack or just receiving a very \nlarge number of requests from a single party,\
+        \ responding \nto each with a 429 status code will consume resources. \nTherefore, servers may drop connections or\
+        \ take other steps\ninstead of responding with the 429 status code, when limiting\nresource usage.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-429:
+              $ref: '#/components/examples/example-error-429'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition\
+        \ which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After\
+        \ header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote:\
+        \ The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers\
+        \ may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic\
+        \ error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status\
+        \ code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when\
+        \ no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer Token
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 2048
+        minLength: 32
+        pattern: ^[A-Za-z0-9\-_\.\ ]{32,2048}$
+      example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this\
+        \ unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the\
+        \ current Barclays REST Standard.\n"
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    NumberOfPastCycles:
+      name: numberOfPastCycles
+      in: query
+      description: Number of past billing cycles to retrieve (excluding current cycle). Maximum 24 cycles allowed.
+      required: false
+      schema:
+        type: integer
+        default: 24
+        maximum: 24
+        minimum: 0
+      example: 24
+    ExternalAccountID:
+      name: externalAccountId
+      in: path
+      description: A unique id (similar to UUID) created for each customer account
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+  examples:
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    rewards-earn-history:
+      value:
+        data:
+          rewardCurrency: cash rewards
+          rewardHistory:
+          - statementDate: '2026-02-26'
+            isCurrent: true
+            totalEarnedAwardValue: 125.5
+            rewardInformationList:
+            - description: Samsung On partner
+              type: BASE_EARN
+              earnedAwardValue: 25.5
+            - description: Welcome Bonus
+              type: BONUS
+              earnedAwardValue: 100
+          - statementDate: '2026-01-26'
+            isCurrent: false
+            totalEarnedAwardValue: 50
+            rewardInformationList:
+            - description: Samsung On partner
+              type: BASE_EARN
+              earnedAwardValue: 20
+            - description: Samsung Off partner
+              type: BASE_EARN
+              earnedAwardValue: 30
+          - statementDate: '2026-12-26'
+            isCurrent: false
+            totalEarnedAwardValue: 0
+            rewardInformationList: []
+          - statementDate: '2025-11-26'
+            isCurrent: false
+            totalEarnedAwardValue: 40
+            rewardInformationList:
+            - description: Samsung On partner
+              type: BASE_EARN
+              earnedAwardValue: 20
+            - description: Adhoc Rewards
+              type: ADJ
+              earnedAwardValue: 20
+    example-error-429:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: TOO_MANY_REQUESTS
+          title: Too many requests
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    example-error-403:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed.
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

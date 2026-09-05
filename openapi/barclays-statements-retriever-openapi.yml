@@ -1,0 +1,489 @@
+openapi: 3.1.0
+info:
+  title: Statements Retriever
+  description: Enables a secure view of customer statements
+  version: '1.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/bbd4bc7d-30cd-46a5-bc9a-169e7472ab2a.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-statements-retriever-openapi.json. The UK Open Banking
+  documents carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as
+  Barclays implements and publishes it — the API, the registry record and the host are Barclays'.
+tags:
+- name: statements-list
+  description: Returns list of statements
+paths:
+  /statement/accounts/{acctId}:
+    summary: GET Statements list
+    description: This endpoint get list of Statements
+    get:
+      tags:
+      - statements-list
+      summary: List statements for an account
+      description: Retrieve all statements for a specific account
+      operationId: listStatements
+      parameters:
+      - name: acctId
+        in: path
+        description: Account identifier
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+      - name: fromDate
+        in: query
+        description: It is lower limit of duration for which user wants to retrieve documents.
+        required: false
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 10
+          minLength: 10
+          pattern: ^[0-9\-]{10}$
+        example: '2020-08-08'
+      - name: toDate
+        in: query
+        description: It is upper limit of duration for which user wants to retrive documents.
+        required: false
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 10
+          minLength: 10
+          pattern: ^[0-9\-]{10}$
+        example: '2020-12-31'
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/StatementsResponseBody'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+components:
+  schemas:
+    StatementsResponseObjectBody:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Letters List Response
+      properties:
+        id:
+          type: string
+          example: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        type:
+          type: string
+          example: statements
+          maxLength: 10
+          minLength: 10
+          pattern: ^[a-zA-Z]{10}$
+        attributes:
+          $ref: '#/components/schemas/StatementsListResponseBody'
+      nullable: false
+    StatementsListBody:
+      type: array
+      additionalProperties: false
+      deprecated: false
+      description: Statements List
+      items:
+        $ref: '#/components/schemas/Statements'
+      maxItems: 999
+      minItems: 0
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 9709-4675-2456-7801
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]{1,50}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying
+            purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - id
+      - title
+    StatementsResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Statement List Response
+      properties:
+        data:
+          $ref: '#/components/schemas/StatementsResponseObjectBody'
+      nullable: true
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    StatementsListResponseBody:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Statements List Response
+      properties:
+        statements:
+          $ref: '#/components/schemas/StatementsListBody'
+      required:
+      - statements
+    Statements:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: The document details list data
+      properties:
+        statementDate:
+          type: string
+          example: '2021-05-11'
+          maxLength: 10
+          minLength: 10
+          pattern: ^[0-9\-]{10}$
+        statementReference:
+          type: string
+          example: Tmpaak5UWm1OVEU1WXpNeU9EZ3habVE1TldKa05qZGhMRUZCUkZWVk9VRTVWVE5NTXpCbE5GWkJSa1pETTBkVVUxRTBNMGMwTVVrMVVFcE1UVTFTTUZKRlVrcFBSVWhRUVV0S1IwcFE6c3RhdGVtZW50
+          maxLength: 999
+          minLength: 1
+          pattern: ^[A-Za-z0-9/=_.-]{1,999}$
+        accountId:
+          type: string
+          example: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      nullable: false
+  responses:
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat\
+        \ the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400-bad-request:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    StatementsResponseBody:
+      description: Document Details Response
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatementsResponseType'
+          examples:
+            StatementListResponse:
+              $ref: '#/components/examples/StatementListResponse'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    ServiceUnavailable:
+      description: 'Service Unavailable
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic\
+        \ error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    NotFound:
+      description: 'delivery not found, or delivery did not contain any articles
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer Token
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 2048
+        minLength: 32
+        pattern: ^[A-Za-z0-9\-_\.\ ]{32,2048}$
+      example: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Imctb09kUnc1TWFlTmcwbWpsN1VpczlXT010NCIsInBpLmF0bSI6IjQ2N3YifQ.eyJzY29wZSI6ImFjY291bnRzIiwiY2xpZW50X2lkIjoiR2FwQ2xpZW50IiwiaXNzIjoiVElBQSBERVYiLCJhdWQiOiJCRE4tVVMtREVWIiwianRpIjoia0F0c2JYYW5CdnZOSFBacVd6WEs4TlhzczlPSXozamdBT090IiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiU21pdGgiLCJmcmF1ZFRva2VuIjoiOThjYmVlNWEtOTU4MS00NTdlLTk3NTEtZjVlYzNlNWZiYTUwIiwiZnJhdWRUb2tlbklzc3VlVGltZSI6IjE2MzAwMDMyNTQiLCJhY2NvdW50cyI6WyIxMjM0NTY3OCIsIjk4NzY1NDMyIl0sInBhcnR5SWQiOiIxMjM0NTYiLCJ1c2VybmFtZSI6ImJhcmNsYXlzdXNlciIsImV4cCI6MTYzMDAwMTQ1NX0.Jkgb2A2HAOdLKaion8ff097GedtQkxtAV4Qxea538owLS8zaEvTm9kHBWOxmuNHIgP1V8mx3NUflwbY8A823Ut00wWqbUbB-cSV0idDaQJ2pKWHDFYbipvi5I7yPGj2BR-oHhQao1ZGlW6DyxYuZ12q8IK7LpKVWbCSPZ-fFAlD5HgH_FORq6Avc5oLH--Zcww63fI6gtZ48pwnXX2gM1aiSQ3lfvLXWVQ9fooAlP65LOW1MMjh5HOtrNvA7ObBSYepYzef5ykP2YvIz3OOS4hLhTo-3-iEbUDvkPx_mmz_pi7piXrMqQPfPnz5y2VkLOHTYfQJeQmVg60YTG7uPdw
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this\
+        \ unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the\
+        \ current Barclays REST Standard.\n"
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    X-Party-Id:
+      name: X-Party-Id
+      in: header
+      description: 'X-Party-Id will be populated by Akana if the grant-type is Auth-Grant.
+
+        '
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 20
+        minLength: 1
+        pattern: ^[A-Za-z0-9\-_]{1,20}$
+      example: '12345'
+    acctId:
+      name: acctId
+      in: path
+      description: Account identifier
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+    FromDate:
+      name: fromDate
+      in: query
+      description: It is lower limit of duration for which user wants to retrieve documents.
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 10
+        minLength: 10
+        pattern: ^[0-9\-]{10}$
+      example: '2020-08-08'
+    ToDate:
+      name: toDate
+      in: query
+      description: It is upper limit of duration for which user wants to retrive documents.
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 10
+        minLength: 10
+        pattern: ^[0-9\-]{10}$
+      example: '2020-12-31'
+    Oauth_ClientId:
+      name: Oauth_ClientId
+      in: header
+      description: 'OAuth Client ID set by BDN.
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 256
+        minLength: 1
+        pattern: ^[a-zA-Z0-9.\-]{1,256}$
+      example: bdn-68EwxNCdDi65Y2FV6wxupfsoD3ilveYxDqok0LD5
+    X-IDVSessionID:
+      name: X-IDVSessionID
+      in: header
+      description: 'X-IDVSessionID will be populated by Akana if the grant-type is Auth-Grant.
+
+        '
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 60fec066-8930-42a2-a907-bd0b5bfa5140
+  examples:
+    StatementListResponse:
+      value:
+        data:
+          id: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+          type: STATEMENTS
+          attributes:
+            statements:
+            - statementDate: '2025-05-19'
+              statementReference: TmpneVl6WXhNV1UyTWpsak9USTJabVZtT0RnNVlURmxMRVpRVmtkQ05EUTBTVkZJUVVwbE1GTkxTVWxKVkZSUU5VVkVTRWMwTVVsU1RVeE5UMUZETURFeE9VbzJTak14TjB4UU5FcFI6c3RhdGVtZW50
+              accountId: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

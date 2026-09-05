@@ -1,0 +1,202 @@
+generated: '2026-09-04'
+method: probed
+source: https://developer.barclays.com/api/apis/versions/{apiVersionId} (Barclays API Exchange registry, anonymous)
+sandbox_published: true
+note: 'Every API on the Barclays API Exchange carries a distinct sandbox endpoint alongside its production endpoint,
+  and the registry records both. The sandbox is NOT anonymous: SandboxAnonymousAccessAllowed is false and SandboxEndpointAccessAutoApproved
+  is false on all 30 published API versions, so a developer must register an app and have sandbox access approved
+  before a first call. No test credentials, test cards, test bank accounts, fixtures or time-simulation tooling
+  are published anonymously, so none are recorded here — Barclays publishes none that we could read without an account.'
+access:
+  anonymous: false
+  auto_approved: false
+  registration: https://drm.developer.barclays.com/s/registration
+  login: https://developer.barclays.com/login
+test_values:
+  published_anonymously: false
+  note: No test card numbers, test sort codes or hosted test tokens are published on the anonymous surface.
+time_simulation:
+  supported: null
+  note: Not documented on the anonymous surface.
+apis:
+- api: Confirmation of Funds
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  sandbox_scopes:
+  - openid
+  - fundsconfirmations
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: false
+- api: Dynamic Client Registration
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Barclays Bank Ireland Account Information
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  sandbox_scopes:
+  - ais
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Barclaycard Smartpay Web Payment
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Barclays Bank Ireland Confirmation of Funds
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  sandbox_scopes:
+  - pis
+  - piis
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Payment Initiation
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  sandbox_scopes:
+  - accounts
+  - payments
+  - openid
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: false
+- api: Account and Transactions
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  sandbox_scopes:
+  - accounts
+  - payments
+  - openid
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: false
+- api: ATM Locator
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Branch Locator
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Product Details
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: FCA Service Metrics
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Event Notification
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Barclays Bank Ireland Payment Initiation
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  sandbox_scopes:
+  - pis
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Digital Wallet
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:digitalwallet
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Barclaycard Smartpay Connect
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Authentication
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:authentication
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Benefits Redemption
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:rewardspwp
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Accounts
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:cardaccountinquiry
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Rewards Loyalty Sync
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:rewardsloyaltysynch
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Transactions
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:transactions
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Card Application
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:apply
+  sandbox_anonymous_access: true
+  sandbox_access_auto_approved: true
+- api: Payments
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:cardspayment
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Cryptography Key Exchange
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Variable Recurring Payment
+  sandbox_oauth_provider: Akana OAUTH Provider Sanbox
+  sandbox_scopes:
+  - payments
+  - accounts
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: false
+- api: Payment Initiation API
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Balances and Transactions Reporting API
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Rewards Earn
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:rewards-earn
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Card Control
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:cardcontrols
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Account Management
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:cardsaccountmanagement
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: Statements Retriever
+  sandbox_oauth_provider: JWTOauthSBXDomain
+  sandbox_scopes:
+  - uscb:statements
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true
+- api: TEST_VR
+  sandbox_oauth_provider: null
+  sandbox_scopes: null
+  sandbox_anonymous_access: false
+  sandbox_access_auto_approved: true

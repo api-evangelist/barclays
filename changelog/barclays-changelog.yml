@@ -1,0 +1,130 @@
+generated: '2026-09-04'
+method: derived
+source: https://developer.barclays.com/api/apis/{apiId}/versions — publication dates from the Barclays API Exchange
+  registry
+note: 'Barclays publishes no dated, human-readable changelog. This is the closest first-party substitute: the publication
+  timestamp the API Exchange registry carries for every API version. It records WHEN a version was published, not
+  what changed in it — no release notes, breaking-change list or migration guide is published anywhere on developer.barclays.com.'
+scheme: per-API semantic-ish versions surfaced in the registry
+changelog_published: false
+entries:
+- api: Payment Initiation
+  version: v4.0
+  date: '2026-08-31'
+- api: Payment Initiation
+  version: v3.1
+  date: '2026-08-31'
+- api: Account and Transactions
+  version: v4.0
+  date: '2026-08-31'
+- api: Account and Transactions
+  version: '3.1'
+  date: '2026-08-31'
+- api: Variable Recurring Payment
+  version: v4.0
+  date: '2026-08-31'
+- api: Confirmation of Funds
+  version: v4.0
+  date: '2026-08-25'
+- api: Confirmation of Funds
+  version: v3.1
+  date: '2026-08-25'
+- api: Event Notification
+  version: v4.0
+  date: '2026-08-25'
+- api: Event Notification
+  version: v3.1
+  date: '2026-08-25'
+- api: Transactions
+  version: '2.0'
+  date: '2026-08-25'
+- api: Card Application
+  version: '4.0'
+  date: '2026-08-25'
+- api: Payments
+  version: '2.0'
+  date: '2026-08-25'
+- api: Digital Wallet
+  version: '2.0'
+  date: '2026-08-21'
+- api: Accounts
+  version: '2.0'
+  date: '2026-08-07'
+- api: Cryptography Key Exchange
+  version: '1.0'
+  date: '2026-07-14'
+- api: ATM Locator
+  version: '2.2'
+  date: '2026-07-10'
+- api: Digital Wallet
+  version: '1.0'
+  date: '2026-07-09'
+- api: Payments
+  version: '1.0'
+  date: '2026-07-06'
+- api: Account Management
+  version: '1.0'
+  date: '2026-07-06'
+- api: Authentication
+  version: '1.0'
+  date: '2026-07-01'
+- api: Accounts
+  version: '1.0'
+  date: '2026-07-01'
+- api: Authentication
+  version: '2.0'
+  date: '2026-06-22'
+- api: Barclays Bank Ireland Account Information
+  version: v1.3.0
+  date: '2026-06-17'
+- api: Barclays Bank Ireland Confirmation of Funds
+  version: v1.3.0
+  date: '2026-06-17'
+- api: Barclays Bank Ireland Payment Initiation
+  version: v1.3
+  date: '2026-06-17'
+- api: Benefits Redemption
+  version: '3.0'
+  date: '2026-06-02'
+- api: Rewards Earn
+  version: '1.0'
+  date: '2026-06-02'
+- api: Card Control
+  version: '1.0'
+  date: '2026-06-02'
+- api: Statements Retriever
+  version: '1.0'
+  date: '2026-06-02'
+- api: Transactions
+  version: '1.0'
+  date: '2026-05-21'
+- api: Card Application
+  version: '3.0'
+  date: '2026-04-24'
+- api: Card Application
+  version: '2.0'
+  date: '2026-04-01'
+- api: Benefits Redemption
+  version: '2.0'
+  date: '2026-02-04'
+- api: Dynamic Client Registration
+  version: v1.10
+  date: '2025-12-09'
+- api: Barclaycard Smartpay Web Payment
+  version: '30'
+  date: '2025-12-09'
+- api: Branch Locator
+  version: '2.2'
+  date: '2025-12-09'
+- api: Product Details
+  version: '2.4'
+  date: '2025-12-09'
+- api: FCA Service Metrics
+  version: v1
+  date: '2025-12-09'
+- api: Benefits Redemption
+  version: '1.0'
+  date: '2025-12-09'
+- api: Rewards Loyalty Sync
+  version: '1.0'
+  date: '2025-12-09'

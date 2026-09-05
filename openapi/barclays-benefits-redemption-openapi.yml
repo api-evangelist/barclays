@@ -1,0 +1,2111 @@
+openapi: 3.1.0
+info:
+  title: Benefits Redemption
+  description: Enables users to view and redeem their rewards
+  version: '3.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/0ef2bd66-883a-4a03-80e8-e08319f97bfe.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-benefits-redemption-openapi.json. The UK Open Banking
+  documents carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as
+  Barclays implements and publishes it — the API, the registry record and the host are Barclays'.
+tags:
+- name: Rewards-Balance
+- name: Rewards-Redemption-Eligibility
+- name: Rewards-Redemption-Capabilities
+- name: Rewards-Redemption
+- name: Rewards-Redemption-History
+paths:
+  /cards/accounts/external/{externalAccountID}/redemption/capabilities:
+    summary: Retrieves the available external redemption capabilities for an account.
+    description: Retrieves the available external redemption capabilities for an account.
+    get:
+      tags:
+      - Rewards-Redemption-Capabilities
+      summary: Get external redemption capabilities
+      description: Retrieves the external redemption capabilities for an account.
+      operationId: getRedemptionCapabilities
+      parameters:
+      - name: Correlation-ID
+        in: header
+        description: 'Unique identifier for each incoming request. The API caller must pass this in the header, which will
+          be cascaded through the API call stack.
+
+          This is required to maintain compliance with the current Barclays REST standards.'
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: externalAccountID
+        in: path
+        description: A unique id (similar to UUID) created for each customer account.
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/RedemptionCapabilitiesResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      deprecated: false
+  /cards/accounts/external/{externalAccountID}/rewards/balance:
+    summary: Operations by Account ID.
+    description: Operations by Account ID.
+    get:
+      tags:
+      - Rewards-Balance
+      summary: Get current rewards balance for the given account.
+      description: Get current rewards balance for the given account.
+      operationId: getRewardsBalanceV3
+      parameters:
+      - name: externalAccountID
+        in: path
+        description: A unique id (similar to UUID) created for each customer account.
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+      - name: Correlation-ID
+        in: header
+        description: 'Unique identifier for each incoming request. The API caller must pass this in the header, which will
+          be cascaded through the API call stack.
+
+          This is required to maintain compliance with the current Barclays REST standards.'
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/RewardPointBalanceResponseV3'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/500_getBalance'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      deprecated: false
+  /cards/accounts/external/{externalAccountID}/rewards/redemption:
+    summary: Fulfill statement credit/ACH for the given account and corresponding program attributes.
+    description: Deducts rewards from the given account and posts a statement credit/ACH. Returns a redemption id for tracking.
+    post:
+      tags:
+      - Rewards-Redemption
+      summary: Fulfill statement credit/ACH for the given account and corresponding program attributes.
+      description: Deducts rewards from the given account and posts a statement credit/ACH. Returns a redemption id for tracking.
+      operationId: postRewardsRedemption
+      parameters:
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 16
+          minLength: 16
+          pattern: ^[a-z/]{16}$
+        example: application/json
+      - name: externalAccountID
+        in: path
+        description: A unique id (similar to UUID) created for each customer account.
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+      - name: Correlation-ID
+        in: header
+        description: 'Unique identifier for each incoming request. The API caller must pass this in the header, which will
+          be cascaded through the API call stack.
+
+          This is required to maintain compliance with the current Barclays REST standards.'
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: X-Channel-Id
+        in: header
+        description: The channel ID of external entity initiating the call.
+        required: false
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 40
+          minLength: 1
+          pattern: ^[A-Za-z0-9\-_]{1,40}$
+        example: WALLET
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      requestBody:
+        description: Contains information required for the redemption operation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RedemptionRequestDataV3'
+            examples:
+              RedemptionRequestPayWithPoints:
+                $ref: '#/components/examples/RedemptionRequestPayWithPoints'
+              RedemptionRequestCashBackStmntCr:
+                $ref: '#/components/examples/RedemptionRequestCashBackStmntCr'
+              RedemptionRequestCashBackACH:
+                $ref: '#/components/examples/RedemptionRequestCashBackACH'
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/RedemptionResponseV3'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/500_redemption'
+        '403':
+          $ref: '#/components/responses/Forbidden_redemption'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '428':
+          $ref: '#/components/responses/FraudChallenge'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      deprecated: false
+  /cards/accounts/external/{externalAccountID}/redemption/eligibility:
+    summary: Rewards API for fetching redemption eligibility.
+    description: Rewards API for fetching redemption eligibility.
+    get:
+      tags:
+      - Rewards-Redemption-Eligibility
+      summary: Retrieves redemption eligibility information based on available redemption options for a specific external
+        account.
+      description: Retrieves redemption eligibility information on available redemption options for a specific external account.
+      operationId: getRedemptionEligibility
+      parameters:
+      - name: Correlation-ID
+        in: header
+        description: 'Unique identifier for each incoming request. The API caller must pass this in the header, which will
+          be cascaded through the API call stack.
+
+          This is required to maintain compliance with the current Barclays REST standards.'
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: externalAccountID
+        in: path
+        description: A unique id (similar to UUID) created for each customer account.
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+      - name: includeCashBackACHEligibility
+        in: query
+        description: Include Cash Back ACH redemption eligibility information
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: includeCashBackStmntCrEligibility
+        in: query
+        description: Include Cash Back Statement credit redemption eligibility information
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: includePayWithPointsEligibility
+        in: query
+        description: Include Pay With Points redemption eligibility information
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/RedemptionEligibilityResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      deprecated: false
+  /cards/accounts/external/{externalAccountID}/redemption/history:
+    summary: Get rewards redemption history for externalAccountId
+    description: Get rewards redemption history for externalAccountId
+    get:
+      tags:
+      - Rewards-Redemption-History
+      summary: Get rewards redemption history for externalAccountId
+      description: Get rewards redemption history for externalAccountId
+      operationId: getRedemptionHistory
+      parameters:
+      - name: externalAccountID
+        in: path
+        description: A unique id (similar to UUID) created for each customer account.
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+      - name: Correlation-ID
+        in: header
+        description: 'Unique identifier for each incoming request. The API caller must pass this in the header, which will
+          be cascaded through the API call stack.
+
+          This is required to maintain compliance with the current Barclays REST standards.'
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: redemptionType
+        in: query
+        description: List of redemption types which will be included in response
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: array
+          items:
+            type: string
+            description: Type of redemption.
+            example: CASH_BACK
+            maxLength: 50
+            minLength: 1
+            pattern: ^[a-zA-Z_]{1,50}$
+          maxItems: 50
+          minItems: 1
+        example:
+        - CASH_BACK
+        - PAY_WITH_POINTS
+      - name: includeFailures
+        in: query
+        description: Include failed redemptions in response
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: fromDate
+        in: query
+        description: Fetch redemption history starting from this date
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{4}-\d{2}-\d{2}$
+        example: '2024-02-21'
+      - name: toDate
+        in: query
+        description: Fetch redemption history till this date
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{4}-\d{2}-\d{2}$
+        example: '2026-02-21'
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/RedemptionHistoryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/500_redemption'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      deprecated: false
+components:
+  schemas:
+    RedemptionRule:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Defined rule for the redemption type.
+      properties:
+        ruleId:
+          type: string
+          description: Unique identifier for the rule.
+          example: '100005000000'
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]{1,50}$
+        ruleName:
+          type: string
+          description: Name of the rule.
+          example: Samsung Cashback Rule
+          maxLength: 50
+          minLength: 1
+          pattern: ^.{1,50}$
+        conversionRate:
+          type: number
+          description: Conversion rate for the redemption.
+          example: 1
+        minRedeem:
+          type: number
+          description: Minimum amount that can be redeemed.
+          example: 1500
+        maxRedeem:
+          type: number
+          description: Maximum amount that can be redeemed.
+          example: 5000
+      required:
+      - conversionRate
+      - maxRedeem
+      - minRedeem
+      - ruleId
+      - ruleName
+      nullable: false
+    RedemptionResponseDataV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Root object that holds a redemption id and current rewards balance upon a successful redemption.
+      properties:
+        data:
+          $ref: '#/components/schemas/RedemptionResponseV3'
+      required:
+      - data
+      nullable: false
+    Eligibility:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Determines eligibility of redemption option
+      properties:
+        value:
+          type: boolean
+          description: Redemption type eligibility determination and reasoning
+          example: true
+        ineligibilityReason:
+          type: string
+          description: Reason for ineligibility
+          example: No configured accounts
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+          nullable: true
+      required:
+      - value
+      nullable: false
+    RedemptionHistoryResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Redemption History Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/RedemptionHistoryResponse'
+      required:
+      - data
+      nullable: false
+    FulfillmentMethod:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Fulfillment method for the redemption type.
+      properties:
+        fulfillmentMethod:
+          type: string
+          description: Method of fulfillment.
+          example: STMNT_CR
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,50}$
+        capAmount:
+          type: number
+          description: Maximum amount that can be redeemed per cap period.
+          example: 50
+        capPeriod:
+          type: string
+          description: Period for the cap amount.
+          example: DAY
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,50}$
+      required:
+      - fulfillmentMethod
+      nullable: false
+    RewardBalanceV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains rewards balance.
+      properties:
+        availableBalance:
+          type: number
+          description: Current rewards balance for the given account. Represents the total amount of rewards that can be redeemed.
+          example: 1000
+        rewardCurrencyDisplayName:
+          type: string
+          description: User-friendly display name for the reward currency type. This is human-readable name to be shown in
+            the user interface.
+          example: Rewards
+          maxLength: 50
+          minLength: 1
+          pattern: ^.{1,50}$
+        rewardType:
+          type: string
+          description: Rewards currency type
+          example: Cash
+          maxLength: 16
+          minLength: 1
+          pattern: ^.{1,16}$
+        isCashBased:
+          type: boolean
+          description: Indicates if rewards are cash based or non cash based.
+          example: true
+      required:
+      - availableBalance
+      - isCashBased
+      - rewardCurrencyDisplayName
+      - rewardType
+      nullable: false
+    CashCapability:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Details about the cash-based redemption capability.
+      properties:
+        redemptionType:
+          type: string
+          description: Type of redemption.
+          example: CASH_BACK
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,50}$
+        redemptionTypeId:
+          type: string
+          description: Unique identifier for the redemption type.
+          example: 6070de43-c712-4902-9077-0a69b691eaea
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        redemptionTypeName:
+          type: string
+          description: Name for the redemption type.
+          example: Samsung Cashback
+          maxLength: 100
+          minLength: 1
+          pattern: ^.{1,100}$
+        fulfillmentMethods:
+          type: array
+          description: Available fulfillment methods for the redemption type.
+          items:
+            $ref: '#/components/schemas/FulfillmentMethod'
+          maxItems: 5
+          minItems: 1
+        rules:
+          type: array
+          description: Defined rules for the redemption type.
+          items:
+            $ref: '#/components/schemas/RedemptionRule'
+          maxItems: 20
+          minItems: 1
+      required:
+      - fulfillmentMethods
+      - redemptionType
+      - redemptionTypeId
+      - redemptionTypeName
+      - rules
+      nullable: false
+    ACHDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains details of external bank account to which ACH was applied
+      properties:
+        accountAlias:
+          type: string
+          description: User-defined account alias
+          example: AAA Bank
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+          nullable: false
+        bankName:
+          type: string
+          description: Name of the bank
+          example: Barclays
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+          nullable: false
+        last4Digits:
+          type: number
+          description: Last 4 digits of account number
+          example: 1234
+      nullable: true
+    RedemptionResponseV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains redemption id and status of redemption request.
+      properties:
+        redemptionReferenceNumber:
+          type: string
+          description: UUID received in the API request will be sent back in the API response upon a successful redemption.
+          example: 1c4717c4-d4a5-e3f3-4a71-b868908763ff
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        redemptionId:
+          type: string
+          description: Unique id generated by Barclays for a redemption.
+          example: '142342342'
+          maxLength: 20
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]{1,20}$
+        status:
+          type: string
+          description: Redemption status
+          enum:
+          - ACCEPTED
+          - IN_PROCESS
+          - COMPLETED
+          - FAILURE
+          - CANCELLED
+          - RETURNED
+          example: COMPLETED
+      required:
+      - redemptionId
+      - redemptionReferenceNumber
+      - status
+      nullable: false
+    RedemptionCapabilitiesResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Redemption Capabilities Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/RedemptionCapabilitiesResponse'
+      required:
+      - data
+      nullable: false
+    RedemptionAmount:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Dollar value of rewards to be applied to the account via statement credit or ACH
+      properties:
+        currency:
+          type: string
+          description: Currency
+          example: USD
+          maxLength: 10
+          minLength: 1
+          pattern: ^.{1,10}$
+        amount:
+          type: number
+          description: Amount
+          example: 20
+      nullable: true
+    ErrorType:
+      type: object
+      additionalProperties: false
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 1c4717c4-d4a5-e3f3-4a71-b868908763ff
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying
+            purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,']{1,250}$
+      required:
+      - code
+      - id
+      - title
+    RedemptionRequestDataV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Root object that holds redemption amount and related program attributes.
+      properties:
+        data:
+          $ref: '#/components/schemas/RedemptionRequestV3'
+      required:
+      - data
+      nullable: false
+    TransactionInfo:
+      type: object
+      additionalProperties: false
+      description: Optional metadata supplied by partner for pay with points redemption.
+      properties:
+        authorizationCode:
+          type: string
+          description: Authorization code generated by merchant at point of sale.
+          example: 5R20BK11W6
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]{1,50}$
+        transactionDesc:
+          type: string
+          description: Free-text description of the source transaction tied to redemption.
+          example: Online order placed at Expedia.com for a hotel booking
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+          nullable: true
+      nullable: true
+    RedemptionEligibilityResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Redemption Eligibility Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/RedemptionEligibilityResponse'
+      required:
+      - data
+      nullable: false
+    RedemptionRequestV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Redemption amount and related program attributes.
+      properties:
+        redemptionReferenceNumber:
+          type: string
+          description: UUID to keep track of each redemption request from a partner. Generated by the partner and passed in
+            each request.
+          example: 1c4717c4-d4a5-e3f3-4a71-b868908763ff
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        redemptionAmount:
+          type: number
+          description: Dollar value of the rewards to be redeemed. Minimum and Maximum limits depend on program setup.
+          example: 50
+        conversionRate:
+          type: number
+          description: 'Denotes the dollar value of rewards (ex: 1 point = $0.01).'
+          example: 0.01
+        rewards:
+          type: number
+          description: Quantity of rewards/points consumed for this redemption.
+          example: 50
+        redemptionTypeId:
+          type: string
+          description: Unique identifier for the partner product brand.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        redemptionType:
+          type: string
+          description: Type of redemption.
+          example: CASH_BACK
+          maxLength: 30
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,30}$
+        fulfillmentMethod:
+          type: string
+          description: Method of fulfillment.
+          example: STMNT_CR
+          maxLength: 20
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,20}$
+        externalAccountRefId:
+          type: string
+          description: External account reference ID required for ACH-based fulfillment.
+          example: '1214534'
+          maxLength: 30
+          minLength: 1
+          pattern: ^[0-9a-zA-Z]{1,30}$
+          nullable: true
+        transactionInfo:
+          $ref: '#/components/schemas/TransactionInfo'
+      required:
+      - conversionRate
+      - fulfillmentMethod
+      - redemptionAmount
+      - redemptionReferenceNumber
+      - redemptionType
+      - redemptionTypeId
+      - rewards
+      nullable: false
+    CashBackACH:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Cash Back ACH redemption eligibility information (only present if query parameter includeCashBackACHEligibility=true)
+      properties:
+        eligibility:
+          $ref: '#/components/schemas/Eligibility'
+        remainingLimit:
+          $ref: '#/components/schemas/RemainingLimit'
+        externalAccounts:
+          type: array
+          description: List of external bank accounts configured for ACH
+          items:
+            $ref: '#/components/schemas/ExternalAccount'
+          maxItems: 100
+          minItems: 0
+      required:
+      - eligibility
+      - externalAccounts
+      nullable: true
+    CashBackStmntCr:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Cash Back Statement credit redemption eligibility information (only present if query parameter includeCashBackStmntCrEligibility=true)
+      properties:
+        eligibility:
+          $ref: '#/components/schemas/Eligibility'
+        remainingLimit:
+          $ref: '#/components/schemas/RemainingLimit'
+      required:
+      - eligibility
+      nullable: true
+    LineItem:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        lineItemId:
+          type: string
+          description: line item id
+          example: S16705z
+          maxLength: 36
+          minLength: 1
+          pattern: ^[a-zA-Z0-9-]{1,36}$
+        rewardName:
+          type: string
+          description: Reward name
+          example: Points Payback Credit
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+        rewardsRedeemed:
+          type: number
+          description: Rewards redeemed
+          example: 11
+        fulfillmentMethod:
+          type: string
+          description: Method of fulfillment or delivery
+          example: RW_ACH
+          maxLength: 20
+          minLength: 1
+          pattern: ^.{1,20}$
+        shippingDate:
+          type: string
+          description: Delivery date of Non-Cash gift card/merchandise
+          example: 07/25/2025
+          maxLength: 10
+          minLength: 10
+          pattern: ^\d{2}/\d{2}/\d{4}$
+          nullable: true
+        redemptionAmount:
+          $ref: '#/components/schemas/RedemptionAmount'
+        replenishedRewards:
+          type: number
+          description: Rewards replenished during redemption
+          example: 11
+        quantity:
+          type: number
+          description: Redeemed quantity of a line item
+          example: 10
+        redemptionStatus:
+          type: string
+          description: Redemption status
+          enum:
+          - ACCEPTED
+          - IN_PROCESS
+          - COMPLETED
+          - FAILURE
+          - CANCELLED
+          - RETURNED
+          example: COMPLETED
+        redemptionStatusDetail:
+          type: string
+          description: Redemption status detail populated if includeFailures is true for failed redemptions
+          example: T&C not met
+          maxLength: 400
+          minLength: 1
+          pattern: ^.{1,400}$
+          nullable: true
+        purchaseDetails:
+          $ref: '#/components/schemas/TransactionInfo'
+        achDetails:
+          $ref: '#/components/schemas/ACHDetails'
+      required:
+      - fulfillmentMethod
+      - lineItemId
+      - quantity
+      - redemptionStatus
+      - rewardName
+      - rewardsRedeemed
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    ExternalAccount:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains details of external bank accounts configured on an account for ACH
+      properties:
+        id:
+          type: string
+          description: External account identifier
+          example: 12311da
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+          nullable: false
+        accountAlias:
+          type: string
+          description: User-defined account alias
+          example: AAA Bank
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+          nullable: false
+        bankName:
+          type: string
+          description: Name of the bank
+          example: Barclays
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+          nullable: false
+        last4Digits:
+          type: number
+          description: Last 4 digits of account number
+          example: 1234
+        accountType:
+          type: string
+          description: Type of bank account
+          example: CHECKING
+          maxLength: 200
+          minLength: 1
+          pattern: ^.{1,200}$
+          nullable: false
+      required:
+      - accountAlias
+      - accountType
+      - bankName
+      - id
+      - last4Digits
+      nullable: false
+    RedemptionEligibilityResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains redemption eligibility information based on available redemption options for a specific external
+        account.
+      properties:
+        isAccountStatusValid:
+          type: boolean
+          description: True if account is eligible to redeem the current rewards balance, determined based on if the account
+            is in good standing with regards to account statuses.
+          example: true
+        cashBackACH:
+          $ref: '#/components/schemas/CashBackACH'
+        cashBackStmntCr:
+          $ref: '#/components/schemas/CashBackStmntCr'
+        payWithPoints:
+          $ref: '#/components/schemas/PayWithPoints'
+      required:
+      - isAccountStatusValid
+      nullable: false
+    PayWithPoints:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Pay With Points redemption eligibility information (only present if query parameter includePayWithPointsEligibility=true)
+      properties:
+        eligibility:
+          $ref: '#/components/schemas/Eligibility'
+        remainingLimit:
+          $ref: '#/components/schemas/RemainingLimit'
+      required:
+      - eligibility
+      nullable: true
+    RedemptionCapabilitiesResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains redemption eligibility information based on available redemption options for a specific external
+        account.
+      properties:
+        partnerProductBrandId:
+          type: string
+          description: Unique identifier for the partner product brand.
+          example: 4f9d630a-249b-474f-9efa-6a03b4dd407c
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        partnerProductBrandName:
+          type: string
+          description: Name of the partner product brand.
+          example: SMG001
+          maxLength: 6
+          minLength: 6
+          pattern: ^[a-zA-Z0-9]{6}$
+        rewardType:
+          type: string
+          description: Rewards currency type
+          example: POINTS
+          maxLength: 10
+          minLength: 1
+          pattern: ^[a-zA-Z]{1,10}$
+        rewardCurrencyDisplayName:
+          type: string
+          description: Display name of the reward type.
+          example: Rewards
+          maxLength: 50
+          minLength: 1
+          pattern: ^.{1,50}$
+        isCashBased:
+          type: boolean
+          description: Indicates if the reward type is cash-based.
+          example: true
+        cashCapabilities:
+          type: array
+          description: List of cash-based redemption capabilities.
+          items:
+            $ref: '#/components/schemas/CashCapability'
+          maxItems: 10
+          minItems: 1
+        nonCashCapabilities:
+          type: array
+          description: List of non-cash redemption capabilities.
+          items:
+            type: object
+            additionalProperties: true
+          maxItems: 10
+          minItems: 1
+          nullable: true
+      required:
+      - cashCapabilities
+      - isCashBased
+      - partnerProductBrandId
+      - partnerProductBrandName
+      - rewardCurrencyDisplayName
+      - rewardType
+      nullable: false
+    RewardBalanceDataV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Root object that holds rewards balance.
+      properties:
+        data:
+          $ref: '#/components/schemas/RewardBalanceV3'
+      required:
+      - data
+      nullable: false
+    Redemption:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains redemption history information.
+      properties:
+        redemptionType:
+          type: string
+          description: Type of redemption.
+          example: CASH_BACK
+          maxLength: 30
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,30}$
+        redemptionId:
+          type: string
+          description: Unique id generated by Barclays for a redemption
+          example: 1c4717c4-d4a5-e3f3-4a71-b868908763ff
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-zA-Z-]{1,36}$
+        redemptionTimestamp:
+          type: string
+          description: Redemption timestamp in EST
+          example: 06/28/2024 03:19:05
+          maxLength: 19
+          minLength: 19
+          pattern: ^\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2}$
+        lineItems:
+          type: array
+          description: List of line items redeemed for a redemption type
+          items:
+            $ref: '#/components/schemas/LineItem'
+          maxItems: 50
+          minItems: 1
+      required:
+      - lineItems
+      - redemptionId
+      - redemptionTimestamp
+      - redemptionType
+      nullable: false
+    RemainingLimit:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains the remaining amount for redemption if a cap amount is configured on redemption option
+      properties:
+        value:
+          type: number
+          description: Monetary amount currently available for redemption requests
+          example: 100
+        currency:
+          type: string
+          description: Currency code indicating the monetary denomination
+          example: USD
+          maxLength: 4
+          minLength: 1
+          pattern: ^[a-zA-Z]{1,4}$
+      required:
+      - currency
+      - value
+      nullable: true
+    RedemptionHistoryResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Redemption history Response
+      properties:
+        redemptionHistory:
+          type: array
+          description: List of rewards redeemed
+          items:
+            $ref: '#/components/schemas/Redemption'
+          maxItems: 200
+          minItems: 0
+      required:
+      - redemptionHistory
+      nullable: false
+  responses:
+    RewardPointBalanceResponseV3:
+      description: Contains information related to rewards balance for the given account.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RewardBalanceDataV3'
+          examples:
+            RewardPointBalanceResponseV3:
+              $ref: '#/components/examples/RewardBalanceResponseV3'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Forbidden:
+              $ref: '#/components/examples/example-error-403'
+    RedemptionEligibilityResponse:
+      description: Redemption Eligibility Response Data
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedemptionEligibilityResponseData'
+          examples:
+            ResponseWithAllRedemptionTypesEligibility:
+              $ref: '#/components/examples/ResponseWithAllRedemptionTypesEligibility'
+            ResponseWithoutRedemptionTypesEligibility:
+              $ref: '#/components/examples/ResponseWithoutRedemptionTypesEligibility'
+    500_getBalance:
+      description: 'Server encountered an error during processing the request. It''s s a generic error message, given when
+        a more specific message is not available.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            INTERNAL_SERVER_ERROR:
+              $ref: '#/components/examples/example-error-500'
+            ACCOUNT_INELIGIBLE:
+              $ref: '#/components/examples/example-error-500_ACCOUNT_INELIGIBLE'
+            BUSINESS_VALIDATION_FAILED:
+              $ref: '#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED'
+            TEMPORARY_UNPROCESSABLE:
+              $ref: '#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE'
+    InternalServerError:
+      description: 'Server encountered an error during processing the request. It''s s a generic error message, given when
+        a more specific message is not available.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            InternalServerError:
+              $ref: '#/components/examples/example-error-500'
+    RedemptionResponseV3:
+      description: Contains information about the outcome of the redemption operation for the given account.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedemptionResponseDataV3'
+          examples:
+            RedemptionResponseV3:
+              $ref: '#/components/examples/RedemptionResponse'
+    FraudChallenge:
+      description: 'Fraud challenge required
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            FraudChallenge:
+              $ref: '#/components/examples/example-error-428_FRAUD_CHALLENGE'
+    BadRequest:
+      description: 'The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat
+        the request without modifications.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            BadRequest:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    RedemptionCapabilitiesResponse:
+      description: Redemption capabilities Response Data
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedemptionCapabilitiesResponseData'
+          examples:
+            ResponseWithAllRedemptionCapabilities:
+              $ref: '#/components/examples/ResponseWithAllRedemptionCapabilities'
+            ResponseWithOnlyCashRedemptionCapabilities:
+              $ref: '#/components/examples/ResponseWithOnlyCashRedemptionCapabilities'
+    TooManyRequests:
+      description: 'Server received a large number of requests from a single party in a given amount of time. Client is advised
+        to retry after the agreed cool down period.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            TooManyRequests:
+              $ref: '#/components/examples/example-error-429'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Unauthorized:
+              $ref: '#/components/examples/example-error-401'
+    ServiceUnavailable:
+      description: 'Temporary maintenance of service, try again later. This is a temporary condition which will be alleviated
+        after some delay.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            ServiceUnavailable:
+              $ref: '#/components/examples/example-error-503'
+    500_redemption:
+      description: 'Server encountered an error during processing the request. It''s s a generic error message, given when
+        a more specific message is not available.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            INTERNAL_SERVER_ERROR:
+              $ref: '#/components/examples/example-error-500'
+            BAD_STATUS_ACCOUNT:
+              $ref: '#/components/examples/example-error-500_BAD_STATUS_ACCOUNT'
+            INSUFFICIENT_BALANCE:
+              $ref: '#/components/examples/example-error-500_INSUFFICIENT_BALANCE'
+            ACCOUNT_INELIGIBLE:
+              $ref: '#/components/examples/example-error-500_ACCOUNT_INELIGIBLE'
+            BUSINESS_VALIDATION_FAILED:
+              $ref: '#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED'
+            TEMPORARY_UNPROCESSABLE:
+              $ref: '#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE'
+    Forbidden_redemption:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Forbidden:
+              $ref: '#/components/examples/example-error-403'
+            FraudDeclined:
+              $ref: '#/components/examples/example-error-403_FRAUD_DECLINED'
+    NotFound:
+      description: 'Server was unable to locate a resource to complete the operation. This may be temporary or permanent.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            NotFound:
+              $ref: '#/components/examples/example-error-404'
+    RedemptionHistoryResponse:
+      description: Redemption History Response Data
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedemptionHistoryResponseData'
+          examples:
+            Response_NON_CASH_Redemption:
+              $ref: '#/components/examples/ResponseNonCashRedemption'
+            Response_CASH_Redemption_IncludeFailures_True:
+              $ref: '#/components/examples/ResponseWhenIncludeFailures_true'
+  parameters:
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: 'Unique identifier for each incoming request. The API caller must pass this in the header, which will be
+        cascaded through the API call stack.
+
+        This is required to maintain compliance with the current Barclays REST standards.
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    RedemptionType:
+      name: redemptionType
+      in: query
+      description: List of redemption types which will be included in response
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: array
+        items:
+          type: string
+          description: Type of redemption.
+          example: CASH_BACK
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,50}$
+        maxItems: 50
+        minItems: 1
+      example:
+      - CASH_BACK
+      - PAY_WITH_POINTS
+    IncludeFailures:
+      name: includeFailures
+      in: query
+      description: Include failed redemptions in response
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+        default: true
+      example: true
+    X-Channel-Id:
+      name: X-Channel-Id
+      in: header
+      description: 'The channel ID of external entity initiating the call.
+
+        '
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 40
+        minLength: 1
+        pattern: ^[A-Za-z0-9\-_]{1,40}$
+      example: WALLET
+    IncludeCashBackStmntCrEligibility:
+      name: includeCashBackStmntCrEligibility
+      in: query
+      description: Include Cash Back Statement credit redemption eligibility information
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+        default: true
+      example: true
+    X-IDVSessionID:
+      name: X-IDVSessionID
+      in: header
+      description: X-IDVSessionID will be populated by Akana if the grant-type is Auth-Grant. This token will be used by Fraud
+        domain to access fraud context and provide decisioning.
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 8f4c2ae3-d998-4c44-8cc8-851ce18a344a
+    oauth_clientId:
+      name: oauth_clientId
+      in: header
+      description: 'OAuth Client ID used for partner entitlement check.
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 256
+        minLength: 1
+        pattern: ^[a-zA-Z0-9.-]{1,256}$
+      example: bdn-68EwxNCdDi65Y2FV6wxupfsoD3ilveYxDqok0LD5
+    Authorization:
+      name: Authorization
+      in: header
+      description: 'Bearer Token
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 2048
+        minLength: 32
+        pattern: ^[A-Za-z0-9\-_\.\ ]{32,2048}$
+      example: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Imctb09kUnc1TWFlTmcwbWpsN1VpczlXT010NCIsInBpLmF0bSI6IjQ2N3YifQ.eyJzY29wZSI6ImFjY291bnRzIiwiY2xpZW50X2lkIjoiR2FwQ2xpZW50IiwiaXNzIjoiVElBQSBERVYiLCJhdWQiOiJCRE4tVVMtREVWIiwianRpIjoia0F0c2JYYW5CdnZOSFBacVd6WEs4TlhzczlPSXozamdBT090IiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiU21pdGgiLCJmcmF1ZFRva2VuIjoiOThjYmVlNWEtOTU4MS00NTdlLTk3NTEtZjVlYzNlNWZiYTUwIiwiZnJhdWRUb2tlbklzc3VlVGltZSI6IjE2MzAwMDMyNTQiLCJhY2NvdW50cyI6WyIxMjM0NTY3OCIsIjk4NzY1NDMyIl0sInBhcnR5SWQiOiIxMjM0NTYiLCJ1c2VybmFtZSI6ImJhcmNsYXlzdXNlciIsImV4cCI6MTYzMDAwMTQ1NX0.Jkgb2A2HAOdLKaion8ff097GedtQkxtAV4Qxea538owLS8zaEvTm9kHBWOxmuNHIgP1V8mx3NUflwbY8A823Ut00wWqbUbB-cSV0idDaQJ2pKWHDFYbipvi5I7yPGj2BR-oHhQao1ZGlW6DyxYuZ12q8IK7LpKVWbCSPZ-fFAlD5HgH_FORq6Avc5oLH--Zcww63fI6gtZ48pwnXX2gM1aiSQ3lfvLXWVQ9fooAlP65LOW1MMjh5HOtrNvA7ObBSYepYzef5ykP2YvIz3OOS4hLhTo-3-iEbUDvkPx_mmz_pi7piXrMqQPfPnz5y2VkLOHTYfQJeQmVg60YTG7uPdw
+    IncludeCashBackACHEligibility:
+      name: includeCashBackACHEligibility
+      in: query
+      description: Include Cash Back ACH redemption eligibility information
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+        default: true
+      example: true
+    X-Party-ID:
+      name: X-Party-ID
+      in: header
+      description: X-Party-ID will be populated by Akana if the grant-type is Auth-Grant.
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 12
+        minLength: 1
+        pattern: ^[0-9]{1,12}$
+      example: '43545647'
+    ExternalAccountIdPath:
+      name: externalAccountID
+      in: path
+      description: A unique id (similar to UUID) created for each customer account.
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 1
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+    IncludePayWithPointsEligibility:
+      name: includePayWithPointsEligibility
+      in: query
+      description: Include Pay With Points redemption eligibility information
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+        default: true
+      example: true
+    X-Auth-Type:
+      name: X-Auth-Type
+      in: header
+      description: X-Auth-Type will be populated by Akana to identify grant-type
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 50
+        minLength: 1
+        pattern: ^[a-zA-Z0-9.-_]{1,50}$
+      example: '43545647'
+    FromDate:
+      name: fromDate
+      in: query
+      description: Fetch redemption history starting from this date
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 10
+        minLength: 10
+        pattern: ^\d{4}-\d{2}-\d{2}$
+      example: '2024-02-21'
+    ToDate:
+      name: toDate
+      in: query
+      description: Fetch redemption history till this date
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 10
+        minLength: 10
+        pattern: ^\d{4}-\d{2}-\d{2}$
+      example: '2026-02-21'
+    Content-Type:
+      name: Content-Type
+      in: header
+      description: Content-Type
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 16
+        minLength: 16
+        pattern: ^[a-z/]{16}$
+      example: application/json
+  examples:
+    RedemptionResponse:
+      value:
+        data:
+          redemptionReferenceNumber: 1c4717c4-e3f3-4a71-8b67-b868908763ff
+          redemptionId: '65878787'
+          status: COMPLETED
+    ResponseWithAllRedemptionTypesEligibility:
+      value:
+        data:
+          isAccountStatusValid: true
+          cashBackACH:
+            eligibility:
+              value: true
+              ineligibilityReason: null
+            remainingLimit:
+              value: 100
+              currency: USD
+            externalAccounts:
+            - id: 12311da
+              accountAlias: AAA Bank
+              bankName: Barclays
+              last4Digits: 1234
+              accountType: CHECKING
+            - id: 45678bc
+              accountAlias: Savings Account
+              bankName: Chase
+              last4Digits: 5678
+              accountType: SAVINGS
+          cashBackStmntCr:
+            eligibility:
+              value: true
+              ineligibilityReason: null
+            remainingLimit:
+              value: 100
+              currency: USD
+          payWithPoints:
+            eligibility:
+              value: true
+              ineligibilityReason: null
+            remainingLimit:
+              value: 100
+              currency: USD
+    example-error-500_BAD_STATUS_ACCOUNT:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: BAD_STATUS_ACCOUNT
+          title: Account is in bad status
+          detail: Account is in CLOSED status, request cannot be processed
+    example-error-500_INSUFFICIENT_BALANCE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: INSUFFICIENT_BALANCE
+          title: Insufficient reward balance on the account
+          detail: Request cannot be processed due to insufficient reward balance
+    ResponseWithAllRedemptionCapabilities:
+      value:
+        data:
+          partnerProductBrandId: 4f9d630a-249b-474f-9efa-6a03b4dd407c
+          partnerProductBrandName: SMG001
+          rewardType: Cash
+          rewardCurrencyDisplayName: Rewards
+          isCashBased: true
+          cashCapabilities:
+          - redemptionType: CASH_BACK
+            redemptionTypeId: 6070de43-c712-4902-9077-0a69b691eaea
+            redemptionTypeName: Samsung Cashback
+            fulfillmentMethods:
+            - fulfillmentMethod: STMNT_CR
+              capAmount: 50
+              capPeriod: DAY
+            - fulfillmentMethod: RW_ACH
+              capAmount: 500
+              capPeriod: DAY
+            rules:
+            - ruleId: '100005000000'
+              ruleName: Samsung Cashback Rule
+              conversionRate: 1
+              minRedeem: 1500
+              maxRedeem: 5000
+          - redemptionType: PAY_WITH_POINTS
+            redemptionTypeId: 6070de43-c713-4902-9077-0a69b691eaea
+            redemptionTypeName: Samsung Wallet Pay
+            fulfillmentMethods:
+            - fulfillmentMethod: STMNT_CR
+              capAmount: 50
+              capPeriod: DAY
+            rules:
+            - ruleId: '100006000000'
+              ruleName: Samsung Wallet Rule
+              conversionRate: 1
+              minRedeem: 1500
+              maxRedeem: 5000
+          - redemptionType: PAY_YOURSELF_BACK
+            redemptionTypeId: 6070de43-c711-4902-9077-0a69b691eaea
+            redemptionTypeName: Samsung PYB
+            fulfillmentMethods:
+            - fulfillmentMethod: STMNT_CR
+              capAmount: 50
+              capPeriod: DAY
+            rules:
+            - ruleId: '100007000000'
+              ruleName: Samsung PYB Rule
+              conversionRate: 1
+              minRedeem: 1500
+              maxRedeem: 5000
+          nonCashCapabilities:
+          - {}
+    example-error-428_FRAUD_CHALLENGE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: FRAUD_CHALLENGE
+          title: Fraud challenge required
+          detail: Fraud challenge required
+        meta:
+          verificationContextId: A22DFEC1-C5E7-4DD7-99FD-716528EB1FE3
+    example-error-500_BUSINESS_VALIDATION_FAILED:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: BUSINESS_VALIDATION_FAILED
+          title: Request failed while validating the account
+          detail: Request cannot be processed, account validation failure
+    RedemptionRequestCashBackStmntCr:
+      value:
+        data:
+          redemptionReferenceNumber: 1c4717c4-e3f3-4a71-8b67-b868908763ff
+          redemptionAmount: 50
+          conversionRate: 1
+          rewards: 50
+          redemptionTypeId: fffb0eab-be1e-4ad7-b776-117b5eacb117
+          redemptionType: CASH_BACK
+          fulfillmentMethod: STMNT_CR
+    ResponseWhenIncludeFailures_true:
+      value:
+        data:
+          redemptionHistory:
+          - redemptionType: PAY_WITH_POINTS
+            redemptionId: '345523423'
+            redemptionTimestamp: 08/29/2025 10:15:00
+            lineItems:
+            - lineItemId: '23423432'
+              fulfillmentMethod: STMNT_CR
+              rewardName: Pay with Points - Statement Credit
+              rewardsRedeemed: 10000
+              redemptionAmount:
+                currency: USD
+                amount: 100
+              replenishedRewards: 0
+              quantity: 1
+              redemptionStatus: COMPLETED
+              purchaseDetails:
+                authorizationCode: AUTH2342
+          - redemptionType: CASH_BACK
+            redemptionId: '25322352'
+            redemptionTimestamp: 08/29/2025 10:15:00
+            lineItems:
+            - lineItemId: '35234423'
+              fulfillmentMethod: RW_ACH
+              rewardName: Direct Deposit to account
+              rewardsRedeemed: 10000
+              redemptionAmount:
+                currency: USD
+                amount: 100
+              replenishedRewards: 0
+              quantity: 1
+              redemptionStatus: FAILURE
+              redemptionStatusDetail: redemption failure reason
+              achDetails:
+                accountAlias: Primary Checking
+                bankName: Chase Bank
+                last4Digits: 5678
+    RedemptionRequestCashBackACH:
+      value:
+        data:
+          redemptionReferenceNumber: 2d5817c4-e3f3-4a71-8b67-b868908763aa
+          redemptionAmount: 100
+          conversionRate: 1
+          rewards: 100
+          redemptionTypeId: aabbccdd-eeff-1122-3344-556677889900
+          redemptionType: CASH_BACK
+          fulfillmentMethod: RW_ACH
+          externalAccountRefId: '987654321'
+    example-error-404:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found
+          detail: Couldn't locate the account
+    example-error-503:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+          detail: Scheduled service outage starting from Wednesday, 04 Jul 2050 0100 GMT until Wednesday, 04 Jul 2050 0500
+            GMT
+    example-error-403_FRAUD_DECLINED:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: FRAUD_DECLINED
+          title: The user is not permitted to access the requested operation and it cannot be completed
+          detail: The user is not permitted to access the requested operation and it cannot be completed
+    example-error-429:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: TOO_MANY_REQUESTS
+          title: Too many requests
+          detail: The client sent too many requests and server is not able to serve them all at the moment
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed
+          detail: Invalid request, field name does not match with the API spec
+    RewardBalanceResponseV3:
+      value:
+        data:
+          availableBalance: 15000
+          rewardCurrencyDisplayName: Rewards
+          rewardType: Cash
+          isCashBased: true
+    ResponseWithOnlyCashRedemptionCapabilities:
+      value:
+        data:
+          partnerProductBrandId: 4f9d630a-249b-474f-9efa-6a03b4dd407c
+          partnerProductBrandName: SMG001
+          rewardType: Cash
+          rewardCurrencyDisplayName: Rewards
+          isCashBased: true
+          cashCapabilities:
+          - redemptionType: CASH_BACK
+            redemptionTypeId: 6070de43-c712-4902-9077-0a69b691eaea
+            redemptionTypeName: Samsung Cashback
+            fulfillmentMethods:
+            - fulfillmentMethod: STMNT_CR
+              capAmount: 50
+              capPeriod: DAY
+            - fulfillmentMethod: RW_ACH
+              capAmount: 500
+              capPeriod: DAY
+            rules:
+            - ruleId: '100005000000'
+              ruleName: Samsung Cashback Rule
+              conversionRate: 1
+              minRedeem: 1500
+              maxRedeem: 5000
+          - redemptionType: PAY_WITH_POINTS
+            redemptionTypeId: 6070de43-c713-4902-9077-0a69b691eaea
+            redemptionTypeName: Samsung Wallet Pay
+            fulfillmentMethods:
+            - fulfillmentMethod: STMNT_CR
+              capAmount: 50
+              capPeriod: DAY
+            rules:
+            - ruleId: '100006000000'
+              ruleName: Samsung Wallet Rule
+              conversionRate: 1
+              minRedeem: 1500
+              maxRedeem: 5000
+          - redemptionType: PAY_YOURSELF_BACK
+            redemptionTypeId: 6070de43-c711-4902-9077-0a69b691eaea
+            redemptionTypeName: Samsung PYB
+            fulfillmentMethods:
+            - fulfillmentMethod: STMNT_CR
+              capAmount: 50
+              capPeriod: DAY
+            rules:
+            - ruleId: '100007000000'
+              ruleName: Samsung PYB Rule
+              conversionRate: 1
+              minRedeem: 1500
+              maxRedeem: 5000
+    RedemptionRequestPayWithPoints:
+      value:
+        data:
+          redemptionReferenceNumber: 3e6917c4-e3f3-4a71-8b67-b868908763bb
+          redemptionAmount: 75
+          conversionRate: 1
+          rewards: 75
+          redemptionTypeId: 11223344-5566-7788-99aa-bbccddeeff00
+          redemptionType: PAY_WITH_POINTS
+          fulfillmentMethod: STMNT_CR
+          transactionInfo:
+            authorizationCode: AUTH12345
+            transactionDesc: Purchase at Amazon using Pay With Points
+    example-error-500_TEMPORARY_UNPROCESSABLE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: TEMPORARY_UNPROCESSABLE
+          title: Request unprocessable momentarily
+          detail: Request cannot be processed momentarily
+    example-error-500_ACCOUNT_INELIGIBLE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: ACCOUNT_INELIGIBLE
+          title: Account is not eligible for this program
+          detail: Request cannot be processed, account is not eligible for this program
+    example-error-401:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: UNAUTHORIZED
+          title: The authorization credentials required for this request are invalid
+          detail: The authorization credentials required for this request are invalid
+    example-error-500:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error
+          detail: Downstream service call failure while retrieving rewards balance
+    ResponseWithoutRedemptionTypesEligibility:
+      value:
+        data:
+          isAccountStatusValid: true
+    example-error-403:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed
+          detail: The user is not permitted to access the requested operation and it cannot be completed
+    ResponseNonCashRedemption:
+      value:
+        data:
+          redemptionHistory:
+          - redemptionType: THIRD_PARTY_REDEMPTION
+            redemptionId: OSQEPC371143
+            redemptionTimestamp: 08/29/2025 14:30:00
+            lineItems:
+            - lineItemId: ZFDKKH363591
+              rewardName: Samsung Gift Card $50
+              rewardsRedeemed: 5000
+              fulfillmentMethod: ELECTRONIC
+              replenishedRewards: 10
+              quantity: 2
+              redemptionStatus: COMPLETED
+            - lineItemId: SFDKKZ363591
+              rewardName: Amazon Gift Card $50
+              rewardsRedeemed: 5000
+              fulfillmentMethod: PHYSICAL
+              shippingDate: 08/29/2025
+              replenishedRewards: 0
+              quantity: 1
+              redemptionStatus: COMPLETED
+  requestBodies:
+    RedemptionRequestV3:
+      description: Contains information required for the redemption operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedemptionRequestDataV3'
+          examples:
+            RedemptionRequestPayWithPoints:
+              $ref: '#/components/examples/RedemptionRequestPayWithPoints'
+            RedemptionRequestCashBackStmntCr:
+              $ref: '#/components/examples/RedemptionRequestCashBackStmntCr'
+            RedemptionRequestCashBackACH:
+              $ref: '#/components/examples/RedemptionRequestCashBackACH'
+      required: true
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

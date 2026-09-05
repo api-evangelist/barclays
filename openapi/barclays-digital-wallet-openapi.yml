@@ -1,0 +1,1162 @@
+openapi: 3.1.0
+info:
+  title: Digital Wallet
+  description: 'Offers a convenient way to provision cards to digital wallets securely
+
+    '
+  version: '2.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/94d143f9-18d6-4bb7-ad91-9d9cd564e9a0.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-digital-wallet-openapi.json. The UK Open Banking documents
+  carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as Barclays implements
+  and publishes it — the API, the registry record and the host are Barclays'.
+tags:
+- name: Digital Wallet Provision
+  description: Provisions credit cards to digital wallets with eligibility verification and fraud assessment
+paths:
+  /cards/accounts/{accountId}/wallet-provision:
+    summary: Provision digital wallet for credit card account
+    description: Provisions a credit card to a digital wallet with eligibility verification and fraud assessment
+    post:
+      tags:
+      - Digital Wallet Provision
+      summary: Provision card to digital wallet
+      description: "Provisions a credit card to a digital wallet on the customer's device. This endpoint handles eligibility\
+        \ verification, fraud assessment, and wallet provisioning.\n\n**Business Flow:**\n1. Validates account and customer\
+        \ eligibility for wallet provisioning\n2. Performs fraud risk assessment based on account status and risk rules\n\
+        3. Provisions card to the specified wallet (Apple Pay, Google Pay, or Samsung Pay)\n4. Returns provisioning data including\
+        \ activation tokens and encrypted pass data\n\n**Supported Wallets:**\n- **Apple Pay** (walletId: 103) - iOS devices\n\
+        - **Google Pay** (walletId: 216) - Android devices  \n- **Samsung Pay** (walletId: 217) - Samsung devices\n\n**Request\
+        \ Requirements:**\n\n**For Apple Pay:**\n- Device certificates (leaf certificate, sub-certificate)\n- Nonce and nonce\
+        \ signature from Apple SDK\n- Device name and OS version\n\n**For Google Pay:**\n- Device name and OS version\n- Client\
+        \ wallet account ID (required for VISA cards)\n- Client device ID (required for VISA cards)\n\n**For Samsung Pay:**\n\
+        - Device name and OS version\n\n**Response Structure:**\n\n**Apple Pay Response Contains:**\n- `encryptedPassData`\
+        \ - Encrypted wallet pass data for Apple Wallet\n- `ephemeralPublicKey` - Ephemeral public key for encryption\n- `activationData`\
+        \ - Cryptographic OTP for wallet activation\n\n**Google Pay Response Contains:**\n- `activationData` - Cryptographic\
+        \ OTP for wallet activation\n- `phone` - Customer phone number\n- `customerAddress` - Customer billing address (required\
+        \ by Google Pay)\n\n**Samsung Pay Response Contains:**\n- `activationData` - Cryptographic OTP for wallet activation\n\
+        \n**Use Cases:**\n- Customer adds card to Apple Wallet from mobile banking app\n- Partner app provisions card to Google\
+        \ Pay during account opening\n- Customer re-enrolls card after getting a new phone\n- Customer adds card to Samsung\
+        \ Pay from partner app\n\n**Error Scenarios:**\n- 400 Bad Request: Invalid request payload or missing required fields\n\
+        - 401 Unauthorized: Invalid or missing authentication token\n- 403 Forbidden: Account not eligible for wallet provisioning\
+        \ (e.g., account closed, fraud rules)\n- 404 Not Found: Account or customer not found\n- 428 Precondition Required:\
+        \ Additional fraud verification required (step-up authentication needed)\n- 500 Internal Server Error: System error\
+        \ during provisioning\n- 503 Service Unavailable: Wallet service temporarily unavailable"
+      operationId: provisionWallet
+      parameters:
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 35
+          minLength: 16
+          pattern: ^[a-z0-9A-Z\/ ]{16,35}$
+        example: application/json
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: accountId
+        in: path
+        description: External Account Id
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: c8de699e-ff6d-11eb-9a03-0242ac130003
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      requestBody:
+        description: Wallet provision request containing eligibility criteria and device provisioning information
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WalletProvisionRequestData'
+            examples:
+              apple-pay-provision:
+                summary: Apple Pay provisioning
+                description: Provision card to Apple Wallet on iOS device
+                value:
+                  data:
+                    walletId: '103'
+                    eligibility:
+                      enrollmentIndicator: NEW
+                      sourceChannel: BCUS_Mobile
+                    provision:
+                      leafCertificate: MIID/TCCA6OgAwIBAgIIbFjYdyLBY/YwCgYIKoZIzj0EAwIwgYAxNDAyBgNVBAMMK0FwcGxlIFdvcmxkd2lkZSBEZXZlbG9wZXIgUmVsYXRpb25zIENBIC0gRzIxJjAkBgNVBAsMHUFwcGxlIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MRMwEQYDVQ
+                      nonceId: devhVQ==
+                      nonceSignature: QOoKygfavhdWmyTJrSq4UoOA+miEdIEe4JXHga5eTyK+vv7DvfDJXDbvcyewQhD+f9o4FOmj3Gy0r9FmxIga+Jc3HtJP98wJf0efAT7BPSmj
+                      subCertificate: MIIC9zCCAnygAwIBAgIIb+/Y9emjp+4wCgYIKoZIzj0EAwIwZzEbMBkGA1UEAwwSQXBwbGUgUm9vdCBDQSAtIEczMSYwJAYDVQQLDB1BcHBsZSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eT
+                      deviceName: iPhone 14 Pro
+                      osName: IOS
+                      osVersion: 17.2.1
+              google-pay-mastercard:
+                summary: Google Pay - Mastercard
+                description: Provision Mastercard to Google Pay on Android device
+                value:
+                  data:
+                    walletId: '216'
+                    eligibility:
+                      enrollmentIndicator: NEW
+                      sourceChannel: BCUS_Mobile
+                    provision:
+                      deviceName: Pixel 8 Pro
+                      osName: ANDROID
+                      osVersion: 14.0.0
+              google-pay-visa:
+                summary: Google Pay - VISA
+                description: Provision VISA card to Google Pay (requires client wallet and device IDs)
+                value:
+                  data:
+                    walletId: '216'
+                    eligibility:
+                      enrollmentIndicator: NEW
+                      sourceChannel: BCUS_Mobile
+                    provision:
+                      deviceName: Samsung Galaxy S24
+                      osName: ANDROID
+                      osVersion: 14.0.0
+                      clientWalletAccountId: walletaccount12345
+                      clientDeviceId: device67890
+              samsung-pay-mastercard:
+                summary: Samsung Pay - Mastercard
+                description: Provision Mastercard to Samsung Pay on Samsung device
+                value:
+                  data:
+                    walletId: '217'
+                    eligibility:
+                      enrollmentIndicator: NEW
+                      sourceChannel: SAMSUNG_Mobile
+                    provision:
+                      deviceName: Galaxy S24 Ultra
+                      osName: ANDROID
+                      osVersion: 14.0.0
+              samsung-pay-visa:
+                summary: Samsung Pay - VISA
+                description: Provision VISA card to Samsung Pay (requires client wallet and device IDs)
+                value:
+                  data:
+                    walletId: '217'
+                    eligibility:
+                      enrollmentIndicator: NEW
+                      sourceChannel: SAMSUNG_Mobile
+                    provision:
+                      deviceName: Galaxy Z Fold 5
+                      osName: ANDROID
+                      osVersion: 13.0.0
+                      clientWalletAccountId: '54321'
+                      clientDeviceId: device09876
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/ExternalWalletProvisionRes'
+        '400':
+          $ref: '#/components/responses/BadRequest_WalletProvision'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden_eligibility'
+        '404':
+          $ref: '#/components/responses/NotFound_WalletProvision'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '428':
+          $ref: '#/components/responses/FraudChallenge'
+      deprecated: false
+components:
+  schemas:
+    ExternalWalletResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Wallet provisioning response containing activation data and encrypted credentials
+      properties:
+        encryptedPassData:
+          type: string
+          description: Encrypted wallet pass data (Apple Pay only)
+          example: W9uIjoiMiIsImV4cGlyYXRpb25
+          maxLength: 10000
+          minLength: 1
+          pattern: ^[a-zA-Z0-9.\/+=&']{1,10000}$
+        ephemeralPublicKey:
+          type: string
+          description: Ephemeral public key for encryption (Apple Pay only)
+          example: 4cGlyYXRpb25EYXRlSW5jbHVkZ
+          maxLength: 10000
+          minLength: 1
+          pattern: ^[a-zA-Z0-9.\/+=&']{1,10000}$
+        activationData:
+          type: string
+          description: Cryptographic OTP for wallet activation (all wallet types)
+          example: eyJ2ZXJzaW9uIjoiMiIsImV4cGlyYXRpb25EYXRlSW5jbHVkZ
+          maxLength: 10000
+          minLength: 1
+          pattern: ^[a-zA-Z0-9.\/+=&']{1,10000}$
+        phone:
+          type: string
+          description: Customer phone number (Google Pay only)
+          example: '5555555555'
+          maxLength: 25
+          minLength: 7
+          pattern: ^[0-9\.\s()\-]{7,25}$
+        customerAddress:
+          $ref: '#/components/schemas/CustomerAddress'
+      nullable: false
+    WalletProvisionRequestData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Request data for provisioning a credit card to a digital wallet.
+
+
+        **Purpose:**
+
+        - Provision credit cards to Apple Pay, Google Pay, or Samsung Pay
+
+        - Includes eligibility criteria and device provisioning information
+
+        - Supports both Mastercard and VISA card networks
+
+
+        **Wallet-Specific Requirements:**
+
+        - **Apple Pay**: Requires device certificates, nonce, and nonce signature from Apple SDK
+
+        - **Google Pay**: Requires device information; VISA cards also need client wallet and device IDs
+
+        - **Samsung Pay**: Requires device information; VISA cards also need client wallet and device IDs
+
+
+        **Processing:**
+
+        - Eligibility verification performed automatically
+
+        - Fraud assessment based on account status and risk rules
+
+        - Returns wallet-specific provisioning data for activation
+
+        '
+      properties:
+        data:
+          $ref: '#/components/schemas/ExternalWalletProvision'
+      required:
+      - data
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: false
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 9709-4675-2456-7801
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]{1,50}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying
+            purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+      required:
+      - code
+      - id
+      - title
+    WalletProvision:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Device and certificate information for wallet provisioning
+      properties:
+        leafCertificate:
+          type: string
+          description: Base64-encoded leaf certificate from Apple SDK (Apple Pay only)
+          example: MIID/TCCA6OgAwIBAgIIbFjYdyLBY/YwCgYIKoZIzj0EAwIwgYAxNDAyBgNVBAMMK0FwcGxlIFdvcmxkd2lkZSBEZXZlbG9wZXIgUmVsYXRpb25zIENBIC0gRzIxJjAkBgNVBAsMHUFwcGxlIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MRMwEQYDVQ
+          maxLength: 10000
+          minLength: 0
+          pattern: ^[a-zA-Z0-9.\/+=&']{0,10000}$
+        nonceId:
+          type: string
+          description: Hex-encoded nonce from Apple SDK (Apple Pay only)
+          example: devhVQ==
+          maxLength: 10000
+          minLength: 0
+          pattern: ^[a-zA-Z0-9.\/+=&']{0,10000}$
+        nonceSignature:
+          type: string
+          description: Hex-encoded nonce signature from Apple SDK (Apple Pay only)
+          example: QOoKygfavhdWmyTJrSq4UoOA+miEdIEe4JXHga5eTyK+vv7DvfDJXDbvcyewQhD+f9o4FOmj3Gy0r9FmxIga+Jc3HtJP98wJf0efAT7BPSmj
+          maxLength: 10000
+          minLength: 0
+          pattern: ^[a-zA-Z0-9.\/+=&']{0,10000}$
+        subCertificate:
+          type: string
+          description: Base64-encoded sub-certificate from Apple SDK (Apple Pay only)
+          example: MIIC9zCCAnygAwIBAgIIb+/Y9emjp+4wCgYIKoZIzj0EAwIwZzEbMBkGA1UEAwwSQXBwbGUgUm9vdCBDQSAtIEczMSYwJAYDVQQLDB1BcHBsZSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eT
+          maxLength: 10000
+          minLength: 0
+          pattern: ^[a-zA-Z0-9.\/+=&']{0,10000}$
+        deviceName:
+          type: string
+          description: User-friendly device name (e.g., "iPhone 14 Pro", "Galaxy S24")
+          example: iPhone 14 Pro
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s+'-]{1,255}$
+        osName:
+          type: string
+          description: Device operating system (IOS for Apple Pay, ANDROID for Google Pay and Samsung Pay)
+          enum:
+          - IOS
+          - ANDROID
+          example: IOS
+        osVersion:
+          type: string
+          description: Operating system version (e.g., "17.2.1", "14.0.0")
+          example: 17.2.1
+          maxLength: 20
+          minLength: 1
+          pattern: ^[0-9.]{1,20}$
+        clientWalletAccountId:
+          type: string
+          description: Wallet account ID from wallet SDK (required for VISA cards only)
+          example: '12345'
+          maxLength: 1000
+          minLength: 0
+          pattern: ^[a-zA-Z0-9.\/+=&' ]{0,1000}$
+        clientDeviceId:
+          type: string
+          description: Device ID from wallet SDK (required for VISA cards only)
+          example: device67890
+          maxLength: 1000
+          minLength: 0
+          pattern: ^[a-zA-Z0-9.\/+=&']{0,1000}$
+      required:
+      - deviceName
+      - osName
+      - osVersion
+      nullable: false
+    WalletProvisionResponseList:
+      type: array
+      description: List of wallet provisioning responses
+      items:
+        $ref: '#/components/schemas/ExternalWalletResponse'
+      maxItems: 100
+      minItems: 0
+    ExternalWalletProvision:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Wallet provisioning request with eligibility criteria and device information
+      properties:
+        walletId:
+          type: string
+          description: 'Wallet provider identifier:
+
+            - 103: Apple Pay
+
+            - 216: Google Pay
+
+            - 217: Samsung Pay
+
+            - 101: Apple Pay (deprecated, use 103)
+
+            '
+          enum:
+          - '101'
+          - '103'
+          - '216'
+          - '217'
+          example: '103'
+        eligibility:
+          $ref: '#/components/schemas/WalletEligibility'
+        provision:
+          $ref: '#/components/schemas/WalletProvision'
+      required:
+      - eligibility
+      - provision
+      - walletId
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    WalletEligibility:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Eligibility criteria for wallet provisioning
+      properties:
+        enrollmentIndicator:
+          type: string
+          description: Enrollment type (NEW for first-time enrollment, RE_ENROLL for re-enrollment)
+          enum:
+          - NEW
+          - RE_ENROLL
+          example: NEW
+        sourceChannel:
+          type: string
+          description: Channel identifier (e.g., BCUS_Mobile, SAMSUNG_Mobile, GAP_Mobile)
+          example: BCUS_Mobile
+          maxLength: 20
+          minLength: 1
+          pattern: ^[A-Za-z0-9\-_]{1,20}$
+      required:
+      - enrollmentIndicator
+      - sourceChannel
+      nullable: false
+    ExternalWalletProvisionResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Response data containing wallet provisioning information for card activation.
+
+
+        **Response Structure:**
+
+        - Returns provisioning data specific to the requested wallet type
+
+        - Includes activation tokens and encrypted data required by wallet provider
+
+        - Response fields vary based on wallet type (Apple Pay, Google Pay, Samsung Pay)
+
+
+        **Apple Pay Response:**
+
+        - Encrypted pass data for Apple Wallet
+
+        - Ephemeral public key for encryption
+
+        - Activation OTP for wallet activation
+
+
+        **Google Pay Response:**
+
+        - Activation OTP for wallet activation
+
+        - Customer phone number
+
+        - Customer billing address (required by Google Pay)
+
+
+        **Samsung Pay Response:**
+
+        - Activation OTP for wallet activation
+
+
+        **Use Cases:**
+
+        - Complete wallet setup on customer''s device
+
+        - Activate provisioned card in digital wallet
+
+        - Display provisioning confirmation to customer
+
+        - Handle wallet-specific activation flows
+
+        '
+      properties:
+        data:
+          $ref: '#/components/schemas/WalletProvisionResponseList'
+      nullable: false
+    CustomerAddress:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Customer billing address details
+      properties:
+        addrLine1:
+          type: string
+          description: Street address line 1
+          example: 125 S. WEST STREET
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s\/.\-,&#]{1,255}$
+        addrLine2:
+          type: string
+          description: Street address line 2 (optional)
+          example: Columbus Avenue
+          maxLength: 255
+          minLength: 0
+          pattern: ^[a-zA-Z0-9\s\/\-,.&#]{0,255}$
+        addrLine3:
+          type: string
+          description: Street address line 3 (optional)
+          example: LLP
+          maxLength: 255
+          minLength: 0
+          pattern: ^[a-zA-Z0-9\s\/\-.,&#]{0,255}$
+        city:
+          type: string
+          description: City name
+          example: WILMINGTON
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z\s]{1,255}$
+        stateProv:
+          type: string
+          description: State or province code
+          example: DE
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z\s]{1,32}$
+        postalCode:
+          type: string
+          description: Postal or ZIP code
+          example: '19801'
+          maxLength: 7
+          minLength: 1
+          pattern: ^[0-9]{1,7}$
+        countryCode:
+          type: string
+          description: ISO country code
+          example: US
+          maxLength: 10
+          minLength: 1
+          pattern: ^[a-zA-Z]{1,10}$
+      nullable: false
+  responses:
+    BadRequest_WalletProvision:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat\
+        \ the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400-bad-request:
+              $ref: '#/components/examples/example-error-400-bad-request'
+            example-error-4001-invalid-walletId:
+              $ref: '#/components/examples/example-error-4001-invalid-walletId'
+            example-error-4002-missing-leafCertificate:
+              $ref: '#/components/examples/example-error-4002-missing-leafCertificate'
+            example-error-4003-missing-nonceId:
+              $ref: '#/components/examples/example-error-4003-missing-nonceId'
+            example-error-4004-missing-nonceSignature:
+              $ref: '#/components/examples/example-error-4004-missing-nonceSignature'
+            example-error-4005-missing-subCertificate:
+              $ref: '#/components/examples/example-error-4005-missing-subCertificate'
+            example-error-4006-invalid-base64-encoding:
+              $ref: '#/components/examples/example-error-4006-invalid-base64-encoding'
+            example-error-4007-invalid-eligibility-token:
+              $ref: '#/components/examples/example-error-4007-invalid-eligibility-token'
+            example-error-4008-missing-clientWalletAccountId:
+              $ref: '#/components/examples/example-error-4008-missing-clientWalletAccountId'
+            example-error-4009-missing-clientDeviceId:
+              $ref: '#/components/examples/example-error-4009-missing-clientDeviceId'
+    Forbidden_eligibility:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Forbidden:
+              $ref: '#/components/examples/example-error-403'
+            FraudDeclined:
+              $ref: '#/components/examples/example-error-403_FRAUD_DECLINED'
+            CustomerValidationFailed:
+              $ref: '#/components/examples/example-error-4032-customer-validation-failed'
+            AccountNotAuthorized:
+              $ref: '#/components/examples/example-error-4033-account-not-authorized'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    ExternalWalletProvisionRes:
+      description: Wallet Provision Response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExternalWalletProvisionResponseData'
+          examples:
+            ExternalWalletResponseData:
+              $ref: '#/components/examples/example-external-wallet-eligibility-provision-response'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition\
+        \ which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After\
+        \ header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote:\
+        \ The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers\
+        \ may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    NotFound_WalletProvision:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status\
+        \ code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when\
+        \ no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+            example-error-4041-account-not-found:
+              $ref: '#/components/examples/example-error-4041-account-not-found'
+            example-error-4042-no-account-data:
+              $ref: '#/components/examples/example-error-4042-no-account-data'
+            example-error-4043-no-primary-user:
+              $ref: '#/components/examples/example-error-4043-no-primary-user'
+            example-error-4044-no-accounts-found:
+              $ref: '#/components/examples/example-error-4044-no-accounts-found'
+            example-error-4045-no-primary-customer:
+              $ref: '#/components/examples/example-error-4045-no-primary-customer'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic\
+        \ error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+            example-error-5001-internal-processing-error:
+              $ref: '#/components/examples/example-error-5001-internal-processing-error'
+            example-error-5002-encryption-error:
+              $ref: '#/components/examples/example-error-5002-encryption-error'
+    FraudChallenge:
+      description: 'Fraud challenge required
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            FraudChallenge:
+              $ref: '#/components/examples/example-error-428_FRAUD_CHALLENGE'
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer Token
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 2048
+        minLength: 32
+        pattern: ^[A-Za-z0-9\-_\.\ ]{32,2048}$
+      example: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlE4SkRobnd0ODU4eDNlbTRwVVkzd0R2Q3RsRSIsInBpLmF0bSI6IjUybWUifQ.eyJjbGllbnRfaWQiOiJVU0NCSU5UQ0xJRU5UIiwiaXNzIjoiVElBQS1VUyIsImF1ZCI6IlVTQ0IiLCJzdWIiOiJzeXNUSUFBVVNBUFBMWVQiLCJhZGdyb3VwcyI6WyJDTj1mR0xCQ3VzdFByb2R1Y3RITlAsT1U9R3JvdXBzLE9VPUdMQixEQz1JTlRSQU5FVCxEQz1CQVJDQVBJTlQsREM9Y29tIiwiQ049ZkdMQkNycHRQY3NHYXBRQSxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iLCJDTj1mR0xCQWNjdE1nbXROUCxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iLCJDTj1mR0xCVElBQVVTQ0JJbnRyUyxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iXSwiZXhwIjoxNjgzMjYyNzk3fQ.JDw6udt7pegvyz2tD_W0gUR_FXr7XnZIMnb0GeXLGFC7Zcg5yq6vI2bTMaee9pNhtCEJlIbLa5aKvP6xdt1xBfusE74g85Tohb5c-4MF7QNsC3vBCNOlTpnXMPkHR2_aNfXzf_Duvf81ZotsD_KwUF7w8f63BHgpI4itiFSduGEFGzAKlV2OJwcgIIlhDfhstbDtREL931QlFI8v_sj7JjXWOqivrFSOhiuen-rM5SRvFrnm50P9mZvyhs4-228cZ-xv36c5NAsbO9whQCHE5N0rDOhMgCKl65rnCdUr8rktOCe3fMQTWxV-qQqnr4hscgFtcJt9gU07pwP8zvf4xQ
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this\
+        \ unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the\
+        \ current Barclays REST Standard.\n"
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    X-Party-Id:
+      name: X-Party-Id
+      in: header
+      description: 'Party ID of customer associated to an account Id
+
+        '
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 20
+        minLength: 1
+        pattern: ^[0-9]{1,20}$
+      example: '100145000'
+    X-Channel-Id:
+      name: X-Channel-Id
+      in: header
+      description: 'The channel that initiated the call. Must be passed through the API stack.
+
+        '
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 20
+        minLength: 3
+        pattern: ^[A-Za-z0-9\-_]{3,20}$
+      example: ccd
+    ExternalAccountIdPath:
+      name: accountId
+      in: path
+      description: External Account Id
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: c8de699e-ff6d-11eb-9a03-0242ac130003
+    OauthClient-ID:
+      name: oauth_clientid
+      in: header
+      description: 'To be set by Akana ND. It will be removed when published on Akana,
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 256
+        minLength: 1
+        pattern: ^[a-zA-Z0-9.\-]{1,256}$
+      example: bdn-68EwxNCdDi65Y2FV6wxupfsoD3ilveYxDqok0LD5
+    X-Auth-Type:
+      name: X-Auth-Type
+      in: header
+      description: 'X-AuthType injected by AKANA ND.
+
+        Denotes how the token was issued - client-creds/auth-grant
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        description: Denotes how the token was issued - client-creds/auth-grant
+        enum:
+        - auth-grant
+        - client-creds
+      example: auth-grant
+    X-IDVSessionID:
+      name: X-IDVSessionID
+      in: header
+      description: 'X-IDVSessionID injected by AKANA ND. Used for Fraud detection.
+
+        This is passed on as access-token to fraud-decision api.
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 6c9b83bc-5c94-45c8-a594-5ea890409b62
+    Content-Type:
+      name: Content-Type
+      in: header
+      description: Content-Type
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 35
+        minLength: 16
+        pattern: ^[a-z0-9A-Z\/ ]{16,35}$
+      example: application/json
+  examples:
+    example-error-4044-no-accounts-found:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4044
+          title: No accounts found for the provided external account ID
+          detail: No accounts found for the provided external account ID
+    example-error-4002-missing-leafCertificate:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4002
+          title: request.body.data should have required property 'leafCertificate'
+          detail: request.body.data should have required property 'leafCertificate'
+    example-error-4042-no-account-data:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4042
+          title: No Account Data present for the given Account
+          detail: No Account Data present for the given Account
+    example-error-4009-missing-clientDeviceId:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4009
+          title: request.body.data should have required property for google wallet 'clientDeviceId'
+          detail: request.body.data should have required property for google wallet 'clientDeviceId'
+    example-error-4006-invalid-base64-encoding:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4006
+          title: Signal Risk Assesment is not encoded with Base64
+          detail: Signal Risk Assesment is not encoded with Base64
+    example-error-428_FRAUD_CHALLENGE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: CAM_ERR_4281
+          title: Fraud challenge required
+          detail: Fraud challenge required
+        meta:
+          verificationContextId: A22DFEC1-C5E7-4DD7-99FD-716528EB1FE3
+    example-error-4004-missing-nonceSignature:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4004
+          title: request.body.data should have required property 'nonceSignature'
+          detail: request.body.data should have required property 'nonceSignature'
+    example-error-5001-internal-processing-error:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_5001
+          title: Internal processing error, contact Barclay's API support with Correlation-ID
+          detail: Internal processing error, contact Barclay's API support with Correlation-ID
+    example-error-4032-customer-validation-failed:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4032
+          title: Customer validation failed
+          detail: Customer validation failed
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    example-error-4033-account-not-authorized:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4033
+          title: Account is not authorized to access Wallet Provision
+          detail: Account is not authorized to access Wallet Provision
+    example-error-403_FRAUD_DECLINED:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4031
+          title: Fraud Declined
+          detail: Fraud Declined
+    example-external-wallet-eligibility-provision-response:
+      value:
+        data:
+        - encryptedPassData: W9uIjoiMiIsImV4cGlyYXRpb25
+          ephemeralPublicKey: 4cGlyYXRpb25EYXRlSW5jbHVkZ
+          activationData: eyJ2ZXJzaW9uIjoiMiIsImV4cGlyYXRpb25EYXRlSW5jbHVkZ
+          phone: '5555555555'
+          customerAddress:
+            addrLine1: 125 S. WEST STREET
+            addrLine2: Columbus Avenue
+            addrLine3: LLP
+            city: WILMINGTON
+            stateProv: DE
+            postalCode: '19801'
+            countryCode: US
+    example-error-4005-missing-subCertificate:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4005
+          title: request.body.data should have required property 'subCertificate'
+          detail: request.body.data should have required property 'subCertificate'
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
+    example-error-4041-account-not-found:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4041
+          title: Account not found
+          detail: Account not found
+    example-error-4001-invalid-walletId:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4001
+          title: Invalid walletId , Possible values are [APPLE = 103, ANDROID = 216, SAMSUNG = 217]
+          detail: Invalid walletId , Possible values are [APPLE = 103, ANDROID = 216, SAMSUNG = 217]
+    example-error-5002-encryption-error:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_5002
+          title: Exception occurred while encrypting data
+          detail: Exception occurred while encrypting data
+    example-error-4043-no-primary-user:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4043
+          title: No Primary User is available for the given Account
+          detail: No Primary User is available for the given Account
+    example-error-4008-missing-clientWalletAccountId:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4008
+          title: request.body.data should have required property for google wallet 'clientWalletAccountId'
+          detail: request.body.data should have required property for google wallet 'clientWalletAccountId'
+    example-error-4045-no-primary-customer:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4045
+          title: No PRIMARY customer found for account
+          detail: No PRIMARY customer found for account
+    example-error-4003-missing-nonceId:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4003
+          title: request.body.data should have required property 'nonceId'
+          detail: request.body.data should have required property 'nonceId'
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    example-error-4007-invalid-eligibility-token:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: DW_ERR_4007
+          title: Please validate request, Either no record exists for the provided Eligibility token or request is invalid
+          detail: Please validate request, Either no record exists for the provided Eligibility token or request is invalid
+    example-error-403:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed.
+  requestBodies:
+    WalletProvisionRequest:
+      description: Wallet provision request containing eligibility criteria and device provisioning information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WalletProvisionRequestData'
+          examples:
+            apple-pay-provision:
+              summary: Apple Pay provisioning
+              description: Provision card to Apple Wallet on iOS device
+              value:
+                data:
+                  walletId: '103'
+                  eligibility:
+                    enrollmentIndicator: NEW
+                    sourceChannel: BCUS_Mobile
+                  provision:
+                    leafCertificate: MIID/TCCA6OgAwIBAgIIbFjYdyLBY/YwCgYIKoZIzj0EAwIwgYAxNDAyBgNVBAMMK0FwcGxlIFdvcmxkd2lkZSBEZXZlbG9wZXIgUmVsYXRpb25zIENBIC0gRzIxJjAkBgNVBAsMHUFwcGxlIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MRMwEQYDVQ
+                    nonceId: devhVQ==
+                    nonceSignature: QOoKygfavhdWmyTJrSq4UoOA+miEdIEe4JXHga5eTyK+vv7DvfDJXDbvcyewQhD+f9o4FOmj3Gy0r9FmxIga+Jc3HtJP98wJf0efAT7BPSmj
+                    subCertificate: MIIC9zCCAnygAwIBAgIIb+/Y9emjp+4wCgYIKoZIzj0EAwIwZzEbMBkGA1UEAwwSQXBwbGUgUm9vdCBDQSAtIEczMSYwJAYDVQQLDB1BcHBsZSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eT
+                    deviceName: iPhone 14 Pro
+                    osName: IOS
+                    osVersion: 17.2.1
+            google-pay-mastercard:
+              summary: Google Pay - Mastercard
+              description: Provision Mastercard to Google Pay on Android device
+              value:
+                data:
+                  walletId: '216'
+                  eligibility:
+                    enrollmentIndicator: NEW
+                    sourceChannel: BCUS_Mobile
+                  provision:
+                    deviceName: Pixel 8 Pro
+                    osName: ANDROID
+                    osVersion: 14.0.0
+            google-pay-visa:
+              summary: Google Pay - VISA
+              description: Provision VISA card to Google Pay (requires client wallet and device IDs)
+              value:
+                data:
+                  walletId: '216'
+                  eligibility:
+                    enrollmentIndicator: NEW
+                    sourceChannel: BCUS_Mobile
+                  provision:
+                    deviceName: Samsung Galaxy S24
+                    osName: ANDROID
+                    osVersion: 14.0.0
+                    clientWalletAccountId: walletaccount12345
+                    clientDeviceId: device67890
+            samsung-pay-mastercard:
+              summary: Samsung Pay - Mastercard
+              description: Provision Mastercard to Samsung Pay on Samsung device
+              value:
+                data:
+                  walletId: '217'
+                  eligibility:
+                    enrollmentIndicator: NEW
+                    sourceChannel: SAMSUNG_Mobile
+                  provision:
+                    deviceName: Galaxy S24 Ultra
+                    osName: ANDROID
+                    osVersion: 14.0.0
+            samsung-pay-visa:
+              summary: Samsung Pay - VISA
+              description: Provision VISA card to Samsung Pay (requires client wallet and device IDs)
+              value:
+                data:
+                  walletId: '217'
+                  eligibility:
+                    enrollmentIndicator: NEW
+                    sourceChannel: SAMSUNG_Mobile
+                  provision:
+                    deviceName: Galaxy Z Fold 5
+                    osName: ANDROID
+                    osVersion: 13.0.0
+                    clientWalletAccountId: '54321'
+                    clientDeviceId: device09876
+      required: true
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

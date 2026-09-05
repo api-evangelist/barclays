@@ -1,0 +1,628 @@
+openapi: 3.1.0
+info:
+  title: Cryptography Key Exchange
+  description: This API is to get Public Certificate for Partner's Cryptography Operation
+  version: '1.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/15f2194b-7bda-4e81-b90e-f671efbc28c1.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-cryptography-key-exchange-openapi.json. The UK Open Banking
+  documents carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as
+  Barclays implements and publishes it — the API, the registry record and the host are Barclays'.
+tags:
+- name: key-exchange-fetch-json-web-keys
+  description: Key Exchange Fetch Operation APIs
+paths:
+  /pcs/{requesterId}/jwks:
+    summary: API to fetch JWKS content for the given  partner
+    description: API to fetch JWKS content for the given  partner
+    get:
+      tags:
+      - key-exchange-fetch-json-web-keys
+      summary: JSON Web Key Set
+      description: Return the set of JSON Web Keys.
+      operationId: getJSONWebKeys
+      parameters:
+      - name: Correlation-ID
+        in: header
+        description: 'Unique end-to-end trace ID. The caller can generate and pass this unique ID, which will then be passed
+
+          through the API call stack.'
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: requesterId
+        in: path
+        description: Requester ID can be the agreed oauth-client-id/app.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 15de567a-1838-3004-b80f-8c3b0d5ab5e9
+      responses:
+        '200':
+          description: JWKS key set
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWKSKeySetBody'
+              examples:
+                JWKSKeySetRes:
+                  $ref: '#/components/examples/JWKSKeySetRes'
+              example: null
+        '400':
+          description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT\
+            \ repeat the request without \nmodifications."
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              examples:
+                example-error-400-bad-request:
+                  $ref: '#/components/examples/example-error-400-bad-request'
+              example: null
+        '401':
+          description: The user could not be authenticated for this request.
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              examples:
+                example-error-401:
+                  $ref: '#/components/examples/example-error-401'
+              example: null
+        '500':
+          description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic\
+            \ error message, given when \nno more specific message is suitable."
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              examples:
+                example-error-500:
+                  $ref: '#/components/examples/example-error-500'
+              example: null
+        '403':
+          description: The user is not permitted to access the requested operation and it cannot be completed.
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              examples:
+                example-error-403:
+                  $ref: '#/components/examples/example-error-403'
+              example: null
+        '404':
+          description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This\
+            \ status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused,\
+            \ or when no other \nresponse is applicable."
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              examples:
+                example-error-404:
+                  $ref: '#/components/examples/example-error-404'
+              example: null
+        '503':
+          description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition\
+            \ which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After\
+            \ header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response.\
+            \ \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded.\
+            \ Servers may simply \nrefuse the connection."
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              examples:
+                example-error-503:
+                  $ref: '#/components/examples/example-error-503'
+              example: null
+        '429':
+          description: "When a server is under attack or just receiving a very \nlarge number of requests from a single party,\
+            \ responding \nto each with a 429 status code will consume resources. \nTherefore, servers may drop connections\
+            \ or take other steps\ninstead of responding with the 429 status code, when limiting\nresource usage."
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              examples:
+                example-error-429:
+                  $ref: '#/components/examples/example-error-429'
+              example: null
+      deprecated: false
+components:
+  schemas:
+    JWKSKey:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Partner Entity
+      properties:
+        kty:
+          type: string
+          description: Key type value
+          example: RSA
+          maxLength: 100
+          minLength: 1
+          pattern: ^[A-Za-z0-9]{1,100}$
+        use:
+          type: string
+          description: Use value
+          example: enc
+          maxLength: 100
+          minLength: 1
+          pattern: ^[A-Za-z0-9]{1,100}$
+        key_ops:
+          type: array
+          description: Operation(s) for which the key is intended to be used
+          items:
+            $ref: '#/components/schemas/KeyOperation'
+          maxItems: 10
+          minItems: 1
+        kid:
+          type: string
+          description: Kid value
+          example: 0598376fb7d6d671ac0fb2bc3afb6aec
+          maxLength: 100
+          minLength: 1
+          pattern: ^[A-Za-z0-9\-_]{1,100}$
+        x5c:
+          type: array
+          description: Certificate chain
+          items:
+            type: string
+            description: Certificate
+            example: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApwni+ErA4h6wyqAYz39pf3dOlvgRX8I1npz2Cx3Y1ASNl0zfhCK+9r48FisEuRb36iEz8OPk4O7hZIWb2cHg7wNXwUL09jO0rdSquGyPiJXNM/v04CTZo61r5iZ1cLSnLSw0NU4BOedK2mZaFqJhFJDeu44TGmz/x+8l50JAgD3XGk/NlTyYgRGwqpu8TFcCT8XoxEYq2QScfxq+2FnGNFX6bVi1zDSj0yBv90uelsM226zwzdGO0MZnls4AqwfzayTL4zQlI/2CFajnf4noagjbkR8jdFk4je5kLa58smRKA+ce1cb6UHfPQJD6+lVgSLU2uHmoj2KGmPDHtCDEtwIDAQAB
+            maxLength: 3000
+            minLength: 1
+            pattern: ^[A-Za-z0-9+/=._\-]{1,3000}$
+          maxItems: 20
+          minItems: 1
+        x5t#S256:
+          type: string
+          description: Certificate SHA-256 thumbprint
+          example: QTk2MDVFQUEwRkJGRjg4MEY0QTYzMkQ2NUQyNTI5M0FDOTVCQTc0QTQ1N0UxQkE4NzdCNjM3RDcyMEFBNzY3OA==
+          maxLength: 1000
+          minLength: 1
+          pattern: ^[A-Za-z0-9+/=._\-]{1,1000}$
+        x5t:
+          type: string
+          description: Base64 URL Encoded Certificate SHA-1 thumbprint
+          example: YmQ2MGEwMjg3ZDk2ZTA4ZGI0ZWFhZDUzMzNlMTU0MDAwN2Q0NTM
+          maxLength: 1000
+          minLength: 1
+          pattern: ^[A-Za-z0-9+/=._\-]{1,1000}$
+        e:
+          type: string
+          description: Exponential value
+          example: AQAB
+          maxLength: 100
+          minLength: 1
+          pattern: ^[A-Za-z0-9]{1,100}$
+        n:
+          type: string
+          description: Modulus value
+          example: yCxy4RXEn3PEp6NVRZlhJb42gVfQYZ6fdEjO47B86ges9vkcKvfTYgG5EFhSeEfElS9BUuL6Fyivm1dxJyqdFq_S6L_yWURCBP8BYG3aldy1h7owWsBmNJVXz-TSCLojc65RlRRafIzMBsCmDhOE1hFAQOZtCTgTavqHJHMX8yXId67h-C1pnzxRz80yGszje0B71DzpJmNpX3r231hRhvkhTsX43DB22X4YJFX4zErIH5yVESA93YUm_ikR09HfOu88Aq64zC0qd9yaMculpOctkenpOJ8EBsbDZIvIZtw-q2zZEwDAJ1wiSr2W4RH2pMC59G3aZzcFtQvlx6KsDw==
+          maxLength: 1000
+          minLength: 1
+          pattern: ^[A-Za-z0-9+/=._\-]{1,1000}$
+        alg:
+          type: string
+          description: Algorithm intended for use with the key
+          example: RSA-OAEP-256
+          maxLength: 50
+          minLength: 1
+          pattern: ^[A-Za-z0-9-]{1,50}$
+        enc:
+          type: string
+          description: Algorithm intended for decryption
+          example: A256GCM
+          maxLength: 50
+          minLength: 1
+          pattern: ^[A-Za-z0-9-]{1,50}$
+        iat:
+          type: integer
+          format: int64
+          description: Issued at
+          example: 1691702239
+          maximum: 2641905738
+          minimum: 1379601738
+        nbf:
+          type: integer
+          format: int64
+          description: Not before
+          example: 1691702239
+          maximum: 2641905738
+          minimum: 1379601738
+        exp:
+          type: integer
+          format: int64
+          description: Expiration time
+          example: 1691702239
+          maximum: 2641905738
+          minimum: 1379601738
+        crv:
+          type: string
+          description: Elliptic curve intended for use with the EC public key
+          example: P-256
+          maxLength: 50
+          minLength: 1
+          pattern: ^[A-Za-z0-9-]{1,50}$
+        x:
+          type: string
+          description: X Coordinate of the elliptic curve public key
+          example: f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU
+          maxLength: 1000
+          minLength: 1
+          pattern: ^[A-Za-z0-9+/=._\-]{1,1000}$
+        y:
+          type: string
+          description: Y Coordinate of the elliptic curve public key
+          example: x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0
+          maxLength: 1000
+          minLength: 1
+          pattern: ^[A-Za-z0-9+/=._\-]{1,1000}$
+      required:
+      - exp
+      - iat
+      - kid
+      - kty
+      - nbf
+      - use
+      nullable: false
+    KeyOperation:
+      type: string
+      description: key operation
+      enum:
+      - sign
+      - verify
+      - encrypt
+      - decrypt
+      - wrapKey
+      - unwrapKey
+      - deriveKey
+      - deriveBits
+      example: sign
+    JWKSKeySetBody:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: JWKS Response Body
+      properties:
+        keys:
+          type: array
+          description: List of JWKS keys
+          items:
+            $ref: '#/components/schemas/JWKSKey'
+          maxItems: 10
+          minItems: 1
+      required:
+      - keys
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 9709-4675-2456-7801
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]{1,50}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying
+            purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - id
+      - title
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+  responses:
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat\
+        \ the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400-bad-request:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    JWKSKeySetRes:
+      description: JWKS key set
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JWKSKeySetBody'
+          examples:
+            JWKSKeySetRes:
+              summary: success response
+              $ref: '#/components/examples/JWKSKeySetRes'
+    TooManyRequests:
+      description: "When a server is under attack or just receiving a very \nlarge number of requests from a single party,\
+        \ responding \nto each with a 429 status code will consume resources. \nTherefore, servers may drop connections or\
+        \ take other steps\ninstead of responding with the 429 status code, when limiting\nresource usage.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-429:
+              $ref: '#/components/examples/example-error-429'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition\
+        \ which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After\
+        \ header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote:\
+        \ The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers\
+        \ may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic\
+        \ error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status\
+        \ code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when\
+        \ no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+  parameters:
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: 'Unique end-to-end trace ID. The caller can generate and pass this unique ID, which will then be passed
+
+        through the API call stack.
+
+        '
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    requesterId:
+      $ref: '#/components/parameters/RequesterIdPath'
+    RequesterIdPath:
+      name: requesterId
+      in: path
+      description: 'Requester ID can be the agreed oauth-client-id/app.
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 15de567a-1838-3004-b80f-8c3b0d5ab5e9
+  examples:
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    JWKSKeySetRes:
+      value:
+        keys:
+        - e: AQAB
+          kid: 39cf4e1c5fc71fb7ecff6b66e902ca14
+          kty: RSA
+          n: o7kieUWdjJHLHitf85g7oM41Nob6fQ0WdDOR7_OOX6E66uS-xImmPp2wfDaBD5SD-U7ckipE0JCPAMAqxlFztIGRakaQRrjVo0CZ1Sqy7qMa48QjJmVYDvQCLGq58VRH10CmVLvJtGgiLPPzLfk09yEZdjipj7VAuJ-f7L4Y1PkfW6Zrw8vgfcy8tEerdIZDtBAsePuwLsHCnfOBgZ-vh6xyad7VrCANz0pumaLTWR-hh37O6l0-zX1yFtLyZM038tcGbAMF86b1J27M8ZKqX3y5pYLiiY-jjGhytMyZc9FziNppOSPQTWSuIVc9eS6oGXRm2Evauqlm0gdosx5Yew==
+          x5c:
+          - MIIFuzCCBKOgAwIBAgIQOc9OHF/HH7fs/2tm6QLKFDANBgkqhkiG9w0BAQsFADB5MRUwEwYDVQQKEwxCYXJjbGF5cyBQTEMxLzAtBgNVBAsTJkFXUyBJbmZyYXN0cnVjdHVyZSBJbnRlcm1lZGlhdGUgQ0EgKDIpMS8wLQYDVQQDEyZBV1MgSW5mcmFzdHJ1Y3R1cmUgSW50ZXJtZWRpYXRlIENBICgyKTAeFw0yMjEwMjgwMDAwMDBaFw0yMzAxMjYyMzU5NTlaMIGxMQswCQYDVQQGEwJHQjEPMA0GA1UECBMGTG9uZG9uMQ8wDQYDVQQHEwZMb25kb24xFTATBgNVBAoUDEJhcmNsYXlzIFBMQzEUMBIGA1UECxQLQ0kyNjA2NDkyNjExDDAKBgNVBAsUA0NUTzEUMBIGA1UECxQLQmFyY2xheXNDVE8xLzAtBgNVBAMTJmR1d3BzcjAwMjAxODE5My5pbnRyYW5ldC5iYXJjYXBpbnQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo7kieUWdjJHLHitf85g7oM41Nob6fQ0WdDOR7/OOX6E66uS+xImmPp2wfDaBD5SD+U7ckipE0JCPAMAqxlFztIGRakaQRrjVo0CZ1Sqy7qMa48QjJmVYDvQCLGq58VRH10CmVLvJtGgiLPPzLfk09yEZdjipj7VAuJ+f7L4Y1PkfW6Zrw8vgfcy8tEerdIZDtBAsePuwLsHCnfOBgZ+vh6xyad7VrCANz0pumaLTWR+hh37O6l0+zX1yFtLyZM038tcGbAMF86b1J27M8ZKqX3y5pYLiiY+jjGhytMyZc9FziNppOSPQTWSuIVc9eS6oGXRm2Evauqlm0gdosx5YewIDAQABo4ICBDCCAgAwgZQGA1UdEQSBjDCBiYImZHV3cHNyMDAyMDE4MTkzLmludHJhbmV0LmJhcmNhcGludC5jb22CIWppcmEtYW1hem9uLXBkbi5iYXJjbGF5cy5pbnRyYW5ldIIlZXN0LWppcmEtYW1hem9uLXBkbi5iYXJjbGF5cy5pbnRyYW5ldIIVZXN0amlyYS5iYXJjYXBpbnQuY29tMAkGA1UdEwQCMAAwCwYDVR0PBAQDAgSwMB8GA1UdIwQYMBaAFCb6k/J6lAg78l+4hzwF97aEy2mhMB0GA1UdDgQWBBQQfl5lXh6WA+5jDtYQ2/pinmUjYTAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwge8GA1UdIASB5zCB5DCB4QYNKoY6AAGC/UcCAQICAjCBzzCBzAYIKwYBBQUHAgIwgb8agbxUaGlzIGNlcnRpZmljYXRlIGlzIGlzc3VlZCBieSBCYXJjbGF5cyBQTEMsIHdoaWNoIGhhcyBubyBsaWFiaWxpdHkgdW5kZXIgaXQgb3RoZXIgdGhhbiB0byBwZXJzb25zIHdobyBoYXZlIGVudGVyZWQgaW50bywgYW5kIHRoZW4gb25seSB0byB0aGUgZXh0ZW50IHNldCBvdXQgaW4sIGFuIGFncmVlbWVudCB3aXRoIEJhcmNsYXlzLjANBgkqhkiG9w0BAQsFAAOCAQEAL1nu5luU960dBS0JtxHwy4P1A2YpYQk30aaXZIWQ3JVbhOwnXJFlZWIKpAaCxR2IjXIKs6qg2qk7X6NY3aGYRlc6EoHXXqfDrgsi+cY1D8QQOs7wPEcgix8Ddz2EHwbhcpy9KaJZ+T8aRCc6/wtJFKF8IJdiVt1C2YFz1hrj/9ae9ezRWynH4gUm5VALDmszaDjIzI1H7F7i9u83rGEeLZKYCVku4tBbeEOfPzDpldEuF3IBsN7fLY21Ioljrd2JlGGcPBKZnQDOPPOGEYXQXCsMXVedO0Cegp3wGkOUmdlZq/Ucls/fuoh9XluGVayDnGClXQzPEr3xhR1njcOFUA==
+          use: sig
+          iat: 1691702239
+          nbf: 1691366400
+          exp: 1721260799
+    example-error-429:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: TOO_MANY_REQUESTS
+          title: Too many requests
+          detail: The client sent too many requests and server is not able to serve them all at the moment
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    example-error-403:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed.
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    InternalTiaaUsRopcAuth:
+      type: oauth2
+      description: OAuth2.0 Resource Owner Passard Credentials (ROPC) Grant authentication using TIAA-US for internal APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

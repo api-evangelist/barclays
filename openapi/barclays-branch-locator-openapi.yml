@@ -1,0 +1,38 @@
+openapi: 3.1.0
+info:
+  title: Branch Locator
+  description: The Barclays Branch Locator API enables users to locate all Barclays branches throughout the UK. Using longitudinal
+    and latitudinal data, users can find the location of the branch, the opening hours and the facilities available at each
+    individual branch.
+  version: '2.2'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/d9b83b29-42e2-4cb3-ad8f-100d2c9a6314.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-branch-locator-openapi.json. The UK Open Banking documents
+  carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as Barclays implements
+  and publishes it — the API, the registry record and the host are Barclays'.
+paths:
+  /branches:
+    get:
+      operationId: getBranches
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              example: null
+      x-media-type-request-default: 'false'
+      x-media-type-response-default: 'false'
+    head:
+      description: Gets header information on branch objects.
+      operationId: headbranches
+      responses:
+        default:
+          description: ''
+          content:
+            '*/*':
+              example: null
+      x-media-type-request-default: 'false'
+      x-media-type-response-default: 'false'
+components: {}

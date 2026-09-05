@@ -1,0 +1,73 @@
+generated: '2026-09-04'
+method: searched
+source: openapi/barclays-account-and-transactions-openapi.yml, openapi/barclays-account-management-openapi.yml,
+  openapi/barclays-accounts-openapi.yml, openapi/barclays-authentication-openapi.yml, openapi/barclays-benefits-redemption-openapi.yml,
+  openapi/barclays-card-application-openapi.yml, openapi/barclays-card-control-openapi.yml, openapi/barclays-confirmation-of-funds-openapi.yml,
+  openapi/barclays-cryptography-key-exchange-openapi.yml, openapi/barclays-digital-wallet-openapi.yml, openapi/barclays-event-notification-openapi.yml,
+  openapi/barclays-payment-initiation-openapi.yml ... + https://developer.barclays.com/api/apis/versions/{apiVersionId}
+  (Barclays API Exchange registry)
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+schemes:
+- name: TPPOAuth2Security
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://authserver.example/token
+    scopes: 1
+  description: TPP client credential authorisation flow with the ASPSP
+  sources:
+  - openapi/barclays-account-and-transactions-openapi.yml
+  - openapi/barclays-account-management-openapi.yml
+  - openapi/barclays-accounts-openapi.yml
+  - openapi/barclays-authentication-openapi.yml
+  - openapi/barclays-benefits-redemption-openapi.yml
+  - openapi/barclays-card-application-openapi.yml
+  - openapi/barclays-card-control-openapi.yml
+  - openapi/barclays-confirmation-of-funds-openapi.yml
+  - openapi/barclays-cryptography-key-exchange-openapi.yml
+  - openapi/barclays-digital-wallet-openapi.yml
+  - openapi/barclays-event-notification-openapi.yml
+  - openapi/barclays-payment-initiation-openapi.yml
+  - openapi/barclays-payments-openapi.yml
+  - openapi/barclays-rewards-earn-openapi.yml
+  - openapi/barclays-statements-retriever-openapi.yml
+  - openapi/barclays-transactions-openapi.yml
+  - openapi/barclays-variable-recurring-payment-openapi.yml
+- name: PSUOAuth2Security
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://authserver.example/authorization
+    tokenUrl: https://authserver.example/token
+    scopes: 1
+  description: OAuth flow, it is required when the PSU needs to perform SCA with the ASPSP when a TPP wants to access
+    an ASPSP resource owned by the PSU
+  sources:
+  - openapi/barclays-account-and-transactions-openapi.yml
+  - openapi/barclays-confirmation-of-funds-openapi.yml
+  - openapi/barclays-payment-initiation-openapi.yml
+  - openapi/barclays-variable-recurring-payment-openapi.yml
+docs: https://developer.barclays.com/open-banking
+note: 'Three unrelated auth regimes under one portal. (1) UK Open Banking: OAuth 2.0 client-credentials for TPP-to-ASPSP
+  calls and authorization-code with PSU SCA for consented access, over mTLS with an Open Banking-issued transport
+  certificate — https://telesto.api.barclays presents a certificate issued by "OpenBanking Issuing CA". (2) Barclays
+  Bank Ireland: Berlin Group NextGenPSD2 PSU redirect with Digest/Signature/TPP-Signature-Certificate request signing.
+  (3) Barclaycard US: OAuth 2.0 client-credentials against a TIAA-US token service. The tokenUrl values in the published
+  specs are placeholders or internal hosts and cannot be used; real endpoints are issued at onboarding. TPP onboarding
+  itself is an API — Dynamic Client Registration v1.10, which takes an eIDAS certificate.'
+onboarding:
+  registration: https://drm.developer.barclays.com/s/registration
+  dynamic_client_registration: openapi/barclays-dynamic-client-registration-openapi.yml
+  anonymous_access: false
+transport_security:
+  mtls_required: true
+  evidence: X.509 on telesto.api.barclays issued by C=GB, O=OpenBanking, CN=OpenBanking Issuing CA
+see:
+- scopes/barclays-scopes.yml
+- conventions/barclays-conventions.yml
+- conformance/barclays-conformance.yml

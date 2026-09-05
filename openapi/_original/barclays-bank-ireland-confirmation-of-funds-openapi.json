@@ -1,0 +1,1749 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": " Barclays Bank Ireland Confirmation of Funds",
+  "description": "This is an open banking API, which lets third-party providers access to confirmation-of-funds services for Barclays Bank Ireland clients. ",
+  "version": "v1.3.0"
+ },
+ "paths": {
+  "/consents/confirmation-of-funds/{consentId}/authorisations": {
+   "get": {
+    "description": "Return a list of all authorisation subresources IDs which have been created. This function returns an array of hyperlinks to all generated authorisation sub-resources.",
+    "operationId": "get_consents_confirmation-of-funds__consentId__authorisations",
+    "parameters": [
+     {
+      "name": "PSU-IP-Address",
+      "in": "header",
+      "description": "Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU",
+       "maxLength": 39,
+       "minLength": 2,
+       "pattern": "^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$"
+      }
+     },
+     {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "ID of the request, unique to the call, as determined by the initiating party.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the request, unique to the call, as determined by the initiating party.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "PSU-IP-Port",
+      "in": "header",
+      "description": "The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.",
+       "maxLength": 10,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#\\/]{1,10})$"
+      }
+     },
+     {
+      "name": "PSU-Accept",
+      "in": "header",
+      "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available",
+       "maxLength": 100,
+       "minLength": 1
+      }
+     },
+     {
+      "name": "PSU-Accept-Charset",
+      "in": "header",
+      "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "PSU-Accept-Encoding",
+      "in": "header",
+      "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "PSU-User-Agent",
+      "in": "header",
+      "description": "The forwarded Agent header field of the HTTP request between PSU and TPP, if available.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded Agent header field of the HTTP request between PSU and TPP, if available.",
+       "maxLength": 200,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,200})$"
+      }
+     },
+     {
+      "name": "PSU-Accept-Language",
+      "in": "header",
+      "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.",
+       "maxLength": 100,
+       "minLength": 1
+      }
+     },
+     {
+      "name": "PSU-Http-Method",
+      "in": "header",
+      "description": "HTTP method used at the interface between PSU and TPP, if available. Valid values are:\n- GET\n- POST\n- PUT\n- PATCH\n- DELETE",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "HTTP method used at the interface between PSU and TPP, if available. Valid values are:\n- GET\n- POST\n- PUT\n- PATCH\n- DELETE\n",
+       "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+       ]
+      }
+     },
+     {
+      "name": "PSU-Device-ID",
+      "in": "header",
+      "description": "UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^(?!\\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "PSU-Geo-Location",
+      "in": "header",
+      "description": "The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available",
+       "maxLength": 27,
+       "minLength": 23,
+       "pattern": "^(?!\\s)(GEO:)[0-9]{1,3}\\.[-][0-9]{6}\\,[-][0-9]{1,3}\\.[0-9]{6}"
+      }
+     },
+     {
+      "name": "consentId",
+      "in": "path",
+      "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/get_cof_consent_authorisations_response"
+        },
+        "example": null
+       }
+      }
+     },
+     "400": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "404": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response"
+        },
+        "example": null
+       }
+      }
+     }
+    }
+   }
+  },
+  "/consents/confirmation-of-funds/{consentId}/authorisations/{authorisationId}": {
+   "get": {
+    "description": "Returns the SCA status of a Confirmation of Funds Consent initiation's authorisation sub-resource.",
+    "operationId": "get_consents_confirmation-of-funds__consentId__authorisations__authorisationId_",
+    "parameters": [
+     {
+      "name": "PSU-IP-Address",
+      "in": "header",
+      "description": "Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU",
+       "maxLength": 39,
+       "minLength": 2,
+       "pattern": "^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$"
+      }
+     },
+     {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "ID of the request, unique to the call, as determined by the initiating party.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the request, unique to the call, as determined by the initiating party.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "PSU-IP-Port",
+      "in": "header",
+      "description": "The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.",
+       "maxLength": 10,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#\\/]{1,10})$"
+      }
+     },
+     {
+      "name": "PSU-Accept",
+      "in": "header",
+      "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available",
+       "maxLength": 100,
+       "minLength": 1
+      }
+     },
+     {
+      "name": "PSU-Accept-Charset",
+      "in": "header",
+      "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "PSU-Accept-Encoding",
+      "in": "header",
+      "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "PSU-User-Agent",
+      "in": "header",
+      "description": "The forwarded Agent header field of the HTTP request between PSU and TPP, if available.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded Agent header field of the HTTP request between PSU and TPP, if available.",
+       "maxLength": 200,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,200})$"
+      }
+     },
+     {
+      "name": "PSU-Accept-Language",
+      "in": "header",
+      "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.",
+       "maxLength": 100,
+       "minLength": 1
+      }
+     },
+     {
+      "name": "PSU-Http-Method",
+      "in": "header",
+      "description": "HTTP method used at the interface between PSU and TPP, if available. Valid values are:\n- GET\n- POST\n- PUT\n- PATCH\n- DELETE",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "HTTP method used at the interface between PSU and TPP, if available. Valid values are:\n- GET\n- POST\n- PUT\n- PATCH\n- DELETE\n",
+       "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+       ]
+      }
+     },
+     {
+      "name": "PSU-Device-ID",
+      "in": "header",
+      "description": "UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^(?!\\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "PSU-Geo-Location",
+      "in": "header",
+      "description": "The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available",
+       "maxLength": 27,
+       "minLength": 23,
+       "pattern": "^(?!\\s)(GEO:)[0-9]{1,3}\\.[-][0-9]{6}\\,[-][0-9]{1,3}\\.[0-9]{6}"
+      }
+     },
+     {
+      "name": "authorisationId",
+      "in": "path",
+      "description": "Resource Identification of the related SCA",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "Resource Identification of the related SCA",
+       "maxLength": 2,
+       "minLength": 1,
+       "pattern": "^\\d{1,2}$"
+      }
+     },
+     {
+      "name": "consentId",
+      "in": "path",
+      "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/get_cof_consent_authorisation_details_response"
+        },
+        "example": null
+       }
+      }
+     },
+     "400": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "404": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response"
+        },
+        "example": null
+       }
+      }
+     }
+    }
+   }
+  },
+  "/consents/confirmation-of-funds/{consentId}": {
+   "get": {
+    "description": "Returns the content of a Confirmation of Funds Consent object. This is returning the data for the TPP especially in cases, where the consent was directly managed between ASPSP and PSU e.g. in a re-direct SCA Approach",
+    "operationId": "get_consents_confirmation-of-funds__consentId_",
+    "parameters": [
+     {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "ID of the request, unique to the call, as determined by the initiating party.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the request, unique to the call, as determined by the initiating party.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "consentId",
+      "in": "path",
+      "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/get_cof_consent_details_response"
+        },
+        "example": null
+       }
+      }
+     },
+     "400": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "404": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response"
+        },
+        "example": null
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "description": "Delete a Confirmation of Funds Consent object",
+    "operationId": "delete_consents_confirmation-of-funds__consentId_",
+    "parameters": [
+     {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "ID of the request, unique to the call, as determined by the initiating party.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the request, unique to the call, as determined by the initiating party.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "consentId",
+      "in": "path",
+      "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     }
+    ],
+    "responses": {
+     "400": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "204": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "example": null
+       }
+      }
+     },
+     "404": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "409": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DeleteConsentsConfirmationOfFundsConsentid409Response"
+        },
+        "example": null
+       }
+      }
+     }
+    }
+   }
+  },
+  "/consents/confirmation-of-funds/{consentId}/status": {
+   "get": {
+    "description": "Returns the status of a Confirmation of Funds Consent object.",
+    "operationId": "get_consents_confirmation-of-funds__consentId__status",
+    "parameters": [
+     {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "ID of the request, unique to the call, as determined by the initiating party.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the request, unique to the call, as determined by the initiating party.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "consentId",
+      "in": "path",
+      "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/get_cof_consent_status_response"
+        },
+        "example": null
+       }
+      }
+     },
+     "400": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "404": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response"
+        },
+        "example": null
+       }
+      }
+     }
+    }
+   }
+  },
+  "/consents/confirmation-of-funds": {
+   "post": {
+    "description": "Create a consent resource to register a TPP for the confirmation of funds service for a given account by a PSU for a given PSU ID",
+    "operationId": "post_consents_confirmation-of-funds",
+    "parameters": [
+     {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "ID of the request, unique to the call, as determined by the initiating party.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the request, unique to the call, as determined by the initiating party.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "PSU-IP-Address",
+      "in": "header",
+      "description": "The forwarded IP Address header field consists of the corresponding HTTP request IP Address field between PSU and TPP.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "The forwarded IP Address header field consists of the corresponding HTTP request IP Address field between PSU and TPP.",
+       "maxLength": 39,
+       "minLength": 2,
+       "pattern": "^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$"
+      }
+     },
+     {
+      "name": "PSU-ID",
+      "in": "header",
+      "description": "Client ID of the PSU in the ASPSP client interface.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Client ID of the PSU in the ASPSP client interface.",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "PSU-ID-Type",
+      "in": "header",
+      "description": "Type of the PSU-ID, needed in scenarios where PSUs have several PSU-IDs as access possibility.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Type of the PSU-ID, needed in scenarios where PSUs have several PSU-IDs as access possibility.",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "PSU-Corporate-ID",
+      "in": "header",
+      "description": "Corporate ID - Only used in a corporate context.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Corporate ID - Only used in a corporate context.",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "PSU-Corporate-ID-Type",
+      "in": "header",
+      "description": "Type of corporate - Only used in a corporate context.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Type of corporate - Only used in a corporate context.",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "TPP-Redirect-Preferred",
+      "in": "header",
+      "description": "If it equals true, the TPP prefers a Redirect over Decoupled SCA approach. If it equals false, Decoupled SCA Approach will be applied.\nIMPORTANT: Currently, Implicit Redirect SCA Approach is supported, so TPP-Redirect-Preferred must equal true.",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "description": "If it equals true, the TPP prefers a Redirect over Decoupled SCA approach. If it equals false, Decoupled SCA Approach will be applied.\nIMPORTANT: Currently, Implicit Redirect SCA Approach is supported, so TPP-Redirect-Preferred must equal true.\n"
+      }
+     },
+     {
+      "name": "TPP-Redirect-URI",
+      "in": "header",
+      "description": "URI of the TPP, where the transaction flow shall be redirected to after a Redirect. It is mandatory for the Redirect SCA Approach (including OAuth2 SCA approach).",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "URI of the TPP, where the transaction flow shall be redirected to after a Redirect. It is mandatory for the Redirect SCA Approach (including OAuth2 SCA approach).",
+       "maxLength": 1000,
+       "minLength": 12,
+       "pattern": "^[hH][tT][tT][pP][sS]?:\\/\\/([wW]{3}\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&\\/\\\\={}()]*)$"
+      }
+     },
+     {
+      "name": "TPP-Nok-Redirect-URI",
+      "in": "header",
+      "description": "If this URI is contained, the TPP is asking to redirect the transaction flow to this address instead of the TPP-Redirect-URI in case of a negative result of the redirect SCA method.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "If this URI is contained, the TPP is asking to redirect the transaction flow to this address instead of the TPP-Redirect-URI in case of a negative result of the redirect SCA method.",
+       "maxLength": 1000,
+       "minLength": 12,
+       "pattern": "^[hH][tT][tT][pP][sS]?:\\/\\/([wW]{3}\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&\\/\\\\={}()]*)$"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/create_cof_consent_request"
+       },
+       "example": null
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/create_cof_consent_response"
+        },
+        "example": null
+       }
+      }
+     },
+     "400": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "404": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response"
+        },
+        "example": null
+       }
+      }
+     }
+    }
+   }
+  },
+  "/funds-confirmations": {
+   "post": {
+    "description": "Creates a confirmation of funds request. Checks whether a specific amount is available at point of time of the request on an account linked to a given tuple card issuer(TPP)/card number, or addressed by IBAN and TPP respectively.",
+    "operationId": "post_funds-confirmations",
+    "parameters": [
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content Type header",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "Content Type header",
+       "maxLength": 100,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,100})$"
+      }
+     },
+     {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "ID of the request, unique to the call, as determined by the initiating party.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "ID of the request, unique to the call, as determined by the initiating party.",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      }
+     },
+     {
+      "name": "Digest",
+      "in": "header",
+      "description": "Is contained only if the \"Signature\" element is contained in the header of the request",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Is contained only if the \"Signature\" element is contained in the header of the request",
+       "maxLength": 100,
+       "minLength": 1
+      }
+     },
+     {
+      "name": "Signature",
+      "in": "header",
+      "description": "A signature of the request by the TPP on application level.",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "A signature of the request by the TPP on application level.",
+       "maxLength": 1000,
+       "minLength": 1
+      }
+     },
+     {
+      "name": "TPP-Signature-Certificate",
+      "in": "header",
+      "description": "The certificate used for signing the request, in base64 encoding. Must be contained if a signature is contained",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "The certificate used for signing the request, in base64 encoding. Must be contained if a signature is contained",
+       "maxLength": 4000,
+       "minLength": 1
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/create_cof_request"
+       },
+       "example": null
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/create_cof_response"
+        },
+        "example": null
+       }
+      }
+     },
+     "400": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response"
+        },
+        "example": null
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "create_cof_response": {
+    "type": "object",
+    "properties": {
+     "fundsAvailable": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "fundsAvailable"
+    ]
+   },
+   "GetConsentsConfirmationOfFundsConsentidAuthorisations404Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "GetConsentsConfirmationOfFundsConsentid400Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "GetConsentsConfirmationOfFundsConsentidStatus400Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "create_cof_request": {
+    "type": "object",
+    "properties": {
+     "payee": {
+      "type": "string",
+      "maxLength": 70,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,70})$"
+     },
+     "instructedAmount": {
+      "type": "object",
+      "properties": {
+       "amount": {
+        "type": "string",
+        "maxLength": 19,
+        "minLength": 1,
+        "pattern": "^(?!\\s)-?[0-9]{1,14}(\\.[0-9]{1,3})?$"
+       },
+       "currency": {
+        "type": "string",
+        "maxLength": 3,
+        "minLength": 3,
+        "pattern": "^[A-Z]{3}$"
+       }
+      },
+      "required": [
+       "amount",
+       "currency"
+      ]
+     },
+     "cardNumber": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,20})$"
+     },
+     "account": {
+      "type": "object",
+      "properties": {
+       "bban": {
+        "type": "string",
+        "maxLength": 30,
+        "minLength": 0,
+        "pattern": "^[a-zA-Z0-9]{0,30}$"
+       },
+       "iban": {
+        "type": "string",
+        "maxLength": 34,
+        "minLength": 0,
+        "pattern": "^[a-zA-Z0-9]{0,34}$"
+       },
+       "currency": {
+        "type": "string",
+        "maxLength": 3,
+        "minLength": 3,
+        "pattern": "^[A-Z]{3}$"
+       }
+      }
+     }
+    },
+    "required": [
+     "account",
+     "instructedAmount"
+    ]
+   },
+   "GetConsentsConfirmationOfFundsConsentidAuthorisations400Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "get_cof_consent_authorisation_details_response": {
+    "type": "object",
+    "properties": {
+     "scaStatus": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "scaStatus"
+    ]
+   },
+   "GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "create_cof_consent_request": {
+    "type": "object",
+    "properties": {
+     "registrationInformation": {
+      "type": "string",
+      "maxLength": 140,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,140})$"
+     },
+     "cardInformation": {
+      "type": "string",
+      "maxLength": 140,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,140})$"
+     },
+     "account": {
+      "type": "object",
+      "properties": {
+       "bban": {
+        "type": "string",
+        "maxLength": 30,
+        "minLength": 0,
+        "pattern": "^[a-zA-Z0-9]{0,30}$"
+       },
+       "iban": {
+        "type": "string",
+        "maxLength": 34,
+        "minLength": 0,
+        "pattern": "^[a-zA-Z0-9]{0,34}$"
+       },
+       "currency": {
+        "type": "string",
+        "maxLength": 3,
+        "minLength": 3,
+        "pattern": "^[A-Z]{3}$"
+       }
+      }
+     },
+     "cardNumber": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,20})$"
+     },
+     "cardExpiryDate": {
+      "type": "string",
+      "format": "date"
+     }
+    }
+   },
+   "get_cof_consent_authorisations_response": {
+    "type": "object",
+    "properties": {
+     "authorisationIds": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "required": [
+     "authorisationIds"
+    ]
+   },
+   "get_cof_consent_details_response": {
+    "type": "object",
+    "properties": {
+     "consentStatus": {
+      "type": "string"
+     },
+     "registrationInformation": {
+      "type": "string"
+     },
+     "cardInformation": {
+      "type": "string"
+     },
+     "account": {
+      "type": "object",
+      "properties": {
+       "bban": {
+        "type": "string"
+       },
+       "iban": {
+        "type": "string"
+       },
+       "currency": {
+        "type": "string"
+       }
+      }
+     },
+     "cardNumber": {
+      "type": "string"
+     },
+     "cardExpiryDate": {
+      "type": "string",
+      "format": "date-time"
+     }
+    },
+    "required": [
+     "account",
+     "consentStatus"
+    ]
+   },
+   "DeleteConsentsConfirmationOfFundsConsentid400Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "DeleteConsentsConfirmationOfFundsConsentid409Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "PostConsentsConfirmationOfFunds404Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "create_cof_consent_response": {
+    "type": "object",
+    "properties": {
+     "consentId": {
+      "type": "string"
+     },
+     "_links": {
+      "type": "object",
+      "properties": {
+       "scaStatus": {
+        "type": "object",
+        "properties": {
+         "href": {
+          "type": "string"
+         }
+        }
+       },
+       "scaRedirect": {
+        "type": "object",
+        "properties": {
+         "href": {
+          "type": "string"
+         }
+        }
+       },
+       "self": {
+        "type": "object",
+        "properties": {
+         "href": {
+          "type": "string"
+         }
+        }
+       },
+       "startAuthorisation": {
+        "type": "object",
+        "properties": {
+         "href": {
+          "type": "string"
+         }
+        }
+       },
+       "status": {
+        "type": "object",
+        "properties": {
+         "href": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     },
+     "consentStatus": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "_links",
+     "consentId",
+     "consentStatus"
+    ]
+   },
+   "PostConsentsConfirmationOfFunds400Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "GetConsentsConfirmationOfFundsConsentid404Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "get_cof_consent_status_response": {
+    "type": "object",
+    "properties": {
+     "consentStatus": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "consentStatus"
+    ]
+   },
+   "GetConsentsConfirmationOfFundsConsentidStatus404Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "PostFundsConfirmations400Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   },
+   "DeleteConsentsConfirmationOfFundsConsentid404Response": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "additionalErrors": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "detail": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "code"
+       ]
+      }
+     },
+     "detail": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "code",
+     "type"
+    ]
+   }
+  }
+ }
+}

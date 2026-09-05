@@ -1,0 +1,42 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "ATM Locator",
+  "description": "The Barclays ATM Finder API allows users to locate all Barclays Automated Teller Machines across the UK. Users will be able to view the town, street name and postcode the ATM is located on and the services available at each individual machine.",
+  "version": "2.2"
+ },
+ "paths": {
+  "/atms": {
+   "get": {
+    "operationId": "getAtms",
+    "responses": {
+     "default": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "example": null
+       }
+      }
+     }
+    }
+   },
+   "head": {
+    "description": "Gets header information on branch objects.",
+    "operationId": "headatms",
+    "responses": {
+     "default": {
+      "description": "",
+      "content": {
+       "*/*": {
+        "example": null
+       }
+      }
+     }
+    },
+    "x-media-type-request-default": "true",
+    "x-media-type-response-default": "true"
+   }
+  }
+ },
+ "components": {}
+}

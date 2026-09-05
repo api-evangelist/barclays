@@ -1,0 +1,126 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/ (26 first-party OpenAPI 3.1 documents harvested from developer.barclays.com)
+note: 946 component schemas across 26 contracts. The UK Open Banking APIs share one data model — the OBIE Read/Write
+  object graph, in which every resource hangs off AccountId, and every write is a two-step consent-then-execute
+  pair. The Barclaycard US APIs carry a separate, unrelated card-account model keyed on account and card identifiers.
+schema_total: 946
+id_conventions:
+- field: AccountId
+  domain: UK Open Banking account resources
+- field: ConsentId
+  domain: every OBIE consent resource (account-access, payment, funds-confirmation, VRP)
+- field: DomesticPaymentId / InternationalPaymentId / FilePaymentId
+  domain: executed payment resources
+- field: EventSubscriptionId
+  domain: Event Notification subscriptions
+- field: UK.OBIE.*
+  domain: namespaced code values for account identification, local instrument and financial-institution identification
+core_patterns:
+- name: consent-then-execute
+  description: 'Every UK Open Banking write is two resources: a *-consent the PSU authorises, then the execute resource
+    that references its ConsentId. /domestic-payment-consents -> /domestic-payments, /account-access-consents ->
+    /accounts, /domestic-vrp-consents -> /domestic-vrps, /funds-confirmation-consents -> /funds-confirmations.'
+- name: OBRead*/OBWrite* envelope
+  description: Requests wrap payloads in Data; responses return Data + Links + Meta. Errors return OBErrorResponse1
+    { Id, Code, Message, Errors[] }.
+relationships:
+- from: Balance
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: Transaction
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: Beneficiary
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: DirectDebit
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: StandingOrder
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: Statement
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: Party
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: Offer
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: ScheduledPayment
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+- from: Product
+  to: Account
+  type: belongs_to
+  via: AccountId
+  api: Account and Transactions
+entities_by_api:
+- api: Account and Transactions
+  schema_count: 243
+- api: Payment Initiation
+  schema_count: 108
+- api: Payments
+  schema_count: 83
+- api: Variable Recurring Payment
+  schema_count: 83
+- api: Card Application
+  schema_count: 75
+- api: Product Details
+  schema_count: 44
+- api: Barclays Bank Ireland Payment Initiation
+  schema_count: 42
+- api: Barclays Bank Ireland Account Information
+  schema_count: 39
+- api: Benefits Redemption
+  schema_count: 28
+- api: Barclays Bank Ireland Confirmation of Funds
+  schema_count: 22
+- api: Accounts
+  schema_count: 22
+- api: Transactions
+  schema_count: 22
+- api: Authentication
+  schema_count: 17
+- api: FCA Service Metrics
+  schema_count: 16
+- api: Card Control
+  schema_count: 16
+- api: Confirmation of Funds
+  schema_count: 14
+- api: Account Management
+  schema_count: 14
+- api: Event Notification
+  schema_count: 12
+- api: Digital Wallet
+  schema_count: 10
+- api: Dynamic Client Registration
+  schema_count: 9
+- api: Rewards Loyalty Sync
+  schema_count: 9
+- api: Statements Retriever
+  schema_count: 7
+- api: Rewards Earn
+  schema_count: 6
+- api: Cryptography Key Exchange
+  schema_count: 5

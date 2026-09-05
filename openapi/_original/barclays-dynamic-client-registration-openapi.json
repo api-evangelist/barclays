@@ -1,0 +1,889 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Dynamic Client Registration",
+  "description": "On-board to Barclays API Exchange using an EIDAS certificate, and retrieve credentials to consume our PSD2 APIs.",
+  "version": "v1.10"
+ },
+ "paths": {
+  "/register": {
+   "post": {
+    "description": "This endpoint enables a TPP to submit a request to Barclays, for the purpose of creating OAuth clients, that are registered with Barclays Authorization server.",
+    "operationId": "post_register",
+    "parameters": [
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "An identifier for the current call chain that can be used to tie together log entries on multiple layers (e.g. client, server, mainframe). This identifier must be designed to be unique across all applications in the bank.",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "An identifier for the current call chain that can be used to tie together log entries on multiple layers (e.g. client, server, mainframe). This identifier must be designed to be unique across all applications in the bank.",
+       "maxLength": 64,
+       "minLength": 16,
+       "pattern": "^[a-zA-Z0-9-+/=_]{16,64}$"
+      }
+     },
+     {
+      "name": "X-Forwarded-For",
+      "in": "header",
+      "description": "IP Address of requesting client",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "IP Address of requesting client",
+       "maxLength": 4094,
+       "minLength": 7,
+       "pattern": "^(?!\\s)([0-9a-z.,:\\s]{7,4094})$"
+      }
+     },
+     {
+      "name": "X-SSLClientCert",
+      "in": "header",
+      "description": "EIDAS client certificate from Mutual TLS",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "EIDAS client certificate from Mutual TLS",
+       "maxLength": 8192,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-+\\/=]{1,8192})$"
+      }
+     },
+     {
+      "name": "X-SSLClientCertDN",
+      "in": "header",
+      "description": "EIDAS certificate DN",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "EIDAS certificate DN",
+       "maxLength": 1024,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-.,@_%\\/=\\s]{1,1024})$"
+      }
+     },
+     {
+      "name": "X-SSLClientCertIssuerDN",
+      "in": "header",
+      "description": "EIDAS certificate Issuer DN",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "EIDAS certificate Issuer DN",
+       "maxLength": 1024,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-.,@_%\\/=\\s\\\\]{1,1024})$"
+      }
+     },
+     {
+      "name": "X-SSLClientCertSN",
+      "in": "header",
+      "description": "EIDAS certificate Serial Number",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "description": "EIDAS certificate Serial Number",
+       "maxLength": 256,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([\\w.:\\s]{1,256})$"
+      }
+     },
+     {
+      "name": "X-SSLClientCertChain",
+      "in": "header",
+      "description": "EIDAS certificate chain as  it received as part of Mutual TLS",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "EIDAS certificate chain as  it received as part of Mutual TLS",
+       "maxLength": 8192,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-+\\/=\\s]{1,8192})$"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DCRRequestType"
+       },
+       "example": null
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DCRResponseType"
+        },
+        "example": null
+       }
+      }
+     },
+     "400": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostRegister400Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "500": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostRegister500Response"
+        },
+        "example": null
+       }
+      }
+     },
+     "503": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "example": null
+       }
+      }
+     },
+     "429": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostRegister429Response"
+        },
+        "example": null
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "PostRegister400Response": {
+    "type": "object",
+    "properties": {
+     "error_description": {
+      "type": "string"
+     },
+     "error": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "error"
+    ]
+   },
+   "JWKSObjectType": {
+    "type": "object",
+    "properties": {
+     "keys": {
+      "type": "array",
+      "items": {},
+      "maxItems": 100,
+      "minItems": 1
+     }
+    },
+    "required": [
+     "keys"
+    ]
+   },
+   "PostRegister500Response": {
+    "type": "object",
+    "properties": {
+     "error_description": {
+      "type": "string"
+     },
+     "error": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "error"
+    ]
+   },
+   "PostRegister429Response": {
+    "type": "object",
+    "properties": {
+     "error_description": {
+      "type": "string"
+     },
+     "error": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "error"
+    ]
+   },
+   "SYMKEYType": {
+    "type": "object",
+    "properties": {
+     "kty": {
+      "type": "string",
+      "enum": [
+       "RSA",
+       "EC",
+       "oct"
+      ]
+     },
+     "x5t#S256": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "use": {
+      "type": "string",
+      "maxLength": 16,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w-]{1,16})$"
+     },
+     "x5t": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "x5c": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 4096,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-+\\/=]{1,4096})$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "kid": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,512})$"
+     },
+     "key_ops": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 16,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([\\w-]{1,16})$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "x5t#256": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "x5u": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+     },
+     "k": {
+      "type": "string",
+      "maxLength": 2048,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,2048})$"
+     },
+     "alg": {
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w+-]{1,32})$"
+     }
+    },
+    "required": [
+     "k",
+     "kid",
+     "kty",
+     "use",
+     "x5c"
+    ]
+   },
+   "DCRRequestType": {
+    "type": "object",
+    "properties": {
+     "token_endpoint_auth_signing_alg": {
+      "type": "string",
+      "enum": [
+       "PS256"
+      ]
+     },
+     "client_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+     },
+     "jwks": {
+      "$ref": "#/components/schemas/JWKSObjectType"
+     },
+     "grant_types": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "enum": [
+        "client_credentials",
+        "authorization_code",
+        "implicit",
+        "refresh_token",
+        "urn:ietf:params:oauth:grant-type:jwt-bearer"
+       ]
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "application_type": {
+      "type": "string",
+      "enum": [
+       "web",
+       "mobile"
+      ]
+     },
+     "logo_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+     },
+     "tls_client_auth_subject_dn": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9.\\-\\s]{1,128})$"
+     },
+     "redirect_uris": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 263,
+       "minLength": 8,
+       "pattern": "^(?!\\s)(https|http)(\\:\\/\\/)([A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "token_endpoint_auth_method": {
+      "type": "string",
+      "enum": [
+       "private_key_jwt"
+      ]
+     },
+     "software_id": {
+      "type": "string",
+      "maxLength": 22,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w]{1,22})$"
+     },
+     "scope": {
+      "type": "string",
+      "maxLength": 256,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9.\\-\\s]{1,256})$"
+     },
+     "jwks_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+     },
+     "tos_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+     },
+     "software_version": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9.\\-\\s]{1,128})$"
+     },
+     "request_object_signing_alg": {
+      "type": "string",
+      "enum": [
+       "PS256"
+      ]
+     },
+     "client_name": {
+      "type": "string",
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w\\s$£\"ÖÄÜß\"öäü!@#,.§$-]{1,64})$"
+     },
+     "contacts": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 256,
+       "minLength": 5,
+       "pattern": "^(?=.{1,256}$)^([a-zA-Z0-9.!#$%&'*+\\/=?^_`~-]{1,64})@(([a-zA-Z0-9-]{1,180}(\\.[a-zA-Z0-9-]{1,62}){1,9}))$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "policy_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+     },
+     "response_types": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "enum": [
+        "code",
+        "token",
+        "id_token",
+        "id_token token",
+        "code id_token",
+        "code token",
+        "code id_token token",
+        "none"
+       ]
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "id_token_signed_response_alg": {
+      "type": "string",
+      "enum": [
+       "PS256"
+      ]
+     }
+    },
+    "required": [
+     "client_name",
+     "contacts",
+     "grant_types",
+     "redirect_uris",
+     "response_types",
+     "scope",
+     "token_endpoint_auth_method"
+    ]
+   },
+   "RSAKEYType": {
+    "type": "object",
+    "properties": {
+     "oth": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "r": {
+         "type": "string",
+         "maxLength": 2048,
+         "minLength": 0,
+         "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+        },
+        "d": {
+         "type": "string",
+         "maxLength": 2048,
+         "minLength": 0,
+         "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+        },
+        "t": {
+         "type": "string",
+         "maxLength": 2048,
+         "minLength": 0,
+         "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+        }
+       }
+      }
+     },
+     "d": {
+      "type": "string",
+      "maxLength": 2048,
+      "minLength": 0,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+     },
+     "e": {
+      "type": "string",
+      "maxLength": 16,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,16})$"
+     },
+     "use": {
+      "type": "string",
+      "maxLength": 16,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w-]{1,16})$"
+     },
+     "x5c": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 4096,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-+\\/=]{1,4096})$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "kid": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,512})$"
+     },
+     "x5t#256": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "dp": {
+      "type": "string",
+      "maxLength": 2048,
+      "minLength": 0,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+     },
+     "dq": {
+      "type": "string",
+      "maxLength": 2048,
+      "minLength": 0,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+     },
+     "n": {
+      "type": "string",
+      "maxLength": 2048,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,2048})$"
+     },
+     "p": {
+      "type": "string",
+      "maxLength": 2048,
+      "minLength": 0,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+     },
+     "kty": {
+      "type": "string",
+      "enum": [
+       "RSA",
+       "EC",
+       "oct"
+      ]
+     },
+     "x5t#S256": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "q": {
+      "type": "string",
+      "maxLength": 2048,
+      "minLength": 0,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+     },
+     "x5t": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "key_ops": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 16,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([\\w-]{1,16})$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "qi": {
+      "type": "string",
+      "maxLength": 2048,
+      "minLength": 0,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{0,2048})$"
+     },
+     "x5u": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+     },
+     "alg": {
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w+-]{1,32})$"
+     }
+    },
+    "required": [
+     "e",
+     "kid",
+     "kty",
+     "n",
+     "use",
+     "x5c"
+    ]
+   },
+   "ECKEYType": {
+    "type": "object",
+    "properties": {
+     "d": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 0,
+      "pattern": "^(?!\\s)([\\w]{0,512})$"
+     },
+     "use": {
+      "type": "string",
+      "maxLength": 16,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w-]{1,16})$"
+     },
+     "crv": {
+      "type": "string",
+      "enum": [
+       "P-256",
+       "P-384",
+       "P-521"
+      ]
+     },
+     "x5c": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 4096,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([a-zA-Z0-9-+\\/=]{1,4096})$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "kid": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,512})$"
+     },
+     "x5t#256": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "kty": {
+      "type": "string",
+      "enum": [
+       "RSA",
+       "EC",
+       "oct"
+      ]
+     },
+     "x5t#S256": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "x5t": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w=\\/+-]{1,128})$"
+     },
+     "key_ops": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 16,
+       "minLength": 1,
+       "pattern": "^(?!\\s)([\\w-]{1,16})$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+     },
+     "x": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w]{1,512})$"
+     },
+     "x5u": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+     },
+     "y": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w]{1,512})$"
+     },
+     "alg": {
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w+-]{1,32})$"
+     }
+    },
+    "required": [
+     "crv",
+     "kid",
+     "kty",
+     "use",
+     "x",
+     "x5c",
+     "y"
+    ]
+   },
+   "DCRResponseType": {
+    "type": "object",
+    "properties": {
+     "token_endpoint_auth_signing_alg": {
+      "type": "string",
+      "enum": [
+       "PS256"
+      ]
+     },
+     "client_uri": {
+      "type": "string"
+     },
+     "jwks": {
+      "$ref": "#/components/schemas/JWKSObjectType"
+     },
+     "grant_types": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "enum": [
+        "client_credentials",
+        "authorization_code",
+        "implicit",
+        "refresh_token",
+        "urn:ietf:params:oauth:grant-type:jwt-bearer"
+       ]
+      }
+     },
+     "application_type": {
+      "type": "string",
+      "enum": [
+       "web",
+       "mobile"
+      ]
+     },
+     "logo_uri": {
+      "type": "string"
+     },
+     "tls_client_auth_subject_dn": {
+      "type": "string"
+     },
+     "redirect_uris": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "token_endpoint_auth_method": {
+      "type": "string",
+      "enum": [
+       "private_key_jwt"
+      ]
+     },
+     "client_id": {
+      "type": "string"
+     },
+     "software_id": {
+      "type": "string"
+     },
+     "client_secret_expires_at": {
+      "type": "number"
+     },
+     "scope": {
+      "type": "string"
+     },
+     "jwks_uri": {
+      "type": "string"
+     },
+     "tos_uri": {
+      "type": "string"
+     },
+     "software_version": {
+      "type": "string"
+     },
+     "request_object_signing_alg": {
+      "type": "string",
+      "enum": [
+       "PS256"
+      ]
+     },
+     "client_secret": {
+      "type": "string"
+     },
+     "client_id_issued_at": {
+      "type": "number"
+     },
+     "client_name": {
+      "type": "string"
+     },
+     "contacts": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "policy_uri": {
+      "type": "string"
+     },
+     "response_types": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "enum": [
+        "code",
+        "token",
+        "id_token",
+        "id_token token",
+        "code id_token",
+        "code token",
+        "code id_token token",
+        "none"
+       ]
+      }
+     },
+     "id_token_signed_response_alg": {
+      "type": "string",
+      "enum": [
+       "PS256"
+      ]
+     }
+    },
+    "required": [
+     "client_id",
+     "client_name",
+     "contacts",
+     "grant_types",
+     "redirect_uris",
+     "response_types",
+     "scope",
+     "token_endpoint_auth_method"
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,48 @@
+generated: '2026-09-04'
+method: generated
+source: openapi/ (26 first-party OpenAPI 3.1 documents harvested from developer.barclays.com)
+note: 'Barclays publishes no Agent Skills and no AGENTS.md. These three are written by API Evangelist and every
+  operationId in them is grepped from the contracts Barclays publishes — none is invented. They cover the three
+  flows the estate actually supports end to end: AIS consent + read, PIS consent + execute, and the anonymous-shaped
+  open-data lookups.'
+skill_count: 3
+skills:
+- name: barclays-account-information-access
+  file: barclays-account-information-access.md
+  description: Set up a UK Open Banking account-access consent with Barclays and read a customer's accounts, balances
+    and transactions.
+  api: Barclays Account and Transactions API (v4.0)
+  operations:
+  - CreateAccountAccessConsents
+  - GetAccountAccessConsentsConsentId
+  - GetAccounts
+  - GetAccountsAccountId
+  - GetAccountsAccountIdBalances
+  - GetAccountsAccountIdTransactions
+  - DeleteAccountAccessConsentsConsentId
+- name: barclays-domestic-payment
+  file: barclays-domestic-payment.md
+  description: Initiate a single immediate domestic payment from a Barclays account over UK Open Banking, including
+    the funds check and the idempotency rules.
+  api: Barclays Payment Initiation API (v4.0)
+  operations:
+  - CreateDomesticPaymentConsents
+  - GetDomesticPaymentConsentsConsentId
+  - GetDomesticPaymentConsentsConsentIdFundsConfirmation
+  - CreateDomesticPayments
+  - GetDomesticPaymentsDomesticPaymentId
+  - GetDomesticPaymentsDomesticPaymentIdPaymentDetails
+- name: barclays-open-data-lookup
+  file: barclays-open-data-lookup.md
+  description: Read Barclays ATM locations, branch locations, published product terms and FCA service metrics from
+    the OBIE open-data APIs.
+  api: Barclays ATM Locator (2.2), Branch Locator (2.2), Product Details (2.4), FCA Service Metrics (v1)
+  operations:
+  - getAtms
+  - getBranches
+  - get_personal-current-accounts
+  - get_business-current-accounts
+  - get_commercial-credit-cards
+  - get_unsecured-sme-loans
+  - get__fca-service-metrics_pca
+  - get__fca-service-metrics_bca

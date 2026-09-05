@@ -1,0 +1,373 @@
+generated: '2026-09-04'
+method: searched
+source: https://developer.barclays.com/api/apis (Barclays API Exchange registry, anonymous) + openapi/
+versioning:
+  scheme: major.minor per API, carried in the API Exchange version record and in OpenAPI info.version
+  in_url: true
+  note: UK Open Banking APIs track the OBIE Read/Write version (v3.1, v4.0) and both versions are published side
+    by side on the portal; the Barclaycard US APIs use plain 1.0/2.0/3.0/4.0. The version segment appears in the
+    request path (e.g. /open-banking/v3.1/event-subscriptions).
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: 0
+  note: 'No deprecation or sunset policy is published on developer.barclays.com, and no operation or schema in the
+    26 harvested specs carries deprecated: true with a replacement. Superseded versions are left listed alongside
+    the current one rather than marked deprecated — Confirmation of Funds, Payment Initiation, Account and Transactions
+    and Event Notification each publish both v3.1 and v4.0 with no machine-readable signal of which is retiring.
+    The Consent API that this record listed previously now returns HTTP 401 from the registry and is no longer in
+    the public catalogue.'
+  evidence:
+  - url: https://developer.barclays.com/api/apis/versions/41fde785-67a0-47e6-9a34-263d22a08028.bdn
+    status: 401
+status_page:
+  published: false
+  note: Barclays publishes no developer status page. The nearest first-party runtime signal is the FCA Service Metrics
+    API, which serves the FCA-mandated service-availability and incident figures as an open-data API (openapi/barclays-fca-service-metrics-openapi.yml).
+sla:
+  published: false
+  note: No SLA is published on the public developer portal; terms are set per TPP agreement.
+apis:
+- api: ATM Locator
+  versions:
+  - version: '2.2'
+    published: '2026-07-10'
+    documentation: https://developer.barclays.com/apis/atm-locator/c9e28aaa-51a1-4c9b-b8d4-f2b7ac090aa7.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2018-08-30'
+  updated: '2026-07-10'
+- api: Account Management
+  versions:
+  - version: '1.0'
+    published: '2026-07-06'
+    documentation: https://developer.barclays.com/apis/account-management/a56c70ec-e909-4527-96f0-83ff0cedbddd.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-29'
+  updated: '2026-07-06'
+- api: Account and Transactions
+  versions:
+  - version: v4.0
+    published: '2026-08-31'
+    documentation: https://developer.barclays.com/apis/account-and-transactions/e6101c4d-5a76-4ac6-9659-1de2db4267a5.bdn/documentation
+  - version: '3.1'
+    published: '2026-08-31'
+    documentation: https://developer.barclays.com/apis/account-and-transactions/20e74071-13fb-44eb-b98f-2c89d6251ad8.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2025-06-25'
+  updated: '2026-08-31'
+- api: Accounts
+  versions:
+  - version: '2.0'
+    published: '2026-08-07'
+    documentation: https://developer.barclays.com/apis/accounts/f827b203-1be6-4c52-ad15-47cef808b812.bdn/documentation
+  - version: '1.0'
+    published: '2026-07-01'
+    documentation: https://developer.barclays.com/apis/accounts/097976bb-311e-4bb1-89b1-c81e2f1de572.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-28'
+  updated: '2026-08-07'
+- api: Authentication
+  versions:
+  - version: '2.0'
+    published: '2026-06-22'
+    documentation: https://developer.barclays.com/apis/authentication/f12a5fd6-7937-46f4-aa55-75b029a8500e.bdn/documentation
+  - version: '1.0'
+    published: '2026-07-01'
+    documentation: https://developer.barclays.com/apis/authentication/4f4800dd-6a0f-42fe-b6da-5cb2ba8891f5.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-06-01'
+  updated: '2026-06-22'
+- api: Balances and Transactions Reporting API
+  versions:
+  - version: v1.3
+    published: '2025-10-22'
+    documentation: https://developer.barclays.com/apis/balances-and-transactions-reporting-api/0a1ae833-7096-4cf9-85b3-e2ffc59f988b.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2025-10-22'
+  updated: '2025-10-22'
+- api: Barclaycard Smartpay Connect
+  versions:
+  - version: 1.33.0
+    published: '2022-11-16'
+    documentation: https://developer.barclays.com/apis/barclaycard-smartpay-connect/1b93e68c-dd6a-49de-a68c-f3f24205a588.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2021-08-03'
+  updated: '2022-11-16'
+- api: Barclaycard Smartpay Web Payment
+  versions:
+  - version: '30'
+    published: '2025-12-09'
+    documentation: https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2020-07-06'
+  updated: '2025-12-09'
+- api: Barclays Bank Ireland Account Information
+  versions:
+  - version: v1.3.0
+    published: '2026-06-17'
+    documentation: https://developer.barclays.com/apis/barclays-bank-ireland-account-information/696e2ef6-255f-481c-9546-4b5bda44b2e4.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2020-06-04'
+  updated: '2026-06-17'
+- api: Barclays Bank Ireland Confirmation of Funds
+  versions:
+  - version: v1.3.0
+    published: '2026-06-17'
+    documentation: https://developer.barclays.com/apis/barclays-bank-ireland-confirmation-of-funds/8cd8be1f-4bdc-45fe-8fef-c7a569cfe603.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2020-08-14'
+  updated: '2026-06-17'
+- api: Barclays Bank Ireland Payment Initiation
+  versions:
+  - version: v1.3
+    published: '2026-06-17'
+    documentation: https://developer.barclays.com/apis/barclays-bank-ireland-payment-initiation/d41f070a-3b3b-4f2d-b28a-6afdc690a42d.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2020-06-04'
+  updated: '2026-06-17'
+- api: Benefits Redemption
+  versions:
+  - version: '3.0'
+    published: '2026-06-02'
+    documentation: https://developer.barclays.com/apis/benefits-redemption/0ef2bd66-883a-4a03-80e8-e08319f97bfe.bdn/documentation
+  - version: '2.0'
+    published: '2026-02-04'
+    documentation: https://developer.barclays.com/apis/benefits-redemption/1941d4a3-35e3-462c-a209-34101c518b7f.bdn/documentation
+  - version: '1.0'
+    published: '2025-12-09'
+    documentation: https://developer.barclays.com/apis/benefits-redemption/567b2a14-dbcb-49b1-af65-a13aeec5db73.bdn/documentation
+  version_count: 3
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-26'
+  updated: '2026-06-02'
+- api: Branch Locator
+  versions:
+  - version: '2.2'
+    published: '2025-12-09'
+    documentation: https://developer.barclays.com/apis/branch-locator/d9b83b29-42e2-4cb3-ad8f-100d2c9a6314.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2018-08-31'
+  updated: '2025-12-09'
+- api: Card Application
+  versions:
+  - version: '4.0'
+    published: '2026-08-25'
+    documentation: https://developer.barclays.com/apis/card-application/6e3e3358-11bd-4353-92f5-fc0f74c91d3e.bdn/documentation
+  - version: '3.0'
+    published: '2026-04-24'
+    documentation: https://developer.barclays.com/apis/card-application/6b6d8e54-4882-4d3f-a228-0a14a938992d.bdn/documentation
+  - version: '2.0'
+    published: '2026-04-01'
+    documentation: https://developer.barclays.com/apis/card-application/372df8da-72cb-4fe5-b4fb-7e0bcaac7d20.bdn/documentation
+  - version: '1.0'
+    published: '2025-12-09'
+    documentation: https://developer.barclays.com/apis/card-application/36ddccc2-7a13-4b63-b623-9ba3d4081a32.bdn/documentation
+  version_count: 4
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-03-18'
+  updated: '2026-08-25'
+- api: Card Control
+  versions:
+  - version: '1.0'
+    published: '2026-06-02'
+    documentation: https://developer.barclays.com/apis/card-control/fb39ed1a-d10a-47f7-92bb-7ecbb6bbe39e.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-28'
+  updated: '2026-06-02'
+- api: Confirmation of Funds
+  versions:
+  - version: v4.0
+    published: '2026-08-25'
+    documentation: https://developer.barclays.com/apis/confirmation-of-funds/1918e4d6-a63c-4123-a2e6-12b0c7540002.bdn/documentation
+  - version: v3.1
+    published: '2026-08-25'
+    documentation: https://developer.barclays.com/apis/confirmation-of-funds/1c914db2-e592-4e5c-89c8-7b9e76d53303.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2025-06-25'
+  updated: '2026-08-25'
+- api: Cryptography Key Exchange
+  versions:
+  - version: '1.0'
+    published: '2026-07-14'
+    documentation: https://developer.barclays.com/apis/cryptography-key-exchange/15f2194b-7bda-4e81-b90e-f671efbc28c1.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2024-06-12'
+  updated: '2026-07-14'
+- api: Digital Wallet
+  versions:
+  - version: '2.0'
+    published: '2026-08-21'
+    documentation: https://developer.barclays.com/apis/digital-wallet/94d143f9-18d6-4bb7-ad91-9d9cd564e9a0.bdn/documentation
+  - version: '1.0'
+    published: '2026-07-09'
+    documentation: https://developer.barclays.com/apis/digital-wallet/b55293c3-316f-4932-8ac6-b4e94641382a.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-27'
+  updated: '2026-08-21'
+- api: Dynamic Client Registration
+  versions:
+  - version: v1.10
+    published: '2025-12-09'
+    documentation: https://developer.barclays.com/apis/dynamic-client-registration/ace18310-2523-49f0-a66d-4c6e37aae59f.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2020-03-06'
+  updated: '2025-12-09'
+- api: Event Notification
+  versions:
+  - version: v4.0
+    published: '2026-08-25'
+    documentation: https://developer.barclays.com/apis/event-notification/710b0fca-35bd-4d6c-8991-6fb34797e441.bdn/documentation
+  - version: v3.1
+    published: '2026-08-25'
+    documentation: https://developer.barclays.com/apis/event-notification/d71a398f-620b-4a65-8b85-382ca1eb7ede.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2025-06-25'
+  updated: '2026-08-25'
+- api: FCA Service Metrics
+  versions:
+  - version: v1
+    published: '2025-12-09'
+    documentation: https://developer.barclays.com/apis/fca-service-metrics/59f96026-03d6-4c4e-9567-c3db4dd83e3a.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2018-08-14'
+  updated: '2025-12-09'
+- api: Payment Initiation
+  versions:
+  - version: v4.0
+    published: '2026-08-31'
+    documentation: https://developer.barclays.com/apis/payment-initiation/6f206027-5e08-4f4f-a1c5-553cba3c847c.bdn/documentation
+  - version: v3.1
+    published: '2026-08-31'
+    documentation: https://developer.barclays.com/apis/payment-initiation/1f6ad5c5-e397-41c0-8d3b-c35446491402.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2025-09-25'
+  updated: '2026-08-31'
+- api: Payment Initiation API
+  versions:
+  - version: v2.7
+    published: '2025-10-22'
+    documentation: https://developer.barclays.com/apis/payment-initiation-api/f0ad38e0-5101-402a-a9d1-676bf4001027.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2025-10-22'
+  updated: '2025-10-22'
+- api: Payments
+  versions:
+  - version: '2.0'
+    published: '2026-08-25'
+    documentation: https://developer.barclays.com/apis/payments/41c4465b-4997-4934-93e2-7db9607ad4a0.bdn/documentation
+  - version: '1.0'
+    published: '2026-07-06'
+    documentation: https://developer.barclays.com/apis/payments/5286713c-e65f-4c16-aceb-493115142bea.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-27'
+  updated: '2026-08-25'
+- api: Product Details
+  versions:
+  - version: '2.4'
+    published: '2025-12-09'
+    documentation: https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2020-03-22'
+  updated: '2025-12-09'
+- api: Rewards Earn
+  versions:
+  - version: '1.0'
+    published: '2026-06-02'
+    documentation: https://developer.barclays.com/apis/rewards-earn/556aab79-528f-41bf-b75e-29aa4874061a.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-25'
+  updated: '2026-06-02'
+- api: Rewards Loyalty Sync
+  versions:
+  - version: '1.0'
+    published: '2025-12-09'
+    documentation: https://developer.barclays.com/apis/rewards-loyalty-sync/52e2b51b-9937-4f12-901b-3275b0aeb2a8.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2022-04-18'
+  updated: '2025-12-09'
+- api: Statements Retriever
+  versions:
+  - version: '1.0'
+    published: '2026-06-02'
+    documentation: https://developer.barclays.com/apis/statements-retriever/bbd4bc7d-30cd-46a5-bc9a-169e7472ab2a.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-29'
+  updated: '2026-06-02'
+- api: Transactions
+  versions:
+  - version: '2.0'
+    published: '2026-08-25'
+    documentation: https://developer.barclays.com/apis/transactions/5a31e498-f5c0-461e-b25a-9a0aed635bd6.bdn/documentation
+  - version: '1.0'
+    published: '2026-05-21'
+    documentation: https://developer.barclays.com/apis/transactions/b3b4410d-56a7-403c-863c-3af1e939f1c2.bdn/documentation
+  version_count: 2
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2026-05-26'
+  updated: '2026-08-25'
+- api: Variable Recurring Payment
+  versions:
+  - version: v4.0
+    published: '2026-08-31'
+    documentation: https://developer.barclays.com/apis/variable-recurring-payment/0756dc5a-00ca-4b1d-b91d-f6c558d05fc3.bdn/documentation
+  version_count: 1
+  state: com.soa.api.state.open
+  environment: Production
+  created: '2025-09-25'
+  updated: '2026-08-31'

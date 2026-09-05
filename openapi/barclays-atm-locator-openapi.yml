@@ -1,0 +1,36 @@
+openapi: 3.1.0
+info:
+  title: ATM Locator
+  description: The Barclays ATM Finder API allows users to locate all Barclays Automated Teller Machines across the UK. Users
+    will be able to view the town, street name and postcode the ATM is located on and the services available at each individual
+    machine.
+  version: '2.2'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/c9e28aaa-51a1-4c9b-b8d4-f2b7ac090aa7.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-atm-locator-openapi.json. The UK Open Banking documents
+  carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as Barclays implements
+  and publishes it — the API, the registry record and the host are Barclays'.
+paths:
+  /atms:
+    get:
+      operationId: getAtms
+      responses:
+        default:
+          description: ''
+          content:
+            application/json:
+              example: null
+    head:
+      description: Gets header information on branch objects.
+      operationId: headatms
+      responses:
+        default:
+          description: ''
+          content:
+            '*/*':
+              example: null
+      x-media-type-request-default: 'true'
+      x-media-type-response-default: 'true'
+components: {}

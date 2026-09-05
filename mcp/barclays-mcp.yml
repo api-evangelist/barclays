@@ -1,0 +1,233 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/ (26 first-party OpenAPI 3.1 documents harvested from developer.barclays.com)
+status: candidate
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: searched
+note: Barclays ships no MCP server, hosted or local. Searched the API Exchange registry and portal, the github.com/Barclays
+  and github.com/Barclaycard organisations, and the npm and PyPI registries — no first-party MCP package or endpoint
+  exists. The tools below are a DERIVED CANDIDATE list bound to real operationIds in the published contracts; no
+  endpoint has been invented. Any real server would sit behind OAuth 2.0 plus, on the UK Open Banking surface, an
+  Open Banking-issued mTLS transport certificate, so an agent cannot reach these operations anonymously in any case.
+evidence:
+- url: https://developer.barclays.com/api/apis
+  status: 200
+  result: 31 APIs, no MCP server listed
+- url: https://api.github.com/orgs/Barclays/repos
+  status: 200
+  result: no MCP repository
+tool_count: 26
+tools:
+- tool: barclays_GetAccountsAccountIdTransactions
+  api: Account and Transactions
+  rest:
+  - GetAccountsAccountIdTransactions
+  method: get
+  path: /accounts/{accountId}/transactions
+  description: Get Transactions for an AccountId
+  inputSchema: inherits the parameters and requestBody of GetAccountsAccountIdTransactions
+- tool: barclays_GetAccountsAccountId
+  api: Account and Transactions
+  rest:
+  - GetAccountsAccountId
+  method: get
+  path: /accounts/{accountId}
+  description: Get an Account by AccountId
+  inputSchema: inherits the parameters and requestBody of GetAccountsAccountId
+- tool: barclays_GetAccountAccessConsentsConsentId
+  api: Account and Transactions
+  rest:
+  - GetAccountAccessConsentsConsentId
+  method: get
+  path: /account-access-consents/{consentId}
+  description: Get an Account Access Consent
+  inputSchema: inherits the parameters and requestBody of GetAccountAccessConsentsConsentId
+- tool: barclays_DeleteAccountAccessConsentsConsentId
+  api: Account and Transactions
+  rest:
+  - DeleteAccountAccessConsentsConsentId
+  method: delete
+  path: /account-access-consents/{consentId}
+  description: Delete an Account Access Consent
+  inputSchema: inherits the parameters and requestBody of DeleteAccountAccessConsentsConsentId
+- tool: barclays_GetAccountsAccountIdBalances
+  api: Account and Transactions
+  rest:
+  - GetAccountsAccountIdBalances
+  method: get
+  path: /accounts/{accountId}/balances
+  description: Get Balances for an AccountId
+  inputSchema: inherits the parameters and requestBody of GetAccountsAccountIdBalances
+- tool: barclays_CreateAccountAccessConsents
+  api: Account and Transactions
+  rest:
+  - CreateAccountAccessConsents
+  method: post
+  path: /account-access-consents
+  description: Create an Account Access Consent
+  inputSchema: inherits the parameters and requestBody of CreateAccountAccessConsents
+- tool: barclays_GetAccounts
+  api: Account and Transactions
+  rest:
+  - GetAccounts
+  method: get
+  path: /accounts
+  description: Get Accounts
+  inputSchema: inherits the parameters and requestBody of GetAccounts
+- tool: barclays_GetDomesticPaymentConsentsConsentId
+  api: Payment Initiation
+  rest:
+  - GetDomesticPaymentConsentsConsentId
+  method: get
+  path: /domestic-payment-consents/{consentId}
+  description: Get Domestic Payment Consents
+  inputSchema: inherits the parameters and requestBody of GetDomesticPaymentConsentsConsentId
+- tool: barclays_CreateDomesticPayments
+  api: Payment Initiation
+  rest:
+  - CreateDomesticPayments
+  method: post
+  path: /domestic-payments
+  description: Create Domestic Payments
+  inputSchema: inherits the parameters and requestBody of CreateDomesticPayments
+- tool: barclays_CreateDomesticPaymentConsents
+  api: Payment Initiation
+  rest:
+  - CreateDomesticPaymentConsents
+  method: post
+  path: /domestic-payment-consents
+  description: Create Domestic Payment Consents
+  inputSchema: inherits the parameters and requestBody of CreateDomesticPaymentConsents
+- tool: barclays_GetDomesticPaymentConsentsConsentIdFundsConfirmation
+  api: Payment Initiation
+  rest:
+  - GetDomesticPaymentConsentsConsentIdFundsConfirmation
+  method: get
+  path: /domestic-payment-consents/{consentId}/funds-confirmation
+  description: Get Domestic Payment Consents Funds Confirmation
+  inputSchema: inherits the parameters and requestBody of GetDomesticPaymentConsentsConsentIdFundsConfirmation
+- tool: barclays_GetDomesticPaymentsDomesticPaymentId
+  api: Payment Initiation
+  rest:
+  - GetDomesticPaymentsDomesticPaymentId
+  method: get
+  path: /domestic-payments/{domesticPaymentId}
+  description: Get Domestic Payments
+  inputSchema: inherits the parameters and requestBody of GetDomesticPaymentsDomesticPaymentId
+- tool: barclays_CreateFundsConfirmationConsents
+  api: Confirmation of Funds
+  rest:
+  - CreateFundsConfirmationConsents
+  method: post
+  path: /funds-confirmation-consents
+  description: Create a Funds Confirmation Consent
+  inputSchema: inherits the parameters and requestBody of CreateFundsConfirmationConsents
+- tool: barclays_CreateFundsConfirmations
+  api: Confirmation of Funds
+  rest:
+  - CreateFundsConfirmations
+  method: post
+  path: /funds-confirmations
+  description: Create a Funds Confirmation Request
+  inputSchema: inherits the parameters and requestBody of CreateFundsConfirmations
+- tool: barclays_getAtms
+  api: ATM Locator
+  rest:
+  - getAtms
+  method: get
+  path: /atms
+  description: GET /atms
+  inputSchema: inherits the parameters and requestBody of getAtms
+- tool: barclays_getBranches
+  api: Branch Locator
+  rest:
+  - getBranches
+  method: get
+  path: /branches
+  description: GET /branches
+  inputSchema: inherits the parameters and requestBody of getBranches
+- tool: barclays_get_commercial-credit-cards
+  api: Product Details
+  rest:
+  - get_commercial-credit-cards
+  method: get
+  path: /commercial-credit-cards
+  description: GET /commercial-credit-cards
+  inputSchema: inherits the parameters and requestBody of get_commercial-credit-cards
+- tool: barclays_get_business-current-accounts
+  api: Product Details
+  rest:
+  - get_business-current-accounts
+  method: get
+  path: /business-current-accounts
+  description: GET /business-current-accounts
+  inputSchema: inherits the parameters and requestBody of get_business-current-accounts
+- tool: barclays_get_personal-current-accounts
+  api: Product Details
+  rest:
+  - get_personal-current-accounts
+  method: get
+  path: /personal-current-accounts
+  description: GET /personal-current-accounts
+  inputSchema: inherits the parameters and requestBody of get_personal-current-accounts
+- tool: barclays_get_unsecured-sme-loans
+  api: Product Details
+  rest:
+  - get_unsecured-sme-loans
+  method: get
+  path: /unsecured-sme-loans
+  description: GET /unsecured-sme-loans
+  inputSchema: inherits the parameters and requestBody of get_unsecured-sme-loans
+- tool: barclays_get__fca-service-metrics_bca
+  api: FCA Service Metrics
+  rest:
+  - get__fca-service-metrics_bca
+  method: get
+  path: /fca-service-metrics/bca
+  description: GET /fca-service-metrics/bca
+  inputSchema: inherits the parameters and requestBody of get__fca-service-metrics_bca
+- tool: barclays_get__fca-service-metrics_pca
+  api: FCA Service Metrics
+  rest:
+  - get__fca-service-metrics_pca
+  method: get
+  path: /fca-service-metrics/pca
+  description: GET /fca-service-metrics/pca
+  inputSchema: inherits the parameters and requestBody of get__fca-service-metrics_pca
+- tool: barclays_domesticVrpPost
+  api: Variable Recurring Payment
+  rest:
+  - domesticVrpPost
+  method: post
+  path: /domestic-vrps
+  description: Create a domestic VRP
+  inputSchema: inherits the parameters and requestBody of domesticVrpPost
+- tool: barclays_domesticVrpConsentsPost
+  api: Variable Recurring Payment
+  rest:
+  - domesticVrpConsentsPost
+  method: post
+  path: /domestic-vrp-consents
+  description: Create a domestic VRP consent
+  inputSchema: inherits the parameters and requestBody of domesticVrpConsentsPost
+- tool: barclays_GetEventSubscriptions
+  api: Event Notification
+  rest:
+  - GetEventSubscriptions
+  method: get
+  path: /event-subscriptions
+  description: Get Event Subscription
+  inputSchema: inherits the parameters and requestBody of GetEventSubscriptions
+- tool: barclays_CreateEventSubscriptions
+  api: Event Notification
+  rest:
+  - CreateEventSubscriptions
+  method: post
+  path: /event-subscriptions
+  description: Create Event Subscription
+  inputSchema: inherits the parameters and requestBody of CreateEventSubscriptions

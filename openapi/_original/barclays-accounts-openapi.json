@@ -1,0 +1,1360 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Accounts",
+  "description": "Enables the user to quickly and securely view snapshot of key account details",
+  "version": "2.0"
+ },
+ "tags": [
+  {
+   "name": "card-account-details-inquiry-external-api",
+   "description": "The card account details inquiry external API is Barclays US’s credit cards acquisitions solution which will orchestrate the Internal API calls providing account information, such as account peek/summary for an account"
+  }
+ ],
+ "paths": {
+  "/cards/accounts/{accountId}/card-details": {
+   "summary": "retrieve card-details api",
+   "description": "To get the customer full card details by account Id and last four digits of the card",
+   "post": {
+    "tags": [
+     "card-account-details-inquiry-external-api"
+    ],
+    "summary": "Retrieve card-details by account Id and last four digits of the card. This operation contains sensitive data. Response sent will be in encrypted format.",
+    "description": "To get the customer full card details by account Id and last four digits of the card",
+    "operationId": "retrieveCardDetailsV2",
+    "parameters": [
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "accountId",
+      "in": "path",
+      "description": "External Account Id",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      },
+      "example": "c8de699e-ff6d-11eb-9a03-0242ac130003"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     },
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "application/json"
+     }
+    ],
+    "requestBody": {
+     "description": "Request Payload for Retrieve Card-Details",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RetrieveCardDetailsRequestData"
+       },
+       "examples": {
+        "RetrieveCardDetailsRequestData": {
+         "$ref": "#/components/examples/RetrieveCardDetailsRequestData"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/RetrieveCardDetailsResV2"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/customers/{customerId}/accounts/summary": {
+   "summary": "multi cards account summary",
+   "description": "get the multi cards account summary information for a customer id",
+   "get": {
+    "tags": [
+     "card-account-details-inquiry-external-api"
+    ],
+    "summary": "Get multi cards account summary",
+    "description": "this endpoint is used to get the multi cards account summary for a customer id",
+    "operationId": "getMultiCardsAccountSummaryV2",
+    "parameters": [
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "customerId",
+      "in": "path",
+      "description": "External Customer Id",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      },
+      "example": "c8de699e-ff6d-11eb-9a03-0242ac130003"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/MultiCardAccountSummaryResV2"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/cards/customers/search/accounts": {
+   "summary": "account lookup api",
+   "description": "To get the multi card account lookup of a customer by full SSN",
+   "post": {
+    "tags": [
+     "card-account-details-inquiry-external-api"
+    ],
+    "summary": "Account Lookup by SSN. This operation contains sensitive data. Request is expected to be sent in encrypted format.",
+    "description": "To get the multi card account lookup of a customer by full SSN",
+    "operationId": "accountLookupBySSNV2",
+    "parameters": [
+     {
+      "name": "Correlation-ID",
+      "in": "header",
+      "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.",
+      "required": true,
+      "deprecated": false,
+      "allowEmptyValue": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 36,
+       "minLength": 36,
+       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+     },
+     {
+      "name": "Authorization",
+      "in": "header",
+      "description": "TIAA-US External token",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "Bearer <token>"
+     },
+     {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Content-Type",
+      "required": true,
+      "deprecated": false,
+      "schema": {
+       "type": "string"
+      },
+      "example": "application/json"
+     }
+    ],
+    "requestBody": {
+     "description": "Request Payload for Account Lookup",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AccountLookupRequestDataV2"
+       },
+       "examples": {
+        "AccountLookupRequestDataV2": {
+         "$ref": "#/components/examples/AccountLookupRequestDataV2"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/AccountLookupRes"
+     },
+     "400": {
+      "$ref": "#/components/responses/BadRequest"
+     },
+     "401": {
+      "$ref": "#/components/responses/Unauthorized"
+     },
+     "500": {
+      "$ref": "#/components/responses/InternalServerError"
+     },
+     "403": {
+      "$ref": "#/components/responses/Forbidden"
+     },
+     "404": {
+      "$ref": "#/components/responses/NotFound"
+     },
+     "503": {
+      "$ref": "#/components/responses/ServiceUnavailable"
+     }
+    },
+    "deprecated": false
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AccountSummaryResAttributesV2": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Account Summary Response.",
+    "properties": {
+     "cardLast4": {
+      "$ref": "#/components/schemas/CardLast4"
+     },
+     "accountId": {
+      "type": "string",
+      "description": "account id.",
+      "example": "baef47ce-14a6-11ec-82a8-0242ac170007",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+     },
+     "currentBalance": {
+      "$ref": "#/components/schemas/Amount"
+     },
+     "availableCredit": {
+      "$ref": "#/components/schemas/Amount"
+     },
+     "statementBalance": {
+      "$ref": "#/components/schemas/Amount"
+     },
+     "paymentDueDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Payment due date of the account.",
+      "example": "2021-09-20",
+      "maxLength": 10,
+      "minLength": 0
+     },
+     "lastPaymentReceivedDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Last payment received date of the account.",
+      "example": "2021-09-19",
+      "maxLength": 10,
+      "minLength": 0
+     },
+     "cardArtCode": {
+      "type": "string",
+      "description": "Card Art Code.",
+      "example": "ON04ZA04",
+      "maxLength": 250,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s\"=,.']{1,250}$"
+     },
+     "cardDescription": {
+      "type": "string",
+      "description": "Card Description.",
+      "example": "OLD NAVY",
+      "maxLength": 250,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s\"=,.']{1,250}$"
+     },
+     "creditLimit": {
+      "$ref": "#/components/schemas/Amount"
+     }
+    },
+    "required": [
+     "accountId",
+     "availableCredit",
+     "cardArtCode",
+     "cardDescription",
+     "cardLast4",
+     "currentBalance",
+     "lastPaymentReceivedDate",
+     "paymentDueDate",
+     "statementBalance"
+    ],
+    "nullable": false
+   },
+   "AccountLookupRequestV2": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Account Lookup Request",
+    "properties": {
+     "ssn": {
+      "type": "string",
+      "description": "Social Security Number",
+      "example": "115200045",
+      "maxLength": 9,
+      "minLength": 9,
+      "pattern": "^[0-9]{9,9}$"
+     },
+     "posMetaData": {
+      "$ref": "#/components/schemas/POSMetaData"
+     }
+    },
+    "required": [
+     "posMetaData",
+     "ssn"
+    ],
+    "nullable": false
+   },
+   "AccountLookupResponseData": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Account Lookup Response Data.",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/AccountLookupResponse"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "AccountLookupRequestDataV2": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Account Lookup Request Data.",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/AccountLookupRequestV2"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "RetrieveCardDetailsResponseV2": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Retrieve Card Details Response",
+    "properties": {
+     "firstName": {
+      "type": "string",
+      "description": "First name to fetch customer's account information.",
+      "example": "First",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z\\s]{1,32}$"
+     },
+     "lastName": {
+      "type": "string",
+      "description": "Last name to fetch customer's account information.",
+      "example": "Last",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z\\s]{1,32}$"
+     },
+     "cardDetails": {
+      "$ref": "#/components/schemas/CardDetails"
+     }
+    },
+    "required": [
+     "cardDetails",
+     "firstName",
+     "lastName"
+    ],
+    "nullable": false
+   },
+   "Amount": {
+    "type": "object",
+    "additionalProperties": false,
+    "description": "Holds currency data",
+    "properties": {
+     "value": {
+      "type": "number",
+      "format": "BigDecimal",
+      "example": 5000.0,
+      "maximum": 9223372036854775807,
+      "minimum": 0,
+      "multipleOf": 0.01
+     },
+     "currencyCode": {
+      "$ref": "#/components/schemas/CurrencyCode"
+     }
+    }
+   },
+   "RetrieveCardDetailsRequest": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Retrieve Card Details Request",
+    "properties": {
+     "accountLookupToken": {
+      "$ref": "#/components/schemas/AccountLookupToken"
+     },
+     "isIdentityVerified": {
+      "$ref": "#/components/schemas/IsIdentityVerified"
+     },
+     "posMetaData": {
+      "$ref": "#/components/schemas/POSMetaData"
+     }
+    },
+    "required": [
+     "accountLookupToken",
+     "posMetaData"
+    ],
+    "nullable": false
+   },
+   "POSMetaData": {
+    "type": "object",
+    "additionalProperties": false,
+    "description": "Fraud Analysis Data",
+    "properties": {
+     "channel": {
+      "type": "string",
+      "description": "Channel originating the request",
+      "example": "Mob_123456789",
+      "maxLength": 30,
+      "minLength": 3,
+      "pattern": "^[a-zA-Z0-9\\-_]{3,30}$"
+     },
+     "storeId": {
+      "type": "string",
+      "description": "Store Id where the request made",
+      "example": "Gap_345678987",
+      "maxLength": 30,
+      "minLength": 3,
+      "pattern": "^[a-zA-Z0-9\\-_]{3,30}$"
+     },
+     "terminalId": {
+      "type": "string",
+      "description": "POS terminal id where the request was made",
+      "example": "Ter-567898765",
+      "maxLength": 30,
+      "minLength": 3,
+      "pattern": "^[a-zA-Z0-9\\-_]{3,30}$"
+     },
+     "zipCode": {
+      "type": "string",
+      "description": "ZipCode where the request originated",
+      "example": "19555",
+      "maxLength": 20,
+      "minLength": 5,
+      "pattern": "^[a-zA-Z0-9\\-_\\s]{5,20}$"
+     }
+    },
+    "required": [
+     "channel",
+     "storeId",
+     "terminalId",
+     "zipCode"
+    ]
+   },
+   "ErrorResponseType": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "An API error response.\n",
+    "properties": {
+     "meta": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Contains Non-standard meta information"
+     },
+     "errors": {
+      "type": "array",
+      "description": "Contains one or more error messages and is mutually exclusive with the data item.\nThis will not be returned in success scenarios.\n",
+      "items": {
+       "$ref": "#/components/schemas/ErrorType"
+      },
+      "maxItems": 50,
+      "minItems": 0
+     }
+    },
+    "nullable": false
+   },
+   "RetrieveCardDetailsRequestData": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Retrieve Card-Details Request Data",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/RetrieveCardDetailsRequest"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "AccountLookupResponse": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Account Lookup Response",
+    "properties": {
+     "accountLookupToken": {
+      "$ref": "#/components/schemas/AccountLookupToken"
+     },
+     "firstName": {
+      "type": "string",
+      "description": "Customer's first name",
+      "example": "DAGLEY",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z\\s]{1,32}$"
+     },
+     "lastName": {
+      "type": "string",
+      "description": "Customer's last name",
+      "example": "BEATE",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z\\s]{1,32}$"
+     },
+     "accounts": {
+      "type": "array",
+      "description": "Array of Customer's account",
+      "items": {
+       "$ref": "#/components/schemas/AccountInfo"
+      },
+      "maxItems": 10,
+      "minItems": 0
+     }
+    },
+    "required": [
+     "accountLookupToken",
+     "accounts",
+     "firstName",
+     "lastName"
+    ],
+    "nullable": false
+   },
+   "CardLast4": {
+    "type": "string",
+    "description": "Card's last four digits.",
+    "example": "9761",
+    "maxLength": 4,
+    "minLength": 4,
+    "pattern": "^(\\d{4})$"
+   },
+   "AccountLookupToken": {
+    "type": "string",
+    "description": "Account Lookup request reference Id",
+    "example": "c8de699e-ff6d-11eb-9a03-0242ac130003",
+    "maxLength": 36,
+    "minLength": 36,
+    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+   },
+   "CurrencyCode": {
+    "type": "string",
+    "description": "List of allowed currency codes.",
+    "enum": [
+     "USD"
+    ]
+   },
+   "RetrieveCardDetailsResponseDataV2": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Retrieve Card-Details Response Data",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/RetrieveCardDetailsResponseV2"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "ErrorType": {
+    "type": "object",
+    "additionalProperties": true,
+    "description": "Message details - additional operation execution information.",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "Generated message identifier for particular request, helping to locate server logs.",
+      "example": "9709-4675-2456-7801",
+      "maxLength": 50,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\-]{1,50}$"
+     },
+     "code": {
+      "type": "string",
+      "description": "Machine readable, unique code of the message related to particular case within operation execution.",
+      "example": "ACCOUNT_NUMBER_NOT_FOUND",
+      "maxLength": 100,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_]{1,100}$"
+     },
+     "title": {
+      "type": "string",
+      "description": "Short description of the error. Not for displaying purposes.",
+      "example": "The authorization credentials required for this request are invalid.",
+      "maxLength": 250,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s\"=,.']{1,250}$"
+     },
+     "detail": {
+      "type": "string",
+      "description": "Provides additional low-level details about the error to assist with troubleshooting. Not for displaying purposes.",
+      "maxLength": 250,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s\"=,.']{1,250}$"
+     },
+     "meta": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Object containing non-standard meta-information about the error."
+     }
+    },
+    "required": [
+     "code",
+     "id",
+     "title"
+    ]
+   },
+   "CardType": {
+    "type": "string",
+    "description": "Card's allowed type",
+    "enum": [
+     "CBCC",
+     "PLCC"
+    ]
+   },
+   "MultiCardAccountSummaryResponseDataV2": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Multi Card Account Summary Response Data.",
+    "properties": {
+     "data": {
+      "$ref": "#/components/schemas/MultiCardAccountSummaryResAttributesV2"
+     }
+    },
+    "required": [
+     "data"
+    ],
+    "nullable": false
+   },
+   "IsIdentityVerified": {
+    "type": "string",
+    "description": "Possible values of identity verification",
+    "enum": [
+     "Y",
+     "N"
+    ]
+   },
+   "MultiCardAccountSummaryResAttributesV2": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Multi Card Account Summary Response.",
+    "properties": {
+     "summaryInfo": {
+      "type": "array",
+      "description": "List of account summary for customer id.",
+      "items": {
+       "$ref": "#/components/schemas/AccountSummaryResAttributesV2"
+      },
+      "maxItems": 50,
+      "minItems": 0
+     }
+    },
+    "required": [
+     "summaryInfo"
+    ],
+    "nullable": false
+   },
+   "CardDetails": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Card Details of the account",
+    "properties": {
+     "cardNumber": {
+      "type": "string",
+      "description": "Card number",
+      "example": "6119030242130003",
+      "maxLength": 16,
+      "minLength": 16,
+      "pattern": "^[0-9]{16}$"
+     },
+     "cardType": {
+      "type": "string",
+      "description": "Card Type",
+      "example": "PLCC",
+      "maxLength": 16,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z\\s]{1,16}$"
+     },
+     "expiryDate": {
+      "type": "string",
+      "description": "Card expiry date",
+      "example": "0920",
+      "maxLength": 4,
+      "minLength": 4,
+      "pattern": "^[0-9]{4,4}$"
+     }
+    },
+    "required": [
+     "cardNumber",
+     "cardType",
+     "expiryDate"
+    ],
+    "nullable": false
+   },
+   "AccountInfo": {
+    "type": "object",
+    "additionalProperties": false,
+    "description": "Holds Accounts data",
+    "properties": {
+     "accountId": {
+      "type": "string",
+      "description": "account id.",
+      "example": "baef47ce-14a6-11ec-82a8-0242ac130003",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+     },
+     "cardLast4": {
+      "$ref": "#/components/schemas/CardLast4"
+     },
+     "cardType": {
+      "$ref": "#/components/schemas/CardType"
+     },
+     "brandCode": {
+      "type": "string",
+      "description": "Brand code",
+      "example": "Old Navy Card",
+      "maxLength": 250,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\s\"=,.']{1,250}$"
+     }
+    },
+    "required": [
+     "accountId",
+     "brandCode",
+     "cardLast4",
+     "cardType"
+    ]
+   }
+  },
+  "responses": {
+   "MultiCardAccountSummaryResV2": {
+    "description": "Multi Card Account Summary Response",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/MultiCardAccountSummaryResponseDataV2"
+      },
+      "examples": {
+       "MultiCardAccountSummaryResponseDataV2": {
+        "$ref": "#/components/examples/MultiCardAccountSummaryResponseDataV2"
+       }
+      }
+     }
+    }
+   },
+   "BadRequest": {
+    "description": "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-400-bad-request": {
+        "$ref": "#/components/examples/example-error-400-bad-request"
+       }
+      }
+     }
+    }
+   },
+   "RetrieveCardDetailsResV2": {
+    "description": "Retrieve Card-details Response",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/RetrieveCardDetailsResponseDataV2"
+      },
+      "examples": {
+       "RetrieveCardDetailsResponseDataV2": {
+        "$ref": "#/components/examples/RetrieveCardDetailsResponseDataV2"
+       }
+      }
+     }
+    }
+   },
+   "Unauthorized": {
+    "description": "The user could not be authenticated for this request.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-401": {
+        "$ref": "#/components/examples/example-error-401"
+       }
+      }
+     }
+    }
+   },
+   "Forbidden": {
+    "description": "The user is not permitted to access the requested operation and it cannot be completed.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-403": {
+        "$ref": "#/components/examples/example-error-403"
+       }
+      }
+     }
+    }
+   },
+   "ServiceUnavailable": {
+    "description": "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-503": {
+        "$ref": "#/components/examples/example-error-503"
+       }
+      }
+     }
+    }
+   },
+   "InternalServerError": {
+    "description": "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-500": {
+        "$ref": "#/components/examples/example-error-500"
+       }
+      }
+     }
+    }
+   },
+   "AccountLookupRes": {
+    "description": "Account Lookup Response",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/AccountLookupResponseData"
+      },
+      "examples": {
+       "AccountLookupResponseData": {
+        "$ref": "#/components/examples/AccountLookupResponseData"
+       }
+      }
+     }
+    }
+   },
+   "NotFound": {
+    "description": "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n",
+    "headers": {
+     "Cache-Control": {
+      "$ref": "#/components/headers/Cache-Control"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/ErrorResponseType"
+      },
+      "examples": {
+       "example-error-404": {
+        "$ref": "#/components/examples/example-error-404"
+       }
+      }
+     }
+    }
+   }
+  },
+  "parameters": {
+   "Authorization": {
+    "name": "Authorization",
+    "in": "header",
+    "description": "Bearer Token",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 2048,
+     "minLength": 32,
+     "pattern": "^[A-Za-z0-9\\-_\\.\\ ]{32,2048}$"
+    },
+    "example": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlE4SkRobnd0ODU4eDNlbTRwVVkzd0R2Q3RsRSIsInBpLmF0bSI6IjUybWUifQ.eyJjbGllbnRfaWQiOiJVU0NCSU5UQ0xJRU5UIiwiaXNzIjoiVElBQS1VUyIsImF1ZCI6IlVTQ0IiLCJzdWIiOiJzeXNUSUFBVVNBUFBMWVQiLCJhZGdyb3VwcyI6WyJDTj1mR0xCQ3VzdFByb2R1Y3RITlAsT1U9R3JvdXBzLE9VPUdMQixEQz1JTlRSQU5FVCxEQz1CQVJDQVBJTlQsREM9Y29tIiwiQ049ZkdMQkNycHRQY3NHYXBRQSxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iLCJDTj1mR0xCQWNjdE1nbXROUCxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iLCJDTj1mR0xCVElBQVVTQ0JJbnRyUyxPVT1Hcm91cHMsT1U9R0xCLERDPUlOVFJBTkVULERDPUJBUkNBUElOVCxEQz1jb20iXSwiZXhwIjoxNjgzMjYyNzk3fQ.JDw6udt7pegvyz2tD_W0gUR_FXr7XnZIMnb0GeXLGFC7Zcg5yq6vI2bTMaee9pNhtCEJlIbLa5aKvP6xdt1xBfusE74g85Tohb5c-4MF7QNsC3vBCNOlTpnXMPkHR2_aNfXzf_Duvf81ZotsD_KwUF7w8f63BHgpI4itiFSduGEFGzAKlV2OJwcgIIlhDfhstbDtREL931QlFI8v_sj7JjXWOqivrFSOhiuen-rM5SRvFrnm50P9mZvyhs4-228cZ-xv36c5NAsbO9whQCHE5N0rDOhMgCKl65rnCdUr8rktOCe3fMQTWxV-qQqnr4hscgFtcJt9gU07pwP8zvf4xQ"
+   },
+   "Correlation-ID": {
+    "name": "Correlation-ID",
+    "in": "header",
+    "description": "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard.\n",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 36,
+     "minLength": 36,
+     "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+   },
+   "X-Party-Id": {
+    "name": "X-Party-Id",
+    "in": "header",
+    "description": "Party Id associated to an account Id",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 17,
+     "minLength": 1,
+     "pattern": "^[0-9]{1,17}$"
+    },
+    "example": "0013467801"
+   },
+   "ExternalAccountIdPath": {
+    "name": "accountId",
+    "in": "path",
+    "description": "External Account Id",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 36,
+     "minLength": 36,
+     "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "example": "c8de699e-ff6d-11eb-9a03-0242ac130003"
+   },
+   "OauthClient-ID": {
+    "name": "oauth_clientid",
+    "in": "header",
+    "description": "To be set by Akana ND. It will be removed when published on Akana,\n",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 256,
+     "minLength": 1,
+     "pattern": "^[a-zA-Z0-9.\\-]{1,256}$"
+    },
+    "example": "bdn-68EwxNCdDi65Y2FV6wxupfsoD3ilveYxDqok0LD5"
+   },
+   "ExternalCustomerIdPath": {
+    "name": "customerId",
+    "in": "path",
+    "description": "External Customer Id",
+    "required": true,
+    "deprecated": false,
+    "allowEmptyValue": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 36,
+     "minLength": 36,
+     "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "example": "c8de699e-ff6d-11eb-9a03-0242ac130003"
+   }
+  },
+  "examples": {
+   "example-error-404": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "RESOURCE_NOT_FOUND",
+       "title": "The requested operation failed because a resource associated with the request could not be found."
+      }
+     ]
+    }
+   },
+   "example-error-503": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "SERVICE_UNAVAILABLE",
+       "title": "The server is currently unavailable"
+      }
+     ]
+    }
+   },
+   "RetrieveCardDetailsResponseDataV2": {
+    "value": {
+     "data": {
+      "firstName": "Jacky",
+      "lastName": "Wills",
+      "cardDetails": {
+       "cardType": "CBCC",
+       "cardNumber": "6119030242130003",
+       "expiryDate": "0824"
+      }
+     }
+    }
+   },
+   "AccountLookupResponseData": {
+    "value": {
+     "data": {
+      "accountLookupToken": "c8de699e-ff6d-11eb-9a03-0242ac130003",
+      "firstName": "DAGLEY",
+      "lastName": "BEATE",
+      "accounts": [
+       {
+        "accountId": "aebf47ce-14a6-11ec-82a8-0242ac130003",
+        "cardLast4": "4872",
+        "cardType": "CBCC",
+        "brandCode": "AT"
+       },
+       {
+        "accountId": "baef47ce-14a6-11ec-82a8-0242ac130003",
+        "cardLast4": "3831",
+        "cardType": "PLCC",
+        "brandCode": "GAP"
+       }
+      ]
+     }
+    }
+   },
+   "AccountLookupRequestDataV2": {
+    "value": {
+     "data": {
+      "ssn": "545123808",
+      "posMetaData": {
+       "channel": "Mob_123456789",
+       "storeId": "Gap_345678987",
+       "terminalId": "Ter-567898765",
+       "zipCode": "19555"
+      }
+     }
+    }
+   },
+   "example-error-400-bad-request": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "BAD_REQUEST",
+       "title": "The request is invalid or not properly formed."
+      }
+     ]
+    }
+   },
+   "MultiCardAccountSummaryResponseDataV2": {
+    "value": {
+     "data": {
+      "summaryInfo": [
+       {
+        "cardLast4": "8656",
+        "accountId": "f5dd92ea-50ee-440e-98c4-360ed5eef24e",
+        "currentBalance": {
+         "value": 0.0,
+         "currencyCode": "USD"
+        },
+        "availableCredit": {
+         "value": 25000.0,
+         "currencyCode": "USD"
+        },
+        "statementBalance": {
+         "value": 0.0,
+         "currencyCode": "USD"
+        },
+        "paymentDueDate": "2025-01-21",
+        "lastPaymentReceivedDate": "2025-01-21",
+        "cardArtCode": "DGM1DGM1.png",
+        "cardDescription": "GM Rewards Mastercard",
+        "creditLimit": {
+         "value": 25000.0,
+         "currencyCode": "USD"
+        }
+       },
+       {
+        "cardLast4": "8656",
+        "accountId": "a821f72b-4b32-47ed-a095-6e26d34d465c",
+        "currentBalance": {
+         "value": 0.0,
+         "currencyCode": "USD"
+        },
+        "availableCredit": {
+         "value": 25000.0,
+         "currencyCode": "USD"
+        },
+        "statementBalance": {
+         "value": 0.0,
+         "currencyCode": "USD"
+        },
+        "paymentDueDate": "2025-01-21",
+        "lastPaymentReceivedDate": "2025-01-21",
+        "cardArtCode": "DGM1DGM1.png",
+        "cardDescription": "GM Rewards Mastercard",
+        "creditLimit": {
+         "value": 25000.0,
+         "currencyCode": "USD"
+        }
+       }
+      ]
+     }
+    }
+   },
+   "RetrieveCardDetailsRequestData": {
+    "value": {
+     "data": {
+      "accountLookupToken": "c8de699e-ff6d-11eb-9a03-0242ac130003",
+      "isIdentityVerified": "Y",
+      "posMetaData": {
+       "channel": "Mob_123456789",
+       "storeId": "Gap_345678987",
+       "terminalId": "Ter-567898765",
+       "zipCode": "19555"
+      }
+     }
+    }
+   },
+   "example-error-401": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "AUTHENTICATION_ERROR",
+       "title": "The user could not be authenticated for this request."
+      }
+     ]
+    }
+   },
+   "example-error-500": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "INTERNAL_SERVER_ERROR",
+       "title": "The request failed due to an internal error."
+      }
+     ]
+    }
+   },
+   "example-error-403": {
+    "value": {
+     "errors": [
+      {
+       "id": "9709-4675-2456-7801",
+       "code": "ACCESS_FORBIDDEN",
+       "title": "The user is not permitted to access the requested operation and it cannot be completed."
+      }
+     ]
+    }
+   }
+  },
+  "requestBodies": {
+   "RetrieveCardDetailsReq": {
+    "description": "Request Payload for Retrieve Card-Details",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/RetrieveCardDetailsRequestData"
+      },
+      "examples": {
+       "RetrieveCardDetailsRequestData": {
+        "$ref": "#/components/examples/RetrieveCardDetailsRequestData"
+       }
+      }
+     }
+    },
+    "required": true
+   },
+   "AccountLookupReqV2": {
+    "description": "Request Payload for Account Lookup",
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/AccountLookupRequestDataV2"
+      },
+      "examples": {
+       "AccountLookupRequestDataV2": {
+        "$ref": "#/components/examples/AccountLookupRequestDataV2"
+       }
+      }
+     }
+    },
+    "required": true
+   }
+  },
+  "headers": {
+   "Cache-Control": {
+    "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+    "schema": {
+     "type": "string",
+     "default": "no-cache, no-store, must-revalidate",
+     "deprecated": false,
+     "example": "no-cache, no-store, must-revalidate",
+     "maxLength": 35,
+     "minLength": 35,
+     "pattern": "^no-cache, no-store, must-revalidate$",
+     "nullable": false
+    }
+   }
+  },
+  "securitySchemes": {
+   "ExternalTiaaUsCCAuth": {
+    "type": "oauth2",
+    "description": "OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2",
+      "scopes": {
+       "read": "read only",
+       "write": "write only"
+      }
+     }
+    }
+   }
+  }
+ }
+}

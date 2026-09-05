@@ -1,0 +1,44 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Branch Locator",
+  "description": "The Barclays Branch Locator API enables users to locate all Barclays branches throughout the UK. Using longitudinal and latitudinal data, users can find the location of the branch, the opening hours and the facilities available at each individual branch.",
+  "version": "2.2"
+ },
+ "paths": {
+  "/branches": {
+   "get": {
+    "operationId": "getBranches",
+    "responses": {
+     "200": {
+      "description": "",
+      "content": {
+       "application/json": {
+        "example": null
+       }
+      }
+     }
+    },
+    "x-media-type-request-default": "false",
+    "x-media-type-response-default": "false"
+   },
+   "head": {
+    "description": "Gets header information on branch objects.",
+    "operationId": "headbranches",
+    "responses": {
+     "default": {
+      "description": "",
+      "content": {
+       "*/*": {
+        "example": null
+       }
+      }
+     }
+    },
+    "x-media-type-request-default": "false",
+    "x-media-type-response-default": "false"
+   }
+  }
+ },
+ "components": {}
+}

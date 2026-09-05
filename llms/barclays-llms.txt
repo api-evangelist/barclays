@@ -1,0 +1,308 @@
+# Barclays
+
+> Barclays is a UK-headquartered multinational bank. Its public API surface is the Barclays API Exchange at developer.barclays.com, which publishes 30 API versions across three distinct families: UK Open Banking (OBIE Read/Write v3.1 and v4.0), Barclays Bank Ireland (Berlin Group NextGenPSD2), and Barclaycard US card servicing. 26 of them publish a machine-readable OpenAPI 3.1 contract covering 184 operations. Nothing is callable anonymously: every API requires registration, access approval, an OAuth 2.0 token, and — on the UK Open Banking surface — an Open Banking-issued mTLS transport certificate.
+
+## Contracts
+
+Barclays serves a real OpenAPI 3.1 export for every catalogued API version at `https://developer.barclays.com/api/apis/versions/{apiVersionId}/design?specification=oas31` (Swagger 2.0 and OpenAPI 3.0 exports are available at the same path with `specification=swagger2` / `oas3`). The version identifiers come from `https://developer.barclays.com/api/apis`, which is anonymous and returns the whole catalogue.
+
+- [Payment Initiation (v4.0)](https://developer.barclays.com/catalogue) — 41 operations
+- [Account and Transactions (v4.0)](https://developer.barclays.com/catalogue) — 29 operations
+- [Barclays Bank Ireland Payment Initiation (v1.3)](https://developer.barclays.com/catalogue) — 17 operations
+- [Barclays Bank Ireland Account Information (v1.3.0)](https://developer.barclays.com/catalogue) — 11 operations
+- [Payments (2.0)](https://developer.barclays.com/catalogue) — 11 operations
+- [Card Application (4.0)](https://developer.barclays.com/catalogue) — 9 operations
+- [Variable Recurring Payment (v4.0)](https://developer.barclays.com/catalogue) — 9 operations
+- [Product Details (2.4)](https://developer.barclays.com/catalogue) — 8 operations
+- [Barclays Bank Ireland Confirmation of Funds (v1.3.0)](https://developer.barclays.com/catalogue) — 7 operations
+- [Event Notification (v4.0)](https://developer.barclays.com/catalogue) — 5 operations
+- [Benefits Redemption (3.0)](https://developer.barclays.com/catalogue) — 5 operations
+- [Confirmation of Funds (v4.0)](https://developer.barclays.com/catalogue) — 4 operations
+- [FCA Service Metrics (v1)](https://developer.barclays.com/catalogue) — 4 operations
+- [Transactions (2.0)](https://developer.barclays.com/catalogue) — 4 operations
+- [Accounts (2.0)](https://developer.barclays.com/catalogue) — 3 operations
+- [Card Control (1.0)](https://developer.barclays.com/catalogue) — 3 operations
+- [ATM Locator (2.2)](https://developer.barclays.com/catalogue) — 2 operations
+- [Branch Locator (2.2)](https://developer.barclays.com/catalogue) — 2 operations
+- [Authentication (2.0)](https://developer.barclays.com/catalogue) — 2 operations
+- [Account Management (1.0)](https://developer.barclays.com/catalogue) — 2 operations
+- [Dynamic Client Registration (v1.10)](https://developer.barclays.com/catalogue) — 1 operations
+- [Digital Wallet (2.0)](https://developer.barclays.com/catalogue) — 1 operations
+- [Rewards Loyalty Sync (1.0)](https://developer.barclays.com/catalogue) — 1 operations
+- [Cryptography Key Exchange (1.0)](https://developer.barclays.com/catalogue) — 1 operations
+- [Rewards Earn (1.0)](https://developer.barclays.com/catalogue) — 1 operations
+- [Statements Retriever (1.0)](https://developer.barclays.com/catalogue) — 1 operations
+- [TEST_VR (1)](https://developer.barclays.com/catalogue) — 1 operations
+
+## Operations
+
+### Payment Initiation (v4.0)
+- `POST /domestic-payment-consents` — CreateDomesticPaymentConsents: Create Domestic Payment Consents
+- `GET /domestic-payment-consents/{consentId}` — GetDomesticPaymentConsentsConsentId: Get Domestic Payment Consents
+- `GET /domestic-payment-consents/{consentId}/funds-confirmation` — GetDomesticPaymentConsentsConsentIdFundsConfirmation: Get Domestic Payment Consents Funds Confirmation
+- `POST /domestic-payments` — CreateDomesticPayments: Create Domestic Payments
+- `GET /domestic-payments/{domesticPaymentId}` — GetDomesticPaymentsDomesticPaymentId: Get Domestic Payments
+- `GET /domestic-payments/{domesticPaymentId}/payment-details` — GetDomesticPaymentsDomesticPaymentIdPaymentDetails: Get Payment Details
+- `POST /domestic-scheduled-payment-consents` — CreateDomesticScheduledPaymentConsents: Create Domestic Scheduled Payment Consents
+- `GET /domestic-scheduled-payment-consents/{consentId}` — GetDomesticScheduledPaymentConsentsConsentId: Get Domestic Scheduled Payment Consents
+- `POST /domestic-scheduled-payments` — CreateDomesticScheduledPayments: Create Domestic Scheduled Payments
+- `GET /domestic-scheduled-payments/{domesticScheduledPaymentId}` — GetDomesticScheduledPaymentsDomesticScheduledPaymentId: Get Domestic Scheduled Payments
+- `GET /domestic-scheduled-payments/{domesticScheduledPaymentId}/payment-details` — GetDomesticScheduledPaymentsDomesticScheduledPaymentIdPaymentDetails: Get Payment Details
+- `POST /domestic-standing-order-consents` — CreateDomesticStandingOrderConsents: Create Domestic Standing Order Consents
+- `GET /domestic-standing-order-consents/{consentId}` — GetDomesticStandingOrderConsentsConsentId: Get Domestic Standing Order Consents
+- `POST /domestic-standing-orders` — CreateDomesticStandingOrders: Create Domestic Standing Orders
+- `GET /domestic-standing-orders/{domesticStandingOrderId}` — GetDomesticStandingOrdersDomesticStandingOrderId: Get Domestic Standing Orders
+- `GET /domestic-standing-orders/{domesticStandingOrderId}/payment-details` — GetDomesticStandingOrdersDomesticStandingOrderIdPaymentDetails: Get Payment Details
+- `POST /file-payment-consents` — CreateFilePaymentConsents: Create File Payment Consents
+- `GET /file-payment-consents/{consentId}` — GetFilePaymentConsentsConsentId: Get File Payment Consents
+- `GET /file-payment-consents/{consentId}/file` — GetFilePaymentConsentsConsentIdFile: Get File Payment Consents
+- `POST /file-payment-consents/{consentId}/file` — CreateFilePaymentConsentsConsentIdFile: Create File Payment Consents
+- `POST /file-payments` — CreateFilePayments: Create File Payments
+- `GET /file-payments/{filePaymentId}` — GetFilePaymentsFilePaymentId: Get File Payments
+- `GET /file-payments/{filePaymentId}/payment-details` — GetFilePaymentsFilePaymentIdPaymentDetails: Get Payment Details
+- `GET /file-payments/{filePaymentId}/report-file` — GetFilePaymentsFilePaymentIdReportFile: Get File Payments
+- `POST /international-payment-consents` — CreateInternationalPaymentConsents: Create International Payment Consents
+- `GET /international-payment-consents/{consentId}` — GetInternationalPaymentConsentsConsentId: Get International Payment Consents
+- `GET /international-payment-consents/{consentId}/funds-confirmation` — GetInternationalPaymentConsentsConsentIdFundsConfirmation: Get International Payment Consents Funds Confirmation
+- `POST /international-payments` — CreateInternationalPayments: Create International Payments
+- `GET /international-payments/{internationalPaymentId}` — GetInternationalPaymentsInternationalPaymentId: Get International Payments
+- `GET /international-payments/{internationalPaymentId}/payment-details` — GetInternationalPaymentsInternationalPaymentIdPaymentDetails: Get Payment Details
+- `POST /international-scheduled-payment-consents` — CreateInternationalScheduledPaymentConsents: Create International Scheduled Payment Consents
+- `GET /international-scheduled-payment-consents/{consentId}` — GetInternationalScheduledPaymentConsentsConsentId: Get International Scheduled Payment Consents
+- `GET /international-scheduled-payment-consents/{consentId}/funds-confirmation` — GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation: Get International Scheduled Payment Consents Funds Confirmation
+- `POST /international-scheduled-payments` — CreateInternationalScheduledPayments: Create International Scheduled Payments
+- `GET /international-scheduled-payments/{internationalScheduledPaymentId}` — GetInternationalScheduledPaymentsInternationalScheduledPaymentId: Get International Scheduled Payments
+- `GET /international-scheduled-payments/{internationalScheduledPaymentId}/payment-details` — GetInternationalScheduledPaymentsInternationalScheduledPaymentIdPaymentDetails: Get Payment Details
+- `POST /international-standing-order-consents` — CreateInternationalStandingOrderConsents: Create International Standing Order Consents
+- `GET /international-standing-order-consents/{consentId}` — GetInternationalStandingOrderConsentsConsentId: Get International Standing Order Consents
+- `POST /international-standing-orders` — CreateInternationalStandingOrders: Create International Standing Orders
+- `GET /international-standing-orders/{internationalStandingOrderPaymentId}` — GetInternationalStandingOrdersInternationalStandingOrderPaymentId: Get International Standing Orders
+- `GET /international-standing-orders/{internationalStandingOrderPaymentId}/payment-details` — GetInternationalStandingOrdersInternationalStandingOrderPaymentIdPaymentDetails: Get Payment Details
+
+### Account and Transactions (v4.0)
+- `POST /account-access-consents` — CreateAccountAccessConsents: Create an Account Access Consent
+- `DELETE /account-access-consents/{consentId}` — DeleteAccountAccessConsentsConsentId: Delete an Account Access Consent
+- `GET /account-access-consents/{consentId}` — GetAccountAccessConsentsConsentId: Get an Account Access Consent
+- `GET /accounts` — GetAccounts: Get Accounts
+- `GET /accounts/{accountId}` — GetAccountsAccountId: Get an Account by AccountId
+- `GET /accounts/{accountId}/balances` — GetAccountsAccountIdBalances: Get Balances for an AccountId
+- `GET /accounts/{accountId}/beneficiaries` — GetAccountsAccountIdBeneficiaries: Get Beneficiaries for an AccountId
+- `GET /accounts/{accountId}/direct-debits` — GetAccountsAccountIdDirectDebits: Get Direct Debits for an AccountId
+- `GET /accounts/{accountId}/offers` — GetAccountsAccountIdOffers: Get Offers for an AccountId
+- `GET /accounts/{accountId}/parties` — GetAccountsAccountIdParties: Get Parties for an AccountId
+- `GET /accounts/{accountId}/party` — GetAccountsAccountIdParty: Get Party for an AccountId
+- `GET /accounts/{accountId}/product` — GetAccountsAccountIdProduct: Get Product for an AccountId
+- `GET /accounts/{accountId}/scheduled-payments` — GetAccountsAccountIdScheduledPayments: Get Scheduled Payments for an AccountId
+- `GET /accounts/{accountId}/standing-orders` — GetAccountsAccountIdStandingOrders: Get Standing Orders for an AccountId
+- `GET /accounts/{accountId}/statements` — GetAccountsAccountIdStatements: Get Statements for an AccountId
+- `GET /accounts/{accountId}/statements/{statementId}` — GetAccountsAccountIdStatementsStatementId: Get Statement by StatementId for an AccountId
+- `GET /accounts/{accountId}/statements/{statementId}/file` — GetAccountsAccountIdStatementsStatementIdFile: Get Statement file by StatementId for an AccountId
+- `GET /accounts/{accountId}/statements/{statementId}/transactions` — GetAccountsAccountIdStatementsStatementIdTransactions: Get Statement Transactions for an AccountId
+- `GET /accounts/{accountId}/transactions` — GetAccountsAccountIdTransactions: Get Transactions for an AccountId
+- `GET /balances` — GetBalances: Get Balances
+- `GET /beneficiaries` — GetBeneficiaries: Get Beneficiaries
+- `GET /direct-debits` — GetDirectDebits: Get Direct Debits
+- `GET /offers` — GetOffers: Get Offers
+- `GET /party` — GetParty: Get Party
+- `GET /products` — GetProducts: Get Products
+- `GET /scheduled-payments` — GetScheduledPayments: Get Scheduled Payments
+- `GET /standing-orders` — GetStandingOrders: Get Standing Orders
+- `GET /statements` — GetStatements: Get Statements
+- `GET /transactions` — GetTransactions: Get Transactions
+
+### Barclays Bank Ireland Payment Initiation (v1.3)
+- `POST /payments/cross-border-credit-transfers` — post_payments_cross-border-credit-transfers
+- `DELETE /payments/cross-border-credit-transfers/{paymentId}` — delete_payments_cross-border-credit-transfers__paymentId_
+- `GET /payments/cross-border-credit-transfers/{paymentId}` — get_payments_cross-border-credit-transfers__paymentId_
+- `GET /payments/cross-border-credit-transfers/{paymentId}/authorisations` — get_payments_cross-border-credit-transfers__paymentId__authorisations
+- `GET /payments/cross-border-credit-transfers/{paymentId}/authorisations/{authorisationId}` — get_payments_cross-border-credit-transfers__paymentId__authorisations__authorisationId_
+- `GET /payments/cross-border-credit-transfers/{paymentId}/status` — get_payments_cross-border-credit-transfers__paymentId__status
+- `POST /payments/instant-sepa-credit-transfers` — post_payments_instant-sepa-credit-transfers
+- `GET /payments/instant-sepa-credit-transfers/{paymentId}` — get_payments_instant-sepa-credit-transfers__paymentId_
+- `GET /payments/instant-sepa-credit-transfers/{paymentId}/authorisations` — get_payments_instant-sepa-credit-transfers__paymentId__authorisations
+- `GET /payments/instant-sepa-credit-transfers/{paymentId}/authorisations/{authorisationId}` — get_payments_instant-sepa-credit-transfers__paymentId__authorisations__authorisationId_
+- `GET /payments/instant-sepa-credit-transfers/{paymentId}/status` — get_payments_instant-sepa-credit-transfers__paymentId__status
+- `POST /payments/sepa-credit-transfers` — post_payments_sepa-credit-transfers
+- `DELETE /payments/sepa-credit-transfers/{paymentId}` — delete_payments_sepa-credit-transfers__paymentId_
+- `GET /payments/sepa-credit-transfers/{paymentId}` — get_payments_sepa-credit-transfers__paymentId_
+- `GET /payments/sepa-credit-transfers/{paymentId}/authorisations` — get_payments_sepa-credit-transfers__paymentId__authorisations
+- `GET /payments/sepa-credit-transfers/{paymentId}/authorisations/{authorisationId}` — get_payments_sepa-credit-transfers__paymentId__authorisations__authorisationId_
+- `GET /payments/sepa-credit-transfers/{paymentId}/status` — get_payments_sepa-credit-transfers__paymentId__status
+
+### Barclays Bank Ireland Account Information (v1.3.0)
+- `GET /accounts` — get_accounts
+- `GET /accounts/{account-id}` — get_accounts__account-id_
+- `GET /accounts/{account-id}/balances` — get_accounts__account-id__balances
+- `GET /accounts/{account-id}/transactions` — get_accounts__account-id__transactions
+- `GET /accounts/{account-id}/transactions/{transactionId}` — get_accounts__account-id__transactions__transactionId_
+- `POST /consents` — post_consents
+- `DELETE /consents/{consentId}` — delete_consents__consentId_
+- `GET /consents/{consentId}` — get_consents__consentId_
+- `GET /consents/{consentId}/authorisations` — get_consents__consentId__authorisations
+- `GET /consents/{consentId}/authorisations/{authorisationId}` — get_consents__consentId__authorisations__authorisationId_
+- `GET /consents/{consentId}/status` — get_consents__consentId__status
+
+### Payments (2.0)
+- `PATCH /cards/accounts/{extAccountId}/auto-payments/{referenceNumber}` — modifyAutoPayPayment: Modify Autopay Payment for current cycle
+- `GET /cards/accounts/{extAccountId}/payments` — getPaymentSummaryV2: Payment activity for the accountId from partner
+- `POST /cards/accounts/{extAccountId}/payments` — schedulePaymentV2: Make a One-time Payment for account id from partner
+- `GET /cards/accounts/{extAccountId}/payments/external-accounts` — getAllExternalAccountsV2: Get all external bank accounts for partner provided accountId
+- `GET /cards/accounts/{extAccountId}/payments/external-accounts/{bankAccountId}` — getExternalAccountV2: Get an external bank account for partner provided external bank account ID
+- `GET /cards/accounts/{extAccountId}/payments/payment-options` — getPaymentOptionsV2: Payment options for the accountId from partner
+- `GET /cards/accounts/{extAccountId}/payments/subscriptions` — getSubscriptionV2: Retrieve the most recent and active AutoPay subscription
+- `POST /cards/accounts/{extAccountId}/payments/subscriptions` — addSubscriptionV2: Create an AutoPay subscription
+- `GET /cards/accounts/{extAccountId}/payments/subscriptions/options` — getSubscriptionOptionsV2: Retrieve options for setting up an AutoPay subscription
+- `PATCH /cards/accounts/{extAccountId}/payments/subscriptions/{subscriptionId}` — updateSubscriptionV2: Update an AutoPay subscription - update attributes or cancel
+- `PATCH /cards/accounts/{extAccountId}/payments/{referenceNumber}` — updatePaymentV2: Modify One-time Payment for partner
+
+### Card Application (4.0)
+- `POST /cards/accounts/instant-credit` — postApiForInstantCreditCardDetail: Get card details based on the accountId. This operation contains sensitive data. Expect response Content-Type as application/jose
+- `POST /cards/app-consent` — postApiForAppConsent: The API accepts consent from Applicant for various capabilities. Expect response Content-Type as application/jose
+- `POST /cards/applications` — applyPostOperation: Apply for the credit card and get status, T&C and CMA. This operation contains sensitive data. Please use Content-Type as application/jose for request, response will be send with Content-Type as application/jose.
+- `POST /cards/applications/verify` — postApiForApplicationVerification: Process the application post challenge verification
+- `GET /cards/applications/{applicationId}` — getApiForApplicationStatus: Get the status of application
+- `POST /cards/offer` — postApiForOffer: Accepts meta data to fetch a unique offerId
+- `POST /cards/prequal` — postRequestForPrequalDecision: Pre Qualification Check.Please use Content-Type as application/jose for request, response will be send with Content-Type as application/jose.
+- `POST /cards/prescreen` — postApiForPrescreenOffer: Get all eligible offers for a customer. This operation contains sensitive data. Please use Content-Type as application/jose for request.
+- `POST /cards/prescreen/{prescreenId}/capture` — postApiForPrescreenOffersCapture: Capture the fact that the offer(s) were displayed to the customer
+
+### Variable Recurring Payment (v4.0)
+- `POST /domestic-vrp-consents` — domesticVrpConsentsPost: Create a domestic VRP consent
+- `DELETE /domestic-vrp-consents/{consentId}` — domesticVrpConsentsDelete: Delete a domestic VRP
+- `GET /domestic-vrp-consents/{consentId}` — domesticVrpConsentsGet: Retrieve a domestic VRP consent
+- `PATCH /domestic-vrp-consents/{consentId}` — domesticVrpConsentsPatch: Update a domestic VRP consent - only to be used for version migrations
+- `PUT /domestic-vrp-consents/{consentId}` — domesticVrpConsentsPut: Update a domestic VRP consent - only to be used for version migrations
+- `POST /domestic-vrp-consents/{consentId}/funds-confirmation` — domesticVrpConsentsFundsConfirmation: Confirm availability of funds for a VRP
+- `POST /domestic-vrps` — domesticVrpPost: Create a domestic VRP
+- `GET /domestic-vrps/{domesticVRPId}` — domesticVrpGet: Retrieve a domestic VRP
+- `GET /domestic-vrps/{domesticVRPId}/payment-details` — domesticVrpPaymentDetailsGet: Retrieve a domestic VRP
+
+### Product Details (2.4)
+- `GET /business-current-accounts` — get_business-current-accounts
+- `HEAD /business-current-accounts` — head_business-current-accounts
+- `GET /commercial-credit-cards` — get_commercial-credit-cards
+- `HEAD /commercial-credit-cards` — head_commercial-credit-cards
+- `GET /personal-current-accounts` — get_personal-current-accounts
+- `HEAD /personal-current-accounts` — head_personal-current-accounts
+- `GET /unsecured-sme-loans` — get_unsecured-sme-loans
+- `HEAD /unsecured-sme-loans` — head_unsecured-sme-loans
+
+### Barclays Bank Ireland Confirmation of Funds (v1.3.0)
+- `POST /consents/confirmation-of-funds` — post_consents_confirmation-of-funds
+- `DELETE /consents/confirmation-of-funds/{consentId}` — delete_consents_confirmation-of-funds__consentId_
+- `GET /consents/confirmation-of-funds/{consentId}` — get_consents_confirmation-of-funds__consentId_
+- `GET /consents/confirmation-of-funds/{consentId}/authorisations` — get_consents_confirmation-of-funds__consentId__authorisations
+- `GET /consents/confirmation-of-funds/{consentId}/authorisations/{authorisationId}` — get_consents_confirmation-of-funds__consentId__authorisations__authorisationId_
+- `GET /consents/confirmation-of-funds/{consentId}/status` — get_consents_confirmation-of-funds__consentId__status
+- `POST /funds-confirmations` — post_funds-confirmations
+
+### Event Notification (v4.0)
+- `GET /event-subscriptions` — GetEventSubscriptions: Get Event Subscription
+- `POST /event-subscriptions` — CreateEventSubscriptions: Create Event Subscription
+- `DELETE /event-subscriptions/{eventSubscriptionId}` — DeleteEventSubscriptionsEventSubscriptionId: Delete Event Subscription
+- `PUT /event-subscriptions/{eventSubscriptionId}` — ChangeEventSubscriptionsEventSubscriptionId: Change Event Subscription
+- `POST /events` — CreateEvents: Create Events
+
+### Benefits Redemption (3.0)
+- `GET /cards/accounts/external/{externalAccountID}/redemption/capabilities` — getRedemptionCapabilities: Get external redemption capabilities
+- `GET /cards/accounts/external/{externalAccountID}/redemption/eligibility` — getRedemptionEligibility: Retrieves redemption eligibility information based on available redemption options for a specific external account.
+- `GET /cards/accounts/external/{externalAccountID}/redemption/history` — getRedemptionHistory: Get rewards redemption history for externalAccountId
+- `GET /cards/accounts/external/{externalAccountID}/rewards/balance` — getRewardsBalanceV3: Get current rewards balance for the given account.
+- `POST /cards/accounts/external/{externalAccountID}/rewards/redemption` — postRewardsRedemption: Fulfill statement credit/ACH for the given account and corresponding program attributes.
+
+### Confirmation of Funds (v4.0)
+- `POST /funds-confirmation-consents` — CreateFundsConfirmationConsents: Create a Funds Confirmation Consent
+- `DELETE /funds-confirmation-consents/{consentId}` — DeleteFundsConfirmationConsentsConsentId: Delete a Funds Confirmation Consent
+- `GET /funds-confirmation-consents/{consentId}` — GetFundsConfirmationConsentsConsentId: Get a Funds Confirmation Consent
+- `POST /funds-confirmations` — CreateFundsConfirmations: Create a Funds Confirmation Request
+
+### FCA Service Metrics (v1)
+- `GET /fca-service-metrics/bca` — get__fca-service-metrics_bca
+- `HEAD /fca-service-metrics/bca` — head__fca-service-metrics_bca
+- `GET /fca-service-metrics/pca` — get__fca-service-metrics_pca
+- `HEAD /fca-service-metrics/pca` — head__fca-service-metrics_pca
+
+### Transactions (2.0)
+- `GET /{accountId}/authorizations` — getAuthorizationsExt: Get Auth transactions for Account ID
+- `GET /{accountId}/statements/cycle-dates` — getCycleDatesV2: Get cycle dates for account id
+- `GET /{accountId}/transactions` — getTransactionsV2: Get transactions for Account ID. This operation contains sensitive data in response payload.
+- `GET /{accountId}/transactions/search-options` — getSearchOptionsV2: Get transactions search options. This operation contains sensitive data in response payload.
+
+### Accounts (2.0)
+- `POST /cards/accounts/{accountId}/card-details` — retrieveCardDetailsV2: Retrieve card-details by account Id and last four digits of the card. This operation contains sensitive data. Response sent will be in encrypted format.
+- `POST /cards/customers/search/accounts` — accountLookupBySSNV2: Account Lookup by SSN. This operation contains sensitive data. Request is expected to be sent in encrypted format.
+- `GET /cards/customers/{customerId}/accounts/summary` — getMultiCardsAccountSummaryV2: Get multi cards account summary
+
+### Card Control (1.0)
+- `GET /cards/accounts/{accountId}/card-lock-status` — getCardControlStatus: Retrieve lock/unlock status for all cards in the account
+- `POST /cards/accounts/{accountId}/lock-card` — lockCard: Lock a card for an account
+- `POST /cards/accounts/{accountId}/unlock-card` — unlockCard: Unlock a card for an account
+
+### ATM Locator (2.2)
+- `GET /atms` — getAtms
+- `HEAD /atms` — headatms
+
+### Branch Locator (2.2)
+- `GET /branches` — getBranches
+- `HEAD /branches` — headbranches
+
+### Authentication (2.0)
+- `POST /users/sso` — request-sso: single-sign-on customer context. This operation contains sensitive data in request and response payload.
+- `POST /users/{externalAccountId}/context` — request-auth: To setup user identity context for customer login. This operation contains sensitive data in request and response payload.
+
+### Account Management (1.0)
+- `POST /cards/accounts/{accountId}/activate` — activateCard: Activate one or more cards for an account. This operation contains sensitive data. Request is expected to be sent in encrypted format.
+- `GET /cards/accounts/{accountId}/activation-status` — getCardActivationStatus: Retrieve activation status for all cards in the account
+
+### Dynamic Client Registration (v1.10)
+- `POST /register` — post_register
+
+### Digital Wallet (2.0)
+- `POST /cards/accounts/{accountId}/wallet-provision` — provisionWallet: Provision card to digital wallet
+
+### Rewards Loyalty Sync (1.0)
+- `POST /cards/accounts/rewards/loyaltyTier/update` — updateTierUsingPOST: Perform tier update
+
+### Cryptography Key Exchange (1.0)
+- `GET /pcs/{requesterId}/jwks` — getJSONWebKeys: JSON Web Key Set
+
+### Rewards Earn (1.0)
+- `GET /cards/accounts/external/{externalAccountId}/rewards-earn/history` — getRewardsEarnHistoryDetails: Get Rewards Earn History Details
+
+### Statements Retriever (1.0)
+- `GET /statement/accounts/{acctId}` — listStatements: List statements for an account
+
+### TEST_VR (1)
+- `GET /{path:.+|}` — Default_Operation
+
+## Conventions an agent needs
+
+- **Auth**: OAuth 2.0. UK Open Banking uses `TPPOAuth2Security` (client_credentials, scopes `accounts`/`payments`/`fundsconfirmations`/`openid`) and `PSUOAuth2Security` (authorization_code, PSU SCA). Barclaycard US uses `ExternalTiaaUsCCAuth` (client_credentials). See `authentication/` and `scopes/`.
+- **Correlation**: three different headers for three families — `x-fapi-interaction-id` (UK Open Banking), `X-Request-ID` (Barclays Bank Ireland), `Correlation-ID` (Barclaycard US).
+- **Idempotency**: `x-idempotency-key` on 19 of 64 mutating operations, all of them in Payment Initiation and Variable Recurring Payment. No other write in the estate has replay protection, and no key-retention window is published.
+- **Errors**: `OBErrorResponse1 { Id, Code, Message, Errors[] }` with `OBError1 { ErrorCode, Message, Path, Url }`; `ErrorCode` values are `UK.OBIE.*` strings. Not RFC 9457.
+- **Rate limits**: 99 operations declare HTTP 429 but Barclays publishes no numeric limit, no window and no `Retry-After` or `RateLimit-*` response header.
+- **Reversibility**: every reversal Barclays publishes is a consent revocation. No operation cancels, refunds, voids or reverses an executed payment, and no window is stated.
+- **Pagination**: OBIE `Links` (Self/First/Prev/Next/Last) plus `Meta.TotalPages` on UK Open Banking collections. The open-data APIs support `If-None-Match`/`Etag` conditional GETs instead.
+
+## Not published
+
+- No SDK on any registry, in any language. No CLI. No embeddable components.
+- No MCP server and no A2A agent card.
+- No AsyncAPI, though the Event Notification API is a real event surface (push callbacks plus aggregated polling).
+- No changelog, no deprecation or sunset policy, no status page, no published pricing.
+- No `llms.txt`, no `/.well-known/api-catalog`, no OpenID discovery document on any Barclays host. `security.txt` is served on barclays.com, home.barclays, www.barclays.co.uk and www.barclaycard.co.uk.
+
+## Links
+
+- [Barclays API Exchange](https://developer.barclays.com/)
+- [API Catalogue](https://developer.barclays.com/catalogue)
+- [Open Banking at Barclays](https://developer.barclays.com/open-banking)
+- [Registration](https://drm.developer.barclays.com/s/registration)
+- [Knowledge Base](https://developer.barclays.com/support/knowledge-base)
+- [Terms of Use](https://developer.barclays.com/terms-of-use)
+- [Privacy Policy](https://developer.barclays.com/privacy-policy)
+- [Security disclosure](https://barclays.responsibledisclosure.com)
+
+---
+Generated 2026-09-04 by API Evangelist from the contracts Barclays publishes. method: generated; source: https://developer.barclays.com/api/apis

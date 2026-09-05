@@ -1,0 +1,1580 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Event Notification",
+  "description": "The Event Notification API (also known as two-way notification of revocation API) allows ASPSPs and TPPs to notify each other if a consumer has revoked their consent.",
+  "termsOfService": "https://www.openbanking.org.uk/terms",
+  "contact": {
+   "name": "Service Desk",
+   "url": "https://www.openbanking.org.uk",
+   "email": "ServiceDesk@openbanking.org.uk"
+  },
+  "license": {
+   "name": "open-licence",
+   "url": "https://www.openbanking.org.uk/open-licence"
+  },
+  "version": "v4.0"
+ },
+ "tags": [
+  {
+   "name": "Event Subscriptions",
+   "description": "Event Subscriptions"
+  },
+  {
+   "name": "Events",
+   "description": "Events"
+  }
+ ],
+ "paths": {
+  "/event-subscriptions/{eventSubscriptionId}": {
+   "summary": "Modify Event Subscriptions",
+   "description": "Modify Event Subscriptions",
+   "put": {
+    "tags": [
+     "Event Subscriptions"
+    ],
+    "summary": "Change Event Subscription",
+    "description": "Change Event Subscription",
+    "operationId": "ChangeEventSubscriptionsEventSubscriptionId",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/EventSubscriptionId"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-auth-date"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-interaction-id"
+     },
+     {
+      "$ref": "#/components/parameters/Authorization"
+     },
+     {
+      "$ref": "#/components/parameters/x-jws-signature"
+     }
+    ],
+    "requestBody": {
+     "description": "Default",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/OBEventSubscriptionResponse1"
+       },
+       "examples": {
+        "modify-event-subscription-request-example": {
+         "value": {
+          "Data": {
+           "EventSubscriptionId": "BARCLAYS-E-12345678901234",
+           "Version": "3.1",
+           "EventTypes": [
+            "UK.OBIE.Consent-Authorization-Revoked"
+           ]
+          },
+          "Links": {
+           "Self": "https://telesto.api.barclays/open-banking/v3.1/event-subscriptions"
+          },
+          "Meta": {}
+         }
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "500": {
+      "$ref": "#/components/responses/500Error"
+     },
+     "405": {
+      "$ref": "#/components/responses/405Error"
+     }
+    },
+    "deprecated": false
+   },
+   "delete": {
+    "tags": [
+     "Event Subscriptions"
+    ],
+    "summary": "Delete Event Subscription",
+    "description": "Delete Event Subscription",
+    "operationId": "DeleteEventSubscriptionsEventSubscriptionId",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/EventSubscriptionId"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-auth-date"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-interaction-id"
+     },
+     {
+      "$ref": "#/components/parameters/Authorization"
+     }
+    ],
+    "responses": {
+     "400": {
+      "$ref": "#/components/responses/400Error"
+     },
+     "401": {
+      "$ref": "#/components/responses/401Error"
+     },
+     "500": {
+      "$ref": "#/components/responses/500Error"
+     },
+     "204": {
+      "$ref": "#/components/responses/204EventSubscriptionsEventSubscriptionIdDeleted"
+     },
+     "403": {
+      "$ref": "#/components/responses/403Error"
+     },
+     "404": {
+      "$ref": "#/components/responses/404Error"
+     },
+     "405": {
+      "$ref": "#/components/responses/405Error"
+     },
+     "406": {
+      "$ref": "#/components/responses/406Error"
+     },
+     "429": {
+      "$ref": "#/components/responses/429Error"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/events": {
+   "summary": "Create Events",
+   "description": "Create Events",
+   "post": {
+    "tags": [
+     "Events"
+    ],
+    "summary": "Create Events",
+    "description": "Create Events",
+    "operationId": "CreateEvents",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/x-fapi-auth-date"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-interaction-id"
+     },
+     {
+      "$ref": "#/components/parameters/Authorization"
+     }
+    ],
+    "requestBody": {
+     "description": "Default",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/OBEventPolling1"
+       },
+       "examples": {
+        "create-event-example": {
+         "value": {
+          "maxEvents": 10,
+          "returnImmediately": true
+         }
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/200EventsRead"
+     },
+     "201": {
+      "$ref": "#/components/responses/201EventsCreated"
+     },
+     "400": {
+      "$ref": "#/components/responses/400Error"
+     },
+     "401": {
+      "$ref": "#/components/responses/401Error"
+     },
+     "500": {
+      "$ref": "#/components/responses/500Error"
+     },
+     "403": {
+      "$ref": "#/components/responses/403Error"
+     },
+     "404": {
+      "$ref": "#/components/responses/404Error"
+     },
+     "415": {
+      "$ref": "#/components/responses/415Error"
+     },
+     "405": {
+      "$ref": "#/components/responses/405Error"
+     },
+     "406": {
+      "$ref": "#/components/responses/406Error"
+     },
+     "429": {
+      "$ref": "#/components/responses/429Error"
+     }
+    },
+    "deprecated": false
+   }
+  },
+  "/event-subscriptions": {
+   "summary": "Event Subscriptions",
+   "description": "Event Subscriptions",
+   "get": {
+    "tags": [
+     "Event Subscriptions"
+    ],
+    "summary": "Get Event Subscription",
+    "description": "Get Event Subscription",
+    "operationId": "GetEventSubscriptions",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/x-fapi-auth-date"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-interaction-id"
+     },
+     {
+      "$ref": "#/components/parameters/Authorization"
+     }
+    ],
+    "responses": {
+     "200": {
+      "$ref": "#/components/responses/200EventSubscriptionsRead"
+     },
+     "400": {
+      "$ref": "#/components/responses/400Error"
+     },
+     "401": {
+      "$ref": "#/components/responses/401Error"
+     },
+     "500": {
+      "$ref": "#/components/responses/500Error"
+     },
+     "403": {
+      "$ref": "#/components/responses/403Error"
+     },
+     "404": {
+      "$ref": "#/components/responses/404Error"
+     },
+     "405": {
+      "$ref": "#/components/responses/405Error"
+     },
+     "406": {
+      "$ref": "#/components/responses/406Error"
+     },
+     "429": {
+      "$ref": "#/components/responses/429Error"
+     }
+    },
+    "deprecated": false
+   },
+   "post": {
+    "tags": [
+     "Event Subscriptions"
+    ],
+    "summary": "Create Event Subscription",
+    "description": "Create Event Subscription",
+    "operationId": "CreateEventSubscriptions",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/x-fapi-auth-date"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+     },
+     {
+      "$ref": "#/components/parameters/x-fapi-interaction-id"
+     },
+     {
+      "$ref": "#/components/parameters/Authorization"
+     },
+     {
+      "$ref": "#/components/parameters/x-jws-signature"
+     }
+    ],
+    "requestBody": {
+     "description": "Default",
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/OBEventSubscription1"
+       },
+       "examples": {
+        "create-event-subscription-example": {
+         "value": {
+          "Data": {
+           "Version": "3.1",
+           "EventTypes": [
+            "UK.OBIE.Consent-Authorization-Revoked"
+           ]
+          }
+         }
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "$ref": "#/components/responses/201EventSubscriptionsCreated"
+     },
+     "400": {
+      "$ref": "#/components/responses/400Error"
+     },
+     "401": {
+      "$ref": "#/components/responses/401Error"
+     },
+     "500": {
+      "$ref": "#/components/responses/500Error"
+     },
+     "403": {
+      "$ref": "#/components/responses/403Error"
+     },
+     "404": {
+      "$ref": "#/components/responses/404Error"
+     },
+     "415": {
+      "$ref": "#/components/responses/415Error"
+     },
+     "405": {
+      "$ref": "#/components/responses/405Error"
+     },
+     "406": {
+      "$ref": "#/components/responses/406Error"
+     },
+     "429": {
+      "$ref": "#/components/responses/429Error"
+     },
+     "409": {
+      "$ref": "#/components/responses/409Error"
+     }
+    },
+    "deprecated": false
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "Meta": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Meta Data relevant to the payload",
+    "properties": {
+     "TotalPages": {
+      "type": "integer",
+      "format": "int32",
+      "example": 42,
+      "maximum": 999999,
+      "minimum": 0
+     },
+     "FirstAvailableDateTime": {
+      "$ref": "#/components/schemas/ISODateTime"
+     },
+     "LastAvailableDateTime": {
+      "$ref": "#/components/schemas/ISODateTime"
+     }
+    },
+    "title": "MetaData"
+   },
+   "OBEventPollingResponse1": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "properties": {
+     "moreAvailable": {
+      "type": "boolean",
+      "description": "A JSON boolean value that indicates if more unacknowledged event notifications are available to be returned."
+     },
+     "sets": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string",
+       "description": "An object named with the jti of the event notification to be delivered. The value is the event notification, expressed as a string.\nThe payload of the event should be defined in the OBEventNotification2 format."
+      },
+      "description": "A JSON object that contains zero or more nested JSON attributes. If there are no outstanding event notifications to be transmitted, the JSON object SHALL be empty.",
+      "properties": {}
+     }
+    },
+    "required": [
+     "moreAvailable",
+     "sets"
+    ],
+    "nullable": false
+   },
+   "Version": {
+    "type": "string",
+    "deprecated": false,
+    "description": "Version for the event notification.",
+    "maxLength": 10,
+    "minLength": 1
+   },
+   "OBErrorResponse1": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "An array of detail error codes, and messages, and URLs to documentation to help remediation.",
+    "properties": {
+     "Id": {
+      "type": "string",
+      "description": "A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.",
+      "maxLength": 40,
+      "minLength": 1,
+      "pattern": "^(?!\\\\s)([a-zA-Z0-9- '.,@#?_/()]){1,40}$"
+     },
+     "Code": {
+      "type": "string",
+      "description": "Deprecated <br>High level textual error code, to help categorise the errors.",
+      "example": "400 BadRequest",
+      "maxLength": 40,
+      "minLength": 1,
+      "pattern": "^(?!\\\\s)([a-zA-Z0-9- '.,@#?_/()]){1,40}$"
+     },
+     "Message": {
+      "type": "string",
+      "description": "Deprecated <br>Brief Error message",
+      "example": "There is something wrong with the request parameters provided",
+      "maxLength": 500,
+      "minLength": 1,
+      "pattern": "^(?!\\\\s)([a-zA-Z0-9- '.,@#?_/()]){1,500}$"
+     },
+     "Errors": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/OBError1"
+      },
+      "maxItems": 50,
+      "minItems": 1
+     }
+    },
+    "required": [
+     "Errors"
+    ],
+    "nullable": false
+   },
+   "OBEventPolling1": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "properties": {
+     "maxEvents": {
+      "type": "integer",
+      "description": "Maximum number of events to be returned. A value of zero indicates the ASPSP should not return events even if available",
+      "maximum": 999999,
+      "minimum": 0
+     },
+     "returnImmediately": {
+      "type": "boolean",
+      "description": "Indicates whether an ASPSP should return a response immediately or provide a long poll"
+     },
+     "ack": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "description": "An array of jti values indicating event notifications positively acknowledged by the TPP",
+       "maxLength": 128,
+       "minLength": 1
+      },
+      "maxItems": 99999,
+      "minItems": 0
+     },
+     "setErrs": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "object",
+       "additionalProperties": false,
+       "properties": {
+        "err": {
+         "type": "string",
+         "description": "A value from the IANA \"Security Event Token Delivery Error Codes\" registry that identifies the error as defined here \nhttps://tools.ietf.org/id/draft-ietf-secevent-http-push-03.html#error_codes",
+         "maxLength": 40,
+         "minLength": 1
+        },
+        "description": {
+         "type": "string",
+         "description": "A human-readable string that provides additional diagnostic information",
+         "maxLength": 256,
+         "minLength": 1
+        }
+       },
+       "required": [
+        "description",
+        "err"
+       ]
+      },
+      "description": "An object that encapsulates all negative acknowledgements transmitted by the TPP",
+      "properties": {}
+     }
+    },
+    "nullable": false
+   },
+   "OBExternalStatusReason1Code": {
+    "type": "string",
+    "deprecated": false,
+    "description": "Low level textual error code, for all enum values see `ExternalReturnReason1Code` here - https://github.com/OpenBankingUK/External_Interal_CodeSets/",
+    "example": "AC17",
+    "maxLength": 4,
+    "minLength": 4,
+    "nullable": false
+   },
+   "OBEventSubscription1": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "properties": {
+     "Data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "CallbackUrl": {
+        "type": "string",
+        "format": "uri",
+        "description": "Callback URL for a TPP hosted service. Will be used by ASPSPs, in conjunction with the resource name, to construct a URL to send event notifications to."
+       },
+       "Version": {
+        "$ref": "#/components/schemas/Version"
+       },
+       "EventTypes": {
+        "type": "array",
+        "items": {
+         "type": "string",
+         "description": "Array of event types the subscription applies to.",
+         "enum": [
+          "UK.OBIE.Consent-Authorization-Revoked"
+         ],
+         "example": "UK.OBIE.Consent-Authorization-Revoked"
+        },
+        "maxItems": 99999,
+        "minItems": 0
+       }
+      },
+      "required": [
+       "Version"
+      ]
+     }
+    },
+    "required": [
+     "Data"
+    ],
+    "nullable": false
+   },
+   "Links": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "description": "Links relevant to the payload",
+    "properties": {
+     "Self": {
+      "type": "string",
+      "format": "uri"
+     },
+     "First": {
+      "type": "string",
+      "format": "uri"
+     },
+     "Prev": {
+      "type": "string",
+      "format": "uri"
+     },
+     "Next": {
+      "type": "string",
+      "format": "uri"
+     },
+     "Last": {
+      "type": "string",
+      "format": "uri"
+     }
+    },
+    "required": [
+     "Self"
+    ]
+   },
+   "OBEventSubscriptionsResponse1": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "properties": {
+     "Data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "EventSubscription": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "additionalProperties": false,
+         "properties": {
+          "EventSubscriptionId": {
+           "type": "string",
+           "description": "Unique identification as assigned by the ASPSP to uniquely identify the callback url resource.",
+           "example": "BARCLAYS-E-12345678901234",
+           "maxLength": 25,
+           "minLength": 25,
+           "pattern": "^BARCLAYS-E-\\d{14}$",
+           "nullable": false
+          },
+          "CallbackUrl": {
+           "type": "string",
+           "format": "uri",
+           "description": "Callback URL for a TPP hosted service. Will be used by ASPSPs, in conjunction with the resource name, to construct a URL to send event notifications to."
+          },
+          "Version": {
+           "$ref": "#/components/schemas/Version"
+          },
+          "EventTypes": {
+           "type": "array",
+           "items": {
+            "type": "string",
+            "description": "Array of event types the subscription applies to.",
+            "enum": [
+             "UK.OBIE.Consent-Authorization-Revoked"
+            ],
+            "example": "UK.OBIE.Consent-Authorization-Revoked"
+           },
+           "maxItems": 99999,
+           "minItems": 0
+          }
+         },
+         "required": [
+          "EventSubscriptionId",
+          "Version"
+         ]
+        }
+       }
+      }
+     },
+     "Links": {
+      "$ref": "#/components/schemas/Links"
+     },
+     "Meta": {
+      "$ref": "#/components/schemas/Meta"
+     }
+    },
+    "required": [
+     "Data"
+    ],
+    "nullable": false
+   },
+   "ISODateTime": {
+    "type": "string",
+    "format": "date-time",
+    "deprecated": false,
+    "description": "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+   },
+   "OBError1": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "minProperties": 1,
+    "properties": {
+     "ErrorCode": {
+      "$ref": "#/components/schemas/OBExternalStatusReason1Code"
+     },
+     "Message": {
+      "type": "string",
+      "description": "A description of the error that occurred. e.g., 'A mandatory field isn't supplied' or 'RequestedExecutionDateTime must be in future' OBIE doesn't standardise this field",
+      "maxLength": 500,
+      "minLength": 1,
+      "pattern": "^(?!\\\\s)([a-zA-Z0-9- '.,@#?_/()]){1,500}$"
+     },
+     "Path": {
+      "type": "string",
+      "description": "Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency",
+      "maxLength": 500,
+      "minLength": 1,
+      "pattern": "^(?!\\\\s)([a-zA-Z0-9- '.,@#?_/()]){1,500}$"
+     },
+     "Url": {
+      "type": "string",
+      "description": "URL to help remediate the problem, or provide more information, or to API Reference, or help etc"
+     }
+    },
+    "required": [
+     "ErrorCode"
+    ]
+   },
+   "OBEventSubscriptionResponse1": {
+    "type": "object",
+    "additionalProperties": false,
+    "deprecated": false,
+    "properties": {
+     "Data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "EventSubscriptionId": {
+        "type": "string",
+        "description": "Unique identification as assigned by the ASPSP to uniquely identify the callback URL resource.",
+        "example": "BARCLAYS-E-12345678901234",
+        "maxLength": 25,
+        "minLength": 25,
+        "pattern": "^BARCLAYS-E-\\d{14}$",
+        "nullable": false
+       },
+       "CallbackUrl": {
+        "type": "string",
+        "format": "uri",
+        "description": "Callback URL for a TPP hosted service. Will be used by ASPSPs, in conjunction with the resource name, to construct a URL to send event notifications to."
+       },
+       "Version": {
+        "$ref": "#/components/schemas/Version"
+       },
+       "EventTypes": {
+        "type": "array",
+        "items": {
+         "type": "string",
+         "description": "Array of event types the subscription applies to.",
+         "enum": [
+          "UK.OBIE.Consent-Authorization-Revoked"
+         ],
+         "example": "UK.OBIE.Consent-Authorization-Revoked"
+        },
+        "maxItems": 99999,
+        "minItems": 0
+       }
+      },
+      "required": [
+       "EventSubscriptionId",
+       "Version"
+      ]
+     },
+     "Links": {
+      "$ref": "#/components/schemas/Links"
+     },
+     "Meta": {
+      "$ref": "#/components/schemas/Meta"
+     }
+    },
+    "required": [
+     "Data"
+    ],
+    "nullable": false
+   }
+  },
+  "responses": {
+   "403Error": {
+    "description": "Forbidden",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OBErrorResponse1"
+      },
+      "examples": {
+       "401ErrorResponse": {
+        "value": {
+         "Code": "OB.BadRequest",
+         "Id": "2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc",
+         "Message": "Invalid request parameters",
+         "Errors": [
+          {
+           "ErrorCode": "AC17",
+           "Message": "Version must be supplied",
+           "Path": "Data.Initiation",
+           "Url": "<url to the api reference for Event Notification API>"
+          },
+          {
+           "ErrorCode": "AC17",
+           "Message": "Version supplied is not valid",
+           "Path": "Data.Initiation.CreditorAccount",
+           "Url": "<url to the api reference for Event Notification API>"
+          }
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   "500Error": {
+    "description": "Internal Server Error",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OBErrorResponse1"
+      },
+      "examples": {
+       "500ErrorResponse": {
+        "value": {
+         "Code": "OB.BadRequest",
+         "Id": "2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc",
+         "Message": "Invalid request parameters",
+         "Errors": [
+          {
+           "ErrorCode": "AC17",
+           "Message": "Version must be supplied",
+           "Path": "Data.Initiation",
+           "Url": "<url to the api reference for Event Notification API>"
+          },
+          {
+           "ErrorCode": "AC17",
+           "Message": "Version supplied is not valid",
+           "Path": "Data.Initiation.CreditorAccount",
+           "Url": "<url to the api reference for Event Notification API>"
+          }
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   "406Error": {
+    "description": "Not Acceptable",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    }
+   },
+   "204EventSubscriptionsEventSubscriptionIdDeleted": {
+    "description": "Event Subscription Deleted",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    }
+   },
+   "409Error": {
+    "description": "Conflict",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    }
+   },
+   "400Error": {
+    "description": "Bad request",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OBErrorResponse1"
+      },
+      "examples": {
+       "400ErrorResponse": {
+        "value": {
+         "Code": "OB.BadRequest",
+         "Id": "2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc",
+         "Message": "Invalid request parameters",
+         "Errors": [
+          {
+           "ErrorCode": "AC17",
+           "Message": "Version must be supplied",
+           "Path": "Data.Initiation",
+           "Url": "<url to the api reference for Event Notification API>"
+          },
+          {
+           "ErrorCode": "AC17",
+           "Message": "Version supplied is not valid",
+           "Path": "Data.Initiation.CreditorAccount",
+           "Url": "<url to the api reference for Event Notification API>"
+          }
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   "201EventSubscriptionsCreated": {
+    "description": "Event Subscription Created",
+    "headers": {
+     "Location": {
+      "description": "Mandatory response header for HTTP 201 (Created) response codes",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 492,
+       "minLength": 2,
+       "pattern": "^(https:\\/\\/[-a-zA-Z0-9\\\\._\\\\\\/?=]{2,492})$",
+       "nullable": true
+      },
+      "example": "https://www.example.org/index.php"
+     },
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "x-jws-signature": {
+      "description": "Header containing a detached JWS signature of the body of the payload.\n",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 8192,
+       "minLength": 10,
+       "pattern": "^[A-Za-z0-9-_=\"\\/.]{1,8192}$",
+       "nullable": false
+      },
+      "example": "V2hhdCBoYXRoIGdvZCB3cm91Z2h0ID8=..QnkgR2VvcmdlLCBzaGUncyBnb3QgaXQhIEJ5IEdlb3JnZSBzaGUncyBnb3QgaXQhIE5vdyBvbmNlIGFnYWluLCB3aGVyZSBkb2VzIGl0IHJhaW4"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OBEventSubscriptionResponse1"
+      },
+      "examples": {
+       "create-event-subscription-response-example": {
+        "value": {
+         "Data": {
+          "EventSubscriptionId": "BARCLAYS-E-12345678901234",
+          "Version": "3.1",
+          "EventTypes": [
+           "UK.OBIE.Consent-Authorization-Revoked"
+          ]
+         },
+         "Links": {
+          "Self": "https://telesto.api.barclays/open-banking/v3.1/event-subscriptions"
+         },
+         "Meta": {}
+        }
+       }
+      }
+     }
+    }
+   },
+   "200EventsRead": {
+    "description": "Read awaiting events",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OBEventPollingResponse1"
+      },
+      "examples": {
+       "CreateEventsResponse": {
+        "value": {
+         "sets": {
+          "b6a68c1db7fc4c178fd7d8a41b9ef85c": "eyJhbG...NEysZ4",
+          "2644f8cbc8294325ad103ddfc4a5b15d": "eyJhbG...Qssw5c",
+          "1fd954d5fb964afb97deee232bb88d1f": "eyJhbG...9kogfI"
+         },
+         "moreAvailable": false
+        }
+       },
+       "CreateEventsEmptyResponse": {
+        "value": {
+         "sets": {},
+         "moreAvailable": false
+        }
+       }
+      }
+     }
+    }
+   },
+   "415Error": {
+    "description": "Unsupported Media Type",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    }
+   },
+   "401Error": {
+    "description": "Unauthorized",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    }
+   },
+   "405Error": {
+    "description": "Method Not Allowed",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    }
+   },
+   "200EventSubscriptionsRead": {
+    "description": "Event Subscription Read",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "x-jws-signature": {
+      "description": "Header containing a detached JWS signature of the body of the payload.\n",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 8192,
+       "minLength": 10,
+       "pattern": "^[A-Za-z0-9-_=\"\\/.]{1,8192}$",
+       "nullable": false
+      },
+      "example": "V2hhdCBoYXRoIGdvZCB3cm91Z2h0ID8=..QnkgR2VvcmdlLCBzaGUncyBnb3QgaXQhIEJ5IEdlb3JnZSBzaGUncyBnb3QgaXQhIE5vdyBvbmNlIGFnYWluLCB3aGVyZSBkb2VzIGl0IHJhaW4"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OBEventSubscriptionsResponse1"
+      },
+      "examples": {
+       "get-event-subscription-response-example": {
+        "value": {
+         "Data": {
+          "EventSubscription": [
+           {
+            "EventSubscriptionId": "BARCLAYS-E-12345678901234",
+            "Version": "3.1",
+            "EventTypes": [
+             "UK.OBIE.Consent-Authorization-Revoked"
+            ]
+           }
+          ]
+         },
+         "Links": {
+          "Self": "https://telesto.api.barclays/open-banking/v3.1/event-subscriptions"
+         },
+         "Meta": {}
+        }
+       }
+      }
+     }
+    }
+   },
+   "404Error": {
+    "description": "Not found",
+    "headers": {
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    }
+   },
+   "429Error": {
+    "description": "Too Many Requests",
+    "headers": {
+     "Retry-After": {
+      "description": "Number in seconds to wait",
+      "schema": {
+       "type": "integer",
+       "deprecated": false,
+       "maximum": 9999999,
+       "minimum": 1,
+       "nullable": false
+      },
+      "example": 120
+     },
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    }
+   },
+   "201EventsCreated": {
+    "description": "Events Created",
+    "headers": {
+     "Location": {
+      "description": "Mandatory response header for HTTP 201 (Created) response codes",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 492,
+       "minLength": 2,
+       "pattern": "^(https:\\/\\/[-a-zA-Z0-9\\\\._\\\\\\/?=]{2,492})$",
+       "nullable": true
+      },
+      "example": "https://www.example.org/index.php"
+     },
+     "x-fapi-interaction-id": {
+      "description": "An RFC4122 UID used as a correlation id.",
+      "schema": {
+       "type": "string",
+       "deprecated": false,
+       "maxLength": 36,
+       "minLength": 32,
+       "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+       "nullable": false
+      },
+      "example": "93bac548-d2de-4546-b106-880a5018460d"
+     },
+     "Cache-Control": {
+      "description": "GIS mandatory response header. This is added by the Cognac sidecar.",
+      "schema": {
+       "type": "string",
+       "default": "no-cache, no-store, must-revalidate",
+       "deprecated": false,
+       "maxLength": 35,
+       "minLength": 35,
+       "pattern": "^no-cache, no-store, must-revalidate$",
+       "nullable": false
+      },
+      "example": "no-cache, no-store, must-revalidate"
+     }
+    },
+    "content": {
+     "application/json": {
+      "schema": {
+       "$ref": "#/components/schemas/OBEventPollingResponse1"
+      },
+      "examples": {
+       "CreateEventsResponse": {
+        "value": {
+         "sets": {
+          "b6a68c1db7fc4c178fd7d8a41b9ef85c": "eyJhbG...NEysZ4",
+          "2644f8cbc8294325ad103ddfc4a5b15d": "eyJhbG...Qssw5c",
+          "1fd954d5fb964afb97deee232bb88d1f": "eyJhbG...9kogfI"
+         },
+         "moreAvailable": false
+        }
+       },
+       "CreateEventsEmptyResponse": {
+        "value": {
+         "sets": {},
+         "moreAvailable": false
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "parameters": {
+   "Authorization": {
+    "name": "Authorization",
+    "in": "header",
+    "description": "An Authorisation Token as per https://tools.ietf.org/html/rfc6750",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "maxLength": 4871,
+     "minLength": 1,
+     "pattern": "^Bearer [A-Za-z0-9-_=]{1,256}\\.\\.[A-Za-z0-9-_=]{1,100}\\.[A-Za-z0-9-_=]{1,4096}\\.[A-Za-z0-9-_=]{1,100}$",
+     "nullable": false
+    },
+    "example": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU"
+   },
+   "x-fapi-auth-date": {
+    "name": "x-fapi-auth-date",
+    "in": "header",
+    "description": "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC",
+    "required": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 29,
+     "minLength": 29,
+     "pattern": "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \\d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \\d{4} \\d{2}:\\d{2}:\\d{2} (GMT|UTC)$",
+     "nullable": false
+    },
+    "example": "Sun, 10 Sep 2017 19:43:31 UTC"
+   },
+   "x-jws-signature": {
+    "name": "x-jws-signature",
+    "in": "header",
+    "description": "A detached JWS signature of the body of the payload.",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "deprecated": false,
+     "maxLength": 8192,
+     "minLength": 10,
+     "pattern": "^[A-Za-z0-9-_=\"\\/.]{1,8192}$",
+     "nullable": false
+    },
+    "example": "V2hhdCBoYXRoIGdvZCB3cm91Z2h0ID8=..QnkgR2VvcmdlLCBzaGUncyBnb3QgaXQhIEJ5IEdlb3JnZSBzaGUncyBnb3QgaXQhIE5vdyBvbmNlIGFnYWluLCB3aGVyZSBkb2VzIGl0IHJhaW4"
+   },
+   "x-fapi-interaction-id": {
+    "name": "x-fapi-interaction-id",
+    "in": "header",
+    "description": "An RFC4122 UID used as a correlation id.",
+    "required": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 36,
+     "minLength": 32,
+     "pattern": "^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$",
+     "nullable": false
+    },
+    "example": "93bac548-d2de-4546-b106-880a5018460d"
+   },
+   "x-fapi-customer-ip-address": {
+    "name": "x-fapi-customer-ip-address",
+    "in": "header",
+    "description": "The PSU's IP address if the PSU is currently logged in with the TPP.",
+    "required": false,
+    "schema": {
+     "type": "string",
+     "maxLength": 40,
+     "minLength": 7,
+     "pattern": "^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$",
+     "nullable": false
+    },
+    "example": "104.25.212.99"
+   },
+   "EventSubscriptionId": {
+    "name": "eventSubscriptionId",
+    "in": "path",
+    "description": "EventSubscriptionId",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "maxLength": 25,
+     "minLength": 25,
+     "pattern": "^BARCLAYS-E-\\d{14}$",
+     "nullable": false
+    },
+    "example": "BARCLAYS-E-12345678901234"
+   }
+  },
+  "securitySchemes": {
+   "TPPOAuth2Security": {
+    "type": "oauth2",
+    "description": "TPP client credential authorisation flow with the ASPSP",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://authserver.example/token",
+      "scopes": {
+       "accounts": "Ability to receive events associated with Accounts information",
+       "fundsconfirmations": "Ability to receive events associated with confirmation of funds",
+       "payments": "Ability to receive events associated with payments"
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,1041 @@
+openapi: 3.1.0
+info:
+  title: Authentication
+  description: Secure login for Barclays credit card customers to access online services
+  version: '2.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/f12a5fd6-7937-46f4-aa55-75b029a8500e.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-authentication-openapi.json. The UK Open Banking documents
+  carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as Barclays implements
+  and publishes it — the API, the registry record and the host are Barclays'.
+tags:
+- name: user-identity-context
+  description: User identity context API
+- name: user-sso-context
+  description: User sso context API
+paths:
+  /users/sso:
+    summary: This api is used to facilitate single-sign-on customer into selected activity journey. This operation contains
+      sensitive data in request and response payload.
+    description: This api is used to facilitate single-sign-on customer into MOBILE/CWS for selected activity journey.
+    post:
+      tags:
+      - user-sso-context
+      summary: single-sign-on customer context. This operation contains sensitive data in request and response payload.
+      description: This api is used to facilitate single-sign-on customer into MOBILE/CWS for selected activity journey. Uses
+        `auth_grant` token.
+      operationId: request-sso
+      parameters:
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: application/json
+      requestBody:
+        description: SSO drop off request. Payload fully encrypted.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSSOContextRequest'
+            examples:
+              UserSSOContextRequest:
+                $ref: '#/components/examples/user-sso-context-request'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSSOContextResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /users/{externalAccountId}/context:
+    summary: user identity context for customer login. This operation contains sensitive data in request and response payload.
+    description: The API provides the context URL for customer login via IDP.
+    post:
+      tags:
+      - user-identity-context
+      summary: To setup user identity context for customer login. This operation contains sensitive data in request and response
+        payload.
+      description: The API provides the context URL for customer login via IDP. Uses `client_credentials` token.
+      operationId: request-auth
+      parameters:
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: application/json
+      - name: externalAccountId
+        in: path
+        description: External Account ID (UUID format)
+        required: true
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: 2c4717c4-e2f3-4071-2b86-b86890876322
+      requestBody:
+        description: User identity context request. Payload fully encrypted.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserIdentityContextRequest'
+            examples:
+              UserIdentityContextRequest:
+                $ref: '#/components/examples/user-identity-context-request'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserIdentityContextResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+components:
+  schemas:
+    DeviceDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Customer details
+      properties:
+        deviceType:
+          type: string
+          enum:
+          - PHONE
+          - TABLET
+          - LAPTOP
+        deviceModel:
+          type: string
+          example: SM-S928U
+          maxLength: 25
+          minLength: 1
+          pattern: ^[a-zA-Z0-9-]{1,25}$
+        deviceOS:
+          type: string
+          example: Android
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9-]{1,50}$
+        deviceOSVersion:
+          type: string
+          example: '35'
+          maxLength: 20
+          minLength: 1
+          pattern: ^[a-zA-Z0-9.\-]{1,20}$
+        deviceFingerprintType:
+          type: string
+          description: Device fingerprint type
+          enum:
+          - THREATMETRIX
+          - CUSTOM
+          example: THREATMETRIX
+        deviceFingerprintId:
+          type: string
+          format: uuid
+          description: Unique identifier for device fingerprint
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          minLength: 36
+          pattern: ^[a-fA-F0-9]{8}-([a-fA-F0-9]{4}-){3}[a-fA-F0-9]{12}$
+        deviceRegistrationDate:
+          type: integer
+          format: int64
+          description: Device registration date in Unix timestamp (milliseconds since epoch)
+          example: 1734260400000
+          maximum: 253402300799999
+          minimum: 0
+        deviceLastUsedDate:
+          type: integer
+          format: int64
+          description: Device last used date in Unix timestamp (milliseconds since epoch)
+          example: 1734260400000
+          maximum: 253402300799999
+          minimum: 0
+        deviceLockPresent:
+          type: string
+          description: Indicates whether device lock is present
+          enum:
+          - Y
+          - N
+          example: Y
+          nullable: true
+        deviceBiometricType:
+          type: string
+          enum:
+          - FINGER
+          - PIN
+          - IRIS
+          - FACE
+          nullable: true
+        serviceCarrierName:
+          type: string
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9&-]{1,50}$
+          nullable: true
+        deviceIPAddress:
+          type: string
+          description: Client IP address (IPv4 or IPv6)
+          example: 111.111.1.1
+          maxLength: 45
+          minLength: 7
+          pattern: ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$
+          nullable: true
+        deviceSim1PhoneNumber:
+          type: string
+          description: Phone number associated with device SIM
+          example: '8882223333'
+          maxLength: 40
+          minLength: 6
+          pattern: ^[0-9\- ]{6,40}$
+          nullable: true
+        deviceSim2PhoneNumber:
+          type: string
+          description: Phone number associated with second SIM for dual-SIM devices
+          example: '8882223333'
+          maxLength: 40
+          minLength: 6
+          pattern: ^[0-9\- ]{6,40}$
+          nullable: true
+        dateCurrentSimLinkedToDevice:
+          type: integer
+          format: int64
+          description: Date current SIM linked to device in Unix timestamp (milliseconds since epoch)
+          example: 1734260400000
+          maximum: 253402300799999
+          minimum: 0
+        additionalAttributes:
+          $ref: '#/components/schemas/DeviceAttributes'
+      nullable: true
+    UserSSOContextResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: response payload for sso.
+      properties:
+        expiry:
+          type: integer
+          description: Resume URL expiry in seconds.
+          example: 10
+          maximum: 95
+          minimum: 1
+        resumeUrl:
+          type: string
+          description: Client/Partner endpoint where CWS/Mobile is expected to redirect after completing.
+          example: https://idp.barclays.com
+          maxLength: 300
+          minLength: 1
+          pattern: ^(?=.{1,300}$)https:\/\/[^\s/$.?#].[^\s]*$
+          nullable: false
+      nullable: false
+    UserIdentityContextResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: User identify context response.
+      properties:
+        data:
+          $ref: '#/components/schemas/UserIdentityContextResponseData'
+      required:
+      - data
+      nullable: false
+    UserIdentityContextResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: User identity context response data.
+      properties:
+        expiry:
+          type: integer
+          description: Resume URL expiry in seconds.
+          example: 10
+          maximum: 60
+          minimum: 1
+        resumeUrl:
+          type: string
+          description: Redirect URL to continue with Login or IDP resume.
+          example: https://oauth-sit.tiaa.barclaysus.com/sp/AA8XC0009543FDWWWPI/as/authorization.oauth2
+          maxLength: 300
+          minLength: 1
+          pattern: ^(?=.{1,300}$)https:\/\/[^\s/$.?#].[^\s]*$
+          nullable: true
+      nullable: false
+    UserSSOContextRequestData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Request payload for User SSO context.
+      properties:
+        identifier:
+          $ref: '#/components/schemas/Identifier'
+        activityType:
+          type: string
+          description: Activity type sent by customer for CWS/MOB to identify allowed SSO activity
+          enum:
+          - ADD_EXTERNAL_ACCOUNT
+          - MANAGE_EXTERNAL_ACCOUNT
+          - VIEW_STATEMENT
+          example: ADD_EXTERNAL_ACCOUNT
+        product:
+          type: string
+          description: Client product/brand
+          example: SMG
+          maxLength: 20
+          minLength: 3
+          pattern: ^[A-Za-z0-9]{3,20}$
+          nullable: false
+        channel:
+          type: string
+          description: Channel field for the IDP page rendering.
+          enum:
+          - WEB
+          - MOBILE
+        deviceIPAddress:
+          type: string
+          description: Client IP address (IPv4 or IPv6)
+          example: 111.111.1.1
+          maxLength: 45
+          minLength: 7
+          pattern: ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$
+          nullable: true
+        additionalAttributes:
+          $ref: '#/components/schemas/AdditionalSSOAttributes'
+      required:
+      - activityType
+      - channel
+      - identifier
+      - product
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    UserIdentityContextRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: User identity context request.
+      properties:
+        data:
+          $ref: '#/components/schemas/UserIdentityContextRequestData'
+      required:
+      - data
+      nullable: false
+    UserSSOContextRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: SSO Request Data
+      properties:
+        data:
+          $ref: '#/components/schemas/UserSSOContextRequestData'
+      required:
+      - data
+      nullable: false
+    CustomerProfile:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Customer's partner account relationship details
+      properties:
+        memberNumber:
+          type: string
+          example: CM12345
+          maxLength: 17
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]{1,17}$
+        firstName:
+          type: string
+          description: Customer's first name on partner account
+          example: John
+          maxLength: 32
+          minLength: 2
+          pattern: ^[-a-zA-Z'\s]{2,32}$
+        lastName:
+          type: string
+          description: Customer's last name on partner account
+          example: Doe
+          maxLength: 32
+          minLength: 2
+          pattern: ^[-a-zA-Z'\s]{2,32}$
+        email:
+          type: string
+          description: Customer's email on partner account
+          example: support@barclays.com
+          maxLength: 320
+          minLength: 6
+          pattern: ^(?=.{1,256}$)^([a-zA-Z0-9.\x21#$\x25&'\x2A\x2B\/=\x3F\x5E_`\x7E-]{1,64})@(([a-zA-Z0-9-]{1,180}(\.[a-zA-Z0-9-]{1,62}){1,9}))$
+        nameChangeTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of customer name change in Unix timestamp (milliseconds since epoch)
+          example: 1734260400000
+          maximum: 253402300799999
+          minimum: 0
+        previousFirstName:
+          type: string
+          description: Customer's first name on partner account before last change
+          example: John
+          maxLength: 32
+          minLength: 2
+          pattern: ^[-a-zA-Z'\s]{2,32}$
+        previousLastName:
+          type: string
+          description: Customer's last name on partner account before last change
+          example: Doe
+          maxLength: 32
+          minLength: 2
+          pattern: ^[-a-zA-Z'\s]{2,32}$
+        emailChangeTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of customer email change in Unix timestamp (milliseconds since epoch)
+          example: 1734260400000
+          maximum: 253402300799999
+          minimum: 0
+        previousEmail:
+          type: string
+          description: Customer's email on partner account before last change
+          example: support@barclaycardus.com
+          maxLength: 320
+          minLength: 6
+          pattern: ^(?=.{1,256}$)^([a-zA-Z0-9.\x21#$\x25&'\x2A\x2B\/=\x3F\x5E_`\x7E-]{1,64})@(([a-zA-Z0-9-]{1,180}(\.[a-zA-Z0-9-]{1,62}){1,9}))$
+        numberOfAssociatedDevices:
+          type: integer
+          format: int32
+          description: Number of devices associated with the account
+          example: 3
+          maximum: 100
+          minimum: 0
+        digitalWalletLastLoginDate:
+          type: integer
+          format: int64
+          description: Last login date for digital wallet in Unix timestamp (milliseconds since epoch)
+          example: 1734260400000
+          maximum: 253402300799999
+          minimum: 0
+        digitalWalletLastLoginAuthMethod:
+          type: string
+          description: Authentication method used for last login to digital wallet
+          example: Pin
+          maxLength: 30
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]{1,30}$
+        additionalAttributes:
+          $ref: '#/components/schemas/CustomerProfileAttributes'
+      required:
+      - email
+      - firstName
+      - lastName
+      - memberNumber
+      nullable: true
+    AdditionalSSOAttributes:
+      type: array
+      description: Additional attributes for SSO context
+      items:
+        $ref: '#/components/schemas/NameValueAttributePair'
+      maxItems: 100
+      minItems: 0
+    Identifier:
+      type: object
+      additionalProperties: false
+      description: An field for customer unique identifier.
+      properties:
+        id:
+          type: string
+          description: identifier id
+          example: 2c4717c4-e2f3-4071-2b86-b86890876322
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+          nullable: false
+        type:
+          type: string
+          description: Type sent by customer for to identify allowed SSO activity
+          enum:
+          - CUSTOMER_ID
+          - ACCOUNT_ID
+          example: CUSTOMER_ID
+      required:
+      - id
+      - type
+      nullable: false
+    NameValueAttributePair:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Attribute name and value pair
+      properties:
+        name:
+          type: string
+          description: Attribute name
+          example: name
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        value:
+          type: string
+          description: Attribute value
+          example: partner-details
+          maxLength: 200
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_\-\s\@\#\$\&\*\(\)\+\=\"\.\,\/]{1,200}$
+        type:
+          type: string
+          default: text
+          description: Attribute data type
+          enum:
+          - text
+          - number
+          - boolean
+          - iso_date
+          example: text
+      required:
+      - name
+      - value
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: false
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 9709-4675-2456-7801
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]{1,50}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying
+            purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+      required:
+      - code
+      - id
+      - title
+    DeviceAttributes:
+      type: array
+      description: Additional device attributes useful for fraud risk assessment
+      items:
+        $ref: '#/components/schemas/NameValueAttributePair'
+      maxItems: 100
+      minItems: 0
+      nullable: true
+    UserIdentityContextRequestData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: User identity context request data.
+      properties:
+        product:
+          type: string
+          description: Product/CPC for the IDP.
+          example: SMG
+          maxLength: 20
+          minLength: 3
+          pattern: ^[A-Za-z0-9]{3,20}$
+        channel:
+          type: string
+          description: Channel field for the IDP page rendering.
+          enum:
+          - WEB
+          - MOBILE
+          example: MOBILE
+        fraudSessionId:
+          type: string
+          description: Applicant Fraud Session ID.
+          example: 6c9b83bc-5c94-45c8-a594-5ea890409b62
+          maxLength: 36
+          minLength: 36
+          pattern: ^[a-fA-F0-9]{8}-([a-fA-F0-9]{4}-){3}[a-fA-F0-9]{12}$
+        applicationId:
+          type: number
+          description: Applicant Application ID.
+          example: 1346780132564
+          pattern: ^[0-9]{15,16}$
+        customerProfileDetails:
+          $ref: '#/components/schemas/CustomerProfile'
+        deviceDetails:
+          $ref: '#/components/schemas/DeviceDetails'
+      required:
+      - channel
+      - customerProfileDetails
+      - deviceDetails
+      - product
+      nullable: false
+    CustomerProfileAttributes:
+      type: array
+      description: Additional customer profile attributes useful for fraud risk assessment
+      items:
+        $ref: '#/components/schemas/NameValueAttributePair'
+      maxItems: 100
+      minItems: 0
+      nullable: true
+    UserSSOContextResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: User SSO Response.
+      properties:
+        data:
+          $ref: '#/components/schemas/UserSSOContextResponseData'
+      required:
+      - data
+      nullable: false
+  responses:
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat\
+        \ the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400-bad-request:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    UserIdentityContextResponse:
+      description: User identify context response body. Payload fully encrypted.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserIdentityContextResponse'
+          examples:
+            UserIdentityContextResponseData:
+              $ref: '#/components/examples/user-identity-context-response'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition\
+        \ which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After\
+        \ header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote:\
+        \ The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers\
+        \ may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    UserSSOContextResponse:
+      description: SSO drop off response. Payload fully encrypted.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserSSOContextResponse'
+          examples:
+            UserSSOContextResponse:
+              $ref: '#/components/examples/user-sso-context-response'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic\
+        \ error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status\
+        \ code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when\
+        \ no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer Token
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 2048
+        minLength: 32
+        pattern: ^[A-Za-z0-9\-_\.\ ]{32,2048}$
+      example: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Imctb09kUnc1TWFlTmcwbWpsN1VpczlXT010NCIsInBpLmF0bSI6IjQ2N3YifQ.eyJzY29wZSI6ImFjY291bnRzIiwiY2xpZW50X2lkIjoiR2FwQ2xpZW50IiwiaXNzIjoiVElBQSBERVYiLCJhdWQiOiJCRE4tVVMtREVWIiwianRpIjoia0F0c2JYYW5CdnZOSFBacVd6WEs4TlhzczlPSXozamdBT090IiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiU21pdGgiLCJmcmF1ZFRva2VuIjoiOThjYmVlNWEtOTU4MS00NTdlLTk3NTEtZjVlYzNlNWZiYTUwIiwiZnJhdWRUb2tlbklzc3VlVGltZSI6IjE2MzAwMDMyNTQiLCJhY2NvdW50cyI6WyIxMjM0NTY3OCIsIjk4NzY1NDMyIl0sInBhcnR5SWQiOiIxMjM0NTYiLCJ1c2VybmFtZSI6ImJhcmNsYXlzdXNlciIsImV4cCI6MTYzMDAwMTQ1NX0.Jkgb2A2HAOdLKaion8ff097GedtQkxtAV4Qxea538owLS8zaEvTm9kHBWOxmuNHIgP1V8mx3NUflwbY8A823Ut00wWqbUbB-cSV0idDaQJ2pKWHDFYbipvi5I7yPGj2BR-oHhQao1ZGlW6DyxYuZ12q8IK7LpKVWbCSPZ-fFAlD5HgH_FORq6Avc5oLH--Zcww63fI6gtZ48pwnXX2gM1aiSQ3lfvLXWVQ9fooAlP65LOW1MMjh5HOtrNvA7ObBSYepYzef5ykP2YvIz3OOS4hLhTo-3-iEbUDvkPx_mmz_pi7piXrMqQPfPnz5y2VkLOHTYfQJeQmVg60YTG7uPdw
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this\
+        \ unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the\
+        \ current Barclays REST Standard.\n"
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    X-Party-Id:
+      name: X-Party-Id
+      in: header
+      description: 'Customer/Party ID injected by AKANA ND
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 17
+        minLength: 1
+        pattern: ^[0-9]{1,17}$
+      example: '1234567'
+    X-Channel-Id:
+      name: X-Channel-Id
+      in: header
+      description: 'The channel that initiated the call. Must be passed through the API stack.
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 20
+        minLength: 3
+        pattern: ^[A-Za-z0-9\-_]{3,20}$
+      example: ccd
+    AccountIdPath:
+      name: externalAccountId
+      in: path
+      description: External Account ID (UUID format)
+      required: true
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 1
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      example: 2c4717c4-e2f3-4071-2b86-b86890876322
+    OAuth_ClientID:
+      name: OAuth_ClientID
+      in: header
+      description: 'Required when API has PCI/PII data.
+
+        OAuth client ID set by Akana
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 256
+        minLength: 1
+        pattern: ^[a-zA-Z0-9.\-]{1,256}$
+      example: -bb1v6znioBKKrbkZgjvx5jHJaM
+    X-IDVSessionID:
+      name: X-IDVSessionID
+      in: header
+      description: 'X-IDVSessionID injected by AKANA ND
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 6c9b83bc-5c94-45c8-a594-5ea890409b62
+  examples:
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    user-identity-context-request:
+      value:
+        data:
+          product: SMG
+          channel: MOBILE
+          fraudSessionId: 6c9b83bc-5c94-45c8-a594-5ea890409b62
+          applicationId: 1346780132564
+          customerProfileDetails:
+            memberNumber: CM12345
+            firstName: John
+            lastName: Doe
+            email: john.doe@abc.com
+            numberOfAssociatedDevices: 3
+            digitalWalletLastLoginDate: 1734260400000
+            additionalAttributes:
+            - name: attribute_1
+              value: value_1
+              type: text
+            - name: attribute_2
+              value: value_2
+              type: text
+          deviceDetails:
+            deviceType: PHONE
+            deviceModel: SM-S928U
+            deviceOSVersion: '35'
+            deviceFingerprintType: THREATMETRIX
+            deviceFingerprintId: 123e4567-e89b-12d3-a456-42661417400
+            deviceRegistrationDate: 1734260400000
+            deviceLastUsedDate: 1734260400000
+            deviceLockPresent: true
+            deviceBiometricType: FINGER
+            serviceCarrierName: T-Mobile
+            sim1PhoneNumber: 555-555-5555
+            sim2PhoneNumber: 555555-5551
+            deviceIPAddress: 111.111.1.1
+            dateCurrentSimLinkedToDevice: 1734260400000
+            additionalAttributes:
+            - name: attribute_1
+              value: value-1
+              type: text
+            - name: attribute_2
+              value: value-2
+              type: text
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
+    user-sso-context-response:
+      value:
+        data:
+          expiry: 10
+          resumeUrl: https://barclays-endpoint/to-be-opened-in-web-view/payload-response-fully-encrypted
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    user-identity-context-response:
+      value:
+        data:
+          expiry: 30
+          resumeUrl: https://baclays-authoriation-host/to-be-opened-in-web-view/payload-response-fully-encrypted?client_id=bdn_abc
+    user-sso-context-request:
+      value:
+        data:
+          identifier:
+            id: 2c4717c4-e2f3-4071-2b86-b86890876322
+            type: ACCOUNT_ID
+          activityType: ADD_EXTERNAL_ACCOUNT
+          channel: WEB
+          product: SMG
+          deviceIPAddress: 0.0.1.1
+          additionalAttributes:
+          - name: STATEMENT_REFERENCE
+            value: Tmpjd1kyUmtZemt6WTJVeVl6a3haV1ZqTkRjME1UZGhMRGMxVXpCS00wazBUekU1UjFabE5FOVZVMEZNTms0NVJVdzBUVWMwTVVsQk5UUTBUa1ZGTUZRMFFVaEZSVUZLUTAxR1R6Y3k6YXR0ZXN0YXRpb24=
+            type: text
+    example-error-403:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed.
+  requestBodies:
+    UserIdentityContextRequest:
+      description: User identity context request. Payload fully encrypted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserIdentityContextRequest'
+          examples:
+            UserIdentityContextRequest:
+              $ref: '#/components/examples/user-identity-context-request'
+    UserSSOContextRequest:
+      description: SSO drop off request. Payload fully encrypted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserSSOContextRequest'
+          examples:
+            UserSSOContextRequest:
+              $ref: '#/components/examples/user-sso-context-request'
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

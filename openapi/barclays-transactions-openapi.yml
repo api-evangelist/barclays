@@ -1,0 +1,1448 @@
+openapi: 3.1.0
+info:
+  title: Transactions
+  description: "Enable customers to view transactions, sorting and transaction-level details\n "
+  version: '2.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/5a31e498-f5c0-461e-b25a-9a0aed635bd6.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-transactions-openapi.json. The UK Open Banking documents
+  carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as Barclays implements
+  and publishes it — the API, the registry record and the host are Barclays'.
+tags:
+- name: transactionsExternalAPI
+  description: Transactions API
+- name: postedTransactionAPI
+  description: Posted transactions operations
+- name: getAuthorizations
+  description: Authorization transactions operations
+- name: statementCycleDatesAPI
+  description: Statement cycle dates operations
+- name: searchOptionsAPI
+  description: Transaction search options operations
+paths:
+  /{accountId}/statements/cycle-dates:
+    summary: Get cycle dates for account id
+    description: Get cycle dates for account id
+    get:
+      tags:
+      - statementCycleDatesAPI
+      summary: Get cycle dates for account id
+      description: Get cycle dates for account id. Use this API to get account cycle dates.
+      operationId: getCycleDatesV2
+      parameters:
+      - name: accountId
+        in: path
+        description: Account id
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 2c4717c4-e2f3-4071-2b86-b86890873321
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/CycleDatesDataRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /{accountId}/transactions/search-options:
+    summary: Get transactions search options
+    description: Get transactions search options
+    get:
+      tags:
+      - searchOptionsAPI
+      summary: Get transactions search options. This operation contains sensitive data in response payload.
+      description: Get transactions search options. Use this API to get transactions search options.
+      operationId: getSearchOptionsV2
+      parameters:
+      - name: accountId
+        in: path
+        description: Account id
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 2c4717c4-e2f3-4071-2b86-b86890873321
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/SearchOptionsDataRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /{accountId}/authorizations:
+    summary: Get Auth transactions for Account ID
+    description: Get Auth transactions for Account ID
+    get:
+      tags:
+      - getAuthorizations
+      summary: Get Auth transactions for Account ID
+      description: 'This API provides a list of authorization for a given account for the given date range. These are transactions
+
+        that are authorized but not yet posted to the account'
+      operationId: getAuthorizationsExt
+      parameters:
+      - name: accountId
+        in: path
+        description: Account id
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 2c4717c4-e2f3-4071-2b86-b86890873321
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAuthorizationsExtRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /{accountId}/transactions:
+    summary: Get  transactions with timestamp for Account ID
+    description: Get transactions with timestamp for Account ID
+    get:
+      tags:
+      - postedTransactionAPI
+      summary: Get transactions for Account ID. This operation contains sensitive data in response payload.
+      description: Get transactions for Account ID. Use this API to get transaction.
+      operationId: getTransactionsV2
+      parameters:
+      - name: accountId
+        in: path
+        description: Account id
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 2c4717c4-e2f3-4071-2b86-b86890873321
+      - name: fromDate
+        in: query
+        description: Start date for transactions yyyy-mm-dd
+        schema:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 10
+        example: '2012-03-22'
+      - name: toDate
+        in: query
+        description: End date for transactions yyyy-mm-dd
+        schema:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 10
+        example: '2012-03-22'
+      - name: statementDate
+        in: query
+        description: Transaction Date yyyy-mm-dd
+        schema:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 10
+        example: '2012-03-22'
+      - name: requestType
+        in: query
+        description: Type of  Request to get transactions.
+        schema:
+          type: string
+          enum:
+          - BY_DATE_RANGE
+          - BY_STATEMENT
+          - SINCE_LAST_STATEMENT
+        example: SINCE_LAST_STATEMENT
+      - name: includeDispute
+        in: query
+        description: Boolean flag to include transactions in dispute
+        schema:
+          type: boolean
+        example: true
+      - name: purchasedByRef
+        in: query
+        description: Allowed data for purchased by customer id filter
+        schema:
+          type: string
+          maxLength: 64
+          minLength: 64
+          pattern: ^[a-zA-Z0-9]{64}$
+        example: a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e
+      - name: category
+        in: query
+        description: Category options
+        schema:
+          type: string
+          enum:
+          - ALL
+          - AUTOMOTIVE
+          - EVERYDAY_SPENDING
+          - HEALTHCARE
+          - MERCHANDISE
+          - RESTAURANTS_ENTERTAINMENT
+          - TRAVEL
+          - OTHER
+        example: TRAVEL
+      - name: keyword
+        in: query
+        description: Search keyword for filter
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]{1,256}$
+        example: apple
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate\
+          \ this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance\
+          \ with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/TransactionsDataResV2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+components:
+  schemas:
+    AuthorizationsList:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: List of authorizations
+      properties:
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationExt'
+          maxItems: 500
+          minItems: 0
+      nullable: false
+    AuthorizationsExtList:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: List of authorizations
+      properties:
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationExt'
+          maxItems: 500
+          minItems: 0
+      nullable: false
+    TransactionsDataV2:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions Response
+      properties:
+        data:
+          $ref: '#/components/schemas/TransactionsListV2'
+      nullable: false
+    EasypayInfo:
+      type: object
+      deprecated: false
+      description: Easy Pay installment plan information
+      properties:
+        status:
+          type: string
+          description: Easy Pay enrollment status
+          example: ENROLLED
+          maxLength: 20
+          minLength: 1
+          pattern: ^[A-Z_]+$
+        installmentId:
+          type: string
+          description: Easy Pay installment plan identifier
+          example: '1233333'
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]+$
+      nullable: false
+      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    Amount:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Amount Object
+      properties:
+        amount:
+          type: number
+          deprecated: false
+          description: It represents transaction amount
+          example: 1234.56
+          maximum: 99999999999.99
+          minimum: 0
+        currency:
+          type: string
+          deprecated: false
+          description: Currency of payment amount
+          enum:
+          - USD
+          example: USD
+      required:
+      - amount
+      - currency
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    CycleDatesData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: cycle dates response
+      properties:
+        data:
+          $ref: '#/components/schemas/CycleDatesList'
+      nullable: false
+    SearchOptions:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions search options
+      properties:
+        dateRange:
+          type: array
+          items:
+            type: string
+            format: date
+            deprecated: false
+            description: transaction from/to date
+            example: '2021-08-17'
+          maxItems: 2
+          minItems: 2
+        purchasedByOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PurchasedByOption'
+          maxItems: 10
+          minItems: 1
+        isCategorySearchEnabled:
+          type: boolean
+          description: Indicator to check whether transaction search is enabled for cpc
+          example: true
+        categoryOptions:
+          type: array
+          description: Transaction category options
+          example:
+          - ALL
+          - Automotive
+          - Everyday spending
+          - Healthcare
+          - Merchandise
+          - Restaurants & entertainment
+          - Travel
+          - Other
+          items:
+            type: string
+            enum:
+            - ALL
+            - Automotive
+            - Everyday spending
+            - Healthcare
+            - Merchandise
+            - Restaurants & entertainment
+            - Travel
+            - Other
+          maxItems: 8
+          minItems: 8
+      nullable: false
+    PurchasedByOption:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions purchased by options
+      properties:
+        purchasedByRef:
+          type: string
+          deprecated: false
+          description: Purchased customer reference id
+          example: 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9
+          maxLength: 64
+          minLength: 64
+          pattern: ^[a-zA-Z0-9]{64}$
+        firstName:
+          $ref: '#/components/schemas/customerFirstOrLastName'
+        lastName:
+          $ref: '#/components/schemas/customerFirstOrLastName'
+        roleType:
+          type: string
+          description: Customer role
+          enum:
+          - PRIMARY
+          - AUTHORIZED
+          - CO-APPLICANT
+          - BUSINESS_OWNER
+          - BUSINESS_EMPLOYEE
+          - BUSINESS_ADMIN
+          example: PRIMARY
+        lastFour:
+          type: string
+          deprecated: false
+          description: Customer account number last four
+          example: '1234'
+          maxLength: 4
+          minLength: 4
+          pattern: ^[0-9]{4}$
+        activationDate:
+          type: string
+          format: date
+          deprecated: false
+          description: activation date
+          example: '2021-08-30'
+      nullable: false
+    TransactionV2:
+      type: object
+      deprecated: false
+      description: Transaction record
+      properties:
+        postingTime:
+          type: integer
+          deprecated: false
+          description: Transaction posted timestamp
+          example: 1234567
+          maximum: 99999999
+          minimum: 0
+        classCode:
+          type: string
+          description: It represents type of purchase
+          enum:
+          - CA
+          - PR
+          - PY
+          - FE
+          - NIL
+          example: PR
+        postingDate:
+          type: string
+          format: date
+          deprecated: false
+          description: Transaction posting Date yyyy-mm-dd
+          example: '2012-03-22'
+        transactionDate:
+          type: string
+          format: date
+          deprecated: false
+          description: Date on which transaction occured yyyy-mm-dd
+          example: '2012-03-22'
+        category:
+          type: string
+          deprecated: false
+          description: It represents transaction category
+          example: TRAVEL
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9 ]{1,255}$
+        merchantName:
+          type: string
+          deprecated: false
+          description: It represents merchant name
+          example: 1800Flowers
+          maxLength: 25
+          minLength: 1
+          pattern: ^[a-zA-Z0-9 '*@]{1,25}$
+        merchantCity:
+          type: string
+          deprecated: false
+          description: It represents merchant city
+          example: New York
+          maxLength: 13
+          minLength: 1
+          pattern: ^[a-zA-Z ]{1,13}$
+        merchantState:
+          type: string
+          deprecated: false
+          description: It represents merchant state
+          example: NJ
+          maxLength: 3
+          minLength: 2
+          pattern: ^[A-Z]{2,3}$
+        merchantPostalCode:
+          type: string
+          deprecated: false
+          description: It represents merchant postal code
+          example: '0044'
+          maxLength: 9
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]{1,9}$
+        merchantCountry:
+          type: string
+          deprecated: false
+          description: It represents merchant country
+          example: USA
+          maxLength: 3
+          minLength: 2
+          pattern: ^[A-Z]{2,3}$
+        merchantPhone:
+          type: string
+          deprecated: false
+          description: It represents merchant phone
+          example: 0227865487
+          maxLength: 10
+          minLength: 1
+          pattern: ^[0-9]{1,10}$
+        transactionType:
+          type: string
+          description: It represents transaction type
+          enum:
+          - DEBIT
+          - CREDIT
+          - NIL
+          example: DEBIT
+        transactionAmount:
+          $ref: '#/components/schemas/Amount'
+        transactionNumber:
+          type: string
+          deprecated: false
+          description: It represents transactionNumber
+          example: '1234567'
+          maxLength: 23
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]{1,23}$
+        recurringPaymentIndicator:
+          type: boolean
+          description: Indicate whether transaction is reoccurring.
+          example: false
+        inDispute:
+          type: boolean
+          description: Indicator to check whether transaction is in Dispute
+          example: false
+        purchaserFirstName:
+          $ref: '#/components/schemas/customerFirstOrLastName'
+        purchaserLastName:
+          $ref: '#/components/schemas/customerFirstOrLastName'
+        purchaserNameSuffix:
+          type: string
+          deprecated: false
+          description: It represents purchaserNameSuffix.
+          example: Jr
+          maxLength: 3
+          minLength: 1
+          pattern: ^[a-zA-Z]{1,3}$
+        awardsEarned:
+          type: number
+          deprecated: false
+          description: It represents awardsEarned
+          example: 1234.0
+          maximum: 99999999999.99
+          minimum: 0
+          multipleOf: 0.01
+        transactionChannel:
+          type: string
+          description: Channel through which transaction was made
+          enum:
+          - ONLINE
+          - IN_STORE
+          - OTHER
+          example: IN_STORE
+        walletType:
+          type: string
+          description: Type of payment method/wallet used
+          example: SAMSUNG_PAY
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_\- ]+$
+        authCode:
+          type: string
+          description: Authorization code returned by the payment processor
+          example: '123456'
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]+$
+        authTimeStamp:
+          type: string
+          format: date-time
+          description: Timestamp when authorization occurred (ISO 8601 format)
+          example: '2026-01-11T20:29:49Z'
+        easypayInfo:
+          $ref: '#/components/schemas/EasypayInfo'
+      nullable: false
+    AuthorizationExt_authTransInfoExt:
+      type: object
+      deprecated: false
+      description: Auth Trans Info
+      properties:
+        merchantName:
+          type: string
+          deprecated: false
+          description: It represents merchant name
+          example: 1800Flowers
+          maxLength: 25
+          minLength: 1
+          pattern: ^[a-zA-Z0-9 '*@]{1,25}$
+        dateAuth:
+          type: string
+          format: date
+          deprecated: false
+          description: It represents transaction Date
+          example: '2012-03-22'
+        authType:
+          type: string
+          description: Authorization Type which will hold values like PURCHASE/CASH/PAYMENT/...
+          enum:
+          - PURCHASE
+          - CASH_NON_ATM
+          - CASH_ATM
+          - BALANCE_INQUIRY
+          - MAIL_OR_PHONE_ORDER
+          - MERCHANT_RETURN
+          - PAYMENT
+          - CHECK_GUARENTEE
+          - CASH_BALANCE_TRANSFER
+          - CONVENIENCE_CHECK
+          - PURCHASE_BALANCE_TRANSFER
+          - FAST_CASH
+          - WITHHOLD_FROM_AVAILABLE
+          - PIN_UNBLOCK
+          - PIN_CHANGE
+          - BANKCARD_DEPOSIT_ACCOUNT
+          - FACP
+          - BILL_PAYMENT
+          - PIN_VERIFICATION
+          - TRIAD_HOLD_PAY
+          - PROBE_HOLD_PAY
+          - ACCESS_FUNDS_TRANSFER
+          - IBAN_AUTHORIZATION
+          - MINI_STATEMENT
+          - MOBILE_TOP_UP
+          - ACCOUNT_VERIFICATION
+          - TOKEN_ELIGIBILITY_REQUEST
+          - TOKEN_PROVISION_REQUEST
+          - TOKEN_AUTH_REQUEST
+          - TOKEN_PROVISION_COMPLETED
+          - TOKEN_LOCK_REQUEST
+          - TOKEN_UNLOCK_REQUEST
+          - TOKEN_DELETE_REQUEST
+          - NIL
+          example: TOKEN_LOCK_REQUEST
+        amount:
+          $ref: '#/components/schemas/Amount'
+        resp:
+          type: string
+          description: Authorization Response whether it's approved or declined
+          enum:
+          - APPROVED
+          - DECLINED
+          - FRAUD
+          - PICKUP
+          - REFER
+          - NIL
+          example: REFER
+        status:
+          type: string
+          description: It represents transaction status like MATCHED/ AMOUNT_INCLUDED /AMOUNT_NOT_INCLUDED/..
+          enum:
+          - MATCHED
+          - AMOUNT_INCLUDED
+          - AMOUNT_NOT_INCLUDED
+          - REAL_TIME_AUTHORIZATION
+          - REVERSED_AUTHORIZATION
+          - PAY
+          - NIL
+          example: PAY
+        authTimeStamp:
+          type: string
+          format: date-time
+          description: Timestamp when authorization occurred
+          example: '2026-01-16T12:05:21Z'
+        authCode:
+          type: string
+          description: Authorization code returned by the payment processor
+          example: '123456'
+          maxLength: 50
+          minLength: 1
+          pattern: ^[0-9]+$
+      nullable: false
+    SearchOptionsData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Transactions search options response
+      properties:
+        data:
+          $ref: '#/components/schemas/SearchOptions'
+      nullable: false
+    AuthorizationExt:
+      type: object
+      deprecated: false
+      description: Authorization record
+      properties:
+        authTransInfoExt:
+          $ref: '#/components/schemas/AuthorizationExt_authTransInfoExt'
+      nullable: false
+    Authorization:
+      type: object
+      deprecated: false
+      description: Authorization record
+      properties:
+        authTransInfo:
+          $ref: '#/components/schemas/Authorization_authTransInfo'
+      nullable: false
+    TransactionsList:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions list
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionV2'
+          maxItems: 500
+          minItems: 0
+      nullable: false
+    AuthorizationsExtData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Authorizations Response
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthorizationsExtList'
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: BAD_REQUEST
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: Bad Request
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
+        details:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,255}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - details
+      - title
+    dateCycle:
+      type: string
+      format: date
+      deprecated: false
+      description: account cycle date
+      example: '2021-08-17'
+    CycleDatesList:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: cycle dates list
+      properties:
+        cycleDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/dateCycle'
+          maxItems: 24
+          minItems: 0
+      nullable: false
+    Authorization_authTransInfo:
+      type: object
+      deprecated: false
+      description: Auth Trans Info
+      properties:
+        merchantName:
+          type: string
+          deprecated: false
+          description: It represents merchant name
+          example: 1800Flowers
+          maxLength: 25
+          minLength: 1
+          pattern: ^[a-zA-Z0-9 '*@]{1,25}$
+        dateAuth:
+          type: string
+          format: date
+          deprecated: false
+          description: It represents transaction Date
+          example: '2012-03-22'
+        authType:
+          type: string
+          description: Authorization Type which will hold values like PURCHASE/CASH/PAYMENT/...
+          enum:
+          - PURCHASE
+          - CASH_NON_ATM
+          - CASH_ATM
+          - BALANCE_INQUIRY
+          - MAIL_OR_PHONE_ORDER
+          - MERCHANT_RETURN
+          - PAYMENT
+          - CHECK_GUARENTEE
+          - CASH_BALANCE_TRANSFER
+          - CONVENIENCE_CHECK
+          - PURCHASE_BALANCE_TRANSFER
+          - FAST_CASH
+          - WITHHOLD_FROM_AVAILABLE
+          - PIN_UNBLOCK
+          - PIN_CHANGE
+          - BANKCARD_DEPOSIT_ACCOUNT
+          - FACP
+          - BILL_PAYMENT
+          - PIN_VERIFICATION
+          - TRIAD_HOLD_PAY
+          - PROBE_HOLD_PAY
+          - ACCESS_FUNDS_TRANSFER
+          - IBAN_AUTHORIZATION
+          - MINI_STATEMENT
+          - MOBILE_TOP_UP
+          - ACCOUNT_VERIFICATION
+          - TOKEN_ELIGIBILITY_REQUEST
+          - TOKEN_PROVISION_REQUEST
+          - TOKEN_AUTH_REQUEST
+          - TOKEN_PROVISION_COMPLETED
+          - TOKEN_LOCK_REQUEST
+          - TOKEN_UNLOCK_REQUEST
+          - TOKEN_DELETE_REQUEST
+          - NIL
+          example: TOKEN_LOCK_REQUEST
+        amount:
+          $ref: '#/components/schemas/Amount'
+        resp:
+          type: string
+          description: Authorization Response whether it's approved or declined
+          enum:
+          - APPROVED
+          - DECLINED
+          - FRAUD
+          - PICKUP
+          - REFER
+          - NIL
+          example: REFER
+        status:
+          type: string
+          description: It represents transaction status like MATCHED/ AMOUNT_INCLUDED /AMOUNT_NOT_INCLUDED/..
+          enum:
+          - MATCHED
+          - AMOUNT_INCLUDED
+          - AMOUNT_NOT_INCLUDED
+          - REAL_TIME_AUTHORIZATION
+          - REVERSED_AUTHORIZATION
+          - PAY
+          - NIL
+          example: PAY
+      nullable: false
+    customerFirstOrLastName:
+      type: string
+      deprecated: false
+      description: Customer first or last name
+      example: John
+      maxLength: 30
+      minLength: 1
+      pattern: ^[a-zA-Z']{1,30}$
+    TransactionsListV2:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions list
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionV2'
+          maxItems: 500
+          minItems: 0
+      nullable: false
+  responses:
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat\
+        \ the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    CycleDatesDataRes:
+      description: Account cycle dates history.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CycleDatesData'
+          examples:
+            CycleDatesDataRes:
+              $ref: '#/components/examples/CycleDatesData'
+    GetAuthorizationsExtRes:
+      description: Authorizations list
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorizationsExtData'
+          examples:
+            FindByAccountResponseV2:
+              $ref: '#/components/examples/AuthorizationsExtResp'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition\
+        \ which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After\
+        \ header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote:\
+        \ The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers\
+        \ may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    TransactionsDataResV2:
+      description: Posted transactions response V2.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TransactionsDataV2'
+          examples:
+            TransactionsDataResV2:
+              $ref: '#/components/examples/TransactionsDataV2'
+    SearchOptionsDataRes:
+      description: Transaction search options response
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchOptionsData'
+          examples:
+            SearchOptionsDataRes:
+              $ref: '#/components/examples/SearchOptionsData'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic\
+        \ error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status\
+        \ code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when\
+        \ no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+  parameters:
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this\
+        \ unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the\
+        \ current Barclays REST Standard.\n"
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    keywordQuery:
+      name: keyword
+      in: query
+      description: Search keyword for filter
+      schema:
+        type: string
+        maxLength: 256
+        minLength: 1
+        pattern: ^[a-zA-Z0-9]{1,256}$
+      example: apple
+    toDate:
+      name: toDate
+      in: query
+      description: End date for transactions yyyy-mm-dd
+      schema:
+        type: string
+        format: date
+        maxLength: 10
+        minLength: 10
+      example: '2012-03-22'
+    transactionRequestType:
+      name: requestType
+      in: query
+      description: Type of  Request to get transactions.
+      schema:
+        type: string
+        enum:
+        - BY_DATE_RANGE
+        - BY_STATEMENT
+        - SINCE_LAST_STATEMENT
+      example: SINCE_LAST_STATEMENT
+    categoryQuery:
+      name: category
+      in: query
+      description: Category options
+      schema:
+        type: string
+        enum:
+        - ALL
+        - AUTOMOTIVE
+        - EVERYDAY_SPENDING
+        - HEALTHCARE
+        - MERCHANDISE
+        - RESTAURANTS_ENTERTAINMENT
+        - TRAVEL
+        - OTHER
+      example: TRAVEL
+    statementDate:
+      name: statementDate
+      in: query
+      description: Transaction Date yyyy-mm-dd
+      schema:
+        type: string
+        format: date
+        maxLength: 10
+        minLength: 10
+      example: '2012-03-22'
+    oauth_clientid:
+      name: oauth_clientid
+      in: header
+      description: 'OAuth Client ID set by BDN.
+
+        '
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 256
+        minLength: 1
+        pattern: ^[a-zA-Z0-9.\-]{1,256}$
+      example: bdn-68EwxNCdDi65Y2FV6wxupfsoD3ilveYxDqok0LD5
+    fromDate:
+      name: fromDate
+      in: query
+      description: Start date for transactions yyyy-mm-dd
+      schema:
+        type: string
+        format: date
+        maxLength: 10
+        minLength: 10
+      example: '2012-03-22'
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer Token
+      required: true
+      deprecated: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        maxLength: 2048
+        minLength: 32
+        pattern: ^[A-Za-z0-9\-_\.\ ]{32,2048}$
+      example: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Imctb09kUnc1TWFlTmcwbWpsN1VpczlXT010NCIsInBpLmF0bSI6IjQ2N3YifQ.eyJzY29wZSI6ImFjY291bnRzIiwiY2xpZW50X2lkIjoiR2FwQ2xpZW50IiwiaXNzIjoiVElBQSBERVYiLCJhdWQiOiJCRE4tVVMtREVWIiwianRpIjoia0F0c2JYYW5CdnZOSFBacVd6WEs4TlhzczlPSXozamdBT090IiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiU21pdGgiLCJmcmF1ZFRva2VuIjoiOThjYmVlNWEtOTU4MS00NTdlLTk3NTEtZjVlYzNlNWZiYTUwIiwiZnJhdWRUb2tlbklzc3VlVGltZSI6IjE2MzAwMDMyNTQiLCJhY2NvdW50cyI6WyIxMjM0NTY3OCIsIjk4NzY1NDMyIl0sInBhcnR5SWQiOiIxMjM0NTYiLCJ1c2VybmFtZSI6ImJhcmNsYXlzdXNlciIsImV4cCI6MTYzMDAwMTQ1NX0.Jkgb2A2HAOdLKaion8ff097GedtQkxtAV4Qxea538owLS8zaEvTm9kHBWOxmuNHIgP1V8mx3NUflwbY8A823Ut00wWqbUbB-cSV0idDaQJ2pKWHDFYbipvi5I7yPGj2BR-oHhQao1ZGlW6DyxYuZ12q8IK7LpKVWbCSPZ-fFAlD5HgH_FORq6Avc5oLH--Zcww63fI6gtZ48pwnXX2gM1aiSQ3lfvLXWVQ9fooAlP65LOW1MMjh5HOtrNvA7ObBSYepYzef5ykP2YvIz3OOS4hLhTo-3-iEbUDvkPx_mmz_pi7piXrMqQPfPnz5y2VkLOHTYfQJeQmVg60YTG7uPdw
+    X-Party-Id:
+      name: X-Party-Id
+      in: header
+      description: 'ID of customer initiating the request
+
+        '
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 20
+        minLength: 1
+        pattern: ^[0-9]{1,20}$
+      example: '100145000'
+    AccountIdPath:
+      name: accountId
+      in: path
+      description: Account id
+      required: true
+      deprecated: false
+      schema:
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      example: 2c4717c4-e2f3-4071-2b86-b86890873321
+    includeDisputeQuery:
+      name: includeDispute
+      in: query
+      description: Boolean flag to include transactions in dispute
+      schema:
+        type: boolean
+      example: true
+    purchasedByRefQuery:
+      name: purchasedByRef
+      in: query
+      description: Allowed data for purchased by customer id filter
+      schema:
+        type: string
+        maxLength: 64
+        minLength: 64
+        pattern: ^[a-zA-Z0-9]{64}$
+      example: a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e
+  examples:
+    example-error-404:
+      value:
+        errors:
+        - code: NOT_FOUND
+          title: Not Found
+          details: TXN_ERR_9001
+    example-error-503:
+      value:
+        errors:
+        - code: SERVICE_UNAVAILABLE
+          title: Service Unavailable
+          details: SERVICE_UNAVAILABLE
+    AuthorizationsExtResp:
+      value:
+        data:
+          authorizations:
+          - authTransInfoExt:
+              dateAuth: '2026-02-24'
+              authType: PURCHASE_BALANCE_TRANSFER
+              amount:
+                amount: 1.01
+                currency: USD
+              resp: DECLINED
+              status: REAL_TIME_AUTHORIZATION
+              authTimeStamp: '2026-02-24T10:12:51Z'
+              authCode: '000000'
+          - authTransInfoExt:
+              dateAuth: '2026-02-17'
+              authType: PURCHASE_BALANCE_TRANSFER
+              amount:
+                amount: 101.01
+                currency: USD
+              resp: DECLINED
+              status: AMOUNT_NOT_INCLUDED
+              authTimeStamp: '2026-02-17T07:40:00Z'
+              authCode: '000000'
+    TransactionsDataV2:
+      value:
+        data:
+          transactions:
+          - postingTime: 2040514
+            classCode: PR
+            postingDate: '2021-08-13'
+            transactionDate: '2021-08-29'
+            category: OTHER
+            merchantName: BEST WESTERN GREENVILL
+            merchantCity: GREENVILLE
+            merchantState: AL
+            merchantPostalCode: '36037'
+            merchantCountry: USA
+            merchantPhone: '2126772863'
+            transactionType: CREDIT
+            transactionAmount:
+              amount: 100
+              currency: USD
+            transactionNumber: '75140211154154000007950'
+            recurringPaymentIndicator: false
+            inDispute: false
+            purchaserFirstName: TestUser
+            purchaserLastName: Bar
+            purchaserNameSuffix: Jr
+            awardsEarned: 0
+            transactionChannel: IN_STORE
+            walletType: SAMSUNG_PAY
+            authCode: '1234567'
+            authTimeStamp: '2026-01-11T20:29:49.000Z'
+            easypayInfo:
+              status: ENROLLED
+              installmentId: '1233333'
+    example-error-400-bad-request:
+      value:
+        errors:
+        - code: BAD_REQUEST
+          title: Bad Request
+          details: TXN_ERR_1001
+    CycleDatesData:
+      value:
+        data:
+          cycleDates:
+          - '2021-08-24'
+          - '2021-07-24'
+    example-error-401:
+      value:
+        errors:
+        - code: AUTHENTICATION_ERROR
+          title: Authentication Error
+          details: AUTHENTICATION_ERROR
+    example-error-500:
+      value:
+        errors:
+        - code: INTERNAL_SERVER_ERROR
+          title: Internal Server Error
+          details: TXN_ERR_5001
+    SearchOptionsData:
+      value:
+        data:
+          dateRange:
+          - '2021-08-31'
+          - '2021-08-31'
+          purchasedByOptions:
+          - purchasedByRef: a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e
+            firstName: Firstnamebo
+            lastName: Lastnamebo
+            roleType: BUSINESS_OWNER
+            lastFour: '5985'
+            activationDate: '2021-08-31'
+          isCategorySearchEnabled: true
+          categoryOptions:
+          - ALL
+          - Automotive
+          - Everyday spending
+          - Healthcare
+          - Merchandise
+          - Restaurants & entertainment
+          - Travel
+          - Other
+    example-error-403:
+      value:
+        errors:
+        - code: ACCESS_FORBIDDEN
+          title: Access Forbidden
+          details: ACCESS_FORBIDDEN
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

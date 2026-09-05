@@ -1,0 +1,106 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/ (26 first-party OpenAPI 3.1 documents harvested from developer.barclays.com) + developer.barclays.com/open-banking
+note: Every entry below is asserted from the contract itself — a header, schema, security scheme or namespaced identifier
+  present in a spec Barclays publishes — not from a marketing claim.
+conformance:
+- id: oauth2
+  conforms: true
+  evidence: components.securitySchemes TPPOAuth2Security (clientCredentials) and PSUOAuth2Security (authorizationCode)
+    in openapi/barclays-payment-initiation-openapi.yml; ExternalTiaaUsCCAuth (clientCredentials) across the Barclaycard
+    US APIs
+- id: oidc
+  conforms: true
+  evidence: The API Exchange registry declares the OAuth resource "openid" on Confirmation of Funds, Payment Initiation
+    and Account and Transactions (https://developer.barclays.com/api/apis/versions/1918e4d6-a63c-4123-a2e6-12b0c7540002.bdn)
+- id: fapi
+  conforms: true
+  evidence: x-fapi-auth-date, x-fapi-customer-ip-address, x-fapi-interaction-id and x-customer-user-agent are declared
+    on every UK Open Banking operation (openapi/barclays-account-and-transactions-openapi.yml)
+- id: psd2
+  conforms: true
+  evidence: AISP/PISP/CBPII role separation with PSU-* and TPP-Redirect-* headers on the Barclays Bank Ireland APIs
+    (openapi/barclays-bank-ireland-payment-initiation-openapi.yml); UK APIs carry the OBIE consent-then-execute
+    model
+- id: mtls
+  conforms: true
+  evidence: https://telesto.api.barclays presents an X.509 certificate issued by "OpenBanking Issuing CA" (CN=2SPmPNUU6KrtcgutPlkfBd,
+    OU=0015800000jfAW1AAM), and the Dynamic Client Registration API declares X-SSLClientCert / X-SSLClientCertDN
+    / X-SSLClientCertIssuerDN headers
+- id: jws-detached-signature
+  conforms: true
+  evidence: Digest, Signature and TPP-Signature-Certificate headers on the Barclays Bank Ireland APIs (openapi/barclays-bank-ireland-confirmation-of-funds-openapi.yml)
+- id: rfc9457
+  conforms: false
+  evidence: No operation declares application/problem+json; errors use the UK Open Banking OBError1 envelope (see
+    errors/barclays-problem-types.yml)
+- id: idempotency
+  conforms: true
+  evidence: components.parameters.x-idempotency-key on the Payment Initiation and Variable Recurring Payment write
+    operations — scoped, not universal (see conventions/barclays-conventions.yml)
+- id: pagination
+  conforms: true
+  evidence: OBReadDataResponse Links (Self/First/Prev/Next/Last) and Meta.TotalPages on the collection responses
+    of openapi/barclays-account-and-transactions-openapi.yml
+- id: http-conditional-requests
+  conforms: true
+  evidence: If-Modified-Since / If-None-Match request headers and Etag response headers on the Product Details and
+    FCA Service Metrics open-data APIs
+- id: dynamic-client-registration
+  conforms: true
+  evidence: openapi/barclays-dynamic-client-registration-openapi.yml (RFC 7591-style TPP onboarding, v1.10)
+domain_standards:
+- id: uk-open-banking-read-write
+  name: UK Open Banking Read/Write API Specification
+  body: Open Banking Limited (OBL/OBIE)
+  version: v4.0 (v3.1 also published)
+  conforms: true
+  evidence: 'Contract-level signature: UK.OBIE.* namespaced code values (OBInternalLocalInstrument1Code = UK.OBIE.BACS/UK.OBIE.CHAPS/UK.OBIE.FPS…,
+    OBInternalAccountIdentification4Code = UK.OBIE.IBAN/UK.OBIE.SortCodeAccountNumber…), OBError1/OBErrorResponse1
+    error envelope, OBRead*/OBWrite* request and response schemas, and the consent-then-execute resource pairs /domestic-payment-consents
+    + /domestic-payments in openapi/barclays-payment-initiation-openapi.yml'
+  apis:
+  - Account and Transactions
+  - Confirmation of Funds
+  - Event Notification
+  - Payment Initiation
+  - Variable Recurring Payment
+- id: berlin-group-nextgenpsd2
+  name: Berlin Group NextGenPSD2 XS2A Framework
+  body: Berlin Group
+  conforms: true
+  evidence: The three Barclays Bank Ireland APIs use the NextGenPSD2 header contract verbatim — X-Request-ID, Consent-ID,
+    PSU-ID, PSU-ID-Type, PSU-Corporate-ID, PSU-IP-Address, PSU-IP-Port, PSU-Device-ID, PSU-Geo-Location, PSU-Http-Method,
+    TPP-Redirect-Preferred, TPP-Redirect-URI, TPP-Nok-Redirect-URI, Digest, Signature, TPP-Signature-Certificate
+    together with HAL _links navigation (openapi/barclays-bank-ireland-account-information-openapi.yml).
+    These APIs declare no error schema of their own
+  apis:
+  - Barclays Bank Ireland Account Information
+  - Barclays Bank Ireland Payment Initiation
+  - Barclays Bank Ireland Confirmation of Funds
+- id: iso-20022
+  name: ISO 20022 external code sets
+  body: ISO
+  conforms: true
+  evidence: 'ExternalCategoryPurpose1Code (44 values: BONU, CASH, SALA, SUPP, TAXS…), ExternalPaymentTransactionStatus1Code
+    (ACSC, ACCC, RJCT…), ExternalProxyAccountType1Code and ExternalPurpose1Code are carried verbatim in openapi/barclays-payment-initiation-openapi.yml'
+  apis:
+  - Payment Initiation
+  - Variable Recurring Payment
+  - Account and Transactions
+- id: open-banking-open-data
+  name: UK Open Banking Open Data API
+  body: Open Banking Limited
+  conforms: true
+  evidence: The ATM Locator, Branch Locator and Product Details APIs serve the OBIE open-data media types application/prs.openbanking.opendata.v2.2+json
+    and application/prs.openbanking.opendata.v1.0+json (openapi/barclays-product-details-openapi.yml)
+  apis:
+  - ATM Locator
+  - Branch Locator
+  - Product Details
+regulatory:
+- id: fca-service-metrics
+  name: FCA service quality metrics publication (CMA Order / FCA)
+  conforms: true
+  evidence: openapi/barclays-fca-service-metrics-openapi.yml publishes the mandated service-availability and incident
+    metrics as an anonymous open-data API

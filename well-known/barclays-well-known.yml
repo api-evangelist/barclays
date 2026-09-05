@@ -1,0 +1,147 @@
+generated: '2026-09-04'
+method: probed
+source: anonymous HTTPS probes of /.well-known/* on every host in apis.yml plus the API Exchange host
+note: security.txt is served on the Barclays corporate and retail hosts. No openid-configuration, oauth-authorization-server,
+  api-catalog or ai-plugin.json is published on any probed host. www.barclays.co.uk answers HTTP 200 with its "That
+  page can't be found" shell for every /.well-known/* path — a soft-404, recorded as a miss. The API Exchange host
+  answers a JSON RESOURCE_NOT_FOUND 404.
+hosts:
+- host: barclays.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: barclays-barclays-com-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.barclays.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: barclays-www-barclays-com-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: home.barclays
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: barclays-home-barclays-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: developer.barclays.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.barclays.co.uk
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: barclays-www-barclays-co-uk-security.txt
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: HTTP 200 returned the site SPA/soft-404 shell, not a document — treated as a miss
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: HTTP 200 returned the site SPA/soft-404 shell, not a document — treated as a miss
+  - path: /.well-known/api-catalog
+    status: 200
+    note: HTTP 200 returned the site SPA/soft-404 shell, not a document — treated as a miss
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    note: HTTP 200 returned the site SPA/soft-404 shell, not a document — treated as a miss
+  - path: /.well-known/agent-card.json
+    status: 200
+    note: HTTP 200 returned the site SPA/soft-404 shell, not a document — treated as a miss
+  - path: /.well-known/agent.json
+    status: 200
+    note: HTTP 200 returned the site SPA/soft-404 shell, not a document — treated as a miss
+- host: telesto.api.barclays
+  documents:
+  - path: /.well-known/security.txt
+    status: 0
+  - path: /.well-known/openid-configuration
+    status: 0
+  - path: /.well-known/oauth-authorization-server
+    status: 0
+  - path: /.well-known/api-catalog
+    status: 0
+  - path: /.well-known/ai-plugin.json
+    status: 0
+  - path: /.well-known/agent-card.json
+    status: 0
+  - path: /.well-known/agent.json
+    status: 0
+- host: www.barclaycardus.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.barclaycard.co.uk
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: barclays-www-barclaycard-co-uk-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404

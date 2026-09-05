@@ -1,0 +1,239 @@
+openapi: 3.1.0
+info:
+  title: Rewards Loyalty Sync
+  description: Enables a secure way to sync a customers loyalty status information with Barclays
+  termsOfService: www.barclaycardus.com
+  contact:
+    name: Barclays Rewards Support Team
+    url: https://developer.barclays.com/support/PLACEHOLDER
+    email: RTBDIGITAL@barclaycardus.com
+  version: '1.0'
+x-method: searched
+x-source: https://developer.barclays.com/api/apis/versions/52e2b51b-9937-4f12-901b-3275b0aeb2a8.bdn/design?specification=oas31
+x-harvested: '2026-09-04'
+x-harvested-note: Verbatim OpenAPI 3.1 design export from the Barclays API Exchange registry (developer.barclays.com), fetched
+  anonymously. The untouched export is in openapi/_original/barclays-rewards-loyalty-sync-openapi.json. The UK Open Banking
+  documents carry OBIE (openbanking.org.uk) in info.contact/termsOfService because they are the OBIE standard contract as
+  Barclays implements and publishes it — the API, the registry record and the host are Barclays'.
+paths:
+  /cards/accounts/rewards/loyaltyTier/update:
+    post:
+      tags:
+      - tier-update-xapi
+      summary: Perform tier update
+      operationId: updateTierUsingPOST
+      parameters:
+      - name: Correlation-ID
+        in: header
+        description: Correlation-ID
+        required: true
+        schema:
+          type: string
+          description: Correlation-ID
+      - name: Authorization
+        in: header
+        description: Authorization
+        required: true
+        schema:
+          type: string
+          description: Authorization
+      requestBody:
+        description: loyaltyTierRequestData
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoyaltyTierRequestData'
+            example: null
+        required: true
+      responses:
+        '200':
+          description: Fully Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoyaltyTierResponseData'
+              example: null
+        '400':
+          description: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat
+            the request without modifications.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              example: null
+        '401':
+          description: The user could not be authenticated for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              example: null
+        '403':
+          description: The user is not permitted to access the requested operation and it cannot be completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              example: null
+        '404':
+          description: Server has not found a resource with that URI. This may be temporary and permanent condition. This
+            status code is commonly used when the server does not wish to reveal exactly why the request has been refused,
+            or when no other response is applicable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              example: null
+        '503':
+          description: 'Temporary maintenance of service, try again later. The implication is that this is a temporary condition
+            which will be alleviated after some delay. Note: The existence of the 503 status code does not imply that a server
+            will use it when becoming overloaded. Servers may simply refuse the connection.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseType'
+              example: null
+      deprecated: false
+components:
+  schemas:
+    TierUpdateStatus:
+      type: object
+      description: Contains tier code update success/failure status for each account.
+      properties:
+        externalAccountId:
+          type: string
+          description: Common card account identifier agreed between GAP and Barclays, unique per card. Generated at Barclays
+            during card apply/conversion process and provided to GAP to be stored for further communication with Barclays.
+          example: 2286f91c-f7a8-3771-8e62-cb4833aeb740
+        status:
+          type: string
+          description: Indicates whether tier update request specific to EAID has been processed successfully or declined
+            due to any of the multiple errors mentioned in Error Codes sheet.
+          example: Accepted
+        errors:
+          $ref: '#/components/schemas/ErrorDetails'
+      required:
+      - externalAccountId
+      - status
+    ErrorType:
+      type: object
+      description: Message details - additional operation execution information.
+      properties:
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying
+            purposes.
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 1c4717c4-d4a5-e3f3-4a71-b868908763ff
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+      required:
+      - code
+      - id
+      - title
+      title: ErrorType
+    LoyaltyTierResponse:
+      type: object
+      description: Loyalty Tier Response Data
+      properties:
+        tierUpdateStatusList:
+          type: array
+          description: List of tierUpdateStatus objects per unique EAID under one loyalty program, which contains information
+            about the status of tier update request processed at Barclays.
+          items:
+            $ref: '#/components/schemas/TierUpdateStatus'
+      required:
+      - tierUpdateStatusList
+    ErrorResponseType:
+      type: object
+      description: 'An API error response. '
+      properties:
+        errors:
+          type: array
+          description: Contains one or more error messages and is mutually exclusive with the data item. This will not be
+            returned in success scenarios.
+          items:
+            $ref: '#/components/schemas/ErrorType'
+        meta:
+          type: object
+          description: Contains Non-standard meta information
+          properties: {}
+      title: ErrorResponseType
+    LoyaltyTierResponseData:
+      type: object
+      description: Loyalty Tier Update Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/LoyaltyTierResponse'
+    LoyaltyTierRequestData:
+      type: object
+      description: Loyalty Tier Update Request Data
+      properties:
+        data:
+          $ref: '#/components/schemas/LoyaltyTierRequest'
+      title: LoyaltyTierRequestData
+    ErrorDetails:
+      type: object
+      description: Contains error information if the requested upgrade/downgrade is declined.
+      properties:
+        code:
+          type: string
+          description: Error code describing the type of HTTP error.
+        detail:
+          type: string
+          description: A brief message describing the reason for failure to assist with troubleshooting.
+    LoyaltyTierRequest:
+      type: object
+      description: Loyalty Tier Request Data
+      properties:
+        tierUpdateRequestList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TierUpdateRequest'
+        transactionReferenceId:
+          type: string
+      required:
+      - tierUpdateRequestList
+      - transactionReferenceId
+      title: LoyaltyTierRequest
+    TierUpdateRequest:
+      type: object
+      description: Contains account information, current and new tier codes etc.
+      properties:
+        currentTierCode:
+          type: string
+        externalAccountId:
+          type: string
+          example: 2286f91c-f7a8-3771-8e62-cb4833aeb740
+        issueCard:
+          type: boolean
+        last4OfCardNumber:
+          type: string
+          example: '4556'
+        memberId:
+          type: string
+        newTierCode:
+          type: string
+          example: ICON
+        newTierCodeExpiryDate:
+          type: string
+      required:
+      - externalAccountId
+      - last4OfCardNumber
+      - newTierCode
+      title: TierUpdateRequest
