@@ -300,6 +300,8 @@ apis:
     https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
   baseURL: https://telesto.api.barclays/open-banking/v3.1
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -3650,6 +3652,8 @@ apis:
     https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
   baseURL: https://telesto.api.barclays/open-banking/v3.1
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -4652,7 +4656,8 @@ apis:
   humanURL: >-
     https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
   baseURL: https://telesto.api.barclays/open-banking/v3.1
-  tags:
+  tags: []
+  tags_raw:
   - getAuthorizations
   properties:
   - type: OpenAPI
@@ -6992,6 +6997,8 @@ apis:
     https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
   baseURL: https://telesto.api.barclays/open-banking/v3.1
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -9500,6 +9507,8 @@ apis:
     https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation
   baseURL: https://telesto.api.barclays/open-banking/v3.1
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
