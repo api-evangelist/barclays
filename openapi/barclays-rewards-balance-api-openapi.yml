@@ -1,0 +1,393 @@
+openapi: 3.2.0
+info:
+  title: Benefits Redemption Rewards Balance API
+  description: Enables users to view and redeem their rewards
+  version: '3.0'
+tags:
+- name: Rewards Balance
+paths:
+  /cards/accounts/external/{externalAccountID}/rewards/balance:
+    summary: Operations by Account ID.
+    description: Operations by Account ID.
+    get:
+      tags:
+      - Rewards Balance
+      summary: Get current rewards balance for the given account
+      description: Get current rewards balance for the given account.
+      operationId: getRewardsBalanceV3
+      parameters:
+      - name: externalAccountID
+        in: path
+        description: A unique id (similar to UUID) created for each customer account.
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        example: 0dbcb7ee-6c59-483b-966a-44d11557665b
+      - name: Correlation-ID
+        in: header
+        description: 'Unique identifier for each incoming request. The API caller must pass this in the header, which will be cascaded through the API call stack.
+
+          This is required to maintain compliance with the current Barclays REST standards.'
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/RewardPointBalanceResponseV3'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/500_getBalance'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      deprecated: false
+components:
+  examples:
+    example-error-500_BUSINESS_VALIDATION_FAILED:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: BUSINESS_VALIDATION_FAILED
+          title: Request failed while validating the account
+          detail: Request cannot be processed, account validation failure
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed
+          detail: Invalid request, field name does not match with the API spec
+    example-error-500_TEMPORARY_UNPROCESSABLE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: TEMPORARY_UNPROCESSABLE
+          title: Request unprocessable momentarily
+          detail: Request cannot be processed momentarily
+    example-error-403:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed
+          detail: The user is not permitted to access the requested operation and it cannot be completed
+    example-error-500:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error
+          detail: Downstream service call failure while retrieving rewards balance
+    example-error-404:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found
+          detail: Couldn't locate the account
+    example-error-401:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: UNAUTHORIZED
+          title: The authorization credentials required for this request are invalid
+          detail: The authorization credentials required for this request are invalid
+    RewardBalanceResponseV3:
+      value:
+        data:
+          availableBalance: 15000
+          rewardCurrencyDisplayName: Rewards
+          rewardType: Cash
+          isCashBased: true
+    example-error-500_ACCOUNT_INELIGIBLE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: ACCOUNT_INELIGIBLE
+          title: Account is not eligible for this program
+          detail: Request cannot be processed, account is not eligible for this program
+    example-error-503:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+          detail: Scheduled service outage starting from Wednesday, 04 Jul 2050 0100 GMT until Wednesday, 04 Jul 2050 0500 GMT
+    example-error-429:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: TOO_MANY_REQUESTS
+          title: Too many requests
+          detail: The client sent too many requests and server is not able to serve them all at the moment
+  schemas:
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    RewardBalanceV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Contains rewards balance.
+      properties:
+        availableBalance:
+          type: number
+          description: Current rewards balance for the given account. Represents the total amount of rewards that can be redeemed.
+          example: 1000
+        rewardCurrencyDisplayName:
+          type: string
+          description: User-friendly display name for the reward currency type. This is human-readable name to be shown in the user interface.
+          example: Rewards
+          maxLength: 50
+          minLength: 1
+          pattern: ^.{1,50}$
+        rewardType:
+          type: string
+          description: Rewards currency type
+          example: Cash
+          maxLength: 16
+          minLength: 1
+          pattern: ^.{1,16}$
+        isCashBased:
+          type: boolean
+          description: Indicates if rewards are cash based or non cash based.
+          example: true
+      required:
+      - availableBalance
+      - isCashBased
+      - rewardCurrencyDisplayName
+      - rewardType
+      nullable: false
+    RewardBalanceDataV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Root object that holds rewards balance.
+      properties:
+        data:
+          $ref: '#/components/schemas/RewardBalanceV3'
+      required:
+      - data
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: false
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 1c4717c4-d4a5-e3f3-4a71-b868908763ff
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,']{1,250}$
+      required:
+      - code
+      - id
+      - title
+  responses:
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Unauthorized:
+              $ref: '#/components/examples/example-error-401'
+    500_getBalance:
+      description: 'Server encountered an error during processing the request. It''s s a generic error message, given when a more specific message is not available.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            INTERNAL_SERVER_ERROR:
+              $ref: '#/components/examples/example-error-500'
+            ACCOUNT_INELIGIBLE:
+              $ref: '#/components/examples/example-error-500_ACCOUNT_INELIGIBLE'
+            BUSINESS_VALIDATION_FAILED:
+              $ref: '#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED'
+            TEMPORARY_UNPROCESSABLE:
+              $ref: '#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE'
+    ServiceUnavailable:
+      description: 'Temporary maintenance of service, try again later. This is a temporary condition which will be alleviated after some delay.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            ServiceUnavailable:
+              $ref: '#/components/examples/example-error-503'
+    TooManyRequests:
+      description: 'Server received a large number of requests from a single party in a given amount of time. Client is advised to retry after the agreed cool down period.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            TooManyRequests:
+              $ref: '#/components/examples/example-error-429'
+    NotFound:
+      description: 'Server was unable to locate a resource to complete the operation. This may be temporary or permanent.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            NotFound:
+              $ref: '#/components/examples/example-error-404'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Forbidden:
+              $ref: '#/components/examples/example-error-403'
+    RewardPointBalanceResponseV3:
+      description: Contains information related to rewards balance for the given account.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RewardBalanceDataV3'
+          examples:
+            RewardPointBalanceResponseV3:
+              $ref: '#/components/examples/RewardBalanceResponseV3'
+    BadRequest:
+      description: 'The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            BadRequest:
+              $ref: '#/components/examples/example-error-400-bad-request'
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

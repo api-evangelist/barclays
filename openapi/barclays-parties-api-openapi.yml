@@ -1,0 +1,946 @@
+openapi: 3.2.0
+info:
+  title: Account and Transactions Parties API
+  description: To retrieve account information for Barclays customers
+  termsOfService: https://www.openbanking.org.uk/terms
+  contact:
+    name: Service Desk
+    url: https://www.openbanking.org.uk
+    email: ServiceDesk@openbanking.org.uk
+  license:
+    name: open-licence
+    url: https://www.openbanking.org.uk/open-licence
+  version: v4.0
+tags:
+- name: Parties
+  description: Get Parties
+paths:
+  /party:
+    summary: Get Parties
+    description: Get Parties
+    get:
+      tags:
+      - Parties
+      summary: Get Party
+      description: Retrieve details about the party that gave permission to the AISP to view an account(s).
+      operationId: GetParty
+      parameters:
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+  /accounts/{accountId}/parties:
+    summary: Get Parties
+    description: Get Parties
+    get:
+      tags:
+      - Parties
+      summary: Get Parties for an AccountId
+      description: Enables an AISP to retrieve details about the PSU account-holder(s)/operator(s).
+      operationId: GetAccountsAccountIdParties
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '200':
+          $ref: '#/components/responses/200AccountsAccountIdPartiesRead'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/401Error'
+        '500':
+          $ref: '#/components/responses/500Error'
+        '403':
+          $ref: '#/components/responses/403Error'
+        '404':
+          $ref: '#/components/responses/404Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+        '406':
+          $ref: '#/components/responses/406Error'
+        '429':
+          $ref: '#/components/responses/429Error'
+      deprecated: false
+  /accounts/{accountId}/party:
+    summary: Get Parties
+    description: Get Parties
+    get:
+      tags:
+      - Parties
+      summary: Get Party for an AccountId
+      description: Enables an AISP to retrieve details about the party that gave permission to the AISP to view a specific PSU account.
+      operationId: GetAccountsAccountIdParty
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+components:
+  responses:
+    403Error:
+      description: Forbidden
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            403ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
+    429Error:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
+            deprecated: false
+            maximum: 9999999
+            minimum: 1
+            nullable: false
+          example: 120
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    400Error:
+      description: Bad request
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            400ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
+    404Error:
+      description: Not found
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    500Error:
+      description: Internal Server Error
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            500ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
+    405Error:
+      description: Method Not Allowed
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    200AccountsAccountIdPartiesRead:
+      description: Parties Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadParty3'
+          examples:
+            get-account-parties-response:
+              value:
+                Data:
+                  Party:
+                  - PartyId: PABC123
+                    PartyType: Sole
+                    Name: Semiotec
+                    FullLegalName: Semiotec Limited
+                    LegalStructure: UK.OBIE.PrivateLimitedCompany
+                    BeneficialOwnership: true
+                    AccountRole: UK.OBIE.Principal
+                    EmailAddress: contact@semiotec.co.jp
+                    LEI: 068700IA8DVYPS77MD05
+                    Relationships:
+                      Account:
+                        Related: https://api.alphabank.com/open-banking/v4.0/aisp/accounts/22289
+                        Id: '22289'
+                    Phone: +44-2079460000
+                    Mobile: +44-7700900000
+                    Address:
+                    - AddressType: BIZZ
+                      StreetName: Street
+                      BuildingNumber: '15'
+                      PostCode: NW1 1AB
+                      TownName: London
+                      Country: GB
+                  - PartyId: PXSIF023
+                    PartyNumber: '0000007456'
+                    PartyType: Delegate
+                    Name: Kevin Atkinson
+                    FullLegalName: Mr Kevin Bartholmew Atkinson
+                    LegalStructure: UK.OBIE.Individual
+                    BeneficialOwnership: false
+                    LEI: 068700IA8DVHGY77MD85
+                    AccountRole: UK.OBIE.Administrator
+                    EmailAddress: kev@semiotec.co.jp
+                    Relationships:
+                      Account:
+                        Related: https://api.alphabank.com/open-banking/v4.0/aisp/accounts/22289
+                        Id: '22289'
+                Links:
+                  Self: https://api.alphabank.com/open-banking/v4.0/aisp/accounts/22289/parties
+                Meta:
+                  TotalPages: 1
+    401Error:
+      description: Unauthorized
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    406Error:
+      description: Not Acceptable
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+  schemas:
+    OBInternalLegalStructureType1Code:
+      type: string
+      description: Legal standing of the party. For a full list refer to `OBInternalLegalStructureType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: UK.OBIE.Individual
+      x-namespaced-enum:
+      - UK.OBIE.CIC
+      - UK.OBIE.CIO
+      - UK.OBIE.Charity
+      - UK.OBIE.CoOp
+      - UK.OBIE.GeneralPartnership
+      - UK.OBIE.Individual
+      - UK.OBIE.LimitedLiabilityPartnership
+      - UK.OBIE.LimitedPartnership
+      - UK.OBIE.PrivateLimitedCompany
+      - UK.OBIE.PublicLimitedCompany
+      - UK.OBIE.ScottishLimitedPartnership
+      - UK.OBIE.Sole
+    BuildingNumber:
+      type: string
+      description: Number that identifies the position of a building on a street.
+      example: '11'
+      maxLength: 16
+      minLength: 1
+    CareOf:
+      type: string
+      description: The 'care of' address is used whenever sending mail to a person or organisation who does not actually live or work at the address. They will receive the mail for the individual.
+      example: Jane Smith
+      maxLength: 140
+      minLength: 1
+    PostBox:
+      type: string
+      description: Information that locates and identifies a box in a post office assigned to a person or organization, where letters for them are kept until called for.
+      example: PO Box 123456
+      maxLength: 16
+      minLength: 1
+    ISODateTime:
+      type: string
+      format: date-time
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+    OBParty2:
+      type: object
+      additionalProperties: false
+      properties:
+        PartyId:
+          $ref: '#/components/schemas/PartyId'
+        PartyNumber:
+          $ref: '#/components/schemas/PartyNumber'
+        PartyType:
+          $ref: '#/components/schemas/OBInternalPartyType1Code'
+        Name:
+          $ref: '#/components/schemas/Name_3'
+        FullLegalName:
+          $ref: '#/components/schemas/FullLegalName'
+        LegalStructure:
+          $ref: '#/components/schemas/OBInternalLegalStructureType1Code'
+        LEI:
+          $ref: '#/components/schemas/LEI'
+        BeneficialOwnership:
+          type: boolean
+          description: A flag to indicate a party's beneficial ownership of the related account
+        AccountRole:
+          $ref: '#/components/schemas/OBInternalAccountRole1Code'
+        EmailAddress:
+          $ref: '#/components/schemas/EmailAddress'
+        Phone:
+          $ref: '#/components/schemas/PhoneNumber_0'
+        Mobile:
+          $ref: '#/components/schemas/PhoneNumber_1'
+        Relationships:
+          $ref: '#/components/schemas/OBPartyRelationships1'
+        Address:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBPostalAddress7'
+          maxItems: 99999
+          minItems: 0
+      required:
+      - PartyId
+    OBError1:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/OBExternalStatusReason1Code'
+        Message:
+          type: string
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBL doesn''t standardise this field'
+          maxLength: 500
+          minLength: 1
+        Path:
+          type: string
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          maxLength: 500
+          minLength: 1
+        Url:
+          type: string
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+      required:
+      - ErrorCode
+    BuildingName:
+      type: string
+      description: Name of a referenced building.
+      maxLength: 140
+      minLength: 1
+    OBInternalAccountRole1Code:
+      type: string
+      description: A party’s role with respect to the related account. For a full list refer to `OBInternalAccountRole1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      x-namespaced-enum:
+      - UK.OBIE.Administrator
+      - UK.OBIE.Beneficiary
+      - UK.OBIE.CustodianForMinor
+      - UK.OBIE.Granter
+      - UK.OBIE.LegalGuardian
+      - UK.OBIE.OtherParty
+      - UK.OBIE.PowerOfAttorney
+      - UK.OBIE.Principal
+      - UK.OBIE.Protector
+      - UK.OBIE.RegisteredShareholderName
+      - UK.OBIE.SecondaryOwner
+      - UK.OBIE.SeniorManagingOfficial
+      - UK.OBIE.Settlor
+      - UK.OBIE.SuccessorOnDeath
+    OBAddressType2Code:
+      type: string
+      description: Identifies the nature of the postal address. <br /> For a full set of codes see `OBAddressType2Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets).
+      enum:
+      - BIZZ
+      - DLVY
+      - MLTO
+      - PBOX
+      - ADDR
+      - HOME
+      - CORR
+      - STAT
+      example: BIZZ
+    StreetName:
+      type: string
+      description: Name of a street or thoroughfare.
+      example: Bank Street
+      maxLength: 140
+      minLength: 1
+    PartyNumber:
+      type: string
+      description: Number assigned by an agent to identify its customer.
+      example: '20202002'
+      maxLength: 35
+      minLength: 1
+    Meta:
+      type: object
+      additionalProperties: false
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+          example: 42
+          maximum: 999999
+          minimum: 0
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      title: MetaData
+    Floor:
+      type: string
+      description: Number that identifies the level within a building
+      example: '11'
+      maxLength: 70
+      minLength: 1
+    OBReadParty3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        Data:
+          type: object
+          properties:
+            Party:
+              type: array
+              items:
+                $ref: '#/components/schemas/OBParty2'
+              maxItems: 99999
+              minItems: 0
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - Data
+      nullable: false
+    Links:
+      type: object
+      additionalProperties: false
+      description: Links relevant to the payload
+      properties:
+        Self:
+          type: string
+          format: uri
+        First:
+          type: string
+          format: uri
+        Prev:
+          type: string
+          format: uri
+        Next:
+          type: string
+          format: uri
+        Last:
+          type: string
+          format: uri
+      required:
+      - Self
+    OBErrorResponse1:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      properties:
+        Id:
+          type: string
+          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
+          maxLength: 40
+          minLength: 1
+        Code:
+          type: string
+          description: Deprecated <br />High level textual error code, to help categorise the errors.
+          example: 400 BadRequest
+          maxLength: 40
+          minLength: 1
+        Message:
+          type: string
+          description: Deprecated <br />Brief Error message
+          example: There is something wrong with the request parameters provided
+          maxLength: 500
+          minLength: 1
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBError1'
+          maxItems: 99999
+          minItems: 1
+      required:
+      - Errors
+      nullable: false
+    OBExternalStatusReason1Code:
+      type: string
+      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: U001
+      maxLength: 4
+      minLength: 4
+    PostCode:
+      type: string
+      description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+      example: EC2N 4AG
+      maxLength: 16
+      minLength: 1
+    OBInternalPartyType1Code:
+      type: string
+      description: Party type, in a coded form. For a full list see `OBInternalPartyType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      enum:
+      - Delegate
+      - Joint
+      - Sole
+      example: Joint
+    TownName:
+      type: string
+      description: Name of a built-up area, with defined boundaries, and a local government.
+      example: London
+      maxLength: 140
+      minLength: 1
+    EmailAddress:
+      type: string
+      description: Address for electronic mail (e-mail).
+      example: d.user@semiotec.co.jp
+      maxLength: 256
+      minLength: 1
+    DistrictName:
+      type: string
+      description: Number that of the regional area, known as a district, which forms part of an address
+      example: Greater London
+      maxLength: 140
+      minLength: 1
+    Name_3:
+      type: string
+      description: Name by which a party is known and which is usually used to identify that party.
+      example: Mx Jane Smith
+      maxLength: 350
+      minLength: 1
+    LEI:
+      type: string
+      description: Legal entity identification as an alternate identification for a party. Legal Entity Identifier is a code allocated to a party as described in ISO 17442 "Financial Services - Legal Entity Identifier (LEI)".
+      example: IZ9Q00LZEVUKWCQY6X15
+      maxLength: 20
+      minLength: 1
+      pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
+    PhoneNumber_1:
+      type: string
+      description: Collection of information that identifies a mobile phone number, as defined by telecom services.
+      example: +44-7700900000
+      pattern: \+[0-9]{1,3}-[0-9()+\-]{1,30}
+    Room:
+      type: string
+      description: Information that locates and identifies a room to form part of an address
+      example: Basement 03
+      maxLength: 70
+      minLength: 1
+    UnitNumber:
+      type: string
+      description: Number that identifies the unit of a specific address .
+      example: A88
+      maxLength: 16
+      minLength: 1
+    OBPartyRelationships1:
+      type: object
+      description: The Party's relationships with other resources.
+      properties:
+        Account:
+          type: object
+          description: Relationship to the Account resource.
+          properties:
+            Related:
+              type: string
+              format: uri
+              description: Absolute URI to the related resource.
+              example: https://api.alphabank.com/open-banking/v4.0/aisp/accounts/89019
+            Id:
+              type: string
+              description: Unique identification as assigned by the ASPSP to uniquely identify the related resource.
+              example: '89019'
+              maxLength: 40
+              minLength: 1
+          required:
+          - Id
+          - Related
+    PartyId:
+      type: string
+      description: A unique and immutable identifier used to identify the customer resource. This identifier has no meaning to the account owner.
+      example: PXSIF023
+      maxLength: 40
+      minLength: 1
+    PhoneNumber_0:
+      type: string
+      description: Collection of information that identifies a phone number, as defined by telecom services.
+      example: +44-2079460000
+      pattern: \+[0-9]{1,3}-[0-9()+\-]{1,30}
+    OBPostalAddress7:
+      type: object
+      description: Information that locates and identifies a specific address, as defined by postal services.
+      properties:
+        AddressType:
+          $ref: '#/components/schemas/OBAddressType2Code'
+        Department:
+          type: string
+          description: Identification of a division of a large organisation or building.
+          example: Finance
+          maxLength: 70
+          minLength: 1
+        SubDepartment:
+          type: string
+          description: Identification of a sub-division of a large organisation or building.
+          example: Payroll
+          maxLength: 70
+          minLength: 1
+        StreetName:
+          $ref: '#/components/schemas/StreetName'
+        BuildingNumber:
+          $ref: '#/components/schemas/BuildingNumber'
+        BuildingName:
+          $ref: '#/components/schemas/BuildingName'
+        Floor:
+          $ref: '#/components/schemas/Floor'
+        UnitNumber:
+          $ref: '#/components/schemas/UnitNumber'
+        Room:
+          $ref: '#/components/schemas/Room'
+        PostBox:
+          $ref: '#/components/schemas/PostBox'
+        TownLocationName:
+          $ref: '#/components/schemas/TownName'
+        DistrictName:
+          $ref: '#/components/schemas/DistrictName'
+        CareOf:
+          $ref: '#/components/schemas/CareOf'
+        PostCode:
+          $ref: '#/components/schemas/PostCode'
+        TownName:
+          $ref: '#/components/schemas/TownName'
+        CountrySubDivision:
+          type: string
+          description: Identifies a subdivision of a country such as state, region, county.
+          maxLength: 35
+          minLength: 1
+        Country:
+          type: string
+          description: Nation with its own government.
+          pattern: ^[A-Z]{2,2}$
+        AddressLine:
+          type: array
+          items:
+            type: string
+            description: Information that locates and identifies a specific address, as defined by postal services, presented in free format text.
+            maxLength: 70
+            minLength: 1
+          maxItems: 7
+          minItems: 0
+    FullLegalName:
+      type: string
+      description: The full legal name of the party.
+      example: Jane Smith
+      maxLength: 350
+      minLength: 1
+  parameters:
+    x-fapi-interaction-id:
+      name: x-fapi-interaction-id
+      in: header
+      description: An RFC4122 UID used as a correlation id.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 36
+        minLength: 32
+        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+        nullable: false
+      example: 93bac548-d2de-4546-b106-880a5018460d
+    x-fapi-customer-ip-address:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      required: false
+      schema:
+        type: string
+        maxLength: 40
+        minLength: 7
+        pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+        nullable: false
+      example: 104.25.212.99
+    Authorization:
+      name: Authorization
+      in: header
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      required: true
+      schema:
+        type: string
+        maxLength: 4871
+        minLength: 1
+        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
+        nullable: false
+      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
+    x-customer-user-agent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 500
+        minLength: 1
+        nullable: false
+      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
+    AccountId:
+      name: accountId
+      in: path
+      description: AccountId
+      required: true
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 20
+        minLength: 1
+        pattern: ^\d{1,20}$
+        nullable: false
+      example: '12345678901234567890'
+    x-fapi-auth-date:
+      name: x-fapi-auth-date
+      in: header
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 29
+        minLength: 29
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+        nullable: false
+      example: Sun, 10 Sep 2017 19:43:31 UTC
+  securitySchemes:
+    TPPOAuth2Security:
+      type: oauth2
+      description: TPP client credential authorisation flow with the ASPSP
+      flows:
+        clientCredentials:
+          tokenUrl: https://authserver.example/token
+          scopes:
+            accounts: Ability to read Accounts information
+    PSUOAuth2Security:
+      type: oauth2
+      description: OAuth flow, it is required when the PSU needs to perform SCA with the ASPSP when a TPP wants to access an ASPSP resource owned by the PSU
+      flows:
+        authorizationCode:
+          authorizationUrl: https://authserver.example/authorization
+          tokenUrl: https://authserver.example/token
+          scopes:
+            accounts: Ability to read Accounts information

@@ -1,0 +1,991 @@
+openapi: 3.2.0
+info:
+  title: Payments Payment Product External API Auto Pay API
+  description: Enables customers to easily create, update, or cancel payments
+  version: '2.0'
+tags:
+- name: paymentProductExternalAPI-AutoPay
+  description: OAS3 External AutoPay APIs
+paths:
+  /cards/accounts/{extAccountId}/payments/subscriptions/{subscriptionId}:
+    summary: Update AutoPay subscription for AccountId from Partner
+    description: Update an AutoPay subscription using this end point
+    patch:
+      tags:
+      - paymentProductExternalAPI-AutoPay
+      summary: Update an AutoPay subscription - update attributes or cancel
+      description: Update the amount, pay option or cancel an AutoPay subscription
+      operationId: updateSubscriptionV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: subscriptionId
+        in: path
+        description: Subscription ID
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 17
+          minLength: 1
+          pattern: ^[0-9]{1,17}$
+        example: 1234
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: application/json
+      requestBody:
+        description: Modify Subscription Request Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifySubscriptionReqData'
+            examples:
+              ModifySubscriptionReq:
+                $ref: '#/components/examples/ModifySubscriptionReq'
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/ModifySubscriptionRes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments/subscriptions:
+    summary: Manage AutoPay subscription for the account id provided by Partner
+    description: View or Add an AutoPay subscription using this end point
+    get:
+      tags:
+      - paymentProductExternalAPI-AutoPay
+      summary: Retrieve the most recent and active AutoPay subscription
+      description: Retrieve the most recent and active AutoPay subscription for viewing by the customer
+      operationId: getSubscriptionV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/SubscriptionRes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+    post:
+      tags:
+      - paymentProductExternalAPI-AutoPay
+      summary: Create an AutoPay subscription
+      description: Set up a new AutoPay subscription using the options present to the customer
+      operationId: addSubscriptionV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Content-Type
+        in: header
+        description: Content-Type
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 35
+          minLength: 16
+          pattern: ^[a-zA-Z0-9\-/= ]{16,35}$
+        example: application/json
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      requestBody:
+        description: Create Subscription Request Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSubscriptionReqData'
+            examples:
+              AddSubscriptionReq:
+                $ref: '#/components/examples/AddSubscriptionReq'
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/AddSubscriptionRes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+  /cards/accounts/{extAccountId}/payments/subscriptions/options:
+    summary: Manage options for setting up an AutoPay subscription for the account id provided by Partner
+    description: 'Manage options for date & payment options (e.g. ''Minimum Due'') using which the customer can
+
+      set up an AutoPay subscription'
+    get:
+      tags:
+      - paymentProductExternalAPI-AutoPay
+      summary: Retrieve options for setting up an AutoPay subscription
+      description: 'Retrieve options for date (e.g. 5 days before Due Date)
+
+        & payment options (e.g. ''Minimum Due'') using which the customer can set up an AutoPay subscription'
+      operationId: getSubscriptionOptionsV2
+      parameters:
+      - name: extAccountId
+        in: path
+        description: External Account ID received from the partner
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^c[\d]{1,12}$|^m[\d]{1,20}$
+        example: e17e3338-344b-403c-8a87-f7d8006d6e33
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/SubscriptionOptionsRes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+components:
+  schemas:
+    DayOfMonth:
+      type: integer
+      default: 1
+      description: Day of the Month on which the subscription was set up
+      example: 12
+      maximum: 31
+      minimum: 1
+    ModifySubscriptionResData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Response for subscription update
+      properties:
+        data:
+          $ref: '#/components/schemas/ModifySubscriptionResponse'
+      required:
+      - data
+      nullable: false
+    SubscriptionOptions_dateOptions_daysBeforeDueDateRange:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Interval from Due Date within the subscription can be set up
+      properties:
+        minimum:
+          $ref: '#/components/schemas/MinMaxDueDateInterval'
+        maximum:
+          $ref: '#/components/schemas/MinMaxDueDateInterval'
+      required:
+      - maximum
+      - minimum
+      nullable: false
+    SubscriptionOptionsData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Subscription options data
+      properties:
+        data:
+          $ref: '#/components/schemas/SubscriptionOptions'
+      required:
+      - data
+      nullable: false
+    ModifySubscriptionResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the response for updating an AutoPay subscription
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        subscriptionDetails:
+          $ref: '#/components/schemas/ModifySubscriptionDetails'
+        riskAssessmentDetails:
+          $ref: '#/components/schemas/RiskAssessmentDetails'
+      required:
+      - status
+      nullable: false
+    BankAccountId:
+      type: string
+      deprecated: false
+      description: ID of bank account added as payment source
+      example: '123456789'
+      maxLength: 12
+      minLength: 1
+      pattern: ^([0-9]{1,12})$
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    ModifySubscriptionReqData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Update a subscription
+      properties:
+        data:
+          $ref: '#/components/schemas/ModifySubscriptionRequest'
+      required:
+      - data
+      nullable: false
+    actionSubmittedTime:
+      type: string
+      format: date-time
+      deprecated: false
+      description: Timestamp when the submit button was clicked
+      example: '2021-05-29T08:12:38-04:00'
+      nullable: false
+    RepeatPayOptions:
+      type: string
+      description: The amount options customer can choose to pay for the subscription
+      enum:
+      - MINIMUM_DUE
+      - STATEMENT_BALANCE
+      - CUSTOM
+      example: MINIMUM_DUE
+    Subscription:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information for an account
+      properties:
+        subscriptionId:
+          $ref: '#/components/schemas/SubscriptionId'
+        amount:
+          $ref: '#/components/schemas/amt'
+        daysBeforeDueDateToProcess:
+          $ref: '#/components/schemas/DaysBeforeDueDateToProcess'
+        repeatPayOptionType:
+          $ref: '#/components/schemas/RepeatPayOptions'
+        dayOfMonth:
+          $ref: '#/components/schemas/DayOfMonth'
+        enrolledDate:
+          $ref: '#/components/schemas/DateType'
+        lastModifiedDate:
+          $ref: '#/components/schemas/DateType'
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+      required:
+      - amount
+      - bankAccountId
+      - dayOfMonth
+      - daysBeforeDueDateToProcess
+      - enrolledDate
+      - lastModifiedDate
+      - repeatPayOptionType
+      - subscriptionId
+      nullable: false
+    ModifySubscriptionDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information after enrollment
+      properties:
+        subscriptionId:
+          $ref: '#/components/schemas/SubscriptionId'
+        enrolledDate:
+          $ref: '#/components/schemas/DateType'
+        amount:
+          $ref: '#/components/schemas/amt'
+        referenceNumber:
+          $ref: '#/components/schemas/ReferenceNumber'
+        paymentDate:
+          $ref: '#/components/schemas/DateType'
+        lastModifiedDate:
+          $ref: '#/components/schemas/DateType'
+        firstPaymentDate:
+          $ref: '#/components/schemas/DateType'
+        effectiveDate:
+          $ref: '#/components/schemas/DateType'
+      required:
+      - amount
+      - enrolledDate
+      - lastModifiedDate
+      - paymentDate
+      - referenceNumber
+      - subscriptionId
+    Status:
+      type: string
+      deprecated: false
+      description: Fraud verification status
+      enum:
+      - SUCCESS
+      - CHALLENGE
+      - DENIED
+      example: CHALLENGE
+      nullable: false
+    sessionLoginTime:
+      type: string
+      format: date-time
+      deprecated: false
+      description: Timestamp when the customer login
+      example: '2021-05-29T08:12:38-04:00'
+      nullable: false
+    AuthorizationText:
+      type: string
+      deprecated: false
+      description: Authorization text displayed on the subscription confirmation screen
+      example: By selecting a subscription, I authorize Barclays..
+      maxLength: 4000
+      minLength: 0
+      pattern: ^([A-Za-z0-9\s_().,$"•“”\/-]{0,4000})$
+      nullable: false
+    SubscriptionId:
+      type: integer
+      default: 1
+      description: Unique Identifier for the Subscription
+      example: 12
+      maximum: 999999
+      minimum: 1
+    RiskAssessmentDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Risk summary
+      properties:
+        verificationContextId:
+          type: string
+          deprecated: false
+          description: Fraud verification context id
+          example: e17e3338-344b-403c-8a87-f7d8006d6e33
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+          nullable: false
+      required:
+      - verificationContextId
+      nullable: false
+    SubscriptionOptions_dateOptions:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Options for the dates on which the subscription can be set up for
+      properties:
+        dueDate:
+          $ref: '#/components/schemas/DateType'
+        daysBeforeDueDateRange:
+          $ref: '#/components/schemas/SubscriptionOptions_dateOptions_daysBeforeDueDateRange'
+      required:
+      - daysBeforeDueDateRange
+      - dueDate
+      nullable: false
+    amt:
+      type: number
+      deprecated: false
+      description: Amount figure of payment amount
+      example: 99.0
+      maximum: 999999.99
+      minimum: 0
+      nullable: false
+    CustomAmountRange:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Range allowed for the custom amount payment option
+      properties:
+        minimum:
+          $ref: '#/components/schemas/MinCustomRangeInterval'
+        maximum:
+          $ref: '#/components/schemas/MaxCustomRangeInterval'
+      required:
+      - maximum
+      - minimum
+      nullable: false
+    RepeatPayOptionType:
+      type: array
+      additionalProperties: false
+      deprecated: false
+      description: The amount options customer can choose to pay for the subscription
+      items:
+        $ref: '#/components/schemas/RepeatPayOptions'
+      maxItems: 3
+      minItems: 3
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 9709-4675-2456-7801
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]{1,50}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - id
+      - title
+    AddSubscriptionResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the response for enrollment for an AutoPay subscription
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        subscriptionDetails:
+          $ref: '#/components/schemas/AddSubscriptionDetails'
+        riskAssessmentDetails:
+          $ref: '#/components/schemas/RiskAssessmentDetails'
+      required:
+      - status
+      nullable: false
+    AddSubscriptionReqData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Enroll to a subscription request data
+      properties:
+        data:
+          $ref: '#/components/schemas/SubscriptionRequest'
+      required:
+      - data
+      nullable: false
+    DaysBeforeDueDateToProcess:
+      type: integer
+      default: 1
+      description: Days from Due Date from which the subscription was set up
+      example: 12
+      maximum: 99
+      minimum: 0
+    MaxCustomRangeInterval:
+      type: integer
+      default: 999999
+      description: Higher limit for Custom Amount payment option
+      example: 999999
+      maximum: 999999
+      minimum: 1
+    SubscriptionRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information for creating/patching an AutoPay subscription
+      properties:
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        amount:
+          $ref: '#/components/schemas/amt'
+        daysBeforeDueDateToProcess:
+          $ref: '#/components/schemas/DaysBeforeDueDateToProcess'
+        repeatPayOptionType:
+          $ref: '#/components/schemas/RepeatPayOptions'
+        sessionLoginTime:
+          $ref: '#/components/schemas/sessionLoginTime'
+        authorizationText:
+          $ref: '#/components/schemas/AuthorizationText'
+        actionSubmittedTime:
+          $ref: '#/components/schemas/actionSubmittedTime'
+      required:
+      - actionSubmittedTime
+      - authorizationText
+      - bankAccountId
+      - daysBeforeDueDateToProcess
+      - repeatPayOptionType
+      nullable: false
+    AddSubscriptionDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information after enrollment
+      properties:
+        subscriptionId:
+          $ref: '#/components/schemas/SubscriptionId'
+        enrolledDate:
+          $ref: '#/components/schemas/DateType'
+        firstPaymentDate:
+          $ref: '#/components/schemas/DateType'
+        amount:
+          $ref: '#/components/schemas/amt'
+        referenceNumber:
+          $ref: '#/components/schemas/ReferenceNumber'
+        paymentDate:
+          $ref: '#/components/schemas/DateType'
+      required:
+      - amount
+      - enrolledDate
+      - firstPaymentDate
+      - paymentDate
+      - referenceNumber
+      - subscriptionId
+    ModifySubscriptionRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding the subscription information for updating an AutoPay subscription
+      properties:
+        action:
+          type: string
+          deprecated: false
+          description: Action describing whether the payment needs to be updated or canceled
+          enum:
+          - UPDATE
+          - CANCEL
+          example: UPDATE
+          nullable: false
+        modifySubscriptionDetails:
+          $ref: '#/components/schemas/SubscriptionRequest'
+      required:
+      - action
+      - modifySubscriptionDetails
+      nullable: false
+    SubscriptionOptions:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Object holding options for date, payment option type & range for custom amount
+      properties:
+        dateOptions:
+          $ref: '#/components/schemas/SubscriptionOptions_dateOptions'
+        repeatPayOptionType:
+          $ref: '#/components/schemas/RepeatPayOptionType'
+        customAmountRange:
+          $ref: '#/components/schemas/CustomAmountRange'
+      required:
+      - customAmountRange
+      - dateOptions
+      - repeatPayOptionType
+      nullable: false
+    DateType:
+      type: string
+      deprecated: false
+      description: Standard Date format
+      example: 02-28-2021
+      maxLength: 10
+      minLength: 10
+      pattern: ^\d{2}-\d{2}-\d{4}$
+      nullable: false
+    ReferenceNumber:
+      type: string
+      deprecated: false
+      description: Payment reference number
+      example: '6897656'
+      maxLength: 18
+      minLength: 1
+      pattern: ^([0-9]{1,18})$
+      nullable: false
+    MinCustomRangeInterval:
+      type: integer
+      default: 29
+      description: Lower limit for Custom Amount payment option
+      example: 29
+      maximum: 29
+      minimum: 29
+    MinMaxDueDateInterval:
+      type: integer
+      default: 1
+      description: Lower or Upper limit from Due Date within the subscription can be set up
+      example: 12
+      maximum: 99
+      minimum: 0
+    AddSubscriptionResData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Response for subscription enrollment
+      properties:
+        data:
+          $ref: '#/components/schemas/AddSubscriptionResponse'
+      required:
+      - data
+      nullable: false
+    SubscriptionData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Subscription data
+      properties:
+        data:
+          $ref: '#/components/schemas/Subscription'
+      required:
+      - data
+      nullable: false
+  examples:
+    SubscriptionOptionsRes:
+      value:
+        data:
+          dateOptions:
+            dueDate: 01-02-2026
+            daysBeforeDueDateRange:
+              maximum: 10
+              minimum: 1
+          repeatPayOptionType:
+          - MINIMUM_DUE
+          - STATEMENT_BALANCE
+          - CUSTOM
+          customAmountRange:
+            maximum: 999999
+            minimum: 29
+    ModifySubscriptionRes:
+      value:
+        data:
+          status: SUCCESS
+          subscriptionDetails:
+            subscriptionId: 63
+            enrolledDate: 01-02-2026
+            firstPaymentDate: 02-02-2026
+            amount: 12.59
+            referenceNumber: '4'
+            paymentDate: 02-02-2026
+            lastModifiedDate: 02-02-2026
+    AddSubscriptionRes:
+      value:
+        data:
+          status: SUCCESS
+          subscriptionDetails:
+            subscriptionId: 63
+            enrolledDate: 01-02-2026
+            firstPaymentDate: 02-02-2026
+            amount: 12.59
+            referenceNumber: '4'
+            paymentDate: 02-02-2026
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    ModifySubscriptionReq:
+      value:
+        data:
+          action: UPDATE
+          modifySubscriptionDetails:
+            amount: 12.59
+            bankAccountId: '120'
+            daysBeforeDueDateToProcess: 10
+            repeatPayOptionType: STATEMENT_BALANCE
+            sessionLoginTime: '2026-01-10T15:45:13.922-04:00'
+            authorizationText: sample authorization text
+            actionSubmittedTime: '2026-01-10T15:45:13.922-04:00'
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    AddSubscriptionReq:
+      value:
+        data:
+          amount: 12.59
+          bankAccountId: '120'
+          daysBeforeDueDateToProcess: 10
+          repeatPayOptionType: CUSTOM
+          sessionLoginTime: '2026-01-10T15:45:13.922-04:00'
+          authorizationText: sample authorization text
+          actionSubmittedTime: '2026-01-10T15:45:13.922-04:00'
+    SubscriptionRes:
+      value:
+        data:
+          subscriptionId: 62954
+          amount: 0.88
+          daysBeforeDueDateToProcess: 6
+          repeatPayOptionType: CUSTOM
+          dayOfMonth: 6
+          enrolledDate: 01-01-2026
+          lastModifiedDate: 01-01-2026
+          bankAccountId: '120'
+  responses:
+    SubscriptionRes:
+      description: Subscription information.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionData'
+          examples:
+            SubscriptionRes:
+              $ref: '#/components/examples/SubscriptionRes'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Unauthorized:
+              $ref: '#/components/examples/example-error-401'
+    AddSubscriptionRes:
+      description: Subscription enrollment response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddSubscriptionResData'
+          examples:
+            AddSubscriptionRes:
+              $ref: '#/components/examples/AddSubscriptionRes'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            ServiceUnavailable:
+              $ref: '#/components/examples/example-error-503'
+    ModifySubscriptionRes:
+      description: Subscription enrollment response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ModifySubscriptionResData'
+          examples:
+            ModifySubscriptionRes:
+              $ref: '#/components/examples/ModifySubscriptionRes'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            NotFound:
+              $ref: '#/components/examples/example-error-404'
+    SubscriptionOptionsRes:
+      description: Subscription options list.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionOptionsData'
+          examples:
+            SubscriptionOptionsRes:
+              $ref: '#/components/examples/SubscriptionOptionsRes'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            InternalServerError:
+              $ref: '#/components/examples/example-error-500'
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

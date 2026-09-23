@@ -1,0 +1,1393 @@
+openapi: 3.2.0
+info:
+  title: Product Details Personal Current Accounts API
+  description: The Barclays Product Details API allows users to discover various financial products Barclays offers. From personal accounts to SME lending products, business current accounts to commercial credit cards, users can view current product details.
+  version: '2.4'
+tags:
+- name: Personal Current Accounts
+paths:
+  /personal-current-accounts:
+    get:
+      description: Lists all Barclays Personal Account products
+      operationId: get_personal-current-accounts
+      parameters:
+      - name: If-Modified-Since
+        in: header
+        description: Used for conditional request, to retrieve data only if modified since a given date.
+        required: false
+        schema:
+          type: string
+          description: Used for conditional request, to retrieve data only if modified since a given date.
+          pattern: ^(?!\s)(Mon|Tue|Wed|Thu|Fri|Sat|Sun){1}, (\d){2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec){1} (\d){4} (\d){2}:(\d){2}:(\d){2} GMT$
+      - name: If-None-Match
+        in: header
+        description: Used for conditional request, to retrieve data only if the given Etag value does not match.
+        required: false
+        schema:
+          type: string
+          description: Used for conditional request, to retrieve data only if the given Etag value does not match.
+          pattern: ^(?!\\s)([a-zA-Z0-9,\/"* ]{1,500})$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/personal_account_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans400Response'
+              example: null
+        '500':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans500Response'
+              example: null
+        '503':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans503Response'
+              example: null
+        '429':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans429Response'
+              example: null
+        '408':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans408Response'
+              example: null
+      tags:
+      - Personal Current Accounts
+      summary: Get personal current accounts
+      x-summary-source: derived
+    head:
+      description: Gets header information on Personal Current Accounts objects.
+      operationId: head_personal-current-accounts
+      parameters:
+      - name: If-Modified-Since
+        in: header
+        description: Used for conditional request, to retrieve data only if modified since a given date.
+        required: false
+        schema:
+          type: string
+          description: Used for conditional request, to retrieve data only if modified since a given date.
+          pattern: ^(?!\s)(Mon|Tue|Wed|Thu|Fri|Sat|Sun){1}, (\d){2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec){1} (\d){4} (\d){2}:(\d){2}:(\d){2} GMT$
+      - name: If-None-Match
+        in: header
+        description: Used for conditional request, to retrieve data only if the given Etag value does not match.
+        required: false
+        schema:
+          type: string
+          description: Used for conditional request, to retrieve data only if the given Etag value does not match.
+          pattern: ^(?!\\s)([a-zA-Z0-9,\/"* ]{1,500})$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              example: null
+        '400':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans400Response'
+              example: null
+        '500':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans500Response'
+              example: null
+        '503':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans503Response'
+              example: null
+        '429':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans429Response'
+              example: null
+        '408':
+          description: ''
+          content:
+            application/prs.openbanking.opendata.v2.2+json:
+              schema:
+                $ref: '#/components/schemas/HeadUnsecuredSmeLoans408Response'
+              example: null
+      tags:
+      - Personal Current Accounts
+      summary: Head personal current accounts
+      x-summary-source: derived
+components:
+  schemas:
+    personal_account_response:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              Brand:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    BrandName:
+                      type: string
+                    PCA:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          Identification:
+                            type: string
+                          PCAMarketingState:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                StateTenurePeriod:
+                                  type: string
+                                FeaturesAndBenefits:
+                                  type: object
+                                  properties:
+                                    MobileWallet:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          Type:
+                                            type: string
+                                          OtherType:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                        required:
+                                        - Type
+                                    FeatureBenefitItem:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          Type:
+                                            type: string
+                                          Textual:
+                                            type: string
+                                          Amount:
+                                            type: string
+                                          Identification:
+                                            type: string
+                                          OtherType:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          FeatureBenefitEligibility:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                Type:
+                                                  type: string
+                                                Description:
+                                                  type: string
+                                                Textual:
+                                                  type: string
+                                                Amount:
+                                                  type: string
+                                                Period:
+                                                  type: string
+                                                OtherType:
+                                                  type: object
+                                                  properties:
+                                                    Description:
+                                                      type: string
+                                                    Code:
+                                                      type: string
+                                                    Name:
+                                                      type: string
+                                                  required:
+                                                  - Description
+                                                  - Name
+                                                Indicator:
+                                                  type: boolean
+                                                Notes:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                                Name:
+                                                  type: string
+                                              required:
+                                              - Name
+                                              - Type
+                                          Indicator:
+                                            type: boolean
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                          Name:
+                                            type: string
+                                        required:
+                                        - Identification
+                                        - Type
+                                    FeatureBenefitGroup:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          Type:
+                                            type: string
+                                          ApplicationFrequency:
+                                            type: string
+                                          OtherCalculationFrequency:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          FeatureBenefitItem:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                Type:
+                                                  type: string
+                                                Textual:
+                                                  type: string
+                                                Amount:
+                                                  type: string
+                                                Identification:
+                                                  type: string
+                                                OtherType:
+                                                  type: object
+                                                  properties:
+                                                    Description:
+                                                      type: string
+                                                    Code:
+                                                      type: string
+                                                    Name:
+                                                      type: string
+                                                  required:
+                                                  - Description
+                                                  - Name
+                                                FeatureBenefitEligibility:
+                                                  type: array
+                                                  items:
+                                                    type: object
+                                                    properties:
+                                                      Type:
+                                                        type: string
+                                                      Description:
+                                                        type: string
+                                                      Textual:
+                                                        type: string
+                                                      Amount:
+                                                        type: string
+                                                      Period:
+                                                        type: string
+                                                      OtherType:
+                                                        type: object
+                                                        properties:
+                                                          Description:
+                                                            type: string
+                                                          Code:
+                                                            type: string
+                                                          Name:
+                                                            type: string
+                                                        required:
+                                                        - Description
+                                                        - Name
+                                                      Indicator:
+                                                        type: boolean
+                                                      Notes:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                      Name:
+                                                        type: string
+                                                    required:
+                                                    - Name
+                                                    - Type
+                                                Indicator:
+                                                  type: boolean
+                                                Notes:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                                Name:
+                                                  type: string
+                                              required:
+                                              - Identification
+                                              - Type
+                                          Fee:
+                                            type: string
+                                          CalculationFrequency:
+                                            type: string
+                                          BenefitGroupNominalValue:
+                                            type: string
+                                          OtherType:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          FeatureBenefitEligibility:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                Type:
+                                                  type: string
+                                                Description:
+                                                  type: string
+                                                Textual:
+                                                  type: string
+                                                Amount:
+                                                  type: string
+                                                Period:
+                                                  type: string
+                                                OtherType:
+                                                  type: object
+                                                  properties:
+                                                    Description:
+                                                      type: string
+                                                    Code:
+                                                      type: string
+                                                    Name:
+                                                      type: string
+                                                  required:
+                                                  - Description
+                                                  - Name
+                                                Indicator:
+                                                  type: boolean
+                                                Notes:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                                Name:
+                                                  type: string
+                                              required:
+                                              - Name
+                                              - Type
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                          OtherApplicationFrequency:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          Name:
+                                            type: string
+                                        required:
+                                        - Name
+                                    Card:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          Type:
+                                            type: string
+                                          Scheme:
+                                            type: string
+                                          ContactlessIndicator:
+                                            type: boolean
+                                          OtherType:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                          OtherScheme:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                        required:
+                                        - ContactlessIndicator
+                                        - Scheme
+                                        - Type
+                                PredecessorID:
+                                  type: string
+                                Eligibility:
+                                  type: object
+                                  properties:
+                                    AgeEligibility:
+                                      type: object
+                                      properties:
+                                        MinimumAge:
+                                          type: number
+                                        MaximumAge:
+                                          type: number
+                                        Notes:
+                                          type: array
+                                          items:
+                                            type: string
+                                    OtherEligibility:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          Type:
+                                            type: string
+                                          Description:
+                                            type: string
+                                          Textual:
+                                            type: string
+                                          Amount:
+                                            type: string
+                                          Period:
+                                            type: string
+                                          OtherType:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          Indicator:
+                                            type: boolean
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                          Name:
+                                            type: string
+                                        required:
+                                        - Name
+                                        - Type
+                                    CreditCheck:
+                                      type: object
+                                      properties:
+                                        ScoringType:
+                                          type: string
+                                        Notes:
+                                          type: array
+                                          items:
+                                            type: string
+                                    ResidencyEligibility:
+                                      type: object
+                                      properties:
+                                        ResidencyIncluded:
+                                          type: array
+                                          items:
+                                            type: string
+                                        OtherResidencyType:
+                                          type: object
+                                          properties:
+                                            Description:
+                                              type: string
+                                            Code:
+                                              type: string
+                                            Name:
+                                              type: string
+                                          required:
+                                          - Description
+                                          - Name
+                                        ResidencyType:
+                                          type: string
+                                        Notes:
+                                          type: array
+                                          items:
+                                            type: string
+                                      required:
+                                      - ResidencyIncluded
+                                    IDVerificationCheck:
+                                      type: object
+                                      properties:
+                                        URL:
+                                          type: string
+                                        Notes:
+                                          type: array
+                                          items:
+                                            type: string
+                                LastMarketedDate:
+                                  type: string
+                                  format: date-time
+                                OtherFeesCharges:
+                                  type: object
+                                  properties:
+                                    FeeChargeCap:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          CappingPeriod:
+                                            type: string
+                                          OtherFeeType:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                Description:
+                                                  type: string
+                                                Code:
+                                                  type: string
+                                                Name:
+                                                  type: string
+                                              required:
+                                              - Description
+                                              - Name
+                                          FeeType:
+                                            type: array
+                                            items:
+                                              type: string
+                                          FeeCapOccurrence:
+                                            type: number
+                                          MinMaxType:
+                                            type: string
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                          FeeCapAmount:
+                                            type: string
+                                        required:
+                                        - FeeType
+                                        - MinMaxType
+                                    FeeChargeDetail:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          FeeApplicableRange:
+                                            type: object
+                                            properties:
+                                              MaximumRate:
+                                                type: string
+                                              MaximumAmount:
+                                                type: string
+                                              MinimumAmount:
+                                                type: string
+                                              MinimumRate:
+                                                type: string
+                                          OtherFeeCategory:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          ApplicationFrequency:
+                                            type: string
+                                          OtherFeeType:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              FeeCategory:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - FeeCategory
+                                            - Name
+                                          FeeType:
+                                            type: string
+                                          OtherCalculationFrequency:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          FeeRate:
+                                            type: string
+                                          FeeRateType:
+                                            type: string
+                                          OtherApplicationFrequency:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          OtherFeeRateType:
+                                            type: object
+                                            properties:
+                                              Description:
+                                                type: string
+                                              Code:
+                                                type: string
+                                              Name:
+                                                type: string
+                                            required:
+                                            - Description
+                                            - Name
+                                          CalculationFrequency:
+                                            type: string
+                                          FeeCategory:
+                                            type: string
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                          FeeAmount:
+                                            type: string
+                                        required:
+                                        - ApplicationFrequency
+                                        - CalculationFrequency
+                                        - FeeCategory
+                                        - FeeType
+                                  required:
+                                  - FeeChargeDetail
+                                Identification:
+                                  type: string
+                                StateTenureLength:
+                                  type: number
+                                CreditInterest:
+                                  type: object
+                                  properties:
+                                    TierBandSet:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          Destination:
+                                            type: string
+                                          TierBandMethod:
+                                            type: string
+                                          CalculationMethod:
+                                            type: string
+                                          CreditInterestEligibility:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                Type:
+                                                  type: string
+                                                Description:
+                                                  type: string
+                                                Textual:
+                                                  type: string
+                                                Amount:
+                                                  type: string
+                                                Period:
+                                                  type: string
+                                                OtherType:
+                                                  type: object
+                                                  properties:
+                                                    Description:
+                                                      type: string
+                                                    Code:
+                                                      type: string
+                                                    Name:
+                                                      type: string
+                                                  required:
+                                                  - Description
+                                                  - Name
+                                                Indicator:
+                                                  type: boolean
+                                                Notes:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                                Name:
+                                                  type: string
+                                              required:
+                                              - Name
+                                              - Type
+                                          TierBand:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                FixedVariableInterestRateType:
+                                                  type: string
+                                                BankInterestRate:
+                                                  type: string
+                                                ApplicationFrequency:
+                                                  type: string
+                                                TierValueMaximum:
+                                                  type: string
+                                                BankInterestRateType:
+                                                  type: string
+                                                OtherCalculationFrequency:
+                                                  type: object
+                                                  properties:
+                                                    Description:
+                                                      type: string
+                                                    Code:
+                                                      type: string
+                                                    Name:
+                                                      type: string
+                                                  required:
+                                                  - Description
+                                                  - Name
+                                                OtherBankInterestType:
+                                                  type: object
+                                                  properties:
+                                                    Description:
+                                                      type: string
+                                                    Code:
+                                                      type: string
+                                                    Name:
+                                                      type: string
+                                                  required:
+                                                  - Description
+                                                  - Name
+                                                Identification:
+                                                  type: string
+                                                AER:
+                                                  type: string
+                                                OtherApplicationFrequency:
+                                                  type: object
+                                                  properties:
+                                                    Description:
+                                                      type: string
+                                                    Code:
+                                                      type: string
+                                                    Name:
+                                                      type: string
+                                                  required:
+                                                  - Description
+                                                  - Name
+                                                TierValueMinimum:
+                                                  type: string
+                                                CalculationFrequency:
+                                                  type: string
+                                                DepositInterestAppliedCoverage:
+                                                  type: string
+                                                Notes:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                              required:
+                                              - AER
+                                              - ApplicationFrequency
+                                              - CalculationFrequency
+                                              - DepositInterestAppliedCoverage
+                                              - FixedVariableInterestRateType
+                                              - TierValueMaximum
+                                              - TierValueMinimum
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                        required:
+                                        - TierBand
+                                        - TierBandMethod
+                                  required:
+                                  - TierBandSet
+                                Overdraft:
+                                  type: object
+                                  properties:
+                                    OverdraftTierBandSet:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          OverdraftTierBand:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                TierValueMax:
+                                                  type: string
+                                                BankGuaranteedIndicator:
+                                                  type: boolean
+                                                TierValueMin:
+                                                  type: string
+                                                EAR:
+                                                  type: string
+                                                OverdraftInterestChargingCoverage:
+                                                  type: string
+                                                Identification:
+                                                  type: string
+                                                OverdraftFeesCharges:
+                                                  type: array
+                                                  items:
+                                                    type: object
+                                                    properties:
+                                                      OverdraftFeeChargeCap:
+                                                        type: array
+                                                        items:
+                                                          type: object
+                                                          properties:
+                                                            CappingPeriod:
+                                                              type: string
+                                                            OtherFeeType:
+                                                              type: array
+                                                              items:
+                                                                type: object
+                                                                properties:
+                                                                  Description:
+                                                                    type: string
+                                                                  Code:
+                                                                    type: string
+                                                                  Name:
+                                                                    type: string
+                                                                required:
+                                                                - Description
+                                                                - Name
+                                                            FeeType:
+                                                              type: array
+                                                              items:
+                                                                type: string
+                                                            FeeCapOccurrence:
+                                                              type: number
+                                                            OverdraftControlIndicator:
+                                                              type: boolean
+                                                            MinMaxType:
+                                                              type: string
+                                                            Notes:
+                                                              type: array
+                                                              items:
+                                                                type: string
+                                                            FeeCapAmount:
+                                                              type: string
+                                                          required:
+                                                          - FeeType
+                                                          - MinMaxType
+                                                      OverdraftFeeChargeDetail:
+                                                        type: array
+                                                        items:
+                                                          type: object
+                                                          properties:
+                                                            ApplicationFrequency:
+                                                              type: string
+                                                            OtherFeeType:
+                                                              type: object
+                                                              properties:
+                                                                Description:
+                                                                  type: string
+                                                                Code:
+                                                                  type: string
+                                                                Name:
+                                                                  type: string
+                                                              required:
+                                                              - Description
+                                                              - Name
+                                                            FeeType:
+                                                              type: string
+                                                            IncrementalBorrowingAmount:
+                                                              type: string
+                                                            OtherCalculationFrequency:
+                                                              type: object
+                                                              properties:
+                                                                Description:
+                                                                  type: string
+                                                                Code:
+                                                                  type: string
+                                                                Name:
+                                                                  type: string
+                                                              required:
+                                                              - Description
+                                                              - Name
+                                                            FeeRate:
+                                                              type: string
+                                                            FeeRateType:
+                                                              type: string
+                                                            OverdraftControlIndicator:
+                                                              type: boolean
+                                                            OtherApplicationFrequency:
+                                                              type: object
+                                                              properties:
+                                                                Description:
+                                                                  type: string
+                                                                Code:
+                                                                  type: string
+                                                                Name:
+                                                                  type: string
+                                                              required:
+                                                              - Description
+                                                              - Name
+                                                            OtherFeeRateType:
+                                                              type: object
+                                                              properties:
+                                                                Description:
+                                                                  type: string
+                                                                Code:
+                                                                  type: string
+                                                                Name:
+                                                                  type: string
+                                                              required:
+                                                              - Description
+                                                              - Name
+                                                            OverdraftFeeChargeCap:
+                                                              type: object
+                                                              properties:
+                                                                CappingPeriod:
+                                                                  type: string
+                                                                OtherFeeType:
+                                                                  type: array
+                                                                  items:
+                                                                    type: object
+                                                                    properties:
+                                                                      Description:
+                                                                        type: string
+                                                                      Code:
+                                                                        type: string
+                                                                      Name:
+                                                                        type: string
+                                                                    required:
+                                                                    - Description
+                                                                    - Name
+                                                                FeeType:
+                                                                  type: array
+                                                                  items:
+                                                                    type: string
+                                                                FeeCapOccurrence:
+                                                                  type: number
+                                                                OverdraftControlIndicator:
+                                                                  type: boolean
+                                                                MinMaxType:
+                                                                  type: string
+                                                                Notes:
+                                                                  type: array
+                                                                  items:
+                                                                    type: string
+                                                                FeeCapAmount:
+                                                                  type: string
+                                                              required:
+                                                              - FeeType
+                                                              - MinMaxType
+                                                            CalculationFrequency:
+                                                              type: string
+                                                            Notes:
+                                                              type: array
+                                                              items:
+                                                                type: string
+                                                            FeeAmount:
+                                                              type: string
+                                                          required:
+                                                          - ApplicationFrequency
+                                                          - CalculationFrequency
+                                                          - FeeType
+                                                    required:
+                                                    - OverdraftFeeChargeDetail
+                                                Notes:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                              required:
+                                              - TierValueMin
+                                          OverdraftType:
+                                            type: string
+                                          TierBandMethod:
+                                            type: string
+                                          AuthorisedIndicator:
+                                            type: boolean
+                                          Identification:
+                                            type: string
+                                          OverdraftFeesCharges:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                OverdraftFeeChargeCap:
+                                                  type: array
+                                                  items:
+                                                    type: object
+                                                    properties:
+                                                      CappingPeriod:
+                                                        type: string
+                                                      OtherFeeType:
+                                                        type: array
+                                                        items:
+                                                          type: object
+                                                          properties:
+                                                            Description:
+                                                              type: string
+                                                            Code:
+                                                              type: string
+                                                            Name:
+                                                              type: string
+                                                          required:
+                                                          - Description
+                                                          - Name
+                                                      FeeType:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                      FeeCapOccurrence:
+                                                        type: number
+                                                      OverdraftControlIndicator:
+                                                        type: boolean
+                                                      MinMaxType:
+                                                        type: string
+                                                      Notes:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                      FeeCapAmount:
+                                                        type: string
+                                                    required:
+                                                    - FeeType
+                                                    - MinMaxType
+                                                OverdraftFeeChargeDetail:
+                                                  type: array
+                                                  items:
+                                                    type: object
+                                                    properties:
+                                                      ApplicationFrequency:
+                                                        type: string
+                                                      OtherFeeType:
+                                                        type: object
+                                                        properties:
+                                                          Description:
+                                                            type: string
+                                                          Code:
+                                                            type: string
+                                                          Name:
+                                                            type: string
+                                                        required:
+                                                        - Description
+                                                        - Name
+                                                      FeeType:
+                                                        type: string
+                                                      IncrementalBorrowingAmount:
+                                                        type: string
+                                                      OtherCalculationFrequency:
+                                                        type: object
+                                                        properties:
+                                                          Description:
+                                                            type: string
+                                                          Code:
+                                                            type: string
+                                                          Name:
+                                                            type: string
+                                                        required:
+                                                        - Description
+                                                        - Name
+                                                      FeeRate:
+                                                        type: string
+                                                      FeeRateType:
+                                                        type: string
+                                                      OverdraftControlIndicator:
+                                                        type: boolean
+                                                      OtherApplicationFrequency:
+                                                        type: object
+                                                        properties:
+                                                          Description:
+                                                            type: string
+                                                          Code:
+                                                            type: string
+                                                          Name:
+                                                            type: string
+                                                        required:
+                                                        - Description
+                                                        - Name
+                                                      OtherFeeRateType:
+                                                        type: object
+                                                        properties:
+                                                          Description:
+                                                            type: string
+                                                          Code:
+                                                            type: string
+                                                          Name:
+                                                            type: string
+                                                        required:
+                                                        - Description
+                                                        - Name
+                                                      OverdraftFeeChargeCap:
+                                                        type: object
+                                                        properties:
+                                                          CappingPeriod:
+                                                            type: string
+                                                          OtherFeeType:
+                                                            type: array
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                Description:
+                                                                  type: string
+                                                                Code:
+                                                                  type: string
+                                                                Name:
+                                                                  type: string
+                                                              required:
+                                                              - Description
+                                                              - Name
+                                                          FeeType:
+                                                            type: array
+                                                            items:
+                                                              type: string
+                                                          FeeCapOccurrence:
+                                                            type: number
+                                                          OverdraftControlIndicator:
+                                                            type: boolean
+                                                          MinMaxType:
+                                                            type: string
+                                                          Notes:
+                                                            type: array
+                                                            items:
+                                                              type: string
+                                                          FeeCapAmount:
+                                                            type: string
+                                                        required:
+                                                        - FeeType
+                                                        - MinMaxType
+                                                      CalculationFrequency:
+                                                        type: string
+                                                      Notes:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                      FeeAmount:
+                                                        type: string
+                                                    required:
+                                                    - ApplicationFrequency
+                                                    - CalculationFrequency
+                                                    - FeeType
+                                              required:
+                                              - OverdraftFeeChargeDetail
+                                          BufferAmount:
+                                            type: string
+                                          Notes:
+                                            type: array
+                                            items:
+                                              type: string
+                                        required:
+                                        - Identification
+                                        - OverdraftTierBand
+                                        - TierBandMethod
+                                    Notes:
+                                      type: array
+                                      items:
+                                        type: string
+                                    TcsAndCsURL:
+                                      type: string
+                                  required:
+                                  - OverdraftTierBandSet
+                                MarketingState:
+                                  type: string
+                                CoreProduct:
+                                  type: object
+                                  properties:
+                                    ServicingAccessChannels:
+                                      type: array
+                                      items:
+                                        type: string
+                                    ProductDescription:
+                                      type: string
+                                    ProductURL:
+                                      type: string
+                                    SalesAccessChannels:
+                                      type: array
+                                      items:
+                                        type: string
+                                    TcsAndCsURL:
+                                      type: string
+                                    MonthlyMaximumCharge:
+                                      type: string
+                                Notes:
+                                  type: array
+                                  items:
+                                    type: string
+                                FirstMarketedDate:
+                                  type: string
+                                  format: date-time
+                              required:
+                              - Identification
+                              - MarketingState
+                          OnSaleIndicator:
+                            type: boolean
+                          Segment:
+                            type: array
+                            items:
+                              type: string
+                          Notes:
+                            type: array
+                            items:
+                              type: string
+                          Name:
+                            type: string
+                        required:
+                        - Identification
+                        - Name
+                        - PCAMarketingState
+                  required:
+                  - BrandName
+                  - PCA
+            required:
+            - Brand
+        meta:
+          type: object
+          properties:
+            Agreement:
+              type: string
+            TermsOfUse:
+              type: string
+            License:
+              type: string
+            TotalResults:
+              type: integer
+            LastUpdated:
+              type: string
+          required:
+          - Agreement
+          - LastUpdated
+          - License
+          - TermsOfUse
+          - TotalResults
+      required:
+      - data
+      - meta
+    HeadUnsecuredSmeLoans503Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans408Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans500Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans429Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans400Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title

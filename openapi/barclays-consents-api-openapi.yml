@@ -1,0 +1,2315 @@
+openapi: 3.2.0
+info:
+  title: Barclays Consents API
+  version: v1.3.0
+  description: 'Operations tagged Consents across 2 of this provider''s published API definitions: barclays-bank-ireland-account-information-openapi.json, barclays-bank-ireland-confirmation-of-funds-openapi.json. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Consents
+paths:
+  /consents/{consentId}/authorisations/{authorisationId}:
+    get:
+      description: Retrieves the SCA status of a consent initiation's authorisation sub-resource.
+      operationId: get_consents__consentId__authorisations__authorisationId_
+      parameters:
+      - name: PSU-IP-Address
+        in: header
+        description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+        required: false
+        schema:
+          type: string
+          description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Port
+        in: header
+        description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+          maxLength: 10
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#\/]{1,10})$
+      - name: PSU-Accept
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Accept-Charset
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Accept-Encoding
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-User-Agent
+        in: header
+        description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+          maxLength: 200
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,200})$
+      - name: PSU-Accept-Language
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Http-Method
+        in: header
+        description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+          - GET
+
+          - POST
+
+          - PUT
+
+          - PATCH
+
+          - DELETE'
+        required: false
+        schema:
+          type: string
+          description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+            - GET
+
+            - POST
+
+            - PUT
+
+            - PATCH
+
+            - DELETE
+
+            '
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+      - name: PSU-Device-ID
+        in: header
+        description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+        required: false
+        schema:
+          type: string
+          description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+          maxLength: 36
+          minLength: 36
+          pattern: ^(?!\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-Geo-Location
+        in: header
+        description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+          maxLength: 27
+          minLength: 23
+          pattern: ^(?!\s)(GEO:)[0-9]{1,3}\.[-][0-9]{6}\,[-][0-9]{1,3}\.[0-9]{6}
+      - name: authorisationId
+        in: path
+        description: Resource Identification of the related SCA
+        required: true
+        schema:
+          type: string
+          description: Resource Identification of the related SCA
+          maxLength: 2
+          minLength: 1
+          pattern: ^\d{1,2}$
+      - name: consentId
+        in: path
+        description: Consent Id
+        required: true
+        schema:
+          type: string
+          description: Consent Id
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_consent_authorisation_details_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Get consents consent id authorisations authorisation id
+      x-summary-source: derived
+  /consents/{consentId}/status:
+    get:
+      description: Retrieves the status of an account information consent resource
+      operationId: get_consents__consentId__status
+      parameters:
+      - name: PSU-IP-Address
+        in: header
+        description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+        required: false
+        schema:
+          type: string
+          description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Port
+        in: header
+        description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+          maxLength: 10
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#\/]{1,10})$
+      - name: PSU-Accept
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Accept-Charset
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Accept-Encoding
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-User-Agent
+        in: header
+        description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+          maxLength: 200
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,200})$
+      - name: PSU-Accept-Language
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Http-Method
+        in: header
+        description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+          - GET
+
+          - POST
+
+          - PUT
+
+          - PATCH
+
+          - DELETE'
+        required: false
+        schema:
+          type: string
+          description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+            - GET
+
+            - POST
+
+            - PUT
+
+            - PATCH
+
+            - DELETE
+
+            '
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+      - name: PSU-Device-ID
+        in: header
+        description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+        required: false
+        schema:
+          type: string
+          description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+          maxLength: 36
+          minLength: 36
+          pattern: ^(?!\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-Geo-Location
+        in: header
+        description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+          maxLength: 27
+          minLength: 23
+          pattern: ^(?!\s)(GEO:)[0-9]{1,3}\.[-][0-9]{6}\,[-][0-9]{1,3}\.[0-9]{6}
+      - name: consentId
+        in: path
+        description: Consent Id
+        required: true
+        schema:
+          type: string
+          description: Consent Id
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_consent_status_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Get consents consent id status
+      x-summary-source: derived
+  /consents/{consentId}/authorisations:
+    get:
+      description: Retrieves a list of all authorisation subresources IDs which have been created. This function returns an array of hyperlinks to all generated authorisation sub-resources.
+      operationId: get_consents__consentId__authorisations
+      parameters:
+      - name: PSU-IP-Address
+        in: header
+        description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+        required: false
+        schema:
+          type: string
+          description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Port
+        in: header
+        description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+          maxLength: 10
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#\/]{1,10})$
+      - name: PSU-Accept
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Accept-Charset
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Accept-Encoding
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-User-Agent
+        in: header
+        description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+          maxLength: 200
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,200})$
+      - name: PSU-Accept-Language
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Http-Method
+        in: header
+        description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+          - GET
+
+          - POST
+
+          - PUT
+
+          - PATCH
+
+          - DELETE'
+        required: false
+        schema:
+          type: string
+          description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+            - GET
+
+            - POST
+
+            - PUT
+
+            - PATCH
+
+            - DELETE
+
+            '
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+      - name: PSU-Device-ID
+        in: header
+        description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+        required: false
+        schema:
+          type: string
+          description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+          maxLength: 36
+          minLength: 36
+          pattern: ^(?!\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-Geo-Location
+        in: header
+        description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+          maxLength: 27
+          minLength: 23
+          pattern: ^(?!\s)(GEO:)[0-9]{1,3}\.[-][0-9]{6}\,[-][0-9]{1,3}\.[0-9]{6}
+      - name: consentId
+        in: path
+        description: Consent Id
+        required: true
+        schema:
+          type: string
+          description: Consent Id
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_consent_authorisations_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Get consents consent id authorisations
+      x-summary-source: derived
+  /consents:
+    post:
+      description: Creates an account information consent resource at the ASPSP regarding access to accounts specified in this request.
+      operationId: post_consents
+      parameters:
+      - name: PSU-IP-Address
+        in: header
+        description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+        required: false
+        schema:
+          type: string
+          description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Port
+        in: header
+        description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+          maxLength: 10
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#\/]{1,10})$
+      - name: PSU-Accept
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Accept-Charset
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Accept-Encoding
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-User-Agent
+        in: header
+        description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+          maxLength: 200
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,200})$
+      - name: PSU-Accept-Language
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Http-Method
+        in: header
+        description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+          - GET
+
+          - POST
+
+          - PUT
+
+          - PATCH
+
+          - DELETE'
+        required: false
+        schema:
+          type: string
+          description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+            - GET
+
+            - POST
+
+            - PUT
+
+            - PATCH
+
+            - DELETE
+
+            '
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+      - name: PSU-Device-ID
+        in: header
+        description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+        required: false
+        schema:
+          type: string
+          description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+          maxLength: 36
+          minLength: 36
+          pattern: ^(?!\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-Geo-Location
+        in: header
+        description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+          maxLength: 27
+          minLength: 23
+          pattern: ^(?!\s)(GEO:)[0-9]{1,3}\.[-][0-9]{6}\,[-][0-9]{1,3}\.[0-9]{6}
+      - name: PSU-ID
+        in: header
+        description: Client ID of the PSU in the ASPSP client interface
+        required: false
+        schema:
+          type: string
+          description: Client ID of the PSU in the ASPSP client interface
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-ID-Type
+        in: header
+        description: Type of the PSU-ID, needed in scenarios where PSUs have several PSU-IDs as access possibility.
+        required: false
+        schema:
+          type: string
+          description: Type of the PSU-ID, needed in scenarios where PSUs have several PSU-IDs as access possibility.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Corporate-ID
+        in: header
+        description: Only used in a corporate context
+        required: false
+        schema:
+          type: string
+          description: Only used in a corporate context
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Corporate-ID-Type
+        in: header
+        description: Only used in a corporate context
+        required: false
+        schema:
+          type: string
+          description: Only used in a corporate context
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: Digest
+        in: header
+        description: Is contained only if the "Signature" element is contained in the header of the request
+        required: false
+        schema:
+          type: string
+          description: Is contained only if the "Signature" element is contained in the header of the request
+          maxLength: 100
+          minLength: 1
+      - name: Signature
+        in: header
+        description: A signature of the request by the TPP on application level.
+        required: false
+        schema:
+          type: string
+          description: A signature of the request by the TPP on application level.
+          maxLength: 1000
+          minLength: 1
+      - name: TPP-Redirect-Preferred
+        in: header
+        description: 'If it equals true, the TPP prefers a Redirect over Decoupled SCA approach. If it equals false, Decoupled SCA Approach will be applied
+
+          IMPORTANT - Currently, Implicit Redirect SCA Approach is supported, so TPP-Redirect-Preferred must equal true.'
+        required: false
+        schema:
+          type: boolean
+          description: 'If it equals true, the TPP prefers a Redirect over Decoupled SCA approach. If it equals false, Decoupled SCA Approach will be applied
+
+            IMPORTANT - Currently, Implicit Redirect SCA Approach is supported, so TPP-Redirect-Preferred must equal true.
+
+            '
+      - name: TPP-Redirect-URI
+        in: header
+        description: URI of the TPP, where the transaction flow shall be redirected to after a Redirect. It is mandatory for the Redirect SCA Approach (including OAuth2 SCA approach).
+        required: true
+        schema:
+          type: string
+          description: URI of the TPP, where the transaction flow shall be redirected to after a Redirect. It is mandatory for the Redirect SCA Approach (including OAuth2 SCA approach).
+          maxLength: 1000
+          minLength: 3
+      - name: TPP-Nok-Redirect-URI
+        in: header
+        description: If this URI is contained, the TPP is asking to redirect the transaction flow to this address instead of the TPP-Redirect-URI in case of a negative result of the redirect SCA method
+        required: false
+        schema:
+          type: string
+          description: If this URI is contained, the TPP is asking to redirect the transaction flow to this address instead of the TPP-Redirect-URI in case of a negative result of the redirect SCA method
+          maxLength: 1000
+          minLength: 3
+      - name: Content-Type
+        in: header
+        description: Content Type header
+        required: true
+        schema:
+          type: string
+          description: Content Type header
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_consent_request'
+            example: null
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_consent_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Post consents
+      x-summary-source: derived
+  /consents/{consentId}:
+    get:
+      description: Returns the content of an account information consent object. This is returning the data for the TPP especially in cases, where the consent was directly managed between ASPSP and PSU e.g. in a re-direct SCA Approach
+      operationId: get_consents__consentId_
+      parameters:
+      - name: PSU-IP-Address
+        in: header
+        description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+        required: false
+        schema:
+          type: string
+          description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Port
+        in: header
+        description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+          maxLength: 10
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#\/]{1,10})$
+      - name: PSU-Accept
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Accept-Charset
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Accept-Encoding
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-User-Agent
+        in: header
+        description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+          maxLength: 200
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,200})$
+      - name: PSU-Accept-Language
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Http-Method
+        in: header
+        description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+          - GET
+
+          - POST
+
+          - PUT
+
+          - PATCH
+
+          - DELETE'
+        required: false
+        schema:
+          type: string
+          description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+            - GET
+
+            - POST
+
+            - PUT
+
+            - PATCH
+
+            - DELETE
+
+            '
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+      - name: PSU-Device-ID
+        in: header
+        description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+        required: false
+        schema:
+          type: string
+          description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+          maxLength: 36
+          minLength: 36
+          pattern: ^(?!\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-Geo-Location
+        in: header
+        description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+          maxLength: 27
+          minLength: 23
+          pattern: ^(?!\s)(GEO:)[0-9]{1,3}\.[-][0-9]{6}\,[-][0-9]{1,3}\.[0-9]{6}
+      - name: consentId
+        in: path
+        description: Consent Id
+        required: true
+        schema:
+          type: string
+          description: Consent Id
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_consent_details_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Get consents consent id
+      x-summary-source: derived
+    delete:
+      description: Revoke Account Request Consent - revoke an existing consent to retrieve account details for a customer and TPP.
+      operationId: delete_consents__consentId_
+      parameters:
+      - name: PSU-IP-Address
+        in: header
+        description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+        required: false
+        schema:
+          type: string
+          description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Port
+        in: header
+        description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+          maxLength: 10
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#\/]{1,10})$
+      - name: PSU-Accept
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Accept-Charset
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Accept-Encoding
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-User-Agent
+        in: header
+        description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+          maxLength: 200
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,200})$
+      - name: PSU-Accept-Language
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Http-Method
+        in: header
+        description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+          - GET
+
+          - POST
+
+          - PUT
+
+          - PATCH
+
+          - DELETE'
+        required: false
+        schema:
+          type: string
+          description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+            - GET
+
+            - POST
+
+            - PUT
+
+            - PATCH
+
+            - DELETE
+
+            '
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+      - name: PSU-Device-ID
+        in: header
+        description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+        required: false
+        schema:
+          type: string
+          description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+          maxLength: 36
+          minLength: 36
+          pattern: ^(?!\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-Geo-Location
+        in: header
+        description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+          maxLength: 27
+          minLength: 23
+          pattern: ^(?!\s)(GEO:)[0-9]{1,3}\.[-][0-9]{6}\,[-][0-9]{1,3}\.[0-9]{6}
+      - name: consentId
+        in: path
+        description: Consent Id
+        required: true
+        schema:
+          type: string
+          description: Consent Id
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid400Response'
+              example: null
+        '204':
+          description: ''
+          content:
+            application/json:
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsAccountIdTransactionsTransactionid404Response'
+              example: null
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteConsentsConsentid409Response'
+              example: null
+      tags:
+      - Consents
+      summary: Delete consents consent id
+      x-summary-source: derived
+  /consents/confirmation-of-funds/{consentId}/authorisations:
+    get:
+      description: Return a list of all authorisation subresources IDs which have been created. This function returns an array of hyperlinks to all generated authorisation sub-resources.
+      operationId: get_consents_confirmation-of-funds__consentId__authorisations
+      parameters:
+      - name: PSU-IP-Address
+        in: header
+        description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+        required: false
+        schema:
+          type: string
+          description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Port
+        in: header
+        description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+          maxLength: 10
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#\/]{1,10})$
+      - name: PSU-Accept
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Accept-Charset
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Accept-Encoding
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-User-Agent
+        in: header
+        description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+          maxLength: 200
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,200})$
+      - name: PSU-Accept-Language
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Http-Method
+        in: header
+        description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+          - GET
+
+          - POST
+
+          - PUT
+
+          - PATCH
+
+          - DELETE'
+        required: false
+        schema:
+          type: string
+          description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+            - GET
+
+            - POST
+
+            - PUT
+
+            - PATCH
+
+            - DELETE
+
+            '
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+      - name: PSU-Device-ID
+        in: header
+        description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+        required: false
+        schema:
+          type: string
+          description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+          maxLength: 36
+          minLength: 36
+          pattern: ^(?!\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-Geo-Location
+        in: header
+        description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+          maxLength: 27
+          minLength: 23
+          pattern: ^(?!\s)(GEO:)[0-9]{1,3}\.[-][0-9]{6}\,[-][0-9]{1,3}\.[0-9]{6}
+      - name: consentId
+        in: path
+        description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+        required: true
+        schema:
+          type: string
+          description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_cof_consent_authorisations_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Get consents confirmation of funds consent id authorisations
+      x-summary-source: derived
+  /consents/confirmation-of-funds/{consentId}/authorisations/{authorisationId}:
+    get:
+      description: Returns the SCA status of a Confirmation of Funds Consent initiation's authorisation sub-resource.
+      operationId: get_consents_confirmation-of-funds__consentId__authorisations__authorisationId_
+      parameters:
+      - name: PSU-IP-Address
+        in: header
+        description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+        required: false
+        schema:
+          type: string
+          description: Consists of the corresponding HTTP request IP Address field between PSU and TPP. It shall be contained if and only if this request was actively initiated by the PSU
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Port
+        in: header
+        description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Port header field consists of the corresponding HTTP request IP Port field between PSU and TPP, if available.
+          maxLength: 10
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#\/]{1,10})$
+      - name: PSU-Accept
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Accept-Charset
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Accept-Encoding
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-User-Agent
+        in: header
+        description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded Agent header field of the HTTP request between PSU and TPP, if available.
+          maxLength: 200
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,200})$
+      - name: PSU-Accept-Language
+        in: header
+        description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+        required: false
+        schema:
+          type: string
+          description: The forwarded IP Accept header fields consist of the corresponding HTTP request Accept header fields between PSU and TPP, if available.
+          maxLength: 100
+          minLength: 1
+      - name: PSU-Http-Method
+        in: header
+        description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+          - GET
+
+          - POST
+
+          - PUT
+
+          - PATCH
+
+          - DELETE'
+        required: false
+        schema:
+          type: string
+          description: 'HTTP method used at the interface between PSU and TPP, if available. Valid values are:
+
+            - GET
+
+            - POST
+
+            - PUT
+
+            - PATCH
+
+            - DELETE
+
+            '
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+      - name: PSU-Device-ID
+        in: header
+        description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+        required: false
+        schema:
+          type: string
+          description: UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependent application installation. In case of an installation identification this ID needs to be unaltered until removal from device.
+          maxLength: 36
+          minLength: 36
+          pattern: ^(?!\s)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-Geo-Location
+        in: header
+        description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+        required: false
+        schema:
+          type: string
+          description: The forwarded Geo Location of the corresponding HTTP request between PSU and TPP if available
+          maxLength: 27
+          minLength: 23
+          pattern: ^(?!\s)(GEO:)[0-9]{1,3}\.[-][0-9]{6}\,[-][0-9]{1,3}\.[0-9]{6}
+      - name: authorisationId
+        in: path
+        description: Resource Identification of the related SCA
+        required: true
+        schema:
+          type: string
+          description: Resource Identification of the related SCA
+          maxLength: 2
+          minLength: 1
+          pattern: ^\d{1,2}$
+      - name: consentId
+        in: path
+        description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+        required: true
+        schema:
+          type: string
+          description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_cof_consent_authorisation_details_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Get consents confirmation of funds consent id authorisations authorisation id
+      x-summary-source: derived
+  /consents/confirmation-of-funds/{consentId}:
+    get:
+      description: Returns the content of a Confirmation of Funds Consent object. This is returning the data for the TPP especially in cases, where the consent was directly managed between ASPSP and PSU e.g. in a re-direct SCA Approach
+      operationId: get_consents_confirmation-of-funds__consentId_
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: consentId
+        in: path
+        description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+        required: true
+        schema:
+          type: string
+          description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_cof_consent_details_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Get consents confirmation of funds consent id
+      x-summary-source: derived
+    delete:
+      description: Delete a Confirmation of Funds Consent object
+      operationId: delete_consents_confirmation-of-funds__consentId_
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: consentId
+        in: path
+        description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+        required: true
+        schema:
+          type: string
+          description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response'
+              example: null
+        '204':
+          description: ''
+          content:
+            application/json:
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response'
+              example: null
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteConsentsConfirmationOfFundsConsentid409Response'
+              example: null
+      tags:
+      - Consents
+      summary: Delete consents confirmation of funds consent id
+      x-summary-source: derived
+  /consents/confirmation-of-funds/{consentId}/status:
+    get:
+      description: Returns the status of a Confirmation of Funds Consent object.
+      operationId: get_consents_confirmation-of-funds__consentId__status
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: consentId
+        in: path
+        description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+        required: true
+        schema:
+          type: string
+          description: ID of the corresponding consent object as returned by an Confirmation of Funds Consent Request
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_cof_consent_status_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Get consents confirmation of funds consent id status
+      x-summary-source: derived
+  /consents/confirmation-of-funds:
+    post:
+      description: Create a consent resource to register a TPP for the confirmation of funds service for a given account by a PSU for a given PSU ID
+      operationId: post_consents_confirmation-of-funds
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: ID of the request, unique to the call, as determined by the initiating party.
+        required: true
+        schema:
+          type: string
+          description: ID of the request, unique to the call, as determined by the initiating party.
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      - name: PSU-IP-Address
+        in: header
+        description: The forwarded IP Address header field consists of the corresponding HTTP request IP Address field between PSU and TPP.
+        required: true
+        schema:
+          type: string
+          description: The forwarded IP Address header field consists of the corresponding HTTP request IP Address field between PSU and TPP.
+          maxLength: 39
+          minLength: 2
+          pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+      - name: PSU-ID
+        in: header
+        description: Client ID of the PSU in the ASPSP client interface.
+        required: false
+        schema:
+          type: string
+          description: Client ID of the PSU in the ASPSP client interface.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-ID-Type
+        in: header
+        description: Type of the PSU-ID, needed in scenarios where PSUs have several PSU-IDs as access possibility.
+        required: false
+        schema:
+          type: string
+          description: Type of the PSU-ID, needed in scenarios where PSUs have several PSU-IDs as access possibility.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Corporate-ID
+        in: header
+        description: Corporate ID - Only used in a corporate context.
+        required: false
+        schema:
+          type: string
+          description: Corporate ID - Only used in a corporate context.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: PSU-Corporate-ID-Type
+        in: header
+        description: Type of corporate - Only used in a corporate context.
+        required: false
+        schema:
+          type: string
+          description: Type of corporate - Only used in a corporate context.
+          maxLength: 100
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,100})$
+      - name: TPP-Redirect-Preferred
+        in: header
+        description: 'If it equals true, the TPP prefers a Redirect over Decoupled SCA approach. If it equals false, Decoupled SCA Approach will be applied.
+
+          IMPORTANT: Currently, Implicit Redirect SCA Approach is supported, so TPP-Redirect-Preferred must equal true.'
+        required: false
+        schema:
+          type: boolean
+          description: 'If it equals true, the TPP prefers a Redirect over Decoupled SCA approach. If it equals false, Decoupled SCA Approach will be applied.
+
+            IMPORTANT: Currently, Implicit Redirect SCA Approach is supported, so TPP-Redirect-Preferred must equal true.
+
+            '
+      - name: TPP-Redirect-URI
+        in: header
+        description: URI of the TPP, where the transaction flow shall be redirected to after a Redirect. It is mandatory for the Redirect SCA Approach (including OAuth2 SCA approach).
+        required: true
+        schema:
+          type: string
+          description: URI of the TPP, where the transaction flow shall be redirected to after a Redirect. It is mandatory for the Redirect SCA Approach (including OAuth2 SCA approach).
+          maxLength: 1000
+          minLength: 12
+          pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
+      - name: TPP-Nok-Redirect-URI
+        in: header
+        description: If this URI is contained, the TPP is asking to redirect the transaction flow to this address instead of the TPP-Redirect-URI in case of a negative result of the redirect SCA method.
+        required: false
+        schema:
+          type: string
+          description: If this URI is contained, the TPP is asking to redirect the transaction flow to this address instead of the TPP-Redirect-URI in case of a negative result of the redirect SCA method.
+          maxLength: 1000
+          minLength: 12
+          pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_cof_consent_request'
+            example: null
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_cof_consent_response'
+              example: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response'
+              example: null
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response'
+              example: null
+      tags:
+      - Consents
+      summary: Post consents confirmation of funds
+      x-summary-source: derived
+components:
+  schemas:
+    create_consent_request:
+      type: object
+      properties:
+        access:
+          type: object
+          properties:
+            balances:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                    maxLength: 30
+                    minLength: 1
+                    pattern: ^[a-zA-Z0-9]{1,30}$
+                  iban:
+                    type: string
+                    maxLength: 34
+                    minLength: 5
+                    pattern: ^[A-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}$
+                  currency:
+                    type: string
+                    maxLength: 3
+                    minLength: 3
+                    pattern: ^[A-Z]{3}$
+              maxItems: 100
+              minItems: 0
+            availableAccounts:
+              type: string
+              enum:
+              - allAccounts
+            accounts:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                    maxLength: 30
+                    minLength: 1
+                    pattern: ^[a-zA-Z0-9]{1,30}$
+                  iban:
+                    type: string
+                    maxLength: 34
+                    minLength: 5
+                    pattern: ^[A-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}$
+                  currency:
+                    type: string
+                    maxLength: 3
+                    minLength: 3
+                    pattern: ^[A-Z]{3}$
+              maxItems: 100
+              minItems: 0
+            transactions:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                    maxLength: 30
+                    minLength: 1
+                    pattern: ^[a-zA-Z0-9]{1,30}$
+                  iban:
+                    type: string
+                    maxLength: 34
+                    minLength: 5
+                    pattern: ^[A-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}$
+                  currency:
+                    type: string
+                    maxLength: 3
+                    minLength: 3
+                    pattern: ^[A-Z]{3}$
+              maxItems: 100
+              minItems: 0
+        combinedServiceIndicator:
+          type: boolean
+        validUntil:
+          type: string
+          format: date
+        recurringIndicator:
+          type: boolean
+        frequencyPerDay:
+          type: integer
+          maximum: 9999
+          minimum: 1
+      required:
+      - access
+      - combinedServiceIndicator
+      - frequencyPerDay
+      - recurringIndicator
+      - validUntil
+    get_consent_details_response:
+      type: object
+      properties:
+        access:
+          type: object
+          properties:
+            balances:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                  iban:
+                    type: string
+                  currency:
+                    type: string
+            availableAccounts:
+              type: string
+            accounts:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                  iban:
+                    type: string
+                  currency:
+                    type: string
+            transactions:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                  iban:
+                    type: string
+                  currency:
+                    type: string
+        consentStatus:
+          type: string
+        validUntil:
+          type: string
+          format: date-time
+        recurringIndicator:
+          type: boolean
+        lastActionDate:
+          type: string
+          format: date-time
+        frequencyPerDay:
+          type: integer
+      required:
+      - access
+      - consentStatus
+      - frequencyPerDay
+      - lastActionDate
+      - recurringIndicator
+      - validUntil
+    get_consent_authorisation_details_response:
+      type: object
+      properties:
+        scaStatus:
+          type: string
+      required:
+      - scaStatus
+    create_consent_response:
+      type: object
+      properties:
+        consentId:
+          type: string
+        _links:
+          type: object
+          properties:
+            scaStatus:
+              type: object
+              properties:
+                href:
+                  type: string
+            scaRedirect:
+              type: object
+              properties:
+                href:
+                  type: string
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+            startAuthorisation:
+              type: object
+              properties:
+                href:
+                  type: string
+            status:
+              type: object
+              properties:
+                href:
+                  type: string
+        consentStatus:
+          type: string
+      required:
+      - _links
+      - consentId
+      - consentStatus
+    get_consent_authorisations_response:
+      type: object
+      properties:
+        authorisationIds:
+          type: array
+          items:
+            type: string
+      required:
+      - authorisationIds
+    GetAccountsAccountIdTransactionsTransactionid400Response:
+      type: object
+      properties:
+        code:
+          type: string
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
+    get_consent_status_response:
+      type: object
+      properties:
+        consentStatus:
+          type: string
+      required:
+      - consentStatus
+    DeleteConsentsConsentid409Response:
+      type: object
+      properties:
+        code:
+          type: string
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
+    GetAccountsAccountIdTransactionsTransactionid404Response:
+      type: object
+      properties:
+        code:
+          type: string
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
+    create_cof_consent_request:
+      type: object
+      properties:
+        registrationInformation:
+          type: string
+          maxLength: 140
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,140})$
+        cardInformation:
+          type: string
+          maxLength: 140
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,140})$
+        account:
+          type: object
+          properties:
+            bban:
+              type: string
+              maxLength: 30
+              minLength: 0
+              pattern: ^[a-zA-Z0-9]{0,30}$
+            iban:
+              type: string
+              maxLength: 34
+              minLength: 0
+              pattern: ^[a-zA-Z0-9]{0,34}$
+            currency:
+              type: string
+              maxLength: 3
+              minLength: 3
+              pattern: ^[A-Z]{3}$
+        cardNumber:
+          type: string
+          maxLength: 20
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,20})$
+        cardExpiryDate:
+          type: string
+          format: date
+    get_cof_consent_status_response:
+      type: object
+      properties:
+        consentStatus:
+          type: string
+      required:
+      - consentStatus
+    get_cof_consent_details_response:
+      type: object
+      properties:
+        consentStatus:
+          type: string
+        registrationInformation:
+          type: string
+        cardInformation:
+          type: string
+        account:
+          type: object
+          properties:
+            bban:
+              type: string
+            iban:
+              type: string
+            currency:
+              type: string
+        cardNumber:
+          type: string
+        cardExpiryDate:
+          type: string
+          format: date-time
+      required:
+      - account
+      - consentStatus
+    create_cof_consent_response:
+      type: object
+      properties:
+        consentId:
+          type: string
+        _links:
+          type: object
+          properties:
+            scaStatus:
+              type: object
+              properties:
+                href:
+                  type: string
+            scaRedirect:
+              type: object
+              properties:
+                href:
+                  type: string
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+            startAuthorisation:
+              type: object
+              properties:
+                href:
+                  type: string
+            status:
+              type: object
+              properties:
+                href:
+                  type: string
+        consentStatus:
+          type: string
+      required:
+      - _links
+      - consentId
+      - consentStatus
+    GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response:
+      type: object
+      properties:
+        code:
+          type: string
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
+    GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response:
+      type: object
+      properties:
+        code:
+          type: string
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
+    get_cof_consent_authorisation_details_response:
+      type: object
+      properties:
+        scaStatus:
+          type: string
+      required:
+      - scaStatus
+    get_cof_consent_authorisations_response:
+      type: object
+      properties:
+        authorisationIds:
+          type: array
+          items:
+            type: string
+      required:
+      - authorisationIds
+    DeleteConsentsConfirmationOfFundsConsentid409Response:
+      type: object
+      properties:
+        code:
+          type: string
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
+x-refined-from:
+- barclays-bank-ireland-account-information-openapi.json
+- barclays-bank-ireland-confirmation-of-funds-openapi.json

@@ -1,0 +1,449 @@
+openapi: 3.2.0
+info:
+  title: Transactions Get Authorizations API
+  description: Enable customers to view transactions, sorting and transaction-level details
+  version: '2.0'
+tags:
+- name: getAuthorizations
+  description: Authorization transactions operations
+paths:
+  /{accountId}/authorizations:
+    summary: Get Auth transactions for Account ID
+    description: Get Auth transactions for Account ID
+    get:
+      tags:
+      - getAuthorizations
+      summary: Get Auth transactions for Account ID
+      description: 'This API provides a list of authorization for a given account for the given date range. These are transactions
+
+        that are authorized but not yet posted to the account'
+      operationId: getAuthorizationsExt
+      parameters:
+      - name: accountId
+        in: path
+        description: Account id
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 2c4717c4-e2f3-4071-2b86-b86890873321
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAuthorizationsExtRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+components:
+  schemas:
+    AuthorizationsExtData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Authorizations Response
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthorizationsExtList'
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    AuthorizationsExtList:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: List of authorizations
+      properties:
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationExt'
+          maxItems: 500
+          minItems: 0
+      nullable: false
+    Amount:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Amount Object
+      properties:
+        amount:
+          type: number
+          deprecated: false
+          description: It represents transaction amount
+          example: 1234.56
+          maximum: 99999999999.99
+          minimum: 0
+        currency:
+          type: string
+          deprecated: false
+          description: Currency of payment amount
+          enum:
+          - USD
+          example: USD
+      required:
+      - amount
+      - currency
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: BAD_REQUEST
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: Bad Request
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
+        details:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,255}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - details
+      - title
+    AuthorizationExt_authTransInfoExt:
+      type: object
+      deprecated: false
+      description: Auth Trans Info
+      properties:
+        merchantName:
+          type: string
+          deprecated: false
+          description: It represents merchant name
+          example: 1800Flowers
+          maxLength: 25
+          minLength: 1
+          pattern: ^[a-zA-Z0-9 '*@]{1,25}$
+        dateAuth:
+          type: string
+          format: date
+          deprecated: false
+          description: It represents transaction Date
+          example: '2012-03-22'
+        authType:
+          type: string
+          description: Authorization Type which will hold values like PURCHASE/CASH/PAYMENT/...
+          enum:
+          - PURCHASE
+          - CASH_NON_ATM
+          - CASH_ATM
+          - BALANCE_INQUIRY
+          - MAIL_OR_PHONE_ORDER
+          - MERCHANT_RETURN
+          - PAYMENT
+          - CHECK_GUARENTEE
+          - CASH_BALANCE_TRANSFER
+          - CONVENIENCE_CHECK
+          - PURCHASE_BALANCE_TRANSFER
+          - FAST_CASH
+          - WITHHOLD_FROM_AVAILABLE
+          - PIN_UNBLOCK
+          - PIN_CHANGE
+          - BANKCARD_DEPOSIT_ACCOUNT
+          - FACP
+          - BILL_PAYMENT
+          - PIN_VERIFICATION
+          - TRIAD_HOLD_PAY
+          - PROBE_HOLD_PAY
+          - ACCESS_FUNDS_TRANSFER
+          - IBAN_AUTHORIZATION
+          - MINI_STATEMENT
+          - MOBILE_TOP_UP
+          - ACCOUNT_VERIFICATION
+          - TOKEN_ELIGIBILITY_REQUEST
+          - TOKEN_PROVISION_REQUEST
+          - TOKEN_AUTH_REQUEST
+          - TOKEN_PROVISION_COMPLETED
+          - TOKEN_LOCK_REQUEST
+          - TOKEN_UNLOCK_REQUEST
+          - TOKEN_DELETE_REQUEST
+          - NIL
+          example: TOKEN_LOCK_REQUEST
+        amount:
+          $ref: '#/components/schemas/Amount'
+        resp:
+          type: string
+          description: Authorization Response whether it's approved or declined
+          enum:
+          - APPROVED
+          - DECLINED
+          - FRAUD
+          - PICKUP
+          - REFER
+          - NIL
+          example: REFER
+        status:
+          type: string
+          description: It represents transaction status like MATCHED/ AMOUNT_INCLUDED /AMOUNT_NOT_INCLUDED/..
+          enum:
+          - MATCHED
+          - AMOUNT_INCLUDED
+          - AMOUNT_NOT_INCLUDED
+          - REAL_TIME_AUTHORIZATION
+          - REVERSED_AUTHORIZATION
+          - PAY
+          - NIL
+          example: PAY
+        authTimeStamp:
+          type: string
+          format: date-time
+          description: Timestamp when authorization occurred
+          example: '2026-01-16T12:05:21Z'
+        authCode:
+          type: string
+          description: Authorization code returned by the payment processor
+          example: '123456'
+          maxLength: 50
+          minLength: 1
+          pattern: ^[0-9]+$
+      nullable: false
+    AuthorizationExt:
+      type: object
+      deprecated: false
+      description: Authorization record
+      properties:
+        authTransInfoExt:
+          $ref: '#/components/schemas/AuthorizationExt_authTransInfoExt'
+      nullable: false
+  examples:
+    example-error-400-bad-request:
+      value:
+        errors:
+        - code: BAD_REQUEST
+          title: Bad Request
+          details: TXN_ERR_1001
+    example-error-403:
+      value:
+        errors:
+        - code: ACCESS_FORBIDDEN
+          title: Access Forbidden
+          details: ACCESS_FORBIDDEN
+    example-error-500:
+      value:
+        errors:
+        - code: INTERNAL_SERVER_ERROR
+          title: Internal Server Error
+          details: TXN_ERR_5001
+    example-error-404:
+      value:
+        errors:
+        - code: NOT_FOUND
+          title: Not Found
+          details: TXN_ERR_9001
+    example-error-401:
+      value:
+        errors:
+        - code: AUTHENTICATION_ERROR
+          title: Authentication Error
+          details: AUTHENTICATION_ERROR
+    AuthorizationsExtResp:
+      value:
+        data:
+          authorizations:
+          - authTransInfoExt:
+              dateAuth: '2026-02-24'
+              authType: PURCHASE_BALANCE_TRANSFER
+              amount:
+                amount: 1.01
+                currency: USD
+              resp: DECLINED
+              status: REAL_TIME_AUTHORIZATION
+              authTimeStamp: '2026-02-24T10:12:51Z'
+              authCode: '000000'
+          - authTransInfoExt:
+              dateAuth: '2026-02-17'
+              authType: PURCHASE_BALANCE_TRANSFER
+              amount:
+                amount: 101.01
+                currency: USD
+              resp: DECLINED
+              status: AMOUNT_NOT_INCLUDED
+              authTimeStamp: '2026-02-17T07:40:00Z'
+              authCode: '000000'
+    example-error-503:
+      value:
+        errors:
+        - code: SERVICE_UNAVAILABLE
+          title: Service Unavailable
+          details: SERVICE_UNAVAILABLE
+  responses:
+    GetAuthorizationsExtRes:
+      description: Authorizations list
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorizationsExtData'
+          examples:
+            FindByAccountResponseV2:
+              $ref: '#/components/examples/AuthorizationsExtResp'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400:
+              $ref: '#/components/examples/example-error-400-bad-request'
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only

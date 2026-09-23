@@ -1,0 +1,451 @@
+openapi: 3.2.0
+info:
+  title: Payment Initiation Payment Details API
+  description: Initiate a single and immediate non-mandated funds transfer
+  version: v4.0
+tags:
+- name: Payment Details
+  description: Payment Details
+paths:
+  /international-payments/{internationalPaymentId}/payment-details:
+    summary: Get Payment Details
+    description: Get Payment Details
+    get:
+      tags:
+      - Payment Details
+      summary: Get Payment Details
+      operationId: GetInternationalPaymentsInternationalPaymentIdPaymentDetails
+      parameters:
+      - $ref: '#/components/parameters/InternationalPaymentId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+  /domestic-scheduled-payments/{domesticScheduledPaymentId}/payment-details:
+    summary: Get Payment Details
+    description: Get Payment Details
+    get:
+      tags:
+      - Payment Details
+      summary: Get Payment Details
+      operationId: GetDomesticScheduledPaymentsDomesticScheduledPaymentIdPaymentDetails
+      parameters:
+      - $ref: '#/components/parameters/DomesticScheduledPaymentId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+  /domestic-payments/{domesticPaymentId}/payment-details:
+    summary: Get Payment Details
+    description: Get Payment Details
+    get:
+      tags:
+      - Payment Details
+      summary: Get Payment Details
+      operationId: GetDomesticPaymentsDomesticPaymentIdPaymentDetails
+      parameters:
+      - $ref: '#/components/parameters/DomesticPaymentId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+  /file-payments/{filePaymentId}/payment-details:
+    summary: Get Payment Details
+    description: Get Payment Details
+    get:
+      tags:
+      - Payment Details
+      summary: Get Payment Details
+      operationId: GetFilePaymentsFilePaymentIdPaymentDetails
+      parameters:
+      - $ref: '#/components/parameters/FilePaymentId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+  /international-scheduled-payments/{internationalScheduledPaymentId}/payment-details:
+    summary: Get Payment Details
+    description: Get Payment Details
+    get:
+      tags:
+      - Payment Details
+      summary: Get Payment Details
+      operationId: GetInternationalScheduledPaymentsInternationalScheduledPaymentIdPaymentDetails
+      parameters:
+      - $ref: '#/components/parameters/InternationalScheduledPaymentId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+  /international-standing-orders/{internationalStandingOrderPaymentId}/payment-details:
+    summary: Get Payment Details
+    description: Get Payment Details
+    get:
+      tags:
+      - Payment Details
+      summary: Get Payment Details
+      operationId: GetInternationalStandingOrdersInternationalStandingOrderPaymentIdPaymentDetails
+      parameters:
+      - $ref: '#/components/parameters/InternationalStandingOrderPaymentId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+  /domestic-standing-orders/{domesticStandingOrderId}/payment-details:
+    summary: Get Payment Details
+    description: Get Payment Details
+    get:
+      tags:
+      - Payment Details
+      summary: Get Payment Details
+      operationId: GetDomesticStandingOrdersDomesticStandingOrderIdPaymentDetails
+      parameters:
+      - $ref: '#/components/parameters/DomesticStandingOrderId'
+      - $ref: '#/components/parameters/x-fapi-auth-date'
+      - $ref: '#/components/parameters/x-fapi-customer-ip-address'
+      - $ref: '#/components/parameters/x-fapi-interaction-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-customer-user-agent'
+      responses:
+        '500':
+          $ref: '#/components/responses/500Error'
+        '405':
+          $ref: '#/components/responses/405Error'
+      deprecated: false
+components:
+  parameters:
+    DomesticPaymentId:
+      name: domesticPaymentId
+      in: path
+      description: DomesticPaymentId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    DomesticScheduledPaymentId:
+      name: domesticScheduledPaymentId
+      in: path
+      description: DomesticScheduledPaymentId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    InternationalPaymentId:
+      name: internationalPaymentId
+      in: path
+      description: InternationalPaymentId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    x-customer-user-agent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 500
+        minLength: 1
+        nullable: false
+      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
+    x-fapi-interaction-id:
+      name: x-fapi-interaction-id
+      in: header
+      description: An RFC4122 UID used as a correlation id.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 36
+        minLength: 32
+        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+        nullable: false
+      example: 93bac548-d2de-4546-b106-880a5018460d
+    DomesticStandingOrderId:
+      name: domesticStandingOrderId
+      in: path
+      description: DomesticStandingOrderId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    InternationalStandingOrderPaymentId:
+      name: internationalStandingOrderPaymentId
+      in: path
+      description: InternationalStandingOrderPaymentId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    Authorization:
+      name: Authorization
+      in: header
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      required: true
+      schema:
+        type: string
+        maxLength: 4871
+        minLength: 1
+        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
+        nullable: false
+      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
+    x-fapi-auth-date:
+      name: x-fapi-auth-date
+      in: header
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 29
+        minLength: 29
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+        nullable: false
+      example: Sun, 10 Sep 2017 19:43:31 UTC
+    FilePaymentId:
+      name: filePaymentId
+      in: path
+      description: FilePaymentId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    InternationalScheduledPaymentId:
+      name: internationalScheduledPaymentId
+      in: path
+      description: InternationalScheduledPaymentId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    x-fapi-customer-ip-address:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      required: false
+      schema:
+        type: string
+        maxLength: 40
+        minLength: 7
+        pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+        nullable: false
+      example: 104.25.212.99
+  responses:
+    405Error:
+      description: Method Not Allowed
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    500Error:
+      description: Internal Server Error
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            500ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
+  schemas:
+    OBError1:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      minProperties: 1
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/OBInternalErrorResponseError1Code'
+        Message:
+          type: string
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBL doesn''t standardise this field'
+          maxLength: 500
+          minLength: 1
+        Path:
+          type: string
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          maxLength: 500
+          minLength: 1
+        Url:
+          type: string
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+      required:
+      - ErrorCode
+      nullable: false
+    OBInternalErrorResponseError1Code:
+      type: string
+      description: Low level textual error code, for all enum values see `OBInternalErrorResponseError1Code` [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: U001
+      maxLength: 4
+      minLength: 4
+      pattern: ^(?!\s)([A-Za-z0-9!+\/\= '.,@#()_-]{4,4})$
+    OBErrorResponse1:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      properties:
+        Id:
+          type: string
+          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
+          maxLength: 40
+          minLength: 1
+        Code:
+          type: string
+          description: Deprecated <br>High level textual error code, to help categorise the errors.
+          example: 400 BadRequest
+          maxLength: 40
+          minLength: 1
+        Message:
+          type: string
+          description: Deprecated <br>Brief Error message
+          example: There is something wrong with the request parameters provided
+          maxLength: 500
+          minLength: 1
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBError1'
+          maxItems: 99999
+          minItems: 1
+      required:
+      - Errors
+      nullable: false
+  securitySchemes:
+    TPPOAuth2Security:
+      type: oauth2
+      description: TPP client credential authorisation flow with the ASPSP
+      flows:
+        clientCredentials:
+          tokenUrl: https://authserver.example/token
+          scopes:
+            payments: Generic payment scope
+    PSUOAuth2Security:
+      type: oauth2
+      description: OAuth flow, it is required when the PSU needs to perform SCA with the ASPSP when a TPP wants to access an ASPSP resource owned by the PSU
+      flows:
+        authorizationCode:
+          authorizationUrl: https://authserver.example/authorization
+          tokenUrl: https://authserver.example/token
+          scopes:
+            payments: Generic payment scope

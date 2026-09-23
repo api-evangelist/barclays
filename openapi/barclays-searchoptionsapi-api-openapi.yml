@@ -1,0 +1,409 @@
+openapi: 3.2.0
+info:
+  title: Transactions Search Options API
+  description: Enable customers to view transactions, sorting and transaction-level details
+  version: '2.0'
+tags:
+- name: searchOptionsAPI
+  description: Transaction search options operations
+paths:
+  /{accountId}/transactions/search-options:
+    summary: Get transactions search options
+    description: Get transactions search options
+    get:
+      tags:
+      - searchOptionsAPI
+      summary: Get transactions search options.
+      description: Get transactions search options. Use this API to get transactions search options.
+      operationId: getSearchOptionsV2
+      parameters:
+      - name: accountId
+        in: path
+        description: Account id
+        required: true
+        deprecated: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 2c4717c4-e2f3-4071-2b86-b86890873321
+      - name: Correlation-ID
+        in: header
+        description: "Unique end-to-end trace ID. The initiating system (such as a Channel or \nBatch Job), must generate this unique ID, then this must be passed \nthrough the API call stack. This is required to maintain compliance with the current Barclays REST Standard."
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+      - name: Authorization
+        in: header
+        description: TIAA-US External token
+        required: true
+        deprecated: false
+        schema:
+          type: string
+        example: Bearer <token>
+      responses:
+        '200':
+          $ref: '#/components/responses/SearchOptionsDataRes'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      deprecated: false
+components:
+  examples:
+    example-error-400-bad-request:
+      value:
+        errors:
+        - code: BAD_REQUEST
+          title: Bad Request
+          details: TXN_ERR_1001
+    example-error-403:
+      value:
+        errors:
+        - code: ACCESS_FORBIDDEN
+          title: Access Forbidden
+          details: ACCESS_FORBIDDEN
+    example-error-500:
+      value:
+        errors:
+        - code: INTERNAL_SERVER_ERROR
+          title: Internal Server Error
+          details: TXN_ERR_5001
+    example-error-404:
+      value:
+        errors:
+        - code: NOT_FOUND
+          title: Not Found
+          details: TXN_ERR_9001
+    example-error-401:
+      value:
+        errors:
+        - code: AUTHENTICATION_ERROR
+          title: Authentication Error
+          details: AUTHENTICATION_ERROR
+    SearchOptionsData:
+      value:
+        data:
+          dateRange:
+          - '2021-08-31'
+          - '2021-08-31'
+          purchasedByOptions:
+          - purchasedByRef: a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e
+            firstName: Firstnamebo
+            lastName: Lastnamebo
+            roleType: BUSINESS_OWNER
+            lastFour: '5985'
+            activationDate: '2021-08-31'
+          isCategorySearchEnabled: true
+          categoryOptions:
+          - ALL
+          - Automotive
+          - Everyday spending
+          - Healthcare
+          - Merchandise
+          - Restaurants & entertainment
+          - Travel
+          - Other
+    example-error-503:
+      value:
+        errors:
+        - code: SERVICE_UNAVAILABLE
+          title: Service Unavailable
+          details: SERVICE_UNAVAILABLE
+  schemas:
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    SearchOptionsData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Transactions search options response
+      properties:
+        data:
+          $ref: '#/components/schemas/SearchOptions'
+      nullable: false
+    PurchasedByOption:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions purchased by options
+      properties:
+        purchasedByRef:
+          type: string
+          deprecated: false
+          description: Purchased customer reference id
+          example: 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9
+          maxLength: 64
+          minLength: 64
+          pattern: ^[a-zA-Z0-9]{64}$
+        firstName:
+          $ref: '#/components/schemas/customerFirstOrLastName'
+        lastName:
+          $ref: '#/components/schemas/customerFirstOrLastName'
+        roleType:
+          type: string
+          description: Customer role
+          enum:
+          - PRIMARY
+          - AUTHORIZED
+          - CO-APPLICANT
+          - BUSINESS_OWNER
+          - BUSINESS_EMPLOYEE
+          - BUSINESS_ADMIN
+          example: PRIMARY
+        lastFour:
+          type: string
+          deprecated: false
+          description: Customer account number last four
+          example: '1234'
+          maxLength: 4
+          minLength: 4
+          pattern: ^[0-9]{4}$
+        activationDate:
+          type: string
+          format: date
+          deprecated: false
+          description: activation date
+          example: '2021-08-30'
+      nullable: false
+    SearchOptions:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions search options
+      properties:
+        dateRange:
+          type: array
+          items:
+            type: string
+            format: date
+            deprecated: false
+            description: transaction from/to date
+            example: '2021-08-17'
+          maxItems: 2
+          minItems: 2
+        purchasedByOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PurchasedByOption'
+          maxItems: 10
+          minItems: 1
+        isCategorySearchEnabled:
+          type: boolean
+          description: Indicator to check whether transaction search is enabled for cpc
+          example: true
+        categoryOptions:
+          type: array
+          description: Transaction category options
+          example:
+          - ALL
+          - Automotive
+          - Everyday spending
+          - Healthcare
+          - Merchandise
+          - Restaurants & entertainment
+          - Travel
+          - Other
+          items:
+            type: string
+            enum:
+            - ALL
+            - Automotive
+            - Everyday spending
+            - Healthcare
+            - Merchandise
+            - Restaurants & entertainment
+            - Travel
+            - Other
+          maxItems: 8
+          minItems: 8
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: BAD_REQUEST
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: Bad Request
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
+        details:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,255}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - details
+      - title
+    customerFirstOrLastName:
+      type: string
+      deprecated: false
+      description: Customer first or last name
+      example: John
+      maxLength: 30
+      minLength: 1
+      pattern: ^[a-zA-Z']{1,30}$
+  responses:
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+    SearchOptionsDataRes:
+      description: Transaction search options response
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchOptionsData'
+          examples:
+            SearchOptionsDataRes:
+              $ref: '#/components/examples/SearchOptionsData'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400:
+              $ref: '#/components/examples/example-error-400-bad-request'
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  securitySchemes:
+    ExternalTiaaUsCCAuth:
+      type: oauth2
+      description: OAuth2.0 Client Credentials Grant authentication using TIAA-US for external APIs
+      flows:
+        clientCredentials:
+          tokenUrl: https://token.tiaa-dev.us.barclays.intranet:8443/as/token.oauth2
+          scopes:
+            read: read only
+            write: write only
