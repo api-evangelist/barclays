@@ -125,58 +125,131 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
       deprecated: false
 components:
+  responses:
+    AllExternalAccountsResLast4:
+      description: Gets all external bank accounts
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetAllExternalAccountsResponseDataLast4'
+          examples:
+            AllExternalAccountsRes:
+              $ref: '#/components/examples/AllExternalAccountsResLast4'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            InternalServerError:
+              $ref: '#/components/examples/example-error-500'
+    ExternalAccountResLast4:
+      description: Get an external bank account
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetExternalAccountResponseDataLast4'
+          examples:
+            ExternalAccountRes:
+              $ref: '#/components/examples/ExternalAccountResLast4'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            ServiceUnavailable:
+              $ref: '#/components/examples/example-error-503'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            NotFound:
+              $ref: '#/components/examples/example-error-404'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Unauthorized:
+              $ref: '#/components/examples/example-error-401'
+  examples:
+    ExternalAccountResLast4:
+      value:
+        data:
+          bankDetails:
+            bankRoutingNumber: '037736634'
+            isValidBank: false
+            bankNewRoutingNumber: '908982053'
+            bankName: TD RETAIL CARD SERVICES
+          bankAccountNickname: 'BX)#C8) '
+          bankAccountId: '414'
+          bankAccountNumberLast4: '4513'
+          bankAccountType: SAVINGS
+    AllExternalAccountsResLast4:
+      value:
+        data:
+        - bankDetails:
+            bankRoutingNumber: '397827963'
+            isValidBank: false
+            bankNewRoutingNumber: '863153389'
+            bankName: TD RETAIL CARD SERVICES
+          bankAccountNickname: 79n#9vn5#)
+          bankAccountId: 08
+          bankAccountNumberLast4: '4110'
+          bankAccountType: SAVINGS
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
   schemas:
-    ExternalAccountLast4:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Get all external account response
-      properties:
-        bankDetails:
-          $ref: '#/components/schemas/ExternalBankDetails'
-        bankAccountNickname:
-          $ref: '#/components/schemas/BankAccountNickname'
-        bankAccountId:
-          $ref: '#/components/schemas/BankAccountId'
-        bankAccountNumberLast4:
-          $ref: '#/components/schemas/BankAccountNumberLast4'
-        bankAccountType:
-          $ref: '#/components/schemas/BankAccountType'
-      nullable: false
-    ExternalBankAccountDetailsLast4:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Bank account details
-      properties:
-        bankDetails:
-          $ref: '#/components/schemas/ExternalBankDetails'
-        bankAccountNickname:
-          $ref: '#/components/schemas/BankAccountNickname'
-        bankAccountId:
-          $ref: '#/components/schemas/BankAccountId'
-        bankAccountNumberLast4:
-          $ref: '#/components/schemas/BankAccountNumberLast4'
-        bankAccountType:
-          $ref: '#/components/schemas/BankAccountType'
-      nullable: false
-    BankAccountId:
-      type: string
-      deprecated: false
-      description: ID of bank account added as payment source
-      example: '123456789'
-      maxLength: 12
-      minLength: 1
-      pattern: ^([0-9]{1,12})$
-      nullable: false
-    BankRoutingNumber:
-      type: string
-      deprecated: false
-      description: Bank routing number of the bank account added as payment source
-      example: '123455645'
-      maxLength: 9
-      minLength: 9
-      pattern: ^([0-9]{9})$
     ErrorResponseType:
       type: object
       additionalProperties: false
@@ -201,6 +274,22 @@ components:
           maxItems: 50
           minItems: 0
       nullable: false
+    BankAccountNumberLast4:
+      type: string
+      deprecated: false
+      description: Last 4 digits of Bank account number to be added as a payment source
+      example: '1234'
+      maxLength: 4
+      minLength: 4
+      pattern: ^([a-zA-Z0-9]{4,4})$
+    BankName:
+      type: string
+      deprecated: false
+      description: Bank name of the bank account added as payment source
+      example: bankName
+      maxLength: 255
+      minLength: 1
+      pattern: ^([A-Za-z0-9 &,.'#+$=()_/-]{1,255})$
     BankAccountType:
       type: string
       deprecated: false
@@ -209,15 +298,6 @@ components:
       - CHECKING
       - SAVINGS
       example: CHECKING
-      nullable: false
-    BankAccountNickname:
-      type: string
-      deprecated: false
-      description: Nickname for bank account added as payment source
-      example: ASHES
-      maxLength: 24
-      minLength: 1
-      pattern: ^([a-zA-Z0-9 .,&()#'-]{1,24})$
       nullable: false
     ErrorType:
       type: object
@@ -259,6 +339,23 @@ components:
       - code
       - id
       - title
+    ExternalBankDetails:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        bankName:
+          $ref: '#/components/schemas/BankName'
+        isValidBank:
+          type: boolean
+          deprecated: false
+          description: Signifies the validity of the bank routing number
+          example: false
+          nullable: false
+        bankNewRoutingNumber:
+          $ref: '#/components/schemas/BankRoutingNumber'
+        bankRoutingNumber:
+          $ref: '#/components/schemas/BankRoutingNumber'
     GetAllExternalAccountsResponseDataLast4:
       type: object
       additionalProperties: false
@@ -281,6 +378,14 @@ components:
       required:
       - data
       nullable: false
+    BankRoutingNumber:
+      type: string
+      deprecated: false
+      description: Bank routing number of the bank account added as payment source
+      example: '123455645'
+      maxLength: 9
+      minLength: 9
+      pattern: ^([0-9]{9})$
     ExternalAccountListLast4:
       type: array
       additionalProperties: false
@@ -291,163 +396,58 @@ components:
       maxItems: 2000
       minItems: 0
       nullable: false
-    BankAccountNumberLast4:
-      type: string
-      deprecated: false
-      description: Last 4 digits of Bank account number to be added as a payment source
-      example: '1234'
-      maxLength: 4
-      minLength: 4
-      pattern: ^([a-zA-Z0-9]{4,4})$
-    ExternalBankDetails:
+    ExternalAccountLast4:
       type: object
       additionalProperties: false
       deprecated: false
+      description: Get all external account response
       properties:
-        bankName:
-          $ref: '#/components/schemas/BankName'
-        isValidBank:
-          type: boolean
-          deprecated: false
-          description: Signifies the validity of the bank routing number
-          example: false
-          nullable: false
-        bankNewRoutingNumber:
-          $ref: '#/components/schemas/BankRoutingNumber'
-        bankRoutingNumber:
-          $ref: '#/components/schemas/BankRoutingNumber'
-    BankName:
+        bankDetails:
+          $ref: '#/components/schemas/ExternalBankDetails'
+        bankAccountNickname:
+          $ref: '#/components/schemas/BankAccountNickname'
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        bankAccountNumberLast4:
+          $ref: '#/components/schemas/BankAccountNumberLast4'
+        bankAccountType:
+          $ref: '#/components/schemas/BankAccountType'
+      nullable: false
+    BankAccountId:
       type: string
       deprecated: false
-      description: Bank name of the bank account added as payment source
-      example: bankName
-      maxLength: 255
+      description: ID of bank account added as payment source
+      example: '123456789'
+      maxLength: 12
       minLength: 1
-      pattern: ^([A-Za-z0-9 &,.'#+$=()_/-]{1,255})$
-  examples:
-    ExternalAccountResLast4:
-      value:
-        data:
-          bankDetails:
-            bankRoutingNumber: '037736634'
-            isValidBank: false
-            bankNewRoutingNumber: '908982053'
-            bankName: TD RETAIL CARD SERVICES
-          bankAccountNickname: 'BX)#C8) '
-          bankAccountId: '414'
-          bankAccountNumberLast4: '4513'
-          bankAccountType: SAVINGS
-    example-error-500:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: INTERNAL_SERVER_ERROR
-          title: The request failed due to an internal error.
-    example-error-404:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: RESOURCE_NOT_FOUND
-          title: The requested operation failed because a resource associated with the request could not be found.
-    example-error-401:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: AUTHENTICATION_ERROR
-          title: The user could not be authenticated for this request.
-    AllExternalAccountsResLast4:
-      value:
-        data:
-        - bankDetails:
-            bankRoutingNumber: '397827963'
-            isValidBank: false
-            bankNewRoutingNumber: '863153389'
-            bankName: TD RETAIL CARD SERVICES
-          bankAccountNickname: 79n#9vn5#)
-          bankAccountId: 08
-          bankAccountNumberLast4: '4110'
-          bankAccountType: SAVINGS
-    example-error-503:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: SERVICE_UNAVAILABLE
-          title: The server is currently unavailable
-  responses:
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            Unauthorized:
-              $ref: '#/components/examples/example-error-401'
-    ExternalAccountResLast4:
-      description: Get an external bank account
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GetExternalAccountResponseDataLast4'
-          examples:
-            ExternalAccountRes:
-              $ref: '#/components/examples/ExternalAccountResLast4'
-    ServiceUnavailable:
-      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            ServiceUnavailable:
-              $ref: '#/components/examples/example-error-503'
-    NotFound:
-      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            NotFound:
-              $ref: '#/components/examples/example-error-404'
-    InternalServerError:
-      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            InternalServerError:
-              $ref: '#/components/examples/example-error-500'
-    AllExternalAccountsResLast4:
-      description: Gets all external bank accounts
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GetAllExternalAccountsResponseDataLast4'
-          examples:
-            AllExternalAccountsRes:
-              $ref: '#/components/examples/AllExternalAccountsResLast4'
+      pattern: ^([0-9]{1,12})$
+      nullable: false
+    BankAccountNickname:
+      type: string
+      deprecated: false
+      description: Nickname for bank account added as payment source
+      example: ASHES
+      maxLength: 24
+      minLength: 1
+      pattern: ^([a-zA-Z0-9 .,&()#'-]{1,24})$
+      nullable: false
+    ExternalBankAccountDetailsLast4:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Bank account details
+      properties:
+        bankDetails:
+          $ref: '#/components/schemas/ExternalBankDetails'
+        bankAccountNickname:
+          $ref: '#/components/schemas/BankAccountNickname'
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        bankAccountNumberLast4:
+          $ref: '#/components/schemas/BankAccountNumberLast4'
+        bankAccountType:
+          $ref: '#/components/schemas/BankAccountType'
+      nullable: false
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

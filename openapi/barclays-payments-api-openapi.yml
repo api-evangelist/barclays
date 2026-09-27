@@ -3840,6 +3840,74 @@ components:
       - _links
       - paymentId
       - transactionStatus
+    GetPaymentsInstantSepaCreditTransfersPaymentidStatus400Response:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - SERVICE_INVALID
+          - FORMAT_ERROR
+          - PARAMETER_NOT_CONSISTENT
+          - PARAMETER_NOT_SUPPORTED
+          - SERVICE_INVALID
+          - CONSENT_UNKNOWN
+          - RESOURCE_UNKNOWN
+          - RESOURCE_EXPIRED
+          - RESOURCE_BLOCKED
+          - TIMESTAMP_INVALID
+          - PERIOD_INVALID
+          - SCA_METHOD_UNKNOWN
+          - PAYMENT_FAILED
+          - EXECUTION_DATE_INVALID
+          - SESSIONS_NOT_SUPPORTED
+          - CARD_INVALID
+          - NO_PIIS_ACTIVATION
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - SERVICE_INVALID
+                - FORMAT_ERROR
+                - PARAMETER_NOT_SUPPORTED
+                - CONSENT_UNKNOWN
+                - RESOURCE_UNKNOWN
+                - PRODUCT_UNKNOWN
+                - RESOURCE_EXPIRED
+                - TIMESTAMP_INVALID
+                - PERIOD_INVALID
+                - SCA_METHOD_UNKNOWN
+                - PAYMENT_FAILED
+                - EXECUTION_DATE_INVALID
+                - SESSIONS_NOT_SUPPORTED
+                - NO_PIIS_ACTIVATION
+                - CARD_INVALID
+                - PARAMETER_NOT_CONSISTENT
+                - RESOURCE_BLOCKED
+                - STATUS_INVALID
+                - CONSENT_INVALID
+                - CONSENT_EXPIRED
+                - TOKEN_INVALID
+                - ACCESS_EXCEEDED
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
     get_payment-auth-status_response:
       type: object
       description: Get Payment Authorisation Status
@@ -3876,6 +3944,111 @@ components:
           - exempted
       required:
       - scaStatus
+    DeletePaymentsSepaCreditTransfersPaymentid409Response:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - STATUS_INVALID
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - SERVICE_INVALID
+                - FORMAT_ERROR
+                - PARAMETER_NOT_SUPPORTED
+                - CONSENT_UNKNOWN
+                - RESOURCE_UNKNOWN
+                - PRODUCT_UNKNOWN
+                - RESOURCE_EXPIRED
+                - TIMESTAMP_INVALID
+                - PERIOD_INVALID
+                - SCA_METHOD_UNKNOWN
+                - PAYMENT_FAILED
+                - EXECUTION_DATE_INVALID
+                - SESSIONS_NOT_SUPPORTED
+                - NO_PIIS_ACTIVATION
+                - CARD_INVALID
+                - PARAMETER_NOT_CONSISTENT
+                - RESOURCE_BLOCKED
+                - STATUS_INVALID
+                - CONSENT_INVALID
+                - CONSENT_EXPIRED
+                - TOKEN_INVALID
+                - ACCESS_EXCEEDED
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
+    GetPaymentsInstantSepaCreditTransfersPaymentidStatus404Response:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - RESOURCE_UNKNOWN
+          - PRODUCT_UNKNOWN
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - SERVICE_INVALID
+                - FORMAT_ERROR
+                - PARAMETER_NOT_SUPPORTED
+                - CONSENT_UNKNOWN
+                - RESOURCE_UNKNOWN
+                - PRODUCT_UNKNOWN
+                - RESOURCE_EXPIRED
+                - TIMESTAMP_INVALID
+                - PERIOD_INVALID
+                - SCA_METHOD_UNKNOWN
+                - PAYMENT_FAILED
+                - EXECUTION_DATE_INVALID
+                - SESSIONS_NOT_SUPPORTED
+                - NO_PIIS_ACTIVATION
+                - CARD_INVALID
+                - PARAMETER_NOT_CONSISTENT
+                - RESOURCE_BLOCKED
+                - STATUS_INVALID
+                - CONSENT_INVALID
+                - CONSENT_EXPIRED
+                - TOKEN_INVALID
+                - ACCESS_EXCEEDED
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
     get_payment-details_response:
       type: object
       description: Payment Id response
@@ -4047,59 +4220,23 @@ components:
       - creditorAccount
       - creditorName
       - instructedAmount
-    GetPaymentsInstantSepaCreditTransfersPaymentidStatus404Response:
+    get_payment-auth-details_response:
       type: object
+      description: Get Payment Authorisation Details Response
       properties:
-        code:
-          type: string
-          enum:
-          - RESOURCE_UNKNOWN
-          - PRODUCT_UNKNOWN
-        additionalErrors:
+        authorisationIds:
           type: array
+          description: An array of all authorisationIds
           items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - SERVICE_INVALID
-                - FORMAT_ERROR
-                - PARAMETER_NOT_SUPPORTED
-                - CONSENT_UNKNOWN
-                - RESOURCE_UNKNOWN
-                - PRODUCT_UNKNOWN
-                - RESOURCE_EXPIRED
-                - TIMESTAMP_INVALID
-                - PERIOD_INVALID
-                - SCA_METHOD_UNKNOWN
-                - PAYMENT_FAILED
-                - EXECUTION_DATE_INVALID
-                - SESSIONS_NOT_SUPPORTED
-                - NO_PIIS_ACTIVATION
-                - CARD_INVALID
-                - PARAMETER_NOT_CONSISTENT
-                - RESOURCE_BLOCKED
-                - STATUS_INVALID
-                - CONSENT_INVALID
-                - CONSENT_EXPIRED
-                - TOKEN_INVALID
-                - ACCESS_EXCEEDED
-              detail:
-                type: string
-              title:
-                type: string
-            required:
-            - code
-        detail:
-          type: string
-        type:
-          type: string
-        title:
-          type: string
+            type: string
+            description: Authorisation ID
+            maxLength: 2
+            minLength: 1
+            pattern: ^\d{1,2}$
+          maxItems: 100
+          minItems: 1
       required:
-      - code
-      - type
+      - authorisationIds
     initiate_payment_request:
       type: object
       description: Initiate Payment request
@@ -4265,143 +4402,6 @@ components:
       - creditorAccount
       - creditorName
       - instructedAmount
-    GetPaymentsInstantSepaCreditTransfersPaymentidStatus400Response:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - SERVICE_INVALID
-          - FORMAT_ERROR
-          - PARAMETER_NOT_CONSISTENT
-          - PARAMETER_NOT_SUPPORTED
-          - SERVICE_INVALID
-          - CONSENT_UNKNOWN
-          - RESOURCE_UNKNOWN
-          - RESOURCE_EXPIRED
-          - RESOURCE_BLOCKED
-          - TIMESTAMP_INVALID
-          - PERIOD_INVALID
-          - SCA_METHOD_UNKNOWN
-          - PAYMENT_FAILED
-          - EXECUTION_DATE_INVALID
-          - SESSIONS_NOT_SUPPORTED
-          - CARD_INVALID
-          - NO_PIIS_ACTIVATION
-        additionalErrors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - SERVICE_INVALID
-                - FORMAT_ERROR
-                - PARAMETER_NOT_SUPPORTED
-                - CONSENT_UNKNOWN
-                - RESOURCE_UNKNOWN
-                - PRODUCT_UNKNOWN
-                - RESOURCE_EXPIRED
-                - TIMESTAMP_INVALID
-                - PERIOD_INVALID
-                - SCA_METHOD_UNKNOWN
-                - PAYMENT_FAILED
-                - EXECUTION_DATE_INVALID
-                - SESSIONS_NOT_SUPPORTED
-                - NO_PIIS_ACTIVATION
-                - CARD_INVALID
-                - PARAMETER_NOT_CONSISTENT
-                - RESOURCE_BLOCKED
-                - STATUS_INVALID
-                - CONSENT_INVALID
-                - CONSENT_EXPIRED
-                - TOKEN_INVALID
-                - ACCESS_EXCEEDED
-              detail:
-                type: string
-              title:
-                type: string
-            required:
-            - code
-        detail:
-          type: string
-        type:
-          type: string
-        title:
-          type: string
-      required:
-      - code
-      - type
-    DeletePaymentsSepaCreditTransfersPaymentid409Response:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - STATUS_INVALID
-        additionalErrors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - SERVICE_INVALID
-                - FORMAT_ERROR
-                - PARAMETER_NOT_SUPPORTED
-                - CONSENT_UNKNOWN
-                - RESOURCE_UNKNOWN
-                - PRODUCT_UNKNOWN
-                - RESOURCE_EXPIRED
-                - TIMESTAMP_INVALID
-                - PERIOD_INVALID
-                - SCA_METHOD_UNKNOWN
-                - PAYMENT_FAILED
-                - EXECUTION_DATE_INVALID
-                - SESSIONS_NOT_SUPPORTED
-                - NO_PIIS_ACTIVATION
-                - CARD_INVALID
-                - PARAMETER_NOT_CONSISTENT
-                - RESOURCE_BLOCKED
-                - STATUS_INVALID
-                - CONSENT_INVALID
-                - CONSENT_EXPIRED
-                - TOKEN_INVALID
-                - ACCESS_EXCEEDED
-              detail:
-                type: string
-              title:
-                type: string
-            required:
-            - code
-        detail:
-          type: string
-        type:
-          type: string
-        title:
-          type: string
-      required:
-      - code
-      - type
-    get_payment-auth-details_response:
-      type: object
-      description: Get Payment Authorisation Details Response
-      properties:
-        authorisationIds:
-          type: array
-          description: An array of all authorisationIds
-          items:
-            type: string
-            description: Authorisation ID
-            maxLength: 2
-            minLength: 1
-            pattern: ^\d{1,2}$
-          maxItems: 100
-          minItems: 1
-      required:
-      - authorisationIds
     get_payment-status_response:
       type: object
       description: Get Payment Status

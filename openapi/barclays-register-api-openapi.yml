@@ -127,16 +127,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    JWKSObjectType:
+    PostRegister400Response:
       type: object
       properties:
-        keys:
-          type: array
-          items: {}
-          maxItems: 100
-          minItems: 1
+        error_description:
+          type: string
+        error:
+          type: string
       required:
-      - keys
+      - error
+    PostRegister429Response:
+      type: object
+      properties:
+        error_description:
+          type: string
+        error:
+          type: string
+      required:
+      - error
     DCRRequestType:
       type: object
       properties:
@@ -266,25 +274,17 @@ components:
       - response_types
       - scope
       - token_endpoint_auth_method
-    PostRegister429Response:
+    JWKSObjectType:
       type: object
       properties:
-        error_description:
-          type: string
-        error:
-          type: string
+        keys:
+          type: array
+          items: {}
+          maxItems: 100
+          minItems: 1
       required:
-      - error
+      - keys
     PostRegister500Response:
-      type: object
-      properties:
-        error_description:
-          type: string
-        error:
-          type: string
-      required:
-      - error
-    PostRegister400Response:
       type: object
       properties:
         error_description:

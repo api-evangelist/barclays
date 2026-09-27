@@ -156,10 +156,10 @@ paths:
       deprecated: false
 components:
   parameters:
-    DomesticPaymentId:
-      name: domesticPaymentId
+    InternationalStandingOrderPaymentId:
+      name: internationalStandingOrderPaymentId
       in: path
-      description: DomesticPaymentId
+      description: InternationalStandingOrderPaymentId
       required: true
       schema:
         type: string
@@ -167,10 +167,47 @@ components:
         minLength: 1
         pattern: ^BARCLAYS-P-\d{14}$
       example: BARCLAYS-P-12345678901234
-    DomesticScheduledPaymentId:
-      name: domesticScheduledPaymentId
+    Authorization:
+      name: Authorization
+      in: header
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      required: true
+      schema:
+        type: string
+        maxLength: 4871
+        minLength: 1
+        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
+        nullable: false
+      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
+    x-customer-user-agent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 500
+        minLength: 1
+        nullable: false
+      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
+    x-fapi-auth-date:
+      name: x-fapi-auth-date
+      in: header
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 29
+        minLength: 29
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+        nullable: false
+      example: Sun, 10 Sep 2017 19:43:31 UTC
+    DomesticPaymentId:
+      name: domesticPaymentId
       in: path
-      description: DomesticScheduledPaymentId
+      description: DomesticPaymentId
       required: true
       schema:
         type: string
@@ -189,18 +226,39 @@ components:
         minLength: 1
         pattern: ^BARCLAYS-P-\d{14}$
       example: BARCLAYS-P-12345678901234
-    x-customer-user-agent:
-      name: x-customer-user-agent
-      in: header
-      description: Indicates the user-agent that the PSU is using.
-      required: false
+    DomesticScheduledPaymentId:
+      name: domesticScheduledPaymentId
+      in: path
+      description: DomesticScheduledPaymentId
+      required: true
       schema:
         type: string
-        deprecated: false
-        maxLength: 500
+        maxLength: 25
         minLength: 1
-        nullable: false
-      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    FilePaymentId:
+      name: filePaymentId
+      in: path
+      description: FilePaymentId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
+    InternationalScheduledPaymentId:
+      name: internationalScheduledPaymentId
+      in: path
+      description: InternationalScheduledPaymentId
+      required: true
+      schema:
+        type: string
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-P-\d{14}$
+      example: BARCLAYS-P-12345678901234
     x-fapi-interaction-id:
       name: x-fapi-interaction-id
       in: header
@@ -225,64 +283,6 @@ components:
         minLength: 1
         pattern: ^BARCLAYS-P-\d{14}$
       example: BARCLAYS-P-12345678901234
-    InternationalStandingOrderPaymentId:
-      name: internationalStandingOrderPaymentId
-      in: path
-      description: InternationalStandingOrderPaymentId
-      required: true
-      schema:
-        type: string
-        maxLength: 25
-        minLength: 1
-        pattern: ^BARCLAYS-P-\d{14}$
-      example: BARCLAYS-P-12345678901234
-    Authorization:
-      name: Authorization
-      in: header
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      required: true
-      schema:
-        type: string
-        maxLength: 4871
-        minLength: 1
-        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
-        nullable: false
-      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
-    x-fapi-auth-date:
-      name: x-fapi-auth-date
-      in: header
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 29
-        minLength: 29
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-        nullable: false
-      example: Sun, 10 Sep 2017 19:43:31 UTC
-    FilePaymentId:
-      name: filePaymentId
-      in: path
-      description: FilePaymentId
-      required: true
-      schema:
-        type: string
-        maxLength: 25
-        minLength: 1
-        pattern: ^BARCLAYS-P-\d{14}$
-      example: BARCLAYS-P-12345678901234
-    InternationalScheduledPaymentId:
-      name: internationalScheduledPaymentId
-      in: path
-      description: InternationalScheduledPaymentId
-      required: true
-      schema:
-        type: string
-        maxLength: 25
-        minLength: 1
-        pattern: ^BARCLAYS-P-\d{14}$
-      example: BARCLAYS-P-12345678901234
     x-fapi-customer-ip-address:
       name: x-fapi-customer-ip-address
       in: header
@@ -296,31 +296,6 @@ components:
         nullable: false
       example: 104.25.212.99
   responses:
-    405Error:
-      description: Method Not Allowed
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
     500Error:
       description: Internal Server Error
       headers:
@@ -365,33 +340,32 @@ components:
                   Message: Version supplied is not valid
                   Path: Data.Initiation.CreditorAccount
                   Url: <url to the api reference for Event Notification API>
+    405Error:
+      description: Method Not Allowed
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
   schemas:
-    OBError1:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      minProperties: 1
-      properties:
-        ErrorCode:
-          $ref: '#/components/schemas/OBInternalErrorResponseError1Code'
-        Message:
-          type: string
-          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
-
-            OBL doesn''t standardise this field'
-          maxLength: 500
-          minLength: 1
-        Path:
-          type: string
-          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
-          maxLength: 500
-          minLength: 1
-        Url:
-          type: string
-          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
-      required:
-      - ErrorCode
-      nullable: false
     OBInternalErrorResponseError1Code:
       type: string
       description: Low level textual error code, for all enum values see `OBInternalErrorResponseError1Code` [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
@@ -430,6 +404,32 @@ components:
           minItems: 1
       required:
       - Errors
+      nullable: false
+    OBError1:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      minProperties: 1
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/OBInternalErrorResponseError1Code'
+        Message:
+          type: string
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBL doesn''t standardise this field'
+          maxLength: 500
+          minLength: 1
+        Path:
+          type: string
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          maxLength: 500
+          minLength: 1
+        Url:
+          type: string
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+      required:
+      - ErrorCode
       nullable: false
   securitySchemes:
     TPPOAuth2Security:

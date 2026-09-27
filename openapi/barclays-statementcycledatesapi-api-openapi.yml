@@ -65,49 +65,6 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
       deprecated: false
 components:
-  examples:
-    example-error-400-bad-request:
-      value:
-        errors:
-        - code: BAD_REQUEST
-          title: Bad Request
-          details: TXN_ERR_1001
-    example-error-403:
-      value:
-        errors:
-        - code: ACCESS_FORBIDDEN
-          title: Access Forbidden
-          details: ACCESS_FORBIDDEN
-    CycleDatesData:
-      value:
-        data:
-          cycleDates:
-          - '2021-08-24'
-          - '2021-07-24'
-    example-error-500:
-      value:
-        errors:
-        - code: INTERNAL_SERVER_ERROR
-          title: Internal Server Error
-          details: TXN_ERR_5001
-    example-error-404:
-      value:
-        errors:
-        - code: NOT_FOUND
-          title: Not Found
-          details: TXN_ERR_9001
-    example-error-401:
-      value:
-        errors:
-        - code: AUTHENTICATION_ERROR
-          title: Authentication Error
-          details: AUTHENTICATION_ERROR
-    example-error-503:
-      value:
-        errors:
-        - code: SERVICE_UNAVAILABLE
-          title: Service Unavailable
-          details: SERVICE_UNAVAILABLE
   schemas:
     ErrorResponseType:
       type: object
@@ -131,34 +88,6 @@ components:
           items:
             $ref: '#/components/schemas/ErrorType'
           maxItems: 50
-          minItems: 0
-      nullable: false
-    CycleDatesData:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: cycle dates response
-      properties:
-        data:
-          $ref: '#/components/schemas/CycleDatesList'
-      nullable: false
-    dateCycle:
-      type: string
-      format: date
-      deprecated: false
-      description: account cycle date
-      example: '2021-08-17'
-    CycleDatesList:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: cycle dates list
-      properties:
-        cycleDates:
-          type: array
-          items:
-            $ref: '#/components/schemas/dateCycle'
-          maxItems: 24
           minItems: 0
       nullable: false
     ErrorType:
@@ -194,11 +123,80 @@ components:
       - code
       - details
       - title
+    CycleDatesList:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: cycle dates list
+      properties:
+        cycleDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/dateCycle'
+          maxItems: 24
+          minItems: 0
+      nullable: false
+    CycleDatesData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: cycle dates response
+      properties:
+        data:
+          $ref: '#/components/schemas/CycleDatesList'
+      nullable: false
+    dateCycle:
+      type: string
+      format: date
+      deprecated: false
+      description: account cycle date
+      example: '2021-08-17'
+  examples:
+    CycleDatesData:
+      value:
+        data:
+          cycleDates:
+          - '2021-08-24'
+          - '2021-07-24'
+    example-error-403:
+      value:
+        errors:
+        - code: ACCESS_FORBIDDEN
+          title: Access Forbidden
+          details: ACCESS_FORBIDDEN
+    example-error-500:
+      value:
+        errors:
+        - code: INTERNAL_SERVER_ERROR
+          title: Internal Server Error
+          details: TXN_ERR_5001
+    example-error-401:
+      value:
+        errors:
+        - code: AUTHENTICATION_ERROR
+          title: Authentication Error
+          details: AUTHENTICATION_ERROR
+    example-error-503:
+      value:
+        errors:
+        - code: SERVICE_UNAVAILABLE
+          title: Service Unavailable
+          details: SERVICE_UNAVAILABLE
+    example-error-404:
+      value:
+        errors:
+        - code: NOT_FOUND
+          title: Not Found
+          details: TXN_ERR_9001
+    example-error-400-bad-request:
+      value:
+        errors:
+        - code: BAD_REQUEST
+          title: Bad Request
+          details: TXN_ERR_1001
   responses:
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -207,8 +205,20 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
+            example-error-400:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
     ServiceUnavailable:
       description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
       headers:
@@ -221,18 +231,6 @@ components:
           examples:
             example-error-503:
               $ref: '#/components/examples/example-error-503'
-    CycleDatesDataRes:
-      description: Account cycle dates history.
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CycleDatesData'
-          examples:
-            CycleDatesDataRes:
-              $ref: '#/components/examples/CycleDatesData'
     NotFound:
       description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
       headers:
@@ -259,8 +257,10 @@ components:
           examples:
             example-error-403:
               $ref: '#/components/examples/example-error-403'
-    InternalServerError:
-      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -269,20 +269,20 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-500:
-              $ref: '#/components/examples/example-error-500'
-    BadRequest:
-      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    CycleDatesDataRes:
+      description: Account cycle dates history.
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponseType'
+            $ref: '#/components/schemas/CycleDatesData'
           examples:
-            example-error-400:
-              $ref: '#/components/examples/example-error-400-bad-request'
+            CycleDatesDataRes:
+              $ref: '#/components/examples/CycleDatesData'
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

@@ -151,6 +151,12 @@ paths:
       deprecated: false
 components:
   examples:
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
     example-error-429:
       value:
         errors:
@@ -158,6 +164,18 @@ components:
           code: TOO_MANY_REQUESTS
           title: Too many requests
           detail: The client sent too many requests and server is not able to serve them all at the moment
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-403:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed.
     JWKSKeySetRes:
       value:
         keys:
@@ -171,72 +189,25 @@ components:
           iat: 1691702239
           nbf: 1691366400
           exp: 1721260799
-    example-error-403:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: ACCESS_FORBIDDEN
-          title: The user is not permitted to access the requested operation and it cannot be completed.
-    example-error-400-bad-request:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: BAD_REQUEST
-          title: The request is invalid or not properly formed.
-    example-error-500:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: INTERNAL_SERVER_ERROR
-          title: The request failed due to an internal error.
-    example-error-404:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: RESOURCE_NOT_FOUND
-          title: The requested operation failed because a resource associated with the request could not be found.
-    example-error-401:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: AUTHENTICATION_ERROR
-          title: The user could not be authenticated for this request.
     example-error-503:
       value:
         errors:
         - id: 9709-4675-2456-7801
           code: SERVICE_UNAVAILABLE
           title: The server is currently unavailable
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
   schemas:
-    JWKSKeySetBody:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: JWKS Response Body
-      properties:
-        keys:
-          type: array
-          description: List of JWKS keys
-          items:
-            $ref: '#/components/schemas/JWKSKey'
-          maxItems: 10
-          minItems: 1
-      required:
-      - keys
-      nullable: false
-    KeyOperation:
-      type: string
-      description: key operation
-      enum:
-      - sign
-      - verify
-      - encrypt
-      - decrypt
-      - wrapKey
-      - unwrapKey
-      - deriveKey
-      - deriveBits
-      example: sign
     ErrorType:
       type: object
       additionalProperties: true
@@ -277,6 +248,59 @@ components:
       - code
       - id
       - title
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    JWKSKeySetBody:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: JWKS Response Body
+      properties:
+        keys:
+          type: array
+          description: List of JWKS keys
+          items:
+            $ref: '#/components/schemas/JWKSKey'
+          maxItems: 10
+          minItems: 1
+      required:
+      - keys
+      nullable: false
+    KeyOperation:
+      type: string
+      description: key operation
+      enum:
+      - sign
+      - verify
+      - encrypt
+      - decrypt
+      - wrapKey
+      - unwrapKey
+      - deriveKey
+      - deriveBits
+      example: sign
     JWKSKey:
       type: object
       additionalProperties: false
@@ -414,30 +438,6 @@ components:
       - kty
       - nbf
       - use
-      nullable: false
-    ErrorResponseType:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'An API error response.
-
-        '
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-          description: Contains Non-standard meta information
-        errors:
-          type: array
-          description: 'Contains one or more error messages and is mutually exclusive with the data item.
-
-            This will not be returned in success scenarios.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorType'
-          maxItems: 50
-          minItems: 0
       nullable: false
   headers:
     Cache-Control:

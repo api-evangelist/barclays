@@ -207,6 +207,38 @@ paths:
       deprecated: false
 components:
   schemas:
+    RetrieveCardDetailsResponseV2:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Retrieve Card Details Response
+      properties:
+        firstName:
+          type: string
+          description: First name to fetch customer's account information.
+          example: First
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z\s]{1,32}$
+        lastName:
+          type: string
+          description: Last name to fetch customer's account information.
+          example: Last
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z\s]{1,32}$
+        cardDetails:
+          $ref: '#/components/schemas/CardDetails'
+      required:
+      - cardDetails
+      - firstName
+      - lastName
+      nullable: false
+    CurrencyCode:
+      type: string
+      description: List of allowed currency codes.
+      enum:
+      - USD
     RetrieveCardDetailsResponseDataV2:
       type: object
       additionalProperties: false
@@ -217,22 +249,6 @@ components:
           $ref: '#/components/schemas/RetrieveCardDetailsResponseV2'
       required:
       - data
-      nullable: false
-    RetrieveCardDetailsRequest:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Retrieve Card Details Request
-      properties:
-        accountLookupToken:
-          $ref: '#/components/schemas/AccountLookupToken'
-        isIdentityVerified:
-          $ref: '#/components/schemas/IsIdentityVerified'
-        posMetaData:
-          $ref: '#/components/schemas/POSMetaData'
-      required:
-      - accountLookupToken
-      - posMetaData
       nullable: false
     ErrorResponseType:
       type: object
@@ -258,22 +274,154 @@ components:
           maxItems: 50
           minItems: 0
       nullable: false
-    MultiCardAccountSummaryResAttributesV2:
+    MultiCardAccountSummaryResponseDataV2:
       type: object
       additionalProperties: false
       deprecated: false
-      description: Multi Card Account Summary Response.
+      description: Multi Card Account Summary Response Data.
       properties:
-        summaryInfo:
+        data:
+          $ref: '#/components/schemas/MultiCardAccountSummaryResAttributesV2'
+      required:
+      - data
+      nullable: false
+    AccountLookupResponse:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Account Lookup Response
+      properties:
+        accountLookupToken:
+          $ref: '#/components/schemas/AccountLookupToken'
+        firstName:
+          type: string
+          description: Customer's first name
+          example: DAGLEY
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z\s]{1,32}$
+        lastName:
+          type: string
+          description: Customer's last name
+          example: BEATE
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z\s]{1,32}$
+        accounts:
           type: array
-          description: List of account summary for customer id.
+          description: Array of Customer's account
           items:
-            $ref: '#/components/schemas/AccountSummaryResAttributesV2'
-          maxItems: 50
+            $ref: '#/components/schemas/AccountInfo'
+          maxItems: 10
           minItems: 0
       required:
-      - summaryInfo
+      - accountLookupToken
+      - accounts
+      - firstName
+      - lastName
       nullable: false
+    AccountLookupRequestV2:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Account Lookup Request
+      properties:
+        ssn:
+          type: string
+          description: Social Security Number
+          example: '115200045'
+          maxLength: 9
+          minLength: 9
+          pattern: ^[0-9]{9,9}$
+        posMetaData:
+          $ref: '#/components/schemas/POSMetaData'
+      required:
+      - posMetaData
+      - ssn
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 9709-4675-2456-7801
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]{1,50}$
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying purposes.
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - id
+      - title
+    AccountLookupResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Account Lookup Response Data.
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountLookupResponse'
+      required:
+      - data
+      nullable: false
+    RetrieveCardDetailsRequestData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Retrieve Card-Details Request Data
+      properties:
+        data:
+          $ref: '#/components/schemas/RetrieveCardDetailsRequest'
+      required:
+      - data
+      nullable: false
+    AccountLookupToken:
+      type: string
+      description: Account Lookup request reference Id
+      example: c8de699e-ff6d-11eb-9a03-0242ac130003
+      maxLength: 36
+      minLength: 36
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    Amount:
+      type: object
+      additionalProperties: false
+      description: Holds currency data
+      properties:
+        value:
+          type: number
+          format: BigDecimal
+          example: 5000.0
+          maximum: 9223372036854775807
+          minimum: 0
+          multipleOf: 0.01
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
     POSMetaData:
       type: object
       additionalProperties: false
@@ -312,6 +460,12 @@ components:
       - storeId
       - terminalId
       - zipCode
+    IsIdentityVerified:
+      type: string
+      description: Possible values of identity verification
+      enum:
+      - Y
+      - N
     AccountInfo:
       type: object
       additionalProperties: false
@@ -340,17 +494,23 @@ components:
       - brandCode
       - cardLast4
       - cardType
-    AccountLookupResponseData:
+    AccountLookupRequestDataV2:
       type: object
       additionalProperties: false
       deprecated: false
-      description: Account Lookup Response Data.
+      description: Account Lookup Request Data.
       properties:
         data:
-          $ref: '#/components/schemas/AccountLookupResponse'
+          $ref: '#/components/schemas/AccountLookupRequestV2'
       required:
       - data
       nullable: false
+    CardType:
+      type: string
+      description: Card's allowed type
+      enum:
+      - CBCC
+      - PLCC
     AccountSummaryResAttributesV2:
       type: object
       additionalProperties: false
@@ -413,205 +573,6 @@ components:
       - paymentDueDate
       - statementBalance
       nullable: false
-    Amount:
-      type: object
-      additionalProperties: false
-      description: Holds currency data
-      properties:
-        value:
-          type: number
-          format: BigDecimal
-          example: 5000.0
-          maximum: 9223372036854775807
-          minimum: 0
-          multipleOf: 0.01
-        currencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-    AccountLookupToken:
-      type: string
-      description: Account Lookup request reference Id
-      example: c8de699e-ff6d-11eb-9a03-0242ac130003
-      maxLength: 36
-      minLength: 36
-      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
-    MultiCardAccountSummaryResponseDataV2:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Multi Card Account Summary Response Data.
-      properties:
-        data:
-          $ref: '#/components/schemas/MultiCardAccountSummaryResAttributesV2'
-      required:
-      - data
-      nullable: false
-    RetrieveCardDetailsRequestData:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Retrieve Card-Details Request Data
-      properties:
-        data:
-          $ref: '#/components/schemas/RetrieveCardDetailsRequest'
-      required:
-      - data
-      nullable: false
-    CurrencyCode:
-      type: string
-      description: List of allowed currency codes.
-      enum:
-      - USD
-    ErrorType:
-      type: object
-      additionalProperties: true
-      description: Message details - additional operation execution information.
-      properties:
-        id:
-          type: string
-          description: Generated message identifier for particular request, helping to locate server logs.
-          example: 9709-4675-2456-7801
-          maxLength: 50
-          minLength: 1
-          pattern: ^[a-zA-Z0-9\-]{1,50}$
-        code:
-          type: string
-          description: Machine readable, unique code of the message related to particular case within operation execution.
-          example: ACCOUNT_NUMBER_NOT_FOUND
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_]{1,100}$
-        title:
-          type: string
-          description: Short description of the error. Not for displaying purposes.
-          example: The authorization credentials required for this request are invalid.
-          maxLength: 250
-          minLength: 1
-          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
-        detail:
-          type: string
-          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying purposes.
-          maxLength: 250
-          minLength: 1
-          pattern: ^[a-zA-Z0-9\s"=,.']{1,250}$
-        meta:
-          type: object
-          additionalProperties: true
-          description: Object containing non-standard meta-information about the error.
-      required:
-      - code
-      - id
-      - title
-    CardType:
-      type: string
-      description: Card's allowed type
-      enum:
-      - CBCC
-      - PLCC
-    AccountLookupRequestV2:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Account Lookup Request
-      properties:
-        ssn:
-          type: string
-          description: Social Security Number
-          example: '115200045'
-          maxLength: 9
-          minLength: 9
-          pattern: ^[0-9]{9,9}$
-        posMetaData:
-          $ref: '#/components/schemas/POSMetaData'
-      required:
-      - posMetaData
-      - ssn
-      nullable: false
-    AccountLookupRequestDataV2:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Account Lookup Request Data.
-      properties:
-        data:
-          $ref: '#/components/schemas/AccountLookupRequestV2'
-      required:
-      - data
-      nullable: false
-    CardLast4:
-      type: string
-      description: Card's last four digits.
-      example: '9761'
-      maxLength: 4
-      minLength: 4
-      pattern: ^(\d{4})$
-    AccountLookupResponse:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Account Lookup Response
-      properties:
-        accountLookupToken:
-          $ref: '#/components/schemas/AccountLookupToken'
-        firstName:
-          type: string
-          description: Customer's first name
-          example: DAGLEY
-          maxLength: 32
-          minLength: 1
-          pattern: ^[a-zA-Z\s]{1,32}$
-        lastName:
-          type: string
-          description: Customer's last name
-          example: BEATE
-          maxLength: 32
-          minLength: 1
-          pattern: ^[a-zA-Z\s]{1,32}$
-        accounts:
-          type: array
-          description: Array of Customer's account
-          items:
-            $ref: '#/components/schemas/AccountInfo'
-          maxItems: 10
-          minItems: 0
-      required:
-      - accountLookupToken
-      - accounts
-      - firstName
-      - lastName
-      nullable: false
-    IsIdentityVerified:
-      type: string
-      description: Possible values of identity verification
-      enum:
-      - Y
-      - N
-    RetrieveCardDetailsResponseV2:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Retrieve Card Details Response
-      properties:
-        firstName:
-          type: string
-          description: First name to fetch customer's account information.
-          example: First
-          maxLength: 32
-          minLength: 1
-          pattern: ^[a-zA-Z\s]{1,32}$
-        lastName:
-          type: string
-          description: Last name to fetch customer's account information.
-          example: Last
-          maxLength: 32
-          minLength: 1
-          pattern: ^[a-zA-Z\s]{1,32}$
-        cardDetails:
-          $ref: '#/components/schemas/CardDetails'
-      required:
-      - cardDetails
-      - firstName
-      - lastName
-      nullable: false
     CardDetails:
       type: object
       additionalProperties: false
@@ -644,31 +605,61 @@ components:
       - cardType
       - expiryDate
       nullable: false
+    RetrieveCardDetailsRequest:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Retrieve Card Details Request
+      properties:
+        accountLookupToken:
+          $ref: '#/components/schemas/AccountLookupToken'
+        isIdentityVerified:
+          $ref: '#/components/schemas/IsIdentityVerified'
+        posMetaData:
+          $ref: '#/components/schemas/POSMetaData'
+      required:
+      - accountLookupToken
+      - posMetaData
+      nullable: false
+    CardLast4:
+      type: string
+      description: Card's last four digits.
+      example: '9761'
+      maxLength: 4
+      minLength: 4
+      pattern: ^(\d{4})$
+    MultiCardAccountSummaryResAttributesV2:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Multi Card Account Summary Response.
+      properties:
+        summaryInfo:
+          type: array
+          description: List of account summary for customer id.
+          items:
+            $ref: '#/components/schemas/AccountSummaryResAttributesV2'
+          maxItems: 50
+          minItems: 0
+      required:
+      - summaryInfo
+      nullable: false
   examples:
-    example-error-400-bad-request:
+    AccountLookupRequestDataV2:
       value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: BAD_REQUEST
-          title: The request is invalid or not properly formed.
+        data:
+          ssn: '545123808'
+          posMetaData:
+            channel: Mob_123456789
+            storeId: Gap_345678987
+            terminalId: Ter-567898765
+            zipCode: '19555'
     example-error-403:
       value:
         errors:
         - id: 9709-4675-2456-7801
           code: ACCESS_FORBIDDEN
           title: The user is not permitted to access the requested operation and it cannot be completed.
-    example-error-500:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: INTERNAL_SERVER_ERROR
-          title: The request failed due to an internal error.
-    example-error-404:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: RESOURCE_NOT_FOUND
-          title: The requested operation failed because a resource associated with the request could not be found.
     RetrieveCardDetailsRequestData:
       value:
         data:
@@ -679,42 +670,6 @@ components:
             storeId: Gap_345678987
             terminalId: Ter-567898765
             zipCode: '19555'
-    example-error-401:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: AUTHENTICATION_ERROR
-          title: The user could not be authenticated for this request.
-    AccountLookupRequestDataV2:
-      value:
-        data:
-          ssn: '545123808'
-          posMetaData:
-            channel: Mob_123456789
-            storeId: Gap_345678987
-            terminalId: Ter-567898765
-            zipCode: '19555'
-    example-error-503:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: SERVICE_UNAVAILABLE
-          title: The server is currently unavailable
-    AccountLookupResponseData:
-      value:
-        data:
-          accountLookupToken: c8de699e-ff6d-11eb-9a03-0242ac130003
-          firstName: DAGLEY
-          lastName: BEATE
-          accounts:
-          - accountId: aebf47ce-14a6-11ec-82a8-0242ac130003
-            cardLast4: '4872'
-            cardType: CBCC
-            brandCode: AT
-          - accountId: baef47ce-14a6-11ec-82a8-0242ac130003
-            cardLast4: '3831'
-            cardType: PLCC
-            brandCode: GAP
     RetrieveCardDetailsResponseDataV2:
       value:
         data:
@@ -764,23 +719,54 @@ components:
             creditLimit:
               value: 25000.0
               currencyCode: USD
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    AccountLookupResponseData:
+      value:
+        data:
+          accountLookupToken: c8de699e-ff6d-11eb-9a03-0242ac130003
+          firstName: DAGLEY
+          lastName: BEATE
+          accounts:
+          - accountId: aebf47ce-14a6-11ec-82a8-0242ac130003
+            cardLast4: '4872'
+            cardType: CBCC
+            brandCode: AT
+          - accountId: baef47ce-14a6-11ec-82a8-0242ac130003
+            cardLast4: '3831'
+            cardType: PLCC
+            brandCode: GAP
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
   responses:
-    RetrieveCardDetailsResV2:
-      description: Retrieve Card-details Response
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RetrieveCardDetailsResponseDataV2'
-          examples:
-            RetrieveCardDetailsResponseDataV2:
-              $ref: '#/components/examples/RetrieveCardDetailsResponseDataV2'
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -789,8 +775,20 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
+            example-error-400-bad-request:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
     MultiCardAccountSummaryResV2:
       description: Multi Card Account Summary Response
       headers:
@@ -803,6 +801,18 @@ components:
           examples:
             MultiCardAccountSummaryResponseDataV2:
               $ref: '#/components/examples/MultiCardAccountSummaryResponseDataV2'
+    RetrieveCardDetailsResV2:
+      description: Retrieve Card-details Response
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveCardDetailsResponseDataV2'
+          examples:
+            RetrieveCardDetailsResponseDataV2:
+              $ref: '#/components/examples/RetrieveCardDetailsResponseDataV2'
     AccountLookupRes:
       description: Account Lookup Response
       headers:
@@ -853,8 +863,10 @@ components:
           examples:
             example-error-403:
               $ref: '#/components/examples/example-error-403'
-    InternalServerError:
-      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -863,20 +875,8 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-500:
-              $ref: '#/components/examples/example-error-500'
-    BadRequest:
-      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-400-bad-request:
-              $ref: '#/components/examples/example-error-400-bad-request'
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

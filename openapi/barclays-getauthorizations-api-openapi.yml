@@ -68,15 +68,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    AuthorizationsExtData:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Authorizations Response
-      properties:
-        data:
-          $ref: '#/components/schemas/AuthorizationsExtList'
-      nullable: false
     ErrorResponseType:
       type: object
       additionalProperties: false
@@ -100,43 +91,6 @@ components:
             $ref: '#/components/schemas/ErrorType'
           maxItems: 50
           minItems: 0
-      nullable: false
-    AuthorizationsExtList:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: List of authorizations
-      properties:
-        authorizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizationExt'
-          maxItems: 500
-          minItems: 0
-      nullable: false
-    Amount:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Payment Amount Object
-      properties:
-        amount:
-          type: number
-          deprecated: false
-          description: It represents transaction amount
-          example: 1234.56
-          maximum: 99999999999.99
-          minimum: 0
-        currency:
-          type: string
-          deprecated: false
-          description: Currency of payment amount
-          enum:
-          - USD
-          example: USD
-      required:
-      - amount
-      - currency
       nullable: false
     ErrorType:
       type: object
@@ -171,6 +125,14 @@ components:
       - code
       - details
       - title
+    AuthorizationExt:
+      type: object
+      deprecated: false
+      description: Authorization record
+      properties:
+        authTransInfoExt:
+          $ref: '#/components/schemas/AuthorizationExt_authTransInfoExt'
+      nullable: false
     AuthorizationExt_authTransInfoExt:
       type: object
       deprecated: false
@@ -267,21 +229,53 @@ components:
           minLength: 1
           pattern: ^[0-9]+$
       nullable: false
-    AuthorizationExt:
+    Amount:
       type: object
+      additionalProperties: false
       deprecated: false
-      description: Authorization record
+      description: Payment Amount Object
       properties:
-        authTransInfoExt:
-          $ref: '#/components/schemas/AuthorizationExt_authTransInfoExt'
+        amount:
+          type: number
+          deprecated: false
+          description: It represents transaction amount
+          example: 1234.56
+          maximum: 99999999999.99
+          minimum: 0
+        currency:
+          type: string
+          deprecated: false
+          description: Currency of payment amount
+          enum:
+          - USD
+          example: USD
+      required:
+      - amount
+      - currency
+      nullable: false
+    AuthorizationsExtList:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: List of authorizations
+      properties:
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationExt'
+          maxItems: 500
+          minItems: 0
+      nullable: false
+    AuthorizationsExtData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Authorizations Response
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthorizationsExtList'
       nullable: false
   examples:
-    example-error-400-bad-request:
-      value:
-        errors:
-        - code: BAD_REQUEST
-          title: Bad Request
-          details: TXN_ERR_1001
     example-error-403:
       value:
         errors:
@@ -294,18 +288,30 @@ components:
         - code: INTERNAL_SERVER_ERROR
           title: Internal Server Error
           details: TXN_ERR_5001
-    example-error-404:
-      value:
-        errors:
-        - code: NOT_FOUND
-          title: Not Found
-          details: TXN_ERR_9001
     example-error-401:
       value:
         errors:
         - code: AUTHENTICATION_ERROR
           title: Authentication Error
           details: AUTHENTICATION_ERROR
+    example-error-503:
+      value:
+        errors:
+        - code: SERVICE_UNAVAILABLE
+          title: Service Unavailable
+          details: SERVICE_UNAVAILABLE
+    example-error-404:
+      value:
+        errors:
+        - code: NOT_FOUND
+          title: Not Found
+          details: TXN_ERR_9001
+    example-error-400-bad-request:
+      value:
+        errors:
+        - code: BAD_REQUEST
+          title: Bad Request
+          details: TXN_ERR_1001
     AuthorizationsExtResp:
       value:
         data:
@@ -330,29 +336,9 @@ components:
               status: AMOUNT_NOT_INCLUDED
               authTimeStamp: '2026-02-17T07:40:00Z'
               authCode: '000000'
-    example-error-503:
-      value:
-        errors:
-        - code: SERVICE_UNAVAILABLE
-          title: Service Unavailable
-          details: SERVICE_UNAVAILABLE
   responses:
-    GetAuthorizationsExtRes:
-      description: Authorizations list
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthorizationsExtData'
-          examples:
-            FindByAccountResponseV2:
-              $ref: '#/components/examples/AuthorizationsExtResp'
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -361,8 +347,20 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
+            example-error-400:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
     ServiceUnavailable:
       description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
       headers:
@@ -401,8 +399,22 @@ components:
           examples:
             example-error-403:
               $ref: '#/components/examples/example-error-403'
-    InternalServerError:
-      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+    GetAuthorizationsExtRes:
+      description: Authorizations list
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorizationsExtData'
+          examples:
+            FindByAccountResponseV2:
+              $ref: '#/components/examples/AuthorizationsExtResp'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -411,20 +423,8 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-500:
-              $ref: '#/components/examples/example-error-500'
-    BadRequest:
-      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-400:
-              $ref: '#/components/examples/example-error-400-bad-request'
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

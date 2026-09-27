@@ -147,546 +147,7 @@ paths:
           $ref: '#/components/responses/429Error'
       deprecated: false
 components:
-  responses:
-    403Error:
-      description: Forbidden
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-          examples:
-            403ErrorResponse:
-              value:
-                Code: OB.BadRequest
-                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
-                Message: Invalid request parameters
-                Errors:
-                - ErrorCode: AC17
-                  Message: Version must be supplied
-                  Path: Data.Initiation
-                  Url: <url to the api reference for Event Notification API>
-                - ErrorCode: AC17
-                  Message: Version supplied is not valid
-                  Path: Data.Initiation.CreditorAccount
-                  Url: <url to the api reference for Event Notification API>
-    429Error:
-      description: Too Many Requests
-      headers:
-        Retry-After:
-          description: Number in seconds to wait
-          schema:
-            type: integer
-            deprecated: false
-            maximum: 9999999
-            minimum: 1
-            nullable: false
-          example: 120
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    200AccountAccessConsentsConsentIdRead:
-      description: Account Access Consents Read
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadConsentResponse1'
-          examples:
-            account-access-consent-read-response:
-              value:
-                Data:
-                  ConsentId: urn-alphabank-intent-88379
-                  Status: AWAU
-                  StatusReason:
-                  - StatusReasonCode: U036
-                    StatusReasonDescription: Waiting for completion of consent authorisation to be completed by user
-                  StatusReasonDescription: Waiting for completion of consent authorisation to be completed by user
-                  StatusUpdateDateTime: '2017-05-02T00:00:00+00:00'
-                  CreationDateTime: '2017-05-02T00:00:00+00:00'
-                  Permissions:
-                  - ReadAccountsDetail
-                  - ReadBalances
-                  - ReadBeneficiariesDetail
-                  - ReadDirectDebits
-                  - ReadProducts
-                  - ReadStandingOrdersDetail
-                  - ReadTransactionsCredits
-                  - ReadTransactionsDebits
-                  - ReadTransactionsDetail
-                  - ReadOffers
-                  - ReadPAN
-                  - ReadParty
-                  - ReadPartyPSU
-                  - ReadScheduledPaymentsDetail
-                  - ReadStatementsDetail
-                  ExpirationDateTime: '2017-08-02T00:00:00+00:00'
-                  TransactionFromDateTime: '2017-05-03T00:00:00+00:00'
-                  TransactionToDateTime: '2017-12-03T00:00:00+00:00'
-                Risk: {}
-                Links:
-                  Self: https://api.alphabank.com/open-banking/v4.0/aisp/account-access-consents/urn-alphabank-intent-88379
-                Meta:
-                  TotalPages: 1
-    400Error:
-      description: Bad request
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-          examples:
-            400ErrorResponse:
-              value:
-                Code: OB.BadRequest
-                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
-                Message: Invalid request parameters
-                Errors:
-                - ErrorCode: AC17
-                  Message: Version must be supplied
-                  Path: Data.Initiation
-                  Url: <url to the api reference for Event Notification API>
-                - ErrorCode: AC17
-                  Message: Version supplied is not valid
-                  Path: Data.Initiation.CreditorAccount
-                  Url: <url to the api reference for Event Notification API>
-    500Error:
-      description: Internal Server Error
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-          examples:
-            500ErrorResponse:
-              value:
-                Code: OB.BadRequest
-                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
-                Message: Invalid request parameters
-                Errors:
-                - ErrorCode: AC17
-                  Message: Version must be supplied
-                  Path: Data.Initiation
-                  Url: <url to the api reference for Event Notification API>
-                - ErrorCode: AC17
-                  Message: Version supplied is not valid
-                  Path: Data.Initiation.CreditorAccount
-                  Url: <url to the api reference for Event Notification API>
-    415Error:
-      description: Unsupported Media Type
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    204AccountAccessConsentsConsentIdDeleted:
-      description: Account Access Consents Deleted
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    405Error:
-      description: Method Not Allowed
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    401Error:
-      description: Unauthorized
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    201AccountAccessConsentsCreated:
-      description: Account Access Consents Created
-      headers:
-        Location:
-          description: Mandatory response header for HTTP 201 (Created) response codes
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 492
-            minLength: 2
-            pattern: ^(https:\/\/[-a-zA-Z0-9\\._\\\/?=]{2,492})$
-            nullable: true
-          example: https://www.example.org/index.php
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBReadConsentResponse1'
-          examples:
-            create-account-access-response:
-              value:
-                Data:
-                  ConsentId: urn-alphabank-intent-88379
-                  Status: AWAU
-                  StatusUpdateDateTime: '2017-05-02T00:00:00+00:00'
-                  CreationDateTime: '2017-05-02T00:00:00+00:00'
-                  StatusReason:
-                  - StatusReasonCode: U036
-                    StatusReasonDescription: Waiting for completion of consent authorisation to be completed by user
-                  Permissions:
-                  - ReadAccountsDetail
-                  - ReadBalances
-                  - ReadBeneficiariesDetail
-                  - ReadDirectDebits
-                  - ReadProducts
-                  - ReadStandingOrdersDetail
-                  - ReadTransactionsCredits
-                  - ReadTransactionsDebits
-                  - ReadTransactionsDetail
-                  - ReadOffers
-                  - ReadPAN
-                  - ReadParty
-                  - ReadPartyPSU
-                  - ReadScheduledPaymentsDetail
-                  - ReadStatementsDetail
-                  ExpirationDateTime: '2017-08-02T00:00:00+00:00'
-                  TransactionFromDateTime: '2017-05-03T00:00:00+00:00'
-                  TransactionToDateTime: '2017-12-03T00:00:00+00:00'
-                Risk: {}
-                Links:
-                  Self: https://api.alphabank.com/open-banking/v4.0/aisp/account-access-consents/urn-alphabank-intent-88379
-                Meta:
-                  TotalPages: 1
-    406Error:
-      description: Not Acceptable
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-  parameters:
-    x-fapi-interaction-id:
-      name: x-fapi-interaction-id
-      in: header
-      description: An RFC4122 UID used as a correlation id.
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 36
-        minLength: 32
-        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-        nullable: false
-      example: 93bac548-d2de-4546-b106-880a5018460d
-    x-fapi-customer-ip-address:
-      name: x-fapi-customer-ip-address
-      in: header
-      description: The PSU's IP address if the PSU is currently logged in with the TPP.
-      required: false
-      schema:
-        type: string
-        maxLength: 40
-        minLength: 7
-        pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
-        nullable: false
-      example: 104.25.212.99
-    Authorization:
-      name: Authorization
-      in: header
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      required: true
-      schema:
-        type: string
-        maxLength: 4871
-        minLength: 1
-        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
-        nullable: false
-      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
-    ConsentId:
-      name: consentId
-      in: path
-      description: ConsentId
-      required: true
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 25
-        minLength: 1
-        pattern: ^BARCLAYS-[A]-\d{14}$
-        nullable: false
-      example: BARCLAYS-A-12345678901234
-    x-customer-user-agent:
-      name: x-customer-user-agent
-      in: header
-      description: Indicates the user-agent that the PSU is using.
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 500
-        minLength: 1
-        nullable: false
-      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
-    x-fapi-auth-date:
-      name: x-fapi-auth-date
-      in: header
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 29
-        minLength: 29
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-        nullable: false
-      example: Sun, 10 Sep 2017 19:43:31 UTC
   schemas:
-    ISODateTime:
-      type: string
-      format: date-time
-      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-    OBError1:
-      type: object
-      additionalProperties: false
-      minProperties: 1
-      properties:
-        ErrorCode:
-          $ref: '#/components/schemas/OBExternalStatusReason1Code'
-        Message:
-          type: string
-          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
-
-            OBL doesn''t standardise this field'
-          maxLength: 500
-          minLength: 1
-        Path:
-          type: string
-          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
-          maxLength: 500
-          minLength: 1
-        Url:
-          type: string
-          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
-      required:
-      - ErrorCode
-    CreationDateTime:
-      type: string
-      format: date-time
-      description: "Date and time at which the resource was created. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-      example: '2024-05-29T00:00:00Z'
     Meta:
       type: object
       additionalProperties: false
@@ -703,10 +164,11 @@ components:
         LastAvailableDateTime:
           $ref: '#/components/schemas/ISODateTime'
       title: MetaData
-    StatusUpdateDateTime:
+    CreationDateTime:
       type: string
       format: date-time
-      description: "Date and time at which the resource status was updated. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      description: "Date and time at which the resource was created. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      example: '2024-05-29T00:00:00Z'
     OBRisk2:
       type: object
       additionalProperties: false
@@ -769,22 +231,6 @@ components:
       required:
       - Errors
       nullable: false
-    OBInternalConsentStatus1Code:
-      type: string
-      description: Specifies the status of consent resource in code form.
-      enum:
-      - AWAU
-      - RJCT
-      - AUTH
-      - CANC
-      - EXPD
-      example: AWAU
-    OBExternalStatusReason1Code:
-      type: string
-      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      example: U001
-      maxLength: 4
-      minLength: 4
     OBStatusReason:
       type: object
       properties:
@@ -889,6 +335,46 @@ components:
       - Data
       - Risk
       nullable: false
+    OBExternalStatusReason1Code:
+      type: string
+      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: U001
+      maxLength: 4
+      minLength: 4
+    OBInternalConsentStatus1Code:
+      type: string
+      description: Specifies the status of consent resource in code form.
+      enum:
+      - AWAU
+      - RJCT
+      - AUTH
+      - CANC
+      - EXPD
+      example: AWAU
+    OBError1:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/OBExternalStatusReason1Code'
+        Message:
+          type: string
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBL doesn''t standardise this field'
+          maxLength: 500
+          minLength: 1
+        Path:
+          type: string
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          maxLength: 500
+          minLength: 1
+        Url:
+          type: string
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+      required:
+      - ErrorCode
     OBReadConsent1:
       type: object
       additionalProperties: false
@@ -947,6 +433,520 @@ components:
       - Data
       - Risk
       nullable: false
+    StatusUpdateDateTime:
+      type: string
+      format: date-time
+      description: "Date and time at which the resource status was updated. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+    ISODateTime:
+      type: string
+      format: date-time
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+  parameters:
+    x-fapi-interaction-id:
+      name: x-fapi-interaction-id
+      in: header
+      description: An RFC4122 UID used as a correlation id.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 36
+        minLength: 32
+        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+        nullable: false
+      example: 93bac548-d2de-4546-b106-880a5018460d
+    x-fapi-customer-ip-address:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      required: false
+      schema:
+        type: string
+        maxLength: 40
+        minLength: 7
+        pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+        nullable: false
+      example: 104.25.212.99
+    ConsentId:
+      name: consentId
+      in: path
+      description: ConsentId
+      required: true
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 25
+        minLength: 1
+        pattern: ^BARCLAYS-[A]-\d{14}$
+        nullable: false
+      example: BARCLAYS-A-12345678901234
+    Authorization:
+      name: Authorization
+      in: header
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      required: true
+      schema:
+        type: string
+        maxLength: 4871
+        minLength: 1
+        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
+        nullable: false
+      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
+    x-customer-user-agent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 500
+        minLength: 1
+        nullable: false
+      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
+    x-fapi-auth-date:
+      name: x-fapi-auth-date
+      in: header
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 29
+        minLength: 29
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+        nullable: false
+      example: Sun, 10 Sep 2017 19:43:31 UTC
+  responses:
+    415Error:
+      description: Unsupported Media Type
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    406Error:
+      description: Not Acceptable
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    403Error:
+      description: Forbidden
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            403ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
+    500Error:
+      description: Internal Server Error
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            500ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
+    429Error:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
+            deprecated: false
+            maximum: 9999999
+            minimum: 1
+            nullable: false
+          example: 120
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    204AccountAccessConsentsConsentIdDeleted:
+      description: Account Access Consents Deleted
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    400Error:
+      description: Bad request
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            400ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
+    201AccountAccessConsentsCreated:
+      description: Account Access Consents Created
+      headers:
+        Location:
+          description: Mandatory response header for HTTP 201 (Created) response codes
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 492
+            minLength: 2
+            pattern: ^(https:\/\/[-a-zA-Z0-9\\._\\\/?=]{2,492})$
+            nullable: true
+          example: https://www.example.org/index.php
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadConsentResponse1'
+          examples:
+            create-account-access-response:
+              value:
+                Data:
+                  ConsentId: urn-alphabank-intent-88379
+                  Status: AWAU
+                  StatusUpdateDateTime: '2017-05-02T00:00:00+00:00'
+                  CreationDateTime: '2017-05-02T00:00:00+00:00'
+                  StatusReason:
+                  - StatusReasonCode: U036
+                    StatusReasonDescription: Waiting for completion of consent authorisation to be completed by user
+                  Permissions:
+                  - ReadAccountsDetail
+                  - ReadBalances
+                  - ReadBeneficiariesDetail
+                  - ReadDirectDebits
+                  - ReadProducts
+                  - ReadStandingOrdersDetail
+                  - ReadTransactionsCredits
+                  - ReadTransactionsDebits
+                  - ReadTransactionsDetail
+                  - ReadOffers
+                  - ReadPAN
+                  - ReadParty
+                  - ReadPartyPSU
+                  - ReadScheduledPaymentsDetail
+                  - ReadStatementsDetail
+                  ExpirationDateTime: '2017-08-02T00:00:00+00:00'
+                  TransactionFromDateTime: '2017-05-03T00:00:00+00:00'
+                  TransactionToDateTime: '2017-12-03T00:00:00+00:00'
+                Risk: {}
+                Links:
+                  Self: https://api.alphabank.com/open-banking/v4.0/aisp/account-access-consents/urn-alphabank-intent-88379
+                Meta:
+                  TotalPages: 1
+    401Error:
+      description: Unauthorized
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    200AccountAccessConsentsConsentIdRead:
+      description: Account Access Consents Read
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBReadConsentResponse1'
+          examples:
+            account-access-consent-read-response:
+              value:
+                Data:
+                  ConsentId: urn-alphabank-intent-88379
+                  Status: AWAU
+                  StatusReason:
+                  - StatusReasonCode: U036
+                    StatusReasonDescription: Waiting for completion of consent authorisation to be completed by user
+                  StatusReasonDescription: Waiting for completion of consent authorisation to be completed by user
+                  StatusUpdateDateTime: '2017-05-02T00:00:00+00:00'
+                  CreationDateTime: '2017-05-02T00:00:00+00:00'
+                  Permissions:
+                  - ReadAccountsDetail
+                  - ReadBalances
+                  - ReadBeneficiariesDetail
+                  - ReadDirectDebits
+                  - ReadProducts
+                  - ReadStandingOrdersDetail
+                  - ReadTransactionsCredits
+                  - ReadTransactionsDebits
+                  - ReadTransactionsDetail
+                  - ReadOffers
+                  - ReadPAN
+                  - ReadParty
+                  - ReadPartyPSU
+                  - ReadScheduledPaymentsDetail
+                  - ReadStatementsDetail
+                  ExpirationDateTime: '2017-08-02T00:00:00+00:00'
+                  TransactionFromDateTime: '2017-05-03T00:00:00+00:00'
+                  TransactionToDateTime: '2017-12-03T00:00:00+00:00'
+                Risk: {}
+                Links:
+                  Self: https://api.alphabank.com/open-banking/v4.0/aisp/account-access-consents/urn-alphabank-intent-88379
+                Meta:
+                  TotalPages: 1
+    405Error:
+      description: Method Not Allowed
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
   securitySchemes:
     TPPOAuth2Security:
       type: oauth2

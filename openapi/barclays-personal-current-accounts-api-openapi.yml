@@ -141,6 +141,45 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    HeadUnsecuredSmeLoans408Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans429Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans500Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
     personal_account_response:
       type: object
       properties:
@@ -1327,45 +1366,6 @@ components:
       - data
       - meta
     HeadUnsecuredSmeLoans503Response:
-      type: object
-      properties:
-        description:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-      required:
-      - description
-      - status
-      - title
-    HeadUnsecuredSmeLoans408Response:
-      type: object
-      properties:
-        description:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-      required:
-      - description
-      - status
-      - title
-    HeadUnsecuredSmeLoans500Response:
-      type: object
-      properties:
-        description:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-      required:
-      - description
-      - status
-      - title
-    HeadUnsecuredSmeLoans429Response:
       type: object
       properties:
         description:
