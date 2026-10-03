@@ -265,108 +265,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    get__fca-service-metrics_pcaFault_503_schema_:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          enum:
-          - '503'
-        title:
-          type: string
-          enum:
-          - Service temporarily unavailable
-        description:
-          type: string
-          enum:
-          - The service is temporarily unavailable.
-      required:
-      - description
-      - status
-      - title
-      title: 503 Error object
-    get__fca-service-metrics_pcaFault_400_schema_:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          enum:
-          - '400'
-        title:
-          type: string
-          enum:
-          - Bad request
-        description:
-          type: string
-          enum:
-          - You have sent a request which could not be understood.
-      required:
-      - description
-      - status
-      - title
-      title: 400 Error object
-    get__fca-service-metrics_pcaFault_500_schema_:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          enum:
-          - '500'
-        title:
-          type: string
-          enum:
-          - Internal server error
-        description:
-          type: string
-          enum:
-          - An error occurred on the server. No further information is available.
-      required:
-      - description
-      - status
-      - title
-      title: 500 Error object
-    get__fca-service-metrics_pcaFault_429_schema_:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          enum:
-          - '429'
-        title:
-          type: string
-          enum:
-          - Too many requests
-        description:
-          type: string
-          enum:
-          - You have requested this resource too often. Slow down.
-      required:
-      - description
-      - status
-      - title
-      title: 429 Error object
-    get__fca-service-metrics_pcaFault_default_schema_:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          description: This corresponds to the HTTP status code
-        title:
-          type: string
-          description: A short title of the type of error
-        description:
-          type: string
-          description: Further details describing the error
-      required:
-      - description
-      - status
-      - title
-      title: Error object
     get__fca-service-metrics_pcaFault_408_schema_:
       type: object
       additionalProperties: false
@@ -1878,3 +1776,105 @@ components:
       required:
       - data
       - meta
+    get__fca-service-metrics_pcaFault_503_schema_:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - '503'
+        title:
+          type: string
+          enum:
+          - Service temporarily unavailable
+        description:
+          type: string
+          enum:
+          - The service is temporarily unavailable.
+      required:
+      - description
+      - status
+      - title
+      title: 503 Error object
+    get__fca-service-metrics_pcaFault_400_schema_:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - '400'
+        title:
+          type: string
+          enum:
+          - Bad request
+        description:
+          type: string
+          enum:
+          - You have sent a request which could not be understood.
+      required:
+      - description
+      - status
+      - title
+      title: 400 Error object
+    get__fca-service-metrics_pcaFault_500_schema_:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - '500'
+        title:
+          type: string
+          enum:
+          - Internal server error
+        description:
+          type: string
+          enum:
+          - An error occurred on the server. No further information is available.
+      required:
+      - description
+      - status
+      - title
+      title: 500 Error object
+    get__fca-service-metrics_pcaFault_default_schema_:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          description: This corresponds to the HTTP status code
+        title:
+          type: string
+          description: A short title of the type of error
+        description:
+          type: string
+          description: Further details describing the error
+      required:
+      - description
+      - status
+      - title
+      title: Error object
+    get__fca-service-metrics_pcaFault_429_schema_:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - '429'
+        title:
+          type: string
+          enum:
+          - Too many requests
+        description:
+          type: string
+          enum:
+          - You have requested this resource too often. Slow down.
+      required:
+      - description
+      - status
+      - title
+      title: 429 Error object

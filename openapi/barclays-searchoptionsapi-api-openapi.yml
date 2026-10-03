@@ -66,6 +66,100 @@ paths:
       deprecated: false
 components:
   schemas:
+    PurchasedByOption:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions purchased by options
+      properties:
+        purchasedByRef:
+          type: string
+          deprecated: false
+          description: Purchased customer reference id
+          example: 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9
+          maxLength: 64
+          minLength: 64
+          pattern: ^[a-zA-Z0-9]{64}$
+        firstName:
+          $ref: '#/components/schemas/customerFirstOrLastName'
+        lastName:
+          $ref: '#/components/schemas/customerFirstOrLastName'
+        roleType:
+          type: string
+          description: Customer role
+          enum:
+          - PRIMARY
+          - AUTHORIZED
+          - CO-APPLICANT
+          - BUSINESS_OWNER
+          - BUSINESS_EMPLOYEE
+          - BUSINESS_ADMIN
+          example: PRIMARY
+        lastFour:
+          type: string
+          deprecated: false
+          description: Customer account number last four
+          example: '1234'
+          maxLength: 4
+          minLength: 4
+          pattern: ^[0-9]{4}$
+        activationDate:
+          type: string
+          format: date
+          deprecated: false
+          description: activation date
+          example: '2021-08-30'
+      nullable: false
+    customerFirstOrLastName:
+      type: string
+      deprecated: false
+      description: Customer first or last name
+      example: John
+      maxLength: 30
+      minLength: 1
+      pattern: ^[a-zA-Z']{1,30}$
+    SearchOptionsData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Transactions search options response
+      properties:
+        data:
+          $ref: '#/components/schemas/SearchOptions'
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: BAD_REQUEST
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: Bad Request
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
+        details:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,255}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - details
+      - title
     SearchOptions:
       type: object
       additionalProperties: false
@@ -142,125 +236,126 @@ components:
           maxItems: 50
           minItems: 0
       nullable: false
-    ErrorType:
-      type: object
-      additionalProperties: true
-      description: Message details - additional operation execution information.
-      properties:
-        code:
-          type: string
-          description: Machine readable, unique code of the message related to particular case within operation execution.
-          example: BAD_REQUEST
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z_]{1,100}$
-        title:
-          type: string
-          description: Short description of the error. Not for displaying purposes.
-          example: Bad Request
-          maxLength: 250
-          minLength: 1
-          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
-        details:
-          type: string
-          description: Provides additional low-level details about the error to assist with troubleshooting.
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_]{1,255}$
-        meta:
-          type: object
-          additionalProperties: true
-          description: Object containing non-standard meta-information about the error.
-      required:
-      - code
-      - details
-      - title
-    PurchasedByOption:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: transactions purchased by options
-      properties:
-        purchasedByRef:
-          type: string
-          deprecated: false
-          description: Purchased customer reference id
-          example: 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9
-          maxLength: 64
-          minLength: 64
-          pattern: ^[a-zA-Z0-9]{64}$
-        firstName:
-          $ref: '#/components/schemas/customerFirstOrLastName'
-        lastName:
-          $ref: '#/components/schemas/customerFirstOrLastName'
-        roleType:
-          type: string
-          description: Customer role
-          enum:
-          - PRIMARY
-          - AUTHORIZED
-          - CO-APPLICANT
-          - BUSINESS_OWNER
-          - BUSINESS_EMPLOYEE
-          - BUSINESS_ADMIN
-          example: PRIMARY
-        lastFour:
-          type: string
-          deprecated: false
-          description: Customer account number last four
-          example: '1234'
-          maxLength: 4
-          minLength: 4
-          pattern: ^[0-9]{4}$
-        activationDate:
-          type: string
-          format: date
-          deprecated: false
-          description: activation date
-          example: '2021-08-30'
-      nullable: false
-    customerFirstOrLastName:
-      type: string
-      deprecated: false
-      description: Customer first or last name
-      example: John
-      maxLength: 30
-      minLength: 1
-      pattern: ^[a-zA-Z']{1,30}$
-    SearchOptionsData:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Transactions search options response
-      properties:
-        data:
-          $ref: '#/components/schemas/SearchOptions'
-      nullable: false
+  responses:
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    SearchOptionsDataRes:
+      description: Transaction search options response
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchOptionsData'
+          examples:
+            SearchOptionsDataRes:
+              $ref: '#/components/examples/SearchOptionsData'
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400:
+              $ref: '#/components/examples/example-error-400-bad-request'
   examples:
-    example-error-403:
-      value:
-        errors:
-        - code: ACCESS_FORBIDDEN
-          title: Access Forbidden
-          details: ACCESS_FORBIDDEN
     example-error-500:
       value:
         errors:
         - code: INTERNAL_SERVER_ERROR
           title: Internal Server Error
           details: TXN_ERR_5001
-    example-error-401:
+    example-error-400-bad-request:
       value:
         errors:
-        - code: AUTHENTICATION_ERROR
-          title: Authentication Error
-          details: AUTHENTICATION_ERROR
+        - code: BAD_REQUEST
+          title: Bad Request
+          details: TXN_ERR_1001
     example-error-503:
       value:
         errors:
         - code: SERVICE_UNAVAILABLE
           title: Service Unavailable
           details: SERVICE_UNAVAILABLE
+    example-error-403:
+      value:
+        errors:
+        - code: ACCESS_FORBIDDEN
+          title: Access Forbidden
+          details: ACCESS_FORBIDDEN
+    example-error-401:
+      value:
+        errors:
+        - code: AUTHENTICATION_ERROR
+          title: Authentication Error
+          details: AUTHENTICATION_ERROR
     SearchOptionsData:
       value:
         data:
@@ -290,101 +385,6 @@ components:
         - code: NOT_FOUND
           title: Not Found
           details: TXN_ERR_9001
-    example-error-400-bad-request:
-      value:
-        errors:
-        - code: BAD_REQUEST
-          title: Bad Request
-          details: TXN_ERR_1001
-  responses:
-    BadRequest:
-      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-400:
-              $ref: '#/components/examples/example-error-400-bad-request'
-    SearchOptionsDataRes:
-      description: Transaction search options response
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SearchOptionsData'
-          examples:
-            SearchOptionsDataRes:
-              $ref: '#/components/examples/SearchOptionsData'
-    InternalServerError:
-      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-500:
-              $ref: '#/components/examples/example-error-500'
-    ServiceUnavailable:
-      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-503:
-              $ref: '#/components/examples/example-error-503'
-    NotFound:
-      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-404:
-              $ref: '#/components/examples/example-error-404'
-    Forbidden:
-      description: 'The user is not permitted to access the requested operation and it cannot be completed.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-403:
-              $ref: '#/components/examples/example-error-403'
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

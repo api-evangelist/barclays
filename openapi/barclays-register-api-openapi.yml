@@ -127,24 +127,100 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PostRegister400Response:
+    DCRResponseType:
       type: object
       properties:
-        error_description:
+        token_endpoint_auth_signing_alg:
           type: string
-        error:
+          enum:
+          - PS256
+        client_uri:
           type: string
+        jwks:
+          $ref: '#/components/schemas/JWKSObjectType'
+        grant_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - client_credentials
+            - authorization_code
+            - implicit
+            - refresh_token
+            - urn:ietf:params:oauth:grant-type:jwt-bearer
+        application_type:
+          type: string
+          enum:
+          - web
+          - mobile
+        logo_uri:
+          type: string
+        tls_client_auth_subject_dn:
+          type: string
+        redirect_uris:
+          type: array
+          items:
+            type: string
+        token_endpoint_auth_method:
+          type: string
+          enum:
+          - private_key_jwt
+        client_id:
+          type: string
+        software_id:
+          type: string
+        client_secret_expires_at:
+          type: number
+        scope:
+          type: string
+        jwks_uri:
+          type: string
+        tos_uri:
+          type: string
+        software_version:
+          type: string
+        request_object_signing_alg:
+          type: string
+          enum:
+          - PS256
+        client_secret:
+          type: string
+        client_id_issued_at:
+          type: number
+        client_name:
+          type: string
+        contacts:
+          type: array
+          items:
+            type: string
+        policy_uri:
+          type: string
+        response_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - code
+            - token
+            - id_token
+            - id_token token
+            - code id_token
+            - code token
+            - code id_token token
+            - none
+        id_token_signed_response_alg:
+          type: string
+          enum:
+          - PS256
       required:
-      - error
-    PostRegister429Response:
-      type: object
-      properties:
-        error_description:
-          type: string
-        error:
-          type: string
-      required:
-      - error
+      - client_id
+      - client_name
+      - contacts
+      - grant_types
+      - redirect_uris
+      - response_types
+      - scope
+      - token_endpoint_auth_method
     DCRRequestType:
       type: object
       properties:
@@ -274,6 +350,33 @@ components:
       - response_types
       - scope
       - token_endpoint_auth_method
+    PostRegister500Response:
+      type: object
+      properties:
+        error_description:
+          type: string
+        error:
+          type: string
+      required:
+      - error
+    PostRegister400Response:
+      type: object
+      properties:
+        error_description:
+          type: string
+        error:
+          type: string
+      required:
+      - error
+    PostRegister429Response:
+      type: object
+      properties:
+        error_description:
+          type: string
+        error:
+          type: string
+      required:
+      - error
     JWKSObjectType:
       type: object
       properties:
@@ -284,106 +387,3 @@ components:
           minItems: 1
       required:
       - keys
-    PostRegister500Response:
-      type: object
-      properties:
-        error_description:
-          type: string
-        error:
-          type: string
-      required:
-      - error
-    DCRResponseType:
-      type: object
-      properties:
-        token_endpoint_auth_signing_alg:
-          type: string
-          enum:
-          - PS256
-        client_uri:
-          type: string
-        jwks:
-          $ref: '#/components/schemas/JWKSObjectType'
-        grant_types:
-          type: array
-          items:
-            type: string
-            enum:
-            - client_credentials
-            - authorization_code
-            - implicit
-            - refresh_token
-            - urn:ietf:params:oauth:grant-type:jwt-bearer
-        application_type:
-          type: string
-          enum:
-          - web
-          - mobile
-        logo_uri:
-          type: string
-        tls_client_auth_subject_dn:
-          type: string
-        redirect_uris:
-          type: array
-          items:
-            type: string
-        token_endpoint_auth_method:
-          type: string
-          enum:
-          - private_key_jwt
-        client_id:
-          type: string
-        software_id:
-          type: string
-        client_secret_expires_at:
-          type: number
-        scope:
-          type: string
-        jwks_uri:
-          type: string
-        tos_uri:
-          type: string
-        software_version:
-          type: string
-        request_object_signing_alg:
-          type: string
-          enum:
-          - PS256
-        client_secret:
-          type: string
-        client_id_issued_at:
-          type: number
-        client_name:
-          type: string
-        contacts:
-          type: array
-          items:
-            type: string
-        policy_uri:
-          type: string
-        response_types:
-          type: array
-          items:
-            type: string
-            enum:
-            - code
-            - token
-            - id_token
-            - id_token token
-            - code id_token
-            - code token
-            - code id_token token
-            - none
-        id_token_signed_response_alg:
-          type: string
-          enum:
-          - PS256
-      required:
-      - client_id
-      - client_name
-      - contacts
-      - grant_types
-      - redirect_uris
-      - response_types
-      - scope
-      - token_endpoint_auth_method

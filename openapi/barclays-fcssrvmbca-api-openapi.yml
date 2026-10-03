@@ -265,48 +265,27 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    get__fca-service-metrics_bcaFault_408_schema_:
+    get__fca-service-metrics_bcaFault_400_schema_:
       type: object
       additionalProperties: false
       properties:
         status:
           type: string
           enum:
-          - '408'
+          - '400'
         title:
           type: string
           enum:
-          - Client timeout
+          - Bad request
         description:
           type: string
           enum:
-          - Your client has failed to submit a request, and a timeout has occurred.
+          - You have sent a request which could not be understood.
       required:
       - description
       - status
       - title
-      title: 408 Error object
-    get__fca-service-metrics_bcaFault_500_schema_:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          enum:
-          - '500'
-        title:
-          type: string
-          enum:
-          - Internal server error
-        description:
-          type: string
-          enum:
-          - An error occurred on the server. No further information is available.
-      required:
-      - description
-      - status
-      - title
-      title: 500 Error object
+      title: 400 Error object
     get__fca-service-metrics_bcaFault_503_schema_:
       type: object
       additionalProperties: false
@@ -328,27 +307,6 @@ components:
       - status
       - title
       title: 503 Error object
-    get__fca-service-metrics_bcaFault_429_schema_:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          enum:
-          - '429'
-        title:
-          type: string
-          enum:
-          - Too many requests
-        description:
-          type: string
-          enum:
-          - You have requested this resource too often. Slow down.
-      required:
-      - description
-      - status
-      - title
-      title: 429 Error object
     get__fca-service-metrics_bcaResponseMessage_200_schema_:
       type: object
       additionalProperties: false
@@ -1839,6 +1797,69 @@ components:
       required:
       - data
       - meta
+    get__fca-service-metrics_bcaFault_500_schema_:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - '500'
+        title:
+          type: string
+          enum:
+          - Internal server error
+        description:
+          type: string
+          enum:
+          - An error occurred on the server. No further information is available.
+      required:
+      - description
+      - status
+      - title
+      title: 500 Error object
+    get__fca-service-metrics_bcaFault_429_schema_:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - '429'
+        title:
+          type: string
+          enum:
+          - Too many requests
+        description:
+          type: string
+          enum:
+          - You have requested this resource too often. Slow down.
+      required:
+      - description
+      - status
+      - title
+      title: 429 Error object
+    get__fca-service-metrics_bcaFault_408_schema_:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - '408'
+        title:
+          type: string
+          enum:
+          - Client timeout
+        description:
+          type: string
+          enum:
+          - Your client has failed to submit a request, and a timeout has occurred.
+      required:
+      - description
+      - status
+      - title
+      title: 408 Error object
     get__fca-service-metrics_bcaFault_default_schema_:
       type: object
       additionalProperties: false
@@ -1857,24 +1878,3 @@ components:
       - status
       - title
       title: Error object
-    get__fca-service-metrics_bcaFault_400_schema_:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          enum:
-          - '400'
-        title:
-          type: string
-          enum:
-          - Bad request
-        description:
-          type: string
-          enum:
-          - You have sent a request which could not be understood.
-      required:
-      - description
-      - status
-      - title
-      title: 400 Error object

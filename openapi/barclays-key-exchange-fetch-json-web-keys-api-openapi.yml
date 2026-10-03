@@ -150,63 +150,6 @@ paths:
               example: null
       deprecated: false
 components:
-  examples:
-    example-error-401:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: AUTHENTICATION_ERROR
-          title: The user could not be authenticated for this request.
-    example-error-429:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: TOO_MANY_REQUESTS
-          title: Too many requests
-          detail: The client sent too many requests and server is not able to serve them all at the moment
-    example-error-404:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: RESOURCE_NOT_FOUND
-          title: The requested operation failed because a resource associated with the request could not be found.
-    example-error-403:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: ACCESS_FORBIDDEN
-          title: The user is not permitted to access the requested operation and it cannot be completed.
-    JWKSKeySetRes:
-      value:
-        keys:
-        - e: AQAB
-          kid: 39cf4e1c5fc71fb7ecff6b66e902ca14
-          kty: RSA
-          n: o7kieUWdjJHLHitf85g7oM41Nob6fQ0WdDOR7_OOX6E66uS-xImmPp2wfDaBD5SD-U7ckipE0JCPAMAqxlFztIGRakaQRrjVo0CZ1Sqy7qMa48QjJmVYDvQCLGq58VRH10CmVLvJtGgiLPPzLfk09yEZdjipj7VAuJ-f7L4Y1PkfW6Zrw8vgfcy8tEerdIZDtBAsePuwLsHCnfOBgZ-vh6xyad7VrCANz0pumaLTWR-hh37O6l0-zX1yFtLyZM038tcGbAMF86b1J27M8ZKqX3y5pYLiiY-jjGhytMyZc9FziNppOSPQTWSuIVc9eS6oGXRm2Evauqlm0gdosx5Yew==
-          x5c:
-          - MIIFuzCCBKOgAwIBAgIQOc9OHF/HH7fs/2tm6QLKFDANBgkqhkiG9w0BAQsFADB5MRUwEwYDVQQKEwxCYXJjbGF5cyBQTEMxLzAtBgNVBAsTJkFXUyBJbmZyYXN0cnVjdHVyZSBJbnRlcm1lZGlhdGUgQ0EgKDIpMS8wLQYDVQQDEyZBV1MgSW5mcmFzdHJ1Y3R1cmUgSW50ZXJtZWRpYXRlIENBICgyKTAeFw0yMjEwMjgwMDAwMDBaFw0yMzAxMjYyMzU5NTlaMIGxMQswCQYDVQQGEwJHQjEPMA0GA1UECBMGTG9uZG9uMQ8wDQYDVQQHEwZMb25kb24xFTATBgNVBAoUDEJhcmNsYXlzIFBMQzEUMBIGA1UECxQLQ0kyNjA2NDkyNjExDDAKBgNVBAsUA0NUTzEUMBIGA1UECxQLQmFyY2xheXNDVE8xLzAtBgNVBAMTJmR1d3BzcjAwMjAxODE5My5pbnRyYW5ldC5iYXJjYXBpbnQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo7kieUWdjJHLHitf85g7oM41Nob6fQ0WdDOR7/OOX6E66uS+xImmPp2wfDaBD5SD+U7ckipE0JCPAMAqxlFztIGRakaQRrjVo0CZ1Sqy7qMa48QjJmVYDvQCLGq58VRH10CmVLvJtGgiLPPzLfk09yEZdjipj7VAuJ+f7L4Y1PkfW6Zrw8vgfcy8tEerdIZDtBAsePuwLsHCnfOBgZ+vh6xyad7VrCANz0pumaLTWR+hh37O6l0+zX1yFtLyZM038tcGbAMF86b1J27M8ZKqX3y5pYLiiY+jjGhytMyZc9FziNppOSPQTWSuIVc9eS6oGXRm2Evauqlm0gdosx5YewIDAQABo4ICBDCCAgAwgZQGA1UdEQSBjDCBiYImZHV3cHNyMDAyMDE4MTkzLmludHJhbmV0LmJhcmNhcGludC5jb22CIWppcmEtYW1hem9uLXBkbi5iYXJjbGF5cy5pbnRyYW5ldIIlZXN0LWppcmEtYW1hem9uLXBkbi5iYXJjbGF5cy5pbnRyYW5ldIIVZXN0amlyYS5iYXJjYXBpbnQuY29tMAkGA1UdEwQCMAAwCwYDVR0PBAQDAgSwMB8GA1UdIwQYMBaAFCb6k/J6lAg78l+4hzwF97aEy2mhMB0GA1UdDgQWBBQQfl5lXh6WA+5jDtYQ2/pinmUjYTAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwge8GA1UdIASB5zCB5DCB4QYNKoY6AAGC/UcCAQICAjCBzzCBzAYIKwYBBQUHAgIwgb8agbxUaGlzIGNlcnRpZmljYXRlIGlzIGlzc3VlZCBieSBCYXJjbGF5cyBQTEMsIHdoaWNoIGhhcyBubyBsaWFiaWxpdHkgdW5kZXIgaXQgb3RoZXIgdGhhbiB0byBwZXJzb25zIHdobyBoYXZlIGVudGVyZWQgaW50bywgYW5kIHRoZW4gb25seSB0byB0aGUgZXh0ZW50IHNldCBvdXQgaW4sIGFuIGFncmVlbWVudCB3aXRoIEJhcmNsYXlzLjANBgkqhkiG9w0BAQsFAAOCAQEAL1nu5luU960dBS0JtxHwy4P1A2YpYQk30aaXZIWQ3JVbhOwnXJFlZWIKpAaCxR2IjXIKs6qg2qk7X6NY3aGYRlc6EoHXXqfDrgsi+cY1D8QQOs7wPEcgix8Ddz2EHwbhcpy9KaJZ+T8aRCc6/wtJFKF8IJdiVt1C2YFz1hrj/9ae9ezRWynH4gUm5VALDmszaDjIzI1H7F7i9u83rGEeLZKYCVku4tBbeEOfPzDpldEuF3IBsN7fLY21Ioljrd2JlGGcPBKZnQDOPPOGEYXQXCsMXVedO0Cegp3wGkOUmdlZq/Ucls/fuoh9XluGVayDnGClXQzPEr3xhR1njcOFUA==
-          use: sig
-          iat: 1691702239
-          nbf: 1691366400
-          exp: 1721260799
-    example-error-503:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: SERVICE_UNAVAILABLE
-          title: The server is currently unavailable
-    example-error-500:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: INTERNAL_SERVER_ERROR
-          title: The request failed due to an internal error.
-    example-error-400-bad-request:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: BAD_REQUEST
-          title: The request is invalid or not properly formed.
   schemas:
     ErrorType:
       type: object
@@ -271,22 +214,6 @@ components:
             $ref: '#/components/schemas/ErrorType'
           maxItems: 50
           minItems: 0
-      nullable: false
-    JWKSKeySetBody:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: JWKS Response Body
-      properties:
-        keys:
-          type: array
-          description: List of JWKS keys
-          items:
-            $ref: '#/components/schemas/JWKSKey'
-          maxItems: 10
-          minItems: 1
-      required:
-      - keys
       nullable: false
     KeyOperation:
       type: string
@@ -439,6 +366,79 @@ components:
       - nbf
       - use
       nullable: false
+    JWKSKeySetBody:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: JWKS Response Body
+      properties:
+        keys:
+          type: array
+          description: List of JWKS keys
+          items:
+            $ref: '#/components/schemas/JWKSKey'
+          maxItems: 10
+          minItems: 1
+      required:
+      - keys
+      nullable: false
+  examples:
+    example-error-400-bad-request:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
+    example-error-429:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: TOO_MANY_REQUESTS
+          title: Too many requests
+          detail: The client sent too many requests and server is not able to serve them all at the moment
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    example-error-403:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed.
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    JWKSKeySetRes:
+      value:
+        keys:
+        - e: AQAB
+          kid: 39cf4e1c5fc71fb7ecff6b66e902ca14
+          kty: RSA
+          n: o7kieUWdjJHLHitf85g7oM41Nob6fQ0WdDOR7_OOX6E66uS-xImmPp2wfDaBD5SD-U7ckipE0JCPAMAqxlFztIGRakaQRrjVo0CZ1Sqy7qMa48QjJmVYDvQCLGq58VRH10CmVLvJtGgiLPPzLfk09yEZdjipj7VAuJ-f7L4Y1PkfW6Zrw8vgfcy8tEerdIZDtBAsePuwLsHCnfOBgZ-vh6xyad7VrCANz0pumaLTWR-hh37O6l0-zX1yFtLyZM038tcGbAMF86b1J27M8ZKqX3y5pYLiiY-jjGhytMyZc9FziNppOSPQTWSuIVc9eS6oGXRm2Evauqlm0gdosx5Yew==
+          x5c:
+          - MIIFuzCCBKOgAwIBAgIQOc9OHF/HH7fs/2tm6QLKFDANBgkqhkiG9w0BAQsFADB5MRUwEwYDVQQKEwxCYXJjbGF5cyBQTEMxLzAtBgNVBAsTJkFXUyBJbmZyYXN0cnVjdHVyZSBJbnRlcm1lZGlhdGUgQ0EgKDIpMS8wLQYDVQQDEyZBV1MgSW5mcmFzdHJ1Y3R1cmUgSW50ZXJtZWRpYXRlIENBICgyKTAeFw0yMjEwMjgwMDAwMDBaFw0yMzAxMjYyMzU5NTlaMIGxMQswCQYDVQQGEwJHQjEPMA0GA1UECBMGTG9uZG9uMQ8wDQYDVQQHEwZMb25kb24xFTATBgNVBAoUDEJhcmNsYXlzIFBMQzEUMBIGA1UECxQLQ0kyNjA2NDkyNjExDDAKBgNVBAsUA0NUTzEUMBIGA1UECxQLQmFyY2xheXNDVE8xLzAtBgNVBAMTJmR1d3BzcjAwMjAxODE5My5pbnRyYW5ldC5iYXJjYXBpbnQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo7kieUWdjJHLHitf85g7oM41Nob6fQ0WdDOR7/OOX6E66uS+xImmPp2wfDaBD5SD+U7ckipE0JCPAMAqxlFztIGRakaQRrjVo0CZ1Sqy7qMa48QjJmVYDvQCLGq58VRH10CmVLvJtGgiLPPzLfk09yEZdjipj7VAuJ+f7L4Y1PkfW6Zrw8vgfcy8tEerdIZDtBAsePuwLsHCnfOBgZ+vh6xyad7VrCANz0pumaLTWR+hh37O6l0+zX1yFtLyZM038tcGbAMF86b1J27M8ZKqX3y5pYLiiY+jjGhytMyZc9FziNppOSPQTWSuIVc9eS6oGXRm2Evauqlm0gdosx5YewIDAQABo4ICBDCCAgAwgZQGA1UdEQSBjDCBiYImZHV3cHNyMDAyMDE4MTkzLmludHJhbmV0LmJhcmNhcGludC5jb22CIWppcmEtYW1hem9uLXBkbi5iYXJjbGF5cy5pbnRyYW5ldIIlZXN0LWppcmEtYW1hem9uLXBkbi5iYXJjbGF5cy5pbnRyYW5ldIIVZXN0amlyYS5iYXJjYXBpbnQuY29tMAkGA1UdEwQCMAAwCwYDVR0PBAQDAgSwMB8GA1UdIwQYMBaAFCb6k/J6lAg78l+4hzwF97aEy2mhMB0GA1UdDgQWBBQQfl5lXh6WA+5jDtYQ2/pinmUjYTAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwge8GA1UdIASB5zCB5DCB4QYNKoY6AAGC/UcCAQICAjCBzzCBzAYIKwYBBQUHAgIwgb8agbxUaGlzIGNlcnRpZmljYXRlIGlzIGlzc3VlZCBieSBCYXJjbGF5cyBQTEMsIHdoaWNoIGhhcyBubyBsaWFiaWxpdHkgdW5kZXIgaXQgb3RoZXIgdGhhbiB0byBwZXJzb25zIHdobyBoYXZlIGVudGVyZWQgaW50bywgYW5kIHRoZW4gb25seSB0byB0aGUgZXh0ZW50IHNldCBvdXQgaW4sIGFuIGFncmVlbWVudCB3aXRoIEJhcmNsYXlzLjANBgkqhkiG9w0BAQsFAAOCAQEAL1nu5luU960dBS0JtxHwy4P1A2YpYQk30aaXZIWQ3JVbhOwnXJFlZWIKpAaCxR2IjXIKs6qg2qk7X6NY3aGYRlc6EoHXXqfDrgsi+cY1D8QQOs7wPEcgix8Ddz2EHwbhcpy9KaJZ+T8aRCc6/wtJFKF8IJdiVt1C2YFz1hrj/9ae9ezRWynH4gUm5VALDmszaDjIzI1H7F7i9u83rGEeLZKYCVku4tBbeEOfPzDpldEuF3IBsN7fLY21Ioljrd2JlGGcPBKZnQDOPPOGEYXQXCsMXVedO0Cegp3wGkOUmdlZq/Ucls/fuoh9XluGVayDnGClXQzPEr3xhR1njcOFUA==
+          use: sig
+          iat: 1691702239
+          nbf: 1691366400
+          exp: 1721260799
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

@@ -93,29 +93,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    LoyaltyTierResponseData:
-      type: object
-      description: Loyalty Tier Update Response Data
-      properties:
-        data:
-          $ref: '#/components/schemas/LoyaltyTierResponse'
-    TierUpdateStatus:
-      type: object
-      description: Contains tier code update success/failure status for each account.
-      properties:
-        externalAccountId:
-          type: string
-          description: Common card account identifier agreed between GAP and Barclays, unique per card. Generated at Barclays during card apply/conversion process and provided to GAP to be stored for further communication with Barclays.
-          example: 2286f91c-f7a8-3771-8e62-cb4833aeb740
-        status:
-          type: string
-          description: Indicates whether tier update request specific to EAID has been processed successfully or declined due to any of the multiple errors mentioned in Error Codes sheet.
-          example: Accepted
-        errors:
-          $ref: '#/components/schemas/ErrorDetails'
-      required:
-      - externalAccountId
-      - status
     ErrorType:
       type: object
       description: Message details - additional operation execution information.
@@ -150,31 +127,20 @@ components:
         detail:
           type: string
           description: A brief message describing the reason for failure to assist with troubleshooting.
-    LoyaltyTierResponse:
+    LoyaltyTierRequest:
       type: object
-      description: Loyalty Tier Response Data
+      description: Loyalty Tier Request Data
       properties:
-        tierUpdateStatusList:
+        tierUpdateRequestList:
           type: array
-          description: List of tierUpdateStatus objects per unique EAID under one loyalty program, which contains information about the status of tier update request processed at Barclays.
           items:
-            $ref: '#/components/schemas/TierUpdateStatus'
+            $ref: '#/components/schemas/TierUpdateRequest'
+        transactionReferenceId:
+          type: string
       required:
-      - tierUpdateStatusList
-    ErrorResponseType:
-      type: object
-      description: 'An API error response. '
-      properties:
-        errors:
-          type: array
-          description: Contains one or more error messages and is mutually exclusive with the data item. This will not be returned in success scenarios.
-          items:
-            $ref: '#/components/schemas/ErrorType'
-        meta:
-          type: object
-          description: Contains Non-standard meta information
-          properties: {}
-      title: ErrorResponseType
+      - tierUpdateRequestList
+      - transactionReferenceId
+      title: LoyaltyTierRequest
     TierUpdateRequest:
       type: object
       description: Contains account information, current and new tier codes etc.
@@ -201,6 +167,20 @@ components:
       - last4OfCardNumber
       - newTierCode
       title: TierUpdateRequest
+    ErrorResponseType:
+      type: object
+      description: 'An API error response. '
+      properties:
+        errors:
+          type: array
+          description: Contains one or more error messages and is mutually exclusive with the data item. This will not be returned in success scenarios.
+          items:
+            $ref: '#/components/schemas/ErrorType'
+        meta:
+          type: object
+          description: Contains Non-standard meta information
+          properties: {}
+      title: ErrorResponseType
     LoyaltyTierRequestData:
       type: object
       description: Loyalty Tier Update Request Data
@@ -208,17 +188,37 @@ components:
         data:
           $ref: '#/components/schemas/LoyaltyTierRequest'
       title: LoyaltyTierRequestData
-    LoyaltyTierRequest:
+    LoyaltyTierResponse:
       type: object
-      description: Loyalty Tier Request Data
+      description: Loyalty Tier Response Data
       properties:
-        tierUpdateRequestList:
+        tierUpdateStatusList:
           type: array
+          description: List of tierUpdateStatus objects per unique EAID under one loyalty program, which contains information about the status of tier update request processed at Barclays.
           items:
-            $ref: '#/components/schemas/TierUpdateRequest'
-        transactionReferenceId:
-          type: string
+            $ref: '#/components/schemas/TierUpdateStatus'
       required:
-      - tierUpdateRequestList
-      - transactionReferenceId
-      title: LoyaltyTierRequest
+      - tierUpdateStatusList
+    LoyaltyTierResponseData:
+      type: object
+      description: Loyalty Tier Update Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/LoyaltyTierResponse'
+    TierUpdateStatus:
+      type: object
+      description: Contains tier code update success/failure status for each account.
+      properties:
+        externalAccountId:
+          type: string
+          description: Common card account identifier agreed between GAP and Barclays, unique per card. Generated at Barclays during card apply/conversion process and provided to GAP to be stored for further communication with Barclays.
+          example: 2286f91c-f7a8-3771-8e62-cb4833aeb740
+        status:
+          type: string
+          description: Indicates whether tier update request specific to EAID has been processed successfully or declined due to any of the multiple errors mentioned in Error Codes sheet.
+          example: Accepted
+        errors:
+          $ref: '#/components/schemas/ErrorDetails'
+      required:
+      - externalAccountId
+      - status

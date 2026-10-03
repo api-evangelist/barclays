@@ -1476,33 +1476,20 @@ components:
       required:
       - data
       - meta
-    HeadUnsecuredSmeLoans408Response:
-      type: object
-      properties:
-        description:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-      required:
-      - description
-      - status
-      - title
-    HeadUnsecuredSmeLoans429Response:
-      type: object
-      properties:
-        description:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-      required:
-      - description
-      - status
-      - title
     HeadUnsecuredSmeLoans500Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans400Response:
       type: object
       properties:
         description:
@@ -1528,7 +1515,20 @@ components:
       - description
       - status
       - title
-    HeadUnsecuredSmeLoans400Response:
+    HeadUnsecuredSmeLoans408Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans429Response:
       type: object
       properties:
         description:

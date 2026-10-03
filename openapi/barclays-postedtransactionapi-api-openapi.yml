@@ -142,138 +142,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    TransactionsDataV2:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: transactions Response
-      properties:
-        data:
-          $ref: '#/components/schemas/TransactionsListV2'
-      nullable: false
-    ErrorResponseType:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'An API error response.
-
-        '
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-          description: Contains Non-standard meta information
-        errors:
-          type: array
-          description: 'Contains one or more error messages and is mutually exclusive with the data item.
-
-            This will not be returned in success scenarios.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorType'
-          maxItems: 50
-          minItems: 0
-      nullable: false
-    ErrorType:
-      type: object
-      additionalProperties: true
-      description: Message details - additional operation execution information.
-      properties:
-        code:
-          type: string
-          description: Machine readable, unique code of the message related to particular case within operation execution.
-          example: BAD_REQUEST
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z_]{1,100}$
-        title:
-          type: string
-          description: Short description of the error. Not for displaying purposes.
-          example: Bad Request
-          maxLength: 250
-          minLength: 1
-          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
-        details:
-          type: string
-          description: Provides additional low-level details about the error to assist with troubleshooting.
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_]{1,255}$
-        meta:
-          type: object
-          additionalProperties: true
-          description: Object containing non-standard meta-information about the error.
-      required:
-      - code
-      - details
-      - title
-    TransactionsListV2:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: transactions list
-      properties:
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionV2'
-          maxItems: 500
-          minItems: 0
-      nullable: false
-    customerFirstOrLastName:
-      type: string
-      deprecated: false
-      description: Customer first or last name
-      example: John
-      maxLength: 30
-      minLength: 1
-      pattern: ^[a-zA-Z']{1,30}$
-    EasypayInfo:
-      type: object
-      deprecated: false
-      description: Easy Pay installment plan information
-      properties:
-        status:
-          type: string
-          description: Easy Pay enrollment status
-          example: ENROLLED
-          maxLength: 20
-          minLength: 1
-          pattern: ^[A-Z_]+$
-        installmentId:
-          type: string
-          description: Easy Pay installment plan identifier
-          example: '1233333'
-          maxLength: 64
-          minLength: 1
-          pattern: ^[a-zA-Z0-9\-]+$
-      nullable: false
-      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-    Amount:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Payment Amount Object
-      properties:
-        amount:
-          type: number
-          deprecated: false
-          description: It represents transaction amount
-          example: 1234.56
-          maximum: 99999999999.99
-          minimum: 0
-        currency:
-          type: string
-          deprecated: false
-          description: Currency of payment amount
-          enum:
-          - USD
-          example: USD
-      required:
-      - amount
-      - currency
-      nullable: false
     TransactionV2:
       type: object
       deprecated: false
@@ -440,79 +308,143 @@ components:
         easypayInfo:
           $ref: '#/components/schemas/EasypayInfo'
       nullable: false
-  examples:
+    TransactionsListV2:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions list
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionV2'
+          maxItems: 500
+          minItems: 0
+      nullable: false
+    Amount:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Amount Object
+      properties:
+        amount:
+          type: number
+          deprecated: false
+          description: It represents transaction amount
+          example: 1234.56
+          maximum: 99999999999.99
+          minimum: 0
+        currency:
+          type: string
+          deprecated: false
+          description: Currency of payment amount
+          enum:
+          - USD
+          example: USD
+      required:
+      - amount
+      - currency
+      nullable: false
+    customerFirstOrLastName:
+      type: string
+      deprecated: false
+      description: Customer first or last name
+      example: John
+      maxLength: 30
+      minLength: 1
+      pattern: ^[a-zA-Z']{1,30}$
     TransactionsDataV2:
-      value:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: transactions Response
+      properties:
         data:
-          transactions:
-          - postingTime: 2040514
-            classCode: PR
-            postingDate: '2021-08-13'
-            transactionDate: '2021-08-29'
-            category: OTHER
-            merchantName: BEST WESTERN GREENVILL
-            merchantCity: GREENVILLE
-            merchantState: AL
-            merchantPostalCode: '36037'
-            merchantCountry: USA
-            merchantPhone: '2126772863'
-            transactionType: CREDIT
-            transactionAmount:
-              amount: 100
-              currency: USD
-            transactionNumber: '75140211154154000007950'
-            recurringPaymentIndicator: false
-            inDispute: false
-            purchaserFirstName: TestUser
-            purchaserLastName: Bar
-            purchaserNameSuffix: Jr
-            awardsEarned: 0
-            transactionChannel: IN_STORE
-            walletType: SAMSUNG_PAY
-            authCode: '1234567'
-            authTimeStamp: '2026-01-11T20:29:49.000Z'
-            easypayInfo:
-              status: ENROLLED
-              installmentId: '1233333'
-    example-error-403:
-      value:
+          $ref: '#/components/schemas/TransactionsListV2'
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: BAD_REQUEST
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: Bad Request
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
+        details:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,255}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - details
+      - title
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
         errors:
-        - code: ACCESS_FORBIDDEN
-          title: Access Forbidden
-          details: ACCESS_FORBIDDEN
-    example-error-500:
-      value:
-        errors:
-        - code: INTERNAL_SERVER_ERROR
-          title: Internal Server Error
-          details: TXN_ERR_5001
-    example-error-401:
-      value:
-        errors:
-        - code: AUTHENTICATION_ERROR
-          title: Authentication Error
-          details: AUTHENTICATION_ERROR
-    example-error-503:
-      value:
-        errors:
-        - code: SERVICE_UNAVAILABLE
-          title: Service Unavailable
-          details: SERVICE_UNAVAILABLE
-    example-error-404:
-      value:
-        errors:
-        - code: NOT_FOUND
-          title: Not Found
-          details: TXN_ERR_9001
-    example-error-400-bad-request:
-      value:
-        errors:
-        - code: BAD_REQUEST
-          title: Bad Request
-          details: TXN_ERR_1001
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    EasypayInfo:
+      type: object
+      deprecated: false
+      description: Easy Pay installment plan information
+      properties:
+        status:
+          type: string
+          description: Easy Pay enrollment status
+          example: ENROLLED
+          maxLength: 20
+          minLength: 1
+          pattern: ^[A-Z_]+$
+        installmentId:
+          type: string
+          description: Easy Pay installment plan identifier
+          example: '1233333'
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-]+$
+      nullable: false
+      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
   responses:
-    BadRequest:
-      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -521,10 +453,12 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-400:
-              $ref: '#/components/examples/example-error-400-bad-request'
-    InternalServerError:
-      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -533,8 +467,8 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-500:
-              $ref: '#/components/examples/example-error-500'
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
     TransactionsDataResV2:
       description: Posted transactions response V2.
       headers:
@@ -571,10 +505,8 @@ components:
           examples:
             example-error-404:
               $ref: '#/components/examples/example-error-404'
-    Forbidden:
-      description: 'The user is not permitted to access the requested operation and it cannot be completed.
-
-        '
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -583,12 +515,10 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-403:
-              $ref: '#/components/examples/example-error-403'
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
       headers:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
@@ -597,8 +527,78 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseType'
           examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
+            example-error-400:
+              $ref: '#/components/examples/example-error-400-bad-request'
+  examples:
+    example-error-500:
+      value:
+        errors:
+        - code: INTERNAL_SERVER_ERROR
+          title: Internal Server Error
+          details: TXN_ERR_5001
+    example-error-400-bad-request:
+      value:
+        errors:
+        - code: BAD_REQUEST
+          title: Bad Request
+          details: TXN_ERR_1001
+    example-error-503:
+      value:
+        errors:
+        - code: SERVICE_UNAVAILABLE
+          title: Service Unavailable
+          details: SERVICE_UNAVAILABLE
+    example-error-403:
+      value:
+        errors:
+        - code: ACCESS_FORBIDDEN
+          title: Access Forbidden
+          details: ACCESS_FORBIDDEN
+    example-error-401:
+      value:
+        errors:
+        - code: AUTHENTICATION_ERROR
+          title: Authentication Error
+          details: AUTHENTICATION_ERROR
+    TransactionsDataV2:
+      value:
+        data:
+          transactions:
+          - postingTime: 2040514
+            classCode: PR
+            postingDate: '2021-08-13'
+            transactionDate: '2021-08-29'
+            category: OTHER
+            merchantName: BEST WESTERN GREENVILL
+            merchantCity: GREENVILLE
+            merchantState: AL
+            merchantPostalCode: '36037'
+            merchantCountry: USA
+            merchantPhone: '2126772863'
+            transactionType: CREDIT
+            transactionAmount:
+              amount: 100
+              currency: USD
+            transactionNumber: '75140211154154000007950'
+            recurringPaymentIndicator: false
+            inDispute: false
+            purchaserFirstName: TestUser
+            purchaserLastName: Bar
+            purchaserNameSuffix: Jr
+            awardsEarned: 0
+            transactionChannel: IN_STORE
+            walletType: SAMSUNG_PAY
+            authCode: '1234567'
+            authTimeStamp: '2026-01-11T20:29:49.000Z'
+            easypayInfo:
+              status: ENROLLED
+              installmentId: '1233333'
+    example-error-404:
+      value:
+        errors:
+        - code: NOT_FOUND
+          title: Not Found
+          details: TXN_ERR_9001
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

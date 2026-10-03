@@ -1806,67 +1806,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    get_consent_details_response:
-      type: object
-      properties:
-        access:
-          type: object
-          properties:
-            balances:
-              type: array
-              items:
-                type: object
-                properties:
-                  bban:
-                    type: string
-                  iban:
-                    type: string
-                  currency:
-                    type: string
-            availableAccounts:
-              type: string
-            accounts:
-              type: array
-              items:
-                type: object
-                properties:
-                  bban:
-                    type: string
-                  iban:
-                    type: string
-                  currency:
-                    type: string
-            transactions:
-              type: array
-              items:
-                type: object
-                properties:
-                  bban:
-                    type: string
-                  iban:
-                    type: string
-                  currency:
-                    type: string
-        consentStatus:
-          type: string
-        validUntil:
-          type: string
-          format: date-time
-        recurringIndicator:
-          type: boolean
-        lastActionDate:
-          type: string
-          format: date-time
-        frequencyPerDay:
-          type: integer
-      required:
-      - access
-      - consentStatus
-      - frequencyPerDay
-      - lastActionDate
-      - recurringIndicator
-      - validUntil
-    GetAccountsAccountIdTransactionsTransactionid400Response:
+    GetAccountsAccountIdTransactionsTransactionid404Response:
       type: object
       properties:
         code:
@@ -1893,13 +1833,6 @@ components:
       required:
       - code
       - type
-    get_consent_authorisation_details_response:
-      type: object
-      properties:
-        scaStatus:
-          type: string
-      required:
-      - scaStatus
     create_consent_response:
       type: object
       properties:
@@ -2032,33 +1965,66 @@ components:
       - frequencyPerDay
       - recurringIndicator
       - validUntil
-    GetAccountsAccountIdTransactionsTransactionid404Response:
+    get_consent_details_response:
       type: object
       properties:
-        code:
+        access:
+          type: object
+          properties:
+            balances:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                  iban:
+                    type: string
+                  currency:
+                    type: string
+            availableAccounts:
+              type: string
+            accounts:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                  iban:
+                    type: string
+                  currency:
+                    type: string
+            transactions:
+              type: array
+              items:
+                type: object
+                properties:
+                  bban:
+                    type: string
+                  iban:
+                    type: string
+                  currency:
+                    type: string
+        consentStatus:
           type: string
-        additionalErrors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-            required:
-            - code
-        detail:
+        validUntil:
           type: string
-        type:
+          format: date-time
+        recurringIndicator:
+          type: boolean
+        lastActionDate:
           type: string
-        title:
-          type: string
+          format: date-time
+        frequencyPerDay:
+          type: integer
       required:
-      - code
-      - type
+      - access
+      - consentStatus
+      - frequencyPerDay
+      - lastActionDate
+      - recurringIndicator
+      - validUntil
     DeleteConsentsConsentid409Response:
       type: object
       properties:
@@ -2086,6 +2052,13 @@ components:
       required:
       - code
       - type
+    get_consent_authorisation_details_response:
+      type: object
+      properties:
+        scaStatus:
+          type: string
+      required:
+      - scaStatus
     get_consent_status_response:
       type: object
       properties:
@@ -2102,20 +2075,33 @@ components:
             type: string
       required:
       - authorisationIds
-    get_cof_consent_status_response:
+    GetAccountsAccountIdTransactionsTransactionid400Response:
       type: object
       properties:
-        consentStatus:
+        code:
+          type: string
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
           type: string
       required:
-      - consentStatus
-    get_cof_consent_authorisation_details_response:
-      type: object
-      properties:
-        scaStatus:
-          type: string
-      required:
-      - scaStatus
+      - code
+      - type
     GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response:
       type: object
       properties:
@@ -2143,41 +2129,40 @@ components:
       required:
       - code
       - type
-    get_cof_consent_details_response:
+    get_cof_consent_status_response:
       type: object
       properties:
         consentStatus:
           type: string
-        registrationInformation:
-          type: string
-        cardInformation:
-          type: string
-        account:
-          type: object
-          properties:
-            bban:
-              type: string
-            iban:
-              type: string
-            currency:
-              type: string
-        cardNumber:
-          type: string
-        cardExpiryDate:
-          type: string
-          format: date-time
       required:
-      - account
       - consentStatus
-    get_cof_consent_authorisations_response:
+    GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response:
       type: object
       properties:
-        authorisationIds:
+        code:
+          type: string
+        additionalErrors:
           type: array
           items:
-            type: string
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
       required:
-      - authorisationIds
+      - code
+      - type
     create_cof_consent_response:
       type: object
       properties:
@@ -2256,6 +2241,32 @@ components:
         cardExpiryDate:
           type: string
           format: date
+    get_cof_consent_details_response:
+      type: object
+      properties:
+        consentStatus:
+          type: string
+        registrationInformation:
+          type: string
+        cardInformation:
+          type: string
+        account:
+          type: object
+          properties:
+            bban:
+              type: string
+            iban:
+              type: string
+            currency:
+              type: string
+        cardNumber:
+          type: string
+        cardExpiryDate:
+          type: string
+          format: date-time
+      required:
+      - account
+      - consentStatus
     DeleteConsentsConfirmationOfFundsConsentid409Response:
       type: object
       properties:
@@ -2283,33 +2294,22 @@ components:
       required:
       - code
       - type
-    GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response:
+    get_cof_consent_authorisation_details_response:
       type: object
       properties:
-        code:
-          type: string
-        additionalErrors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-            required:
-            - code
-        detail:
-          type: string
-        type:
-          type: string
-        title:
+        scaStatus:
           type: string
       required:
-      - code
-      - type
+      - scaStatus
+    get_cof_consent_authorisations_response:
+      type: object
+      properties:
+        authorisationIds:
+          type: array
+          items:
+            type: string
+      required:
+      - authorisationIds
 x-refined-from:
 - barclays-bank-ireland-account-information-openapi.json
 - barclays-bank-ireland-confirmation-of-funds-openapi.json

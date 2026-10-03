@@ -68,14 +68,124 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
       deprecated: false
 components:
+  responses:
+    500_getBalance:
+      description: 'Server encountered an error during processing the request. It''s s a generic error message, given when a more specific message is not available.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            INTERNAL_SERVER_ERROR:
+              $ref: '#/components/examples/example-error-500'
+            ACCOUNT_INELIGIBLE:
+              $ref: '#/components/examples/example-error-500_ACCOUNT_INELIGIBLE'
+            BUSINESS_VALIDATION_FAILED:
+              $ref: '#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED'
+            TEMPORARY_UNPROCESSABLE:
+              $ref: '#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Unauthorized:
+              $ref: '#/components/examples/example-error-401'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Forbidden:
+              $ref: '#/components/examples/example-error-403'
+    RewardPointBalanceResponseV3:
+      description: Contains information related to rewards balance for the given account.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RewardBalanceDataV3'
+          examples:
+            RewardPointBalanceResponseV3:
+              $ref: '#/components/examples/RewardBalanceResponseV3'
+    TooManyRequests:
+      description: 'Server received a large number of requests from a single party in a given amount of time. Client is advised to retry after the agreed cool down period.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            TooManyRequests:
+              $ref: '#/components/examples/example-error-429'
+    ServiceUnavailable:
+      description: 'Temporary maintenance of service, try again later. This is a temporary condition which will be alleviated after some delay.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            ServiceUnavailable:
+              $ref: '#/components/examples/example-error-503'
+    NotFound:
+      description: 'Server was unable to locate a resource to complete the operation. This may be temporary or permanent.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            NotFound:
+              $ref: '#/components/examples/example-error-404'
+    BadRequest:
+      description: 'The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            BadRequest:
+              $ref: '#/components/examples/example-error-400-bad-request'
   examples:
-    example-error-500_ACCOUNT_INELIGIBLE:
-      value:
-        errors:
-        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
-          code: ACCOUNT_INELIGIBLE
-          title: Account is not eligible for this program
-          detail: Request cannot be processed, account is not eligible for this program
     example-error-429:
       value:
         errors:
@@ -83,27 +193,6 @@ components:
           code: TOO_MANY_REQUESTS
           title: Too many requests
           detail: The client sent too many requests and server is not able to serve them all at the moment
-    example-error-403:
-      value:
-        errors:
-        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
-          code: ACCESS_FORBIDDEN
-          title: The user is not permitted to access the requested operation and it cannot be completed
-          detail: The user is not permitted to access the requested operation and it cannot be completed
-    example-error-500_TEMPORARY_UNPROCESSABLE:
-      value:
-        errors:
-        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
-          code: TEMPORARY_UNPROCESSABLE
-          title: Request unprocessable momentarily
-          detail: Request cannot be processed momentarily
-    RewardBalanceResponseV3:
-      value:
-        data:
-          availableBalance: 15000
-          rewardCurrencyDisplayName: Rewards
-          rewardType: Cash
-          isCashBased: true
     example-error-500:
       value:
         errors:
@@ -111,34 +200,6 @@ components:
           code: INTERNAL_SERVER_ERROR
           title: The request failed due to an internal error
           detail: Downstream service call failure while retrieving rewards balance
-    example-error-401:
-      value:
-        errors:
-        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
-          code: UNAUTHORIZED
-          title: The authorization credentials required for this request are invalid
-          detail: The authorization credentials required for this request are invalid
-    example-error-503:
-      value:
-        errors:
-        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
-          code: SERVICE_UNAVAILABLE
-          title: The server is currently unavailable
-          detail: Scheduled service outage starting from Wednesday, 04 Jul 2050 0100 GMT until Wednesday, 04 Jul 2050 0500 GMT
-    example-error-404:
-      value:
-        errors:
-        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
-          code: RESOURCE_NOT_FOUND
-          title: The requested operation failed because a resource associated with the request could not be found
-          detail: Couldn't locate the account
-    example-error-500_BUSINESS_VALIDATION_FAILED:
-      value:
-        errors:
-        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
-          code: BUSINESS_VALIDATION_FAILED
-          title: Request failed while validating the account
-          detail: Request cannot be processed, account validation failure
     example-error-400-bad-request:
       value:
         errors:
@@ -146,31 +207,75 @@ components:
           code: BAD_REQUEST
           title: The request is invalid or not properly formed
           detail: Invalid request, field name does not match with the API spec
-  schemas:
-    ErrorResponseType:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'An API error response.
-
-        '
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-          description: Contains Non-standard meta information
+    example-error-500_BUSINESS_VALIDATION_FAILED:
+      value:
         errors:
-          type: array
-          description: 'Contains one or more error messages and is mutually exclusive with the data item.
-
-            This will not be returned in success scenarios.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorType'
-          maxItems: 50
-          minItems: 0
-      nullable: false
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: BUSINESS_VALIDATION_FAILED
+          title: Request failed while validating the account
+          detail: Request cannot be processed, account validation failure
+    example-error-503:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+          detail: Scheduled service outage starting from Wednesday, 04 Jul 2050 0100 GMT until Wednesday, 04 Jul 2050 0500 GMT
+    example-error-403:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed
+          detail: The user is not permitted to access the requested operation and it cannot be completed
+    example-error-401:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: UNAUTHORIZED
+          title: The authorization credentials required for this request are invalid
+          detail: The authorization credentials required for this request are invalid
+    RewardBalanceResponseV3:
+      value:
+        data:
+          availableBalance: 15000
+          rewardCurrencyDisplayName: Rewards
+          rewardType: Cash
+          isCashBased: true
+    example-error-500_ACCOUNT_INELIGIBLE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: ACCOUNT_INELIGIBLE
+          title: Account is not eligible for this program
+          detail: Request cannot be processed, account is not eligible for this program
+    example-error-404:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found
+          detail: Couldn't locate the account
+    example-error-500_TEMPORARY_UNPROCESSABLE:
+      value:
+        errors:
+        - id: 1c4717c4-e3f3-4071-8b86-b868908763ff
+          code: TEMPORARY_UNPROCESSABLE
+          title: Request unprocessable momentarily
+          detail: Request cannot be processed momentarily
+  headers:
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
+  schemas:
     ErrorType:
       type: object
       additionalProperties: false
@@ -207,17 +312,6 @@ components:
       - code
       - id
       - title
-    RewardBalanceDataV3:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Root object that holds rewards balance.
-      properties:
-        data:
-          $ref: '#/components/schemas/RewardBalanceV3'
-      required:
-      - data
-      nullable: false
     RewardBalanceV3:
       type: object
       additionalProperties: false
@@ -252,135 +346,41 @@ components:
       - rewardCurrencyDisplayName
       - rewardType
       nullable: false
-  responses:
-    BadRequest:
-      description: 'The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
 
         '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            BadRequest:
-              $ref: '#/components/examples/example-error-400-bad-request'
-    RewardPointBalanceResponseV3:
-      description: Contains information related to rewards balance for the given account.
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RewardBalanceDataV3'
-          examples:
-            RewardPointBalanceResponseV3:
-              $ref: '#/components/examples/RewardBalanceResponseV3'
-    ServiceUnavailable:
-      description: 'Temporary maintenance of service, try again later. This is a temporary condition which will be alleviated after some delay.
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
 
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            ServiceUnavailable:
-              $ref: '#/components/examples/example-error-503'
-    NotFound:
-      description: 'Server was unable to locate a resource to complete the operation. This may be temporary or permanent.
+            This will not be returned in success scenarios.
 
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            NotFound:
-              $ref: '#/components/examples/example-error-404'
-    Forbidden:
-      description: 'The user is not permitted to access the requested operation and it cannot be completed.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            Forbidden:
-              $ref: '#/components/examples/example-error-403'
-    500_getBalance:
-      description: 'Server encountered an error during processing the request. It''s s a generic error message, given when a more specific message is not available.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            INTERNAL_SERVER_ERROR:
-              $ref: '#/components/examples/example-error-500'
-            ACCOUNT_INELIGIBLE:
-              $ref: '#/components/examples/example-error-500_ACCOUNT_INELIGIBLE'
-            BUSINESS_VALIDATION_FAILED:
-              $ref: '#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED'
-            TEMPORARY_UNPROCESSABLE:
-              $ref: '#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE'
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            Unauthorized:
-              $ref: '#/components/examples/example-error-401'
-    TooManyRequests:
-      description: 'Server received a large number of requests from a single party in a given amount of time. Client is advised to retry after the agreed cool down period.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            TooManyRequests:
-              $ref: '#/components/examples/example-error-429'
-  headers:
-    Cache-Control:
-      description: GIS mandatory response header. This is added by the Cognac sidecar.
-      schema:
-        type: string
-        default: no-cache, no-store, must-revalidate
-        deprecated: false
-        example: no-cache, no-store, must-revalidate
-        maxLength: 35
-        minLength: 35
-        pattern: ^no-cache, no-store, must-revalidate$
-        nullable: false
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
+    RewardBalanceDataV3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Root object that holds rewards balance.
+      properties:
+        data:
+          $ref: '#/components/schemas/RewardBalanceV3'
+      required:
+      - data
+      nullable: false
   securitySchemes:
     ExternalTiaaUsCCAuth:
       type: oauth2
