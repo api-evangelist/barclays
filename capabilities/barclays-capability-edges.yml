@@ -1,0 +1,71 @@
+slug: barclays
+provider: Barclays
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Register
+  spec_file: barclays-register-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.85
+  evidence: '''On-board to Barclays API Exchange using an EIDAS certificate, and retrieve credentials
+    to consume our PSD2 APIs''; POST /register with DCRRequestType, JWKSObjectType'
+  reason: Dynamic Client Registration issuing OAuth client credentials to third-party developers onto
+    the API Exchange — developer identity and credential issuance for an API platform, not a banking business
+    function.
+- tag: tier-update-xapi
+  spec_file: barclays-tier-update-xapi-api-openapi.yml
+  capability_id: BC-420.40
+  capability_id_l1: BC-420
+  capability_name: Loyalty & Retention Management
+  confidence: 0.82
+  evidence: POST /cards/accounts/rewards/loyaltyTier/update updateTierUsingPOST 'Perform tier update';
+    schemas LoyaltyTierRequest, TierUpdateStatus; "Enables a secure way to sync a customers loyalty status
+    information with Barclays"
+  reason: The operation maintains a customer's loyalty programme tier/status, which is loyalty programme
+    administration — BC-420.40 Loyalty & Retention Management. Some residual ambiguity because it is a
+    partner-to-bank sync rather than full programme management.
+- tag: Rewards-Redemption
+  spec_file: barclays-rewards-redemption-api-openapi.yml
+  capability_id: BC-420.40
+  capability_id_l1: BC-420
+  capability_name: Loyalty & Retention Management
+  confidence: 0.8
+  evidence: postRewardsRedemption  'Fulfill statement credit/ACH for the given account and corresponding
+    program'; RedemptionRequestV3
+  reason: Redemption of loyalty reward points into statement credit/ACH is execution of a loyalty programme
+    benefit, squarely Loyalty & Retention Management.
+- tag: Rewards Balance
+  spec_file: barclays-rewards-balance-api-openapi.yml
+  capability_id: BC-420.40
+  capability_id_l1: BC-420
+  capability_name: Loyalty & Retention Management
+  confidence: 0.75
+  evidence: '''Enables users to view and redeem their rewards''; getRewardsBalanceV3  Get current rewards
+    balance for the given account'
+  reason: Card rewards balance retrieval is operation of a customer loyalty/rewards programme, which maps
+    to Loyalty & Retention Management. Slight ambiguity since balance read alone could be treated as account
+    data, hence sub-0.8 confidence.
+- tag: Event Subscriptions
+  spec_file: barclays-event-subscriptions-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.7
+  evidence: POST /event-subscriptions  CreateEventSubscriptions  Create Event Subscription; DELETE /event-subscriptions/{eventSubscriptionId}  Delete
+    Event Subscription
+  reason: The operations are pure CRUD over outbound event-notification subscriptions (OBEventSubscription1)
+    that the bank's API platform pushes to third-party consumers, which is exactly the webhook/event-subscription
+    lifecycle sub-capability of developer platform management. Confidence held at 0.7 because this is
+    arguably integration plumbing rather than a business capability.
