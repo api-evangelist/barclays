@@ -313,6 +313,12 @@ paths:
       deprecated: false
 components:
   examples:
+    example-error-403:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed.
     example-error-428_FRAUD_CHALLENGE:
       value:
         errors:
@@ -322,6 +328,12 @@ components:
           detail: Fraud challenge required
         meta:
           verificationContextId: A22DFEC1-C5E7-4DD7-99FD-716528EB1FE3
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
     example-error-403_FRAUD_DECLINED:
       value:
         errors:
@@ -329,12 +341,6 @@ components:
           code: FRAUD_DECLINED
           title: The user is not permitted to access the requested operation and it cannot be completed
           detail: The user is not permitted to access the requested operation and it cannot be completed
-    example-error-500:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: INTERNAL_SERVER_ERROR
-          title: The request failed due to an internal error.
     example-error-400-bad-request:
       value:
         errors:
@@ -347,25 +353,239 @@ components:
         - id: 9709-4675-2456-7801
           code: SERVICE_UNAVAILABLE
           title: The server is currently unavailable
-    example-error-403:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: ACCESS_FORBIDDEN
-          title: The user is not permitted to access the requested operation and it cannot be completed.
-    example-error-401:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: AUTHENTICATION_ERROR
-          title: The user could not be authenticated for this request.
     example-error-404:
       value:
         errors:
         - id: 9709-4675-2456-7801
           code: RESOURCE_NOT_FOUND
           title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
+  responses:
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    FraudChallenge:
+      description: 'Fraud challenge required
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            FraudChallenge:
+              $ref: '#/components/examples/example-error-428_FRAUD_CHALLENGE'
+    ForbiddenFraudDeclined:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            Forbidden:
+              $ref: '#/components/examples/example-error-403'
+            FraudDeclined:
+              $ref: '#/components/examples/example-error-403_FRAUD_DECLINED'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    LockCardResponse:
+      description: Successful card lock response
+      headers:
+        Correlation-ID:
+          $ref: '#/components/headers/Correlation-ID-ResHeader'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LockCardResponseData'
+          examples:
+            successful-lock:
+              summary: Successful card lock
+              value:
+                data:
+                  lockUnlockCardDetailType:
+                    cardIdentifier:
+                      externalCustomerId: 550e8400-e29b-41d4-a716-446655440000
+                      cardLast4: '1234'
+                    customerRole: PRIMARY
+                    isLock: true
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400-bad-request:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    UnlockCardResponse:
+      description: Successful card unlock response
+      headers:
+        Correlation-ID:
+          $ref: '#/components/headers/Correlation-ID-ResHeader'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnlockCardResponseData'
+          examples:
+            successful-unlock:
+              summary: Successful card unlock
+              value:
+                data:
+                  lockUnlockCardDetailType:
+                    cardIdentifier:
+                      externalCustomerId: 550e8400-e29b-41d4-a716-446655440000
+                      cardLast4: '1234'
+                    customerRole: PRIMARY
+                    isLock: false
+    CardControlStatusResponse:
+      description: Successful lock/unlock status response
+      headers:
+        Correlation-ID:
+          $ref: '#/components/headers/Correlation-ID-ResHeader'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CardControlStatusResponseData'
+          examples:
+            successful-status:
+              summary: Successful status retrieval
+              value:
+                data:
+                  cardControlStatusList:
+                  - cardIdentifier:
+                      externalCustomerId: 550e8400-e29b-41d4-a716-446655440000
+                      cardLast4: '1234'
+                    customerRole: PRIMARY
+                    isLock: true
+                  - cardIdentifier:
+                      externalCustomerId: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+                      cardLast4: '5678'
+                    customerRole: AUTHORIZED_USER
+                    isLock: false
   schemas:
+    UnlockCardControlResponseDataItem:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Response containing unlock result for a single card.
+
+
+        **Response Structure:**
+
+        - Contains card identifier, customer role, and lock status
+
+        - isLock will be false after a successful unlock operation
+
+        '
+      properties:
+        lockUnlockCardDetailType:
+          $ref: '#/components/schemas/LockUnlockCardDetailType'
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
     LockCardRequestData:
       type: object
       additionalProperties: false
@@ -395,55 +615,6 @@ components:
       required:
       - data
       nullable: false
-    UnlockCardResponseData:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Response data containing the result of a card unlock operation.
-
-
-        **Response Structure:**
-
-        - Returns unlock status for the requested card
-
-        - Includes card identifier to match request to response
-
-        - Shows customer role on the account (PRIMARY, AUTHORIZED_USER)
-
-        - Indicates unlock result via isLock flag (false when unlocked)
-
-
-        **Use Cases:**
-
-        - Confirm card was successfully unlocked
-
-        - Display unlock confirmation to customer
-
-        - Update UI to reflect new card unlock state
-
-        '
-      properties:
-        data:
-          $ref: '#/components/schemas/UnlockCardControlResponseDataItem'
-      nullable: false
-    UnlockCardControlResponseDataItem:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Response containing unlock result for a single card.
-
-
-        **Response Structure:**
-
-        - Contains card identifier, customer role, and lock status
-
-        - isLock will be false after a successful unlock operation
-
-        '
-      properties:
-        lockUnlockCardDetailType:
-          $ref: '#/components/schemas/LockUnlockCardDetailType'
-      nullable: false
     LockUnlockCardDetailType:
       type: object
       additionalProperties: false
@@ -462,172 +633,6 @@ components:
           type: boolean
           description: Indicates if the card is currently locked (true) or unlocked (false)
           example: true
-    UnlockCardRequestData:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Request data for unlocking a card with fraud assessment.
-
-
-        **Purpose:**
-
-        - Unlock a card by providing card identifier (external customer ID and card last 4 digits)
-
-        - Fraud verification is performed before the unlock operation
-
-
-        **Validation:**
-
-        - Card identifier must be valid and associated with the account
-
-        - Account must exist and have active customers
-
-        - Fraud assessment must approve the operation before proceeding
-
-        '
-      properties:
-        data:
-          $ref: '#/components/schemas/UnlockCardRequestDataItem'
-      required:
-      - data
-      nullable: false
-    LockCardControlResponseDataItem:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Response containing lock result for a single card.
-
-
-        **Response Structure:**
-
-        - Contains card identifier, customer role, and lock status
-
-        - isLock will be true after a successful lock operation
-
-        '
-      properties:
-        lockUnlockCardDetailType:
-          $ref: '#/components/schemas/LockUnlockCardDetailType'
-      nullable: false
-    CardIdentifier:
-      type: object
-      additionalProperties: false
-      description: Unique card identifier using external customer ID and last 4 digits
-      properties:
-        externalCustomerId:
-          type: string
-          format: uuid
-          description: External customer identifier in UUID format
-          example: 550e8400-e29b-41d4-a716-446655440000
-          maxLength: 36
-          minLength: 36
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
-        cardLast4:
-          type: string
-          description: Last 4 digits of the card number
-          example: '1234'
-          maxLength: 4
-          minLength: 4
-          pattern: ^[0-9]{4}$
-      required:
-      - cardLast4
-      - externalCustomerId
-    LockCardRequestDataItem:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Card lock request payload containing the card to lock.
-
-
-        **Purpose:**
-
-        - Identify the card to lock using external customer ID and card last 4 digits
-
-        - Used as input for fraud assessment and card lock operation
-
-        '
-      properties:
-        cardIdentifier:
-          $ref: '#/components/schemas/CardIdentifier'
-      required:
-      - cardIdentifier
-      nullable: false
-    UnlockCardRequestDataItem:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Card unlock request payload containing the card to unlock.
-
-
-        **Purpose:**
-
-        - Identify the card to unlock using external customer ID and card last 4 digits
-
-        - Used as input for fraud assessment and card unlock operation
-
-        '
-      properties:
-        cardIdentifier:
-          $ref: '#/components/schemas/CardIdentifier'
-      required:
-      - cardIdentifier
-      nullable: false
-    CardControlStatusResponseData:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Response data containing lock/unlock status for all cards in the account.
-
-
-        **Response Structure:**
-
-        - Returns status for all cards associated with the account
-
-        - Includes both locked and unlocked cards
-
-        - Shows card identifiers (external customer ID and last 4 digits)
-
-        - Indicates customer role for each card
-
-
-        **Use Cases:**
-
-        - Display all cards and their lock/unlock status in customer portal
-
-        - Verify card lock state before performing operations
-
-        - Support agent inquiry for account card status
-
-        '
-      properties:
-        data:
-          $ref: '#/components/schemas/CardControlStatusResponseDataItem'
-      nullable: false
-    CardControlStatusResponseDataItem:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Response containing lock/unlock status for all cards in the account.
-
-
-        **Response Structure:**
-
-        - Returns a list of all cards and their current lock/unlock status
-
-        - Each entry includes card identifier, customer role, and lock state
-
-        '
-      properties:
-        cardControlStatusList:
-          $ref: '#/components/schemas/CardControlStatusDetailList'
-      nullable: false
-    CardControlStatusDetailList:
-      type: array
-      description: List of lock/unlock status for each card in the account
-      items:
-        $ref: '#/components/schemas/CardControlStatusDetailType'
-      maxItems: 100
-      minItems: 0
     ErrorType:
       type: object
       additionalProperties: true
@@ -668,53 +673,57 @@ components:
       - code
       - id
       - title
-    ErrorResponseType:
+    LockCardRequestDataItem:
       type: object
       additionalProperties: false
       deprecated: false
-      description: 'An API error response.
+      description: 'Card lock request payload containing the card to lock.
+
+
+        **Purpose:**
+
+        - Identify the card to lock using external customer ID and card last 4 digits
+
+        - Used as input for fraud assessment and card lock operation
 
         '
       properties:
-        meta:
-          type: object
-          additionalProperties: true
-          description: Contains Non-standard meta information
-        errors:
-          type: array
-          description: 'Contains one or more error messages and is mutually exclusive with the data item.
-
-            This will not be returned in success scenarios.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorType'
-          maxItems: 50
-          minItems: 0
-      nullable: false
-    CardControlStatusDetailType:
-      type: object
-      additionalProperties: false
-      description: Lock/unlock status details for a single card
-      properties:
         cardIdentifier:
           $ref: '#/components/schemas/CardIdentifier'
-        customerRole:
-          type: string
-          description: Customer's role on the account (e.g., PRIMARY, AUTHORIZED_USER)
-          example: PRIMARY
-          maxLength: 50
-          minLength: 1
-          pattern: ^[a-zA-Z_]{1,50}$
-        isLock:
-          type: boolean
-          default: false
-          description: Indicates if the card is currently locked (true) or unlocked (false)
-          example: true
       required:
       - cardIdentifier
-      - customerRole
-      - isLock
+      nullable: false
+    CardControlStatusResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Response data containing lock/unlock status for all cards in the account.
+
+
+        **Response Structure:**
+
+        - Returns status for all cards associated with the account
+
+        - Includes both locked and unlocked cards
+
+        - Shows card identifiers (external customer ID and last 4 digits)
+
+        - Indicates customer role for each card
+
+
+        **Use Cases:**
+
+        - Display all cards and their lock/unlock status in customer portal
+
+        - Verify card lock state before performing operations
+
+        - Support agent inquiry for account card status
+
+        '
+      properties:
+        data:
+          $ref: '#/components/schemas/CardControlStatusResponseDataItem'
+      nullable: false
     LockCardResponseData:
       type: object
       additionalProperties: false
@@ -746,196 +755,176 @@ components:
         data:
           $ref: '#/components/schemas/LockCardControlResponseDataItem'
       nullable: false
-  responses:
-    FraudChallenge:
-      description: 'Fraud challenge required
+    CardIdentifier:
+      type: object
+      additionalProperties: false
+      description: Unique card identifier using external customer ID and last 4 digits
+      properties:
+        externalCustomerId:
+          type: string
+          format: uuid
+          description: External customer identifier in UUID format
+          example: 550e8400-e29b-41d4-a716-446655440000
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        cardLast4:
+          type: string
+          description: Last 4 digits of the card number
+          example: '1234'
+          maxLength: 4
+          minLength: 4
+          pattern: ^[0-9]{4}$
+      required:
+      - cardLast4
+      - externalCustomerId
+    CardControlStatusDetailType:
+      type: object
+      additionalProperties: false
+      description: Lock/unlock status details for a single card
+      properties:
+        cardIdentifier:
+          $ref: '#/components/schemas/CardIdentifier'
+        customerRole:
+          type: string
+          description: Customer's role on the account (e.g., PRIMARY, AUTHORIZED_USER)
+          example: PRIMARY
+          maxLength: 50
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,50}$
+        isLock:
+          type: boolean
+          default: false
+          description: Indicates if the card is currently locked (true) or unlocked (false)
+          example: true
+      required:
+      - cardIdentifier
+      - customerRole
+      - isLock
+    LockCardControlResponseDataItem:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Response containing lock result for a single card.
+
+
+        **Response Structure:**
+
+        - Contains card identifier, customer role, and lock status
+
+        - isLock will be true after a successful lock operation
 
         '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            FraudChallenge:
-              $ref: '#/components/examples/example-error-428_FRAUD_CHALLENGE'
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
+      properties:
+        lockUnlockCardDetailType:
+          $ref: '#/components/schemas/LockUnlockCardDetailType'
+      nullable: false
+    UnlockCardRequestData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Request data for unlocking a card with fraud assessment.
+
+
+        **Purpose:**
+
+        - Unlock a card by providing card identifier (external customer ID and card last 4 digits)
+
+        - Fraud verification is performed before the unlock operation
+
+
+        **Validation:**
+
+        - Card identifier must be valid and associated with the account
+
+        - Account must exist and have active customers
+
+        - Fraud assessment must approve the operation before proceeding
 
         '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
-    Forbidden:
-      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+      properties:
+        data:
+          $ref: '#/components/schemas/UnlockCardRequestDataItem'
+      required:
+      - data
+      nullable: false
+    UnlockCardResponseData:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Response data containing the result of a card unlock operation.
+
+
+        **Response Structure:**
+
+        - Returns unlock status for the requested card
+
+        - Includes card identifier to match request to response
+
+        - Shows customer role on the account (PRIMARY, AUTHORIZED_USER)
+
+        - Indicates unlock result via isLock flag (false when unlocked)
+
+
+        **Use Cases:**
+
+        - Confirm card was successfully unlocked
+
+        - Display unlock confirmation to customer
+
+        - Update UI to reflect new card unlock state
 
         '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-403:
-              $ref: '#/components/examples/example-error-403'
-    CardControlStatusResponse:
-      description: Successful lock/unlock status response
-      headers:
-        Correlation-ID:
-          $ref: '#/components/headers/Correlation-ID-ResHeader'
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CardControlStatusResponseData'
-          examples:
-            successful-status:
-              summary: Successful status retrieval
-              value:
-                data:
-                  cardControlStatusList:
-                  - cardIdentifier:
-                      externalCustomerId: 550e8400-e29b-41d4-a716-446655440000
-                      cardLast4: '1234'
-                    customerRole: PRIMARY
-                    isLock: true
-                  - cardIdentifier:
-                      externalCustomerId: 7d444840-9dc0-11d1-b245-5ffdce74fad2
-                      cardLast4: '5678'
-                    customerRole: AUTHORIZED_USER
-                    isLock: false
-    ServiceUnavailable:
-      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-503:
-              $ref: '#/components/examples/example-error-503'
-    NotFound:
-      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-404:
-              $ref: '#/components/examples/example-error-404'
-    InternalServerError:
-      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-500:
-              $ref: '#/components/examples/example-error-500'
-    ForbiddenFraudDeclined:
-      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+      properties:
+        data:
+          $ref: '#/components/schemas/UnlockCardControlResponseDataItem'
+      nullable: false
+    CardControlStatusResponseDataItem:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Response containing lock/unlock status for all cards in the account.
+
+
+        **Response Structure:**
+
+        - Returns a list of all cards and their current lock/unlock status
+
+        - Each entry includes card identifier, customer role, and lock state
 
         '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            Forbidden:
-              $ref: '#/components/examples/example-error-403'
-            FraudDeclined:
-              $ref: '#/components/examples/example-error-403_FRAUD_DECLINED'
-    BadRequest:
-      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-400-bad-request:
-              $ref: '#/components/examples/example-error-400-bad-request'
-    UnlockCardResponse:
-      description: Successful card unlock response
-      headers:
-        Correlation-ID:
-          $ref: '#/components/headers/Correlation-ID-ResHeader'
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UnlockCardResponseData'
-          examples:
-            successful-unlock:
-              summary: Successful card unlock
-              value:
-                data:
-                  lockUnlockCardDetailType:
-                    cardIdentifier:
-                      externalCustomerId: 550e8400-e29b-41d4-a716-446655440000
-                      cardLast4: '1234'
-                    customerRole: PRIMARY
-                    isLock: false
-    LockCardResponse:
-      description: Successful card lock response
-      headers:
-        Correlation-ID:
-          $ref: '#/components/headers/Correlation-ID-ResHeader'
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LockCardResponseData'
-          examples:
-            successful-lock:
-              summary: Successful card lock
-              value:
-                data:
-                  lockUnlockCardDetailType:
-                    cardIdentifier:
-                      externalCustomerId: 550e8400-e29b-41d4-a716-446655440000
-                      cardLast4: '1234'
-                    customerRole: PRIMARY
-                    isLock: true
+      properties:
+        cardControlStatusList:
+          $ref: '#/components/schemas/CardControlStatusDetailList'
+      nullable: false
+    CardControlStatusDetailList:
+      type: array
+      description: List of lock/unlock status for each card in the account
+      items:
+        $ref: '#/components/schemas/CardControlStatusDetailType'
+      maxItems: 100
+      minItems: 0
+    UnlockCardRequestDataItem:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Card unlock request payload containing the card to unlock.
+
+
+        **Purpose:**
+
+        - Identify the card to unlock using external customer ID and card last 4 digits
+
+        - Used as input for fraud assessment and card unlock operation
+
+        '
+      properties:
+        cardIdentifier:
+          $ref: '#/components/schemas/CardIdentifier'
+      required:
+      - cardIdentifier
+      nullable: false
   headers:
-    Cache-Control:
-      description: GIS mandatory response header. This is added by the Cognac sidecar.
-      schema:
-        type: string
-        default: no-cache, no-store, must-revalidate
-        deprecated: false
-        example: no-cache, no-store, must-revalidate
-        maxLength: 35
-        minLength: 35
-        pattern: ^no-cache, no-store, must-revalidate$
-        nullable: false
     Correlation-ID-ResHeader:
       description: 'Unique end-to-end trace ID. The initiating system (such as a Channel or
 
@@ -953,6 +942,17 @@ components:
         pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
         nullable: false
       example: 7d444840-9dc0-11d1-b245-5ffdce74fad2
+    Cache-Control:
+      description: GIS mandatory response header. This is added by the Cognac sidecar.
+      schema:
+        type: string
+        default: no-cache, no-store, must-revalidate
+        deprecated: false
+        example: no-cache, no-store, must-revalidate
+        maxLength: 35
+        minLength: 35
+        pattern: ^no-cache, no-store, must-revalidate$
+        nullable: false
   securitySchemes:
     ExternalTiaaUsCCAuth:
       type: oauth2

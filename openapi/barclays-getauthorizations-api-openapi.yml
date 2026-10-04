@@ -67,19 +67,157 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
       deprecated: false
 components:
+  examples:
+    AuthorizationsExtResp:
+      value:
+        data:
+          authorizations:
+          - authTransInfoExt:
+              dateAuth: '2026-02-24'
+              authType: PURCHASE_BALANCE_TRANSFER
+              amount:
+                amount: 1.01
+                currency: USD
+              resp: DECLINED
+              status: REAL_TIME_AUTHORIZATION
+              authTimeStamp: '2026-02-24T10:12:51Z'
+              authCode: '000000'
+          - authTransInfoExt:
+              dateAuth: '2026-02-17'
+              authType: PURCHASE_BALANCE_TRANSFER
+              amount:
+                amount: 101.01
+                currency: USD
+              resp: DECLINED
+              status: AMOUNT_NOT_INCLUDED
+              authTimeStamp: '2026-02-17T07:40:00Z'
+              authCode: '000000'
+    example-error-403:
+      value:
+        errors:
+        - code: ACCESS_FORBIDDEN
+          title: Access Forbidden
+          details: ACCESS_FORBIDDEN
+    example-error-401:
+      value:
+        errors:
+        - code: AUTHENTICATION_ERROR
+          title: Authentication Error
+          details: AUTHENTICATION_ERROR
+    example-error-400-bad-request:
+      value:
+        errors:
+        - code: BAD_REQUEST
+          title: Bad Request
+          details: TXN_ERR_1001
+    example-error-503:
+      value:
+        errors:
+        - code: SERVICE_UNAVAILABLE
+          title: Service Unavailable
+          details: SERVICE_UNAVAILABLE
+    example-error-404:
+      value:
+        errors:
+        - code: NOT_FOUND
+          title: Not Found
+          details: TXN_ERR_9001
+    example-error-500:
+      value:
+        errors:
+        - code: INTERNAL_SERVER_ERROR
+          title: Internal Server Error
+          details: TXN_ERR_5001
   schemas:
-    AuthorizationsExtList:
+    AuthorizationsExtData:
       type: object
       additionalProperties: false
       deprecated: false
-      description: List of authorizations
+      description: Authorizations Response
       properties:
-        authorizations:
+        data:
+          $ref: '#/components/schemas/AuthorizationsExtList'
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
           type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
           items:
-            $ref: '#/components/schemas/AuthorizationExt'
-          maxItems: 500
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
           minItems: 0
+      nullable: false
+    ErrorType:
+      type: object
+      additionalProperties: true
+      description: Message details - additional operation execution information.
+      properties:
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: BAD_REQUEST
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z_]{1,100}$
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: Bad Request
+          maxLength: 250
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
+        details:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]{1,255}$
+        meta:
+          type: object
+          additionalProperties: true
+          description: Object containing non-standard meta-information about the error.
+      required:
+      - code
+      - details
+      - title
+    Amount:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Payment Amount Object
+      properties:
+        amount:
+          type: number
+          deprecated: false
+          description: It represents transaction amount
+          example: 1234.56
+          maximum: 99999999999.99
+          minimum: 0
+        currency:
+          type: string
+          deprecated: false
+          description: Currency of payment amount
+          enum:
+          - USD
+          example: USD
+      required:
+      - amount
+      - currency
       nullable: false
     AuthorizationExt_authTransInfoExt:
       type: object
@@ -177,96 +315,6 @@ components:
           minLength: 1
           pattern: ^[0-9]+$
       nullable: false
-    AuthorizationsExtData:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Authorizations Response
-      properties:
-        data:
-          $ref: '#/components/schemas/AuthorizationsExtList'
-      nullable: false
-    Amount:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Payment Amount Object
-      properties:
-        amount:
-          type: number
-          deprecated: false
-          description: It represents transaction amount
-          example: 1234.56
-          maximum: 99999999999.99
-          minimum: 0
-        currency:
-          type: string
-          deprecated: false
-          description: Currency of payment amount
-          enum:
-          - USD
-          example: USD
-      required:
-      - amount
-      - currency
-      nullable: false
-    ErrorType:
-      type: object
-      additionalProperties: true
-      description: Message details - additional operation execution information.
-      properties:
-        code:
-          type: string
-          description: Machine readable, unique code of the message related to particular case within operation execution.
-          example: BAD_REQUEST
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z_]{1,100}$
-        title:
-          type: string
-          description: Short description of the error. Not for displaying purposes.
-          example: Bad Request
-          maxLength: 250
-          minLength: 1
-          pattern: ^[a-zA-Z0-9\s"=,.']{1,255}$
-        details:
-          type: string
-          description: Provides additional low-level details about the error to assist with troubleshooting.
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_]{1,255}$
-        meta:
-          type: object
-          additionalProperties: true
-          description: Object containing non-standard meta-information about the error.
-      required:
-      - code
-      - details
-      - title
-    ErrorResponseType:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'An API error response.
-
-        '
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-          description: Contains Non-standard meta information
-        errors:
-          type: array
-          description: 'Contains one or more error messages and is mutually exclusive with the data item.
-
-            This will not be returned in success scenarios.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorType'
-          maxItems: 50
-          minItems: 0
-      nullable: false
     AuthorizationExt:
       type: object
       deprecated: false
@@ -275,21 +323,20 @@ components:
         authTransInfoExt:
           $ref: '#/components/schemas/AuthorizationExt_authTransInfoExt'
       nullable: false
+    AuthorizationsExtList:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: List of authorizations
+      properties:
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationExt'
+          maxItems: 500
+          minItems: 0
+      nullable: false
   responses:
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
     Forbidden:
       description: 'The user is not permitted to access the requested operation and it cannot be completed.
 
@@ -304,30 +351,6 @@ components:
           examples:
             example-error-403:
               $ref: '#/components/examples/example-error-403'
-    GetAuthorizationsExtRes:
-      description: Authorizations list
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthorizationsExtData'
-          examples:
-            FindByAccountResponseV2:
-              $ref: '#/components/examples/AuthorizationsExtResp'
-    ServiceUnavailable:
-      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-503:
-              $ref: '#/components/examples/example-error-503'
     NotFound:
       description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
       headers:
@@ -340,6 +363,32 @@ components:
           examples:
             example-error-404:
               $ref: '#/components/examples/example-error-404'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
     InternalServerError:
       description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
       headers:
@@ -352,6 +401,18 @@ components:
           examples:
             example-error-500:
               $ref: '#/components/examples/example-error-500'
+    GetAuthorizationsExtRes:
+      description: Authorizations list
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorizationsExtData'
+          examples:
+            FindByAccountResponseV2:
+              $ref: '#/components/examples/AuthorizationsExtResp'
     BadRequest:
       description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
       headers:
@@ -364,67 +425,6 @@ components:
           examples:
             example-error-400:
               $ref: '#/components/examples/example-error-400-bad-request'
-  examples:
-    example-error-500:
-      value:
-        errors:
-        - code: INTERNAL_SERVER_ERROR
-          title: Internal Server Error
-          details: TXN_ERR_5001
-    example-error-400-bad-request:
-      value:
-        errors:
-        - code: BAD_REQUEST
-          title: Bad Request
-          details: TXN_ERR_1001
-    example-error-503:
-      value:
-        errors:
-        - code: SERVICE_UNAVAILABLE
-          title: Service Unavailable
-          details: SERVICE_UNAVAILABLE
-    example-error-403:
-      value:
-        errors:
-        - code: ACCESS_FORBIDDEN
-          title: Access Forbidden
-          details: ACCESS_FORBIDDEN
-    example-error-401:
-      value:
-        errors:
-        - code: AUTHENTICATION_ERROR
-          title: Authentication Error
-          details: AUTHENTICATION_ERROR
-    AuthorizationsExtResp:
-      value:
-        data:
-          authorizations:
-          - authTransInfoExt:
-              dateAuth: '2026-02-24'
-              authType: PURCHASE_BALANCE_TRANSFER
-              amount:
-                amount: 1.01
-                currency: USD
-              resp: DECLINED
-              status: REAL_TIME_AUTHORIZATION
-              authTimeStamp: '2026-02-24T10:12:51Z'
-              authCode: '000000'
-          - authTransInfoExt:
-              dateAuth: '2026-02-17'
-              authType: PURCHASE_BALANCE_TRANSFER
-              amount:
-                amount: 101.01
-                currency: USD
-              resp: DECLINED
-              status: AMOUNT_NOT_INCLUDED
-              authTimeStamp: '2026-02-17T07:40:00Z'
-              authCode: '000000'
-    example-error-404:
-      value:
-        errors:
-        - code: NOT_FOUND
-          title: Not Found
-          details: TXN_ERR_9001
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

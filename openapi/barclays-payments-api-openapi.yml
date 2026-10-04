@@ -3745,6 +3745,155 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    get_payment-status_response:
+      type: object
+      description: Get Payment Status
+      properties:
+        transactionStatus:
+          type: string
+          description: 'The transaction status is filled with codes of the ISO 20022 data table. Valid status values are:
+
+
+            - ACCP: AcceptedCustomerProfile Preceding check of technical validation was successful.Customer profile check was also successful.
+
+            - ACSP: AcceptedSettlementInProcess All preceding checks such as technical validation and customer profile were successful and therefore the payment initiation has been accepted for execution.
+
+            - PDNG: Pending Payment initiation or individual transaction included in the payment initiation is pending. Further checks and status update will be performed.
+
+            - RJCT: Rejected Payment initiation or individual transaction included in the payment initiation has been rejected.
+
+            - CANC: Cancelled Payment initiation has been cancelled before execution. Remark Change Request to ISO20022 is still needed.
+
+            '
+          enum:
+          - ACCP
+          - ACSP
+          - PDNG
+          - RJCT
+          - CANC
+      required:
+      - transactionStatus
+    get_payment-auth-details_response:
+      type: object
+      description: Get Payment Authorisation Details Response
+      properties:
+        authorisationIds:
+          type: array
+          description: An array of all authorisationIds
+          items:
+            type: string
+            description: Authorisation ID
+            maxLength: 2
+            minLength: 1
+            pattern: ^\d{1,2}$
+          maxItems: 100
+          minItems: 1
+      required:
+      - authorisationIds
+    get_payment-auth-status_response:
+      type: object
+      description: Get Payment Authorisation Status
+      properties:
+        scaStatus:
+          type: string
+          description: 'Body of the JSON response for a Start SCA authorisation request. Valid values are
+
+            - received: An authorisation or cancellation-authorisation resource has been created successfully.
+
+            - psuIdentified: The PSU related to the authorisation or cancellation-authorisation resource has been identified.
+
+            - psuAuthenticated: The PSU related to the authorisation or cancellation-authorisation resource has been identified and authenticated e.g. by a password or by an access token.
+
+            - scaMethodSelected: The PSU/TPP has selected the related SCA routine.
+
+            - started: The addressed SCA routine has been started.
+
+            - finalised: The SCA routine has been finalised successfully.
+
+            - failed: The SCA routine failed.
+
+            - exempted: SCA was exempted for the related transaction, the related authorisation is successful.
+
+            '
+          enum:
+          - received
+          - psuIdentified
+          - psuAuthenticated
+          - scaMethodSelected
+          - started
+          - finalised
+          - failed
+          - exempted
+      required:
+      - scaStatus
+    GetPaymentsInstantSepaCreditTransfersPaymentidStatus400Response:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - SERVICE_INVALID
+          - FORMAT_ERROR
+          - PARAMETER_NOT_CONSISTENT
+          - PARAMETER_NOT_SUPPORTED
+          - SERVICE_INVALID
+          - CONSENT_UNKNOWN
+          - RESOURCE_UNKNOWN
+          - RESOURCE_EXPIRED
+          - RESOURCE_BLOCKED
+          - TIMESTAMP_INVALID
+          - PERIOD_INVALID
+          - SCA_METHOD_UNKNOWN
+          - PAYMENT_FAILED
+          - EXECUTION_DATE_INVALID
+          - SESSIONS_NOT_SUPPORTED
+          - CARD_INVALID
+          - NO_PIIS_ACTIVATION
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - SERVICE_INVALID
+                - FORMAT_ERROR
+                - PARAMETER_NOT_SUPPORTED
+                - CONSENT_UNKNOWN
+                - RESOURCE_UNKNOWN
+                - PRODUCT_UNKNOWN
+                - RESOURCE_EXPIRED
+                - TIMESTAMP_INVALID
+                - PERIOD_INVALID
+                - SCA_METHOD_UNKNOWN
+                - PAYMENT_FAILED
+                - EXECUTION_DATE_INVALID
+                - SESSIONS_NOT_SUPPORTED
+                - NO_PIIS_ACTIVATION
+                - CARD_INVALID
+                - PARAMETER_NOT_CONSISTENT
+                - RESOURCE_BLOCKED
+                - STATUS_INVALID
+                - CONSENT_INVALID
+                - CONSENT_EXPIRED
+                - TOKEN_INVALID
+                - ACCESS_EXCEEDED
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
     initiate_payment_request:
       type: object
       description: Initiate Payment request
@@ -3910,42 +4059,101 @@ components:
       - creditorAccount
       - creditorName
       - instructedAmount
-    get_payment-auth-status_response:
+    initiate_payment_response:
       type: object
-      description: Get Payment Authorisation Status
+      description: Payment Initiation Response
       properties:
-        scaStatus:
+        transactionStatus:
           type: string
-          description: 'Body of the JSON response for a Start SCA authorisation request. Valid values are
+          description: 'The transaction status is filled with codes of the ISO 20022 data table. Valid status values are:
 
-            - received: An authorisation or cancellation-authorisation resource has been created successfully.
+            - ACCP: AcceptedCustomerProfile Preceding check of technical validation was successful. Customer profile check was also successful.
 
-            - psuIdentified: The PSU related to the authorisation or cancellation-authorisation resource has been identified.
+            - ACSP: AcceptedSettlementInProcess All preceding checks such as technical validation and customer profile were successful and therefore the payment initiation has been accepted for execution.
 
-            - psuAuthenticated: The PSU related to the authorisation or cancellation-authorisation resource has been identified and authenticated e.g. by a password or by an access token.
+            - PDNG: Pending Payment initiation or individual transaction included in the payment initiation is pending. Further checks and status update will be performed.
 
-            - scaMethodSelected: The PSU/TPP has selected the related SCA routine.
+            - RJCT: Rejected Payment initiation or individual transaction included in the payment initiation has been rejected.
 
-            - started: The addressed SCA routine has been started.
-
-            - finalised: The SCA routine has been finalised successfully.
-
-            - failed: The SCA routine failed.
-
-            - exempted: SCA was exempted for the related transaction, the related authorisation is successful.
+            - CANC: Cancelled Payment initiation has been cancelled before execution. Remark Change Request to ISO20022 is still needed.
 
             '
           enum:
-          - received
-          - psuIdentified
-          - psuAuthenticated
-          - scaMethodSelected
-          - started
-          - finalised
-          - failed
-          - exempted
+          - ACCP
+          - ACSP
+          - PDNG
+          - RJCT
+          - CANC
+        _links:
+          type: object
+          description: Links that can be used by TPP for next steps
+          properties:
+            scaStatus:
+              type: object
+              description: Navigate to the SCA Status Page
+              properties:
+                href:
+                  type: string
+                  description: Endpoint URL
+                  maxLength: 1000
+                  minLength: 12
+                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
+            scaRedirect:
+              type: object
+              description: Navigate to the SCA Redirect Page
+              properties:
+                href:
+                  type: string
+                  description: Endpoint URL
+                  maxLength: 1000
+                  minLength: 12
+                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
+            self:
+              type: object
+              description: Navigate to the Same Page
+              properties:
+                href:
+                  type: string
+                  description: Endpoint URL
+                  maxLength: 1000
+                  minLength: 12
+                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
+            startAuthorisation:
+              type: object
+              description: Navigate to the Authoriation Page
+              properties:
+                href:
+                  type: string
+                  description: Endpoint URL
+                  maxLength: 1000
+                  minLength: 12
+                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
+            status:
+              type: object
+              description: Navigate to the status page
+              properties:
+                href:
+                  type: string
+                  description: Endpoint URL
+                  maxLength: 1000
+                  minLength: 12
+                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
+        paymentId:
+          type: string
+          description: Resource identification of the generated payment initiation resource
+          maxLength: 36
+          minLength: 36
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        psuMessage:
+          type: string
+          description: Text to be displayed to the PSU
+          maxLength: 512
+          minLength: 1
+          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,512})$
       required:
-      - scaStatus
+      - _links
+      - paymentId
+      - transactionStatus
     get_payment-details_response:
       type: object
       description: Payment Id response
@@ -4117,101 +4325,6 @@ components:
       - creditorAccount
       - creditorName
       - instructedAmount
-    initiate_payment_response:
-      type: object
-      description: Payment Initiation Response
-      properties:
-        transactionStatus:
-          type: string
-          description: 'The transaction status is filled with codes of the ISO 20022 data table. Valid status values are:
-
-            - ACCP: AcceptedCustomerProfile Preceding check of technical validation was successful. Customer profile check was also successful.
-
-            - ACSP: AcceptedSettlementInProcess All preceding checks such as technical validation and customer profile were successful and therefore the payment initiation has been accepted for execution.
-
-            - PDNG: Pending Payment initiation or individual transaction included in the payment initiation is pending. Further checks and status update will be performed.
-
-            - RJCT: Rejected Payment initiation or individual transaction included in the payment initiation has been rejected.
-
-            - CANC: Cancelled Payment initiation has been cancelled before execution. Remark Change Request to ISO20022 is still needed.
-
-            '
-          enum:
-          - ACCP
-          - ACSP
-          - PDNG
-          - RJCT
-          - CANC
-        _links:
-          type: object
-          description: Links that can be used by TPP for next steps
-          properties:
-            scaStatus:
-              type: object
-              description: Navigate to the SCA Status Page
-              properties:
-                href:
-                  type: string
-                  description: Endpoint URL
-                  maxLength: 1000
-                  minLength: 12
-                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
-            scaRedirect:
-              type: object
-              description: Navigate to the SCA Redirect Page
-              properties:
-                href:
-                  type: string
-                  description: Endpoint URL
-                  maxLength: 1000
-                  minLength: 12
-                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
-            self:
-              type: object
-              description: Navigate to the Same Page
-              properties:
-                href:
-                  type: string
-                  description: Endpoint URL
-                  maxLength: 1000
-                  minLength: 12
-                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
-            startAuthorisation:
-              type: object
-              description: Navigate to the Authoriation Page
-              properties:
-                href:
-                  type: string
-                  description: Endpoint URL
-                  maxLength: 1000
-                  minLength: 12
-                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
-            status:
-              type: object
-              description: Navigate to the status page
-              properties:
-                href:
-                  type: string
-                  description: Endpoint URL
-                  maxLength: 1000
-                  minLength: 12
-                  pattern: ^[hH][tT][tT][pP][sS]?:\/\/([wW]{3}\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\\={}()]*)$
-        paymentId:
-          type: string
-          description: Resource identification of the generated payment initiation resource
-          maxLength: 36
-          minLength: 36
-          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
-        psuMessage:
-          type: string
-          description: Text to be displayed to the PSU
-          maxLength: 512
-          minLength: 1
-          pattern: ^(?!\s)([a-zA-Z0-9-., '()="_@£$#/]{1,512})$
-      required:
-      - _links
-      - paymentId
-      - transactionStatus
     DeletePaymentsSepaCreditTransfersPaymentid409Response:
       type: object
       properties:
@@ -4317,116 +4430,3 @@ components:
       required:
       - code
       - type
-    get_payment-status_response:
-      type: object
-      description: Get Payment Status
-      properties:
-        transactionStatus:
-          type: string
-          description: 'The transaction status is filled with codes of the ISO 20022 data table. Valid status values are:
-
-
-            - ACCP: AcceptedCustomerProfile Preceding check of technical validation was successful.Customer profile check was also successful.
-
-            - ACSP: AcceptedSettlementInProcess All preceding checks such as technical validation and customer profile were successful and therefore the payment initiation has been accepted for execution.
-
-            - PDNG: Pending Payment initiation or individual transaction included in the payment initiation is pending. Further checks and status update will be performed.
-
-            - RJCT: Rejected Payment initiation or individual transaction included in the payment initiation has been rejected.
-
-            - CANC: Cancelled Payment initiation has been cancelled before execution. Remark Change Request to ISO20022 is still needed.
-
-            '
-          enum:
-          - ACCP
-          - ACSP
-          - PDNG
-          - RJCT
-          - CANC
-      required:
-      - transactionStatus
-    GetPaymentsInstantSepaCreditTransfersPaymentidStatus400Response:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - SERVICE_INVALID
-          - FORMAT_ERROR
-          - PARAMETER_NOT_CONSISTENT
-          - PARAMETER_NOT_SUPPORTED
-          - SERVICE_INVALID
-          - CONSENT_UNKNOWN
-          - RESOURCE_UNKNOWN
-          - RESOURCE_EXPIRED
-          - RESOURCE_BLOCKED
-          - TIMESTAMP_INVALID
-          - PERIOD_INVALID
-          - SCA_METHOD_UNKNOWN
-          - PAYMENT_FAILED
-          - EXECUTION_DATE_INVALID
-          - SESSIONS_NOT_SUPPORTED
-          - CARD_INVALID
-          - NO_PIIS_ACTIVATION
-        additionalErrors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - SERVICE_INVALID
-                - FORMAT_ERROR
-                - PARAMETER_NOT_SUPPORTED
-                - CONSENT_UNKNOWN
-                - RESOURCE_UNKNOWN
-                - PRODUCT_UNKNOWN
-                - RESOURCE_EXPIRED
-                - TIMESTAMP_INVALID
-                - PERIOD_INVALID
-                - SCA_METHOD_UNKNOWN
-                - PAYMENT_FAILED
-                - EXECUTION_DATE_INVALID
-                - SESSIONS_NOT_SUPPORTED
-                - NO_PIIS_ACTIVATION
-                - CARD_INVALID
-                - PARAMETER_NOT_CONSISTENT
-                - RESOURCE_BLOCKED
-                - STATUS_INVALID
-                - CONSENT_INVALID
-                - CONSENT_EXPIRED
-                - TOKEN_INVALID
-                - ACCESS_EXCEEDED
-              detail:
-                type: string
-              title:
-                type: string
-            required:
-            - code
-        detail:
-          type: string
-        type:
-          type: string
-        title:
-          type: string
-      required:
-      - code
-      - type
-    get_payment-auth-details_response:
-      type: object
-      description: Get Payment Authorisation Details Response
-      properties:
-        authorisationIds:
-          type: array
-          description: An array of all authorisationIds
-          items:
-            type: string
-            description: Authorisation ID
-            maxLength: 2
-            minLength: 1
-            pattern: ^\d{1,2}$
-          maxItems: 100
-          minItems: 1
-      required:
-      - authorisationIds

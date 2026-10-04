@@ -74,6 +74,405 @@ paths:
       deprecated: false
 components:
   schemas:
+    OBCashAccount5_1:
+      type: object
+      description: Provides the details to identify the beneficiary account.
+      properties:
+        SchemeName:
+          $ref: '#/components/schemas/OBInternalAccountIdentification4Code'
+        Identification:
+          type: string
+          description: Beneficiary account identification.
+          maxLength: 256
+          minLength: 1
+        Name:
+          $ref: '#/components/schemas/Name_0'
+        SecondaryIdentification:
+          $ref: '#/components/schemas/SecondaryIdentification'
+        Proxy:
+          $ref: '#/components/schemas/OBProxy1'
+      required:
+      - Identification
+      - SchemeName
+    AccountId:
+      type: string
+      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
+      example: '22289'
+      maxLength: 40
+      minLength: 1
+    Links:
+      type: object
+      additionalProperties: false
+      description: Links relevant to the payload
+      properties:
+        Self:
+          type: string
+          format: uri
+        First:
+          type: string
+          format: uri
+        Prev:
+          type: string
+          format: uri
+        Next:
+          type: string
+          format: uri
+        Last:
+          type: string
+          format: uri
+      required:
+      - Self
+    CareOf:
+      type: string
+      description: The 'care of' address is used whenever sending mail to a person or organisation who does not actually live or work at the address. They will receive the mail for the individual.
+      example: Jane Smith
+      maxLength: 140
+      minLength: 1
+    DebtorReference:
+      type: string
+      description: A reference value provided by the PSU to the PISP while setting up the scheduled payment.
+      example: REF51561806
+      maxLength: 35
+      minLength: 1
+    OBErrorResponse1:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      properties:
+        Id:
+          type: string
+          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
+          maxLength: 40
+          minLength: 1
+        Code:
+          type: string
+          description: Deprecated <br />High level textual error code, to help categorise the errors.
+          example: 400 BadRequest
+          maxLength: 40
+          minLength: 1
+        Message:
+          type: string
+          description: Deprecated <br />Brief Error message
+          example: There is something wrong with the request parameters provided
+          maxLength: 500
+          minLength: 1
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBError1'
+          maxItems: 99999
+          minItems: 1
+      required:
+      - Errors
+      nullable: false
+    OBBranchAndFinancialInstitutionIdentification5_1:
+      type: object
+      description: 'Party that manages the account on behalf of the account owner, that is manages the registration and booking of entries on the account, calculates balances on the account and provides information about the account.
+
+        This is the servicer of the beneficiary account.'
+      properties:
+        SchemeName:
+          $ref: '#/components/schemas/OBInternalFinancialInstitutionIdentification4Code'
+        Identification:
+          $ref: '#/components/schemas/Identification_1'
+        Name:
+          $ref: '#/components/schemas/Name_1'
+        PostalAddress:
+          $ref: '#/components/schemas/OBPostalAddress7'
+        LEI:
+          $ref: '#/components/schemas/LEI'
+      required:
+      - Identification
+      - SchemeName
+    Room:
+      type: string
+      description: Information that locates and identifies a room to form part of an address
+      example: Basement 03
+      maxLength: 70
+      minLength: 1
+    Reference:
+      type: string
+      description: 'Unique reference, as assigned by the creditor, to unambiguously refer to the payment transaction.
+
+        Usage: If available, the initiating party should provide this reference in the structured remittance information, to enable reconciliation by the creditor upon receipt of the amount of money.
+
+        If the business context requires the use of a creditor reference or a payment remit identification, and only one identifier can be passed through the end-to-end chain, the creditor''s reference or payment remittance identification should be quoted in the end-to-end transaction identification.'
+      example: Towbar Club
+      maxLength: 35
+      minLength: 1
+    OBInternalScheduleType1Code:
+      type: string
+      description: Specifies the scheduled payment date type requested. For a full list of enumeration values refer to `OBInternalScheduleType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      enum:
+      - Arrival
+      - Execution
+      example: Arrival
+    OBError1:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/OBExternalStatusReason1Code'
+        Message:
+          type: string
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBL doesn''t standardise this field'
+          maxLength: 500
+          minLength: 1
+        Path:
+          type: string
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          maxLength: 500
+          minLength: 1
+        Url:
+          type: string
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+      required:
+      - ErrorCode
+    Name_0:
+      type: string
+      description: 'The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP''s online channels.
+
+        Note, the account name is not the product name or the nickname of the account.'
+      example: Jane Smith
+      maxLength: 350
+      minLength: 1
+    LEI:
+      type: string
+      description: Legal entity identification as an alternate identification for a party. Legal Entity Identifier is a code allocated to a party as described in ISO 17442 "Financial Services - Legal Entity Identifier (LEI)".
+      example: IZ9Q00LZEVUKWCQY6X15
+      maxLength: 20
+      minLength: 1
+      pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
+    ScheduledPaymentDateTime:
+      type: string
+      format: date-time
+      description: "The date on which the scheduled payment will be made. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      example: '2017-07-12T00:00:00Z'
+    ScheduledPaymentId:
+      type: string
+      description: A unique and immutable identifier used to identify the scheduled payment resource. This identifier has no meaning to the account owner.
+      example: SP03
+      maxLength: 40
+      minLength: 1
+    ActiveOrHistoricCurrencyCode_1:
+      type: string
+      description: A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 "Codes for the representation of currencies and funds".
+      example: GBP
+      pattern: ^[A-Z]{3,3}$
+    OBInternalAccountIdentification4Code:
+      type: string
+      description: Name of the identification scheme, in a coded form as published in an external list. <br /> For a full list of enumeration values refer to `OBInternalAccountIdentification4Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      x-namespaced-enum:
+      - UK.OBIE.BBAN
+      - UK.OBIE.IBAN
+      - UK.OBIE.PAN
+      - UK.OBIE.Paym
+      - UK.OBIE.SortCodeAccountNumber
+      - UK.OBIE.Wallet
+    SecondaryIdentification:
+      type: string
+      description: "This is secondary identification of the account, as assigned by the account servicing institution. \nThis can be used by building societies to additionally identify accounts with a roll number (in addition to a sort code and account number combination)."
+      example: '87562298675897'
+      maxLength: 34
+      minLength: 1
+    OBActiveOrHistoricCurrencyAndAmount_1:
+      type: object
+      description: 'Amount of money to be moved between the debtor and creditor, before deduction of charges, expressed in the currency as ordered by the initiating party.
+
+        Usage: This amount has to be transported unchanged through the transaction chain.'
+      properties:
+        Amount:
+          $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
+        Currency:
+          $ref: '#/components/schemas/ActiveOrHistoricCurrencyCode_1'
+      required:
+      - Amount
+      - Currency
+    BuildingNumber:
+      type: string
+      description: Number that identifies the position of a building on a street.
+      example: '11'
+      maxLength: 16
+      minLength: 1
+    PostBox:
+      type: string
+      description: Information that locates and identifies a box in a post office assigned to a person or organization, where letters for them are kept until called for.
+      example: PO Box 123456
+      maxLength: 16
+      minLength: 1
+    TownName:
+      type: string
+      description: Name of a built-up area, with defined boundaries, and a local government.
+      example: London
+      maxLength: 140
+      minLength: 1
+    DistrictName:
+      type: string
+      description: Number that of the regional area, known as a district, which forms part of an address
+      example: Greater London
+      maxLength: 140
+      minLength: 1
+    OBExternalStatusReason1Code:
+      type: string
+      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: U001
+      maxLength: 4
+      minLength: 4
+    Meta:
+      type: object
+      additionalProperties: false
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+          example: 42
+          maximum: 999999
+          minimum: 0
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      title: MetaData
+    OBScheduledPayment3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        AccountId:
+          $ref: '#/components/schemas/AccountId'
+        ScheduledPaymentId:
+          $ref: '#/components/schemas/ScheduledPaymentId'
+        ScheduledPaymentDateTime:
+          $ref: '#/components/schemas/ScheduledPaymentDateTime'
+        ScheduledType:
+          $ref: '#/components/schemas/OBInternalScheduleType1Code'
+        Reference:
+          $ref: '#/components/schemas/Reference'
+        DebtorReference:
+          $ref: '#/components/schemas/DebtorReference'
+        InstructedAmount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_1'
+        CreditorAgent:
+          $ref: '#/components/schemas/OBBranchAndFinancialInstitutionIdentification5_1'
+        CreditorAccount:
+          $ref: '#/components/schemas/OBCashAccount5_1'
+      required:
+      - AccountId
+      - InstructedAmount
+      - ScheduledPaymentDateTime
+      - ScheduledType
+      nullable: false
+    PostCode:
+      type: string
+      description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+      example: EC2N 4AG
+      maxLength: 16
+      minLength: 1
+    ExternalProxyAccountType1Code:
+      type: string
+      description: Specifies the external proxy account type code, as published in the proxy account type external code set.<br /> For more information and a full list of values see `ExternalProxyAccountType1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      enum:
+      - TELE
+      - EMAL
+      - DNAM
+      - CINC
+      - COTX
+      - COID
+      - CUST
+      - DRLC
+      - EIDN
+      - EWAL
+      - PVTX
+      - LEIC
+      - MBNO
+      - NIDN
+      - CCPT
+      - SHID
+      - SOSE
+      - TOKN
+      - UBIL
+      - VIPN
+      - BIID
+      example: TELE
+    Floor:
+      type: string
+      description: Number that identifies the level within a building
+      example: '11'
+      maxLength: 70
+      minLength: 1
+    OBProxy1:
+      type: object
+      description: Specifies an alternate assumed name for the identification of the account.
+      properties:
+        Identification:
+          type: string
+          description: Identification used to indicate the account identification under another specified name.
+          example: '2360549017905188'
+          maxLength: 2048
+          minLength: 1
+        Code:
+          $ref: '#/components/schemas/ExternalProxyAccountType1Code'
+        Type:
+          type: string
+          description: Type of the proxy identification.
+          maxLength: 35
+          minLength: 1
+      required:
+      - Code
+      - Identification
+    UnitNumber:
+      type: string
+      description: Number that identifies the unit of a specific address .
+      example: A88
+      maxLength: 16
+      minLength: 1
+    BuildingName:
+      type: string
+      description: Name of a referenced building.
+      maxLength: 140
+      minLength: 1
+    ISODateTime:
+      type: string
+      format: date-time
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+    OBReadScheduledPayment3:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        Data:
+          type: object
+          properties:
+            ScheduledPayment:
+              type: array
+              items:
+                $ref: '#/components/schemas/OBScheduledPayment3'
+              maxItems: 99999
+              minItems: 0
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - Data
+      nullable: false
+    OBInternalFinancialInstitutionIdentification4Code:
+      type: string
+      description: Name of the identification scheme, in a coded form as published in an external list.<br/> For a full list of enumeration values refer to `OBInternalFinancialInstitutionIdentification4Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: UK.OBIE.BICFI
+      x-namespaced-enum:
+      - UK.OBIE.BICFI
+    Name_1:
+      type: string
+      description: Name by which an agent is known and which is usually used to identify that agent.
+      example: Agent Name
+      maxLength: 140
+      minLength: 1
     OBPostalAddress7:
       type: object
       description: Information that locates and identifies a specific address, as defined by postal services.
@@ -134,24 +533,6 @@ components:
             minLength: 1
           maxItems: 7
           minItems: 0
-    ActiveOrHistoricCurrencyCode_1:
-      type: string
-      description: A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 "Codes for the representation of currencies and funds".
-      example: GBP
-      pattern: ^[A-Z]{3,3}$
-    LEI:
-      type: string
-      description: Legal entity identification as an alternate identification for a party. Legal Entity Identifier is a code allocated to a party as described in ISO 17442 "Financial Services - Legal Entity Identifier (LEI)".
-      example: IZ9Q00LZEVUKWCQY6X15
-      maxLength: 20
-      minLength: 1
-      pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
-    DebtorReference:
-      type: string
-      description: A reference value provided by the PSU to the PISP while setting up the scheduled payment.
-      example: REF51561806
-      maxLength: 35
-      minLength: 1
     OBAddressType2Code:
       type: string
       description: Identifies the nature of the postal address. <br /> For a full set of codes see `OBAddressType2Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets).
@@ -170,279 +551,11 @@ components:
       description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
       example: '1209.06'
       pattern: ^\d{1,13}$|^\d{1,13}\.\d{1,5}$
-    OBCashAccount5_1:
-      type: object
-      description: Provides the details to identify the beneficiary account.
-      properties:
-        SchemeName:
-          $ref: '#/components/schemas/OBInternalAccountIdentification4Code'
-        Identification:
-          type: string
-          description: Beneficiary account identification.
-          maxLength: 256
-          minLength: 1
-        Name:
-          $ref: '#/components/schemas/Name_0'
-        SecondaryIdentification:
-          $ref: '#/components/schemas/SecondaryIdentification'
-        Proxy:
-          $ref: '#/components/schemas/OBProxy1'
-      required:
-      - Identification
-      - SchemeName
-    OBProxy1:
-      type: object
-      description: Specifies an alternate assumed name for the identification of the account.
-      properties:
-        Identification:
-          type: string
-          description: Identification used to indicate the account identification under another specified name.
-          example: '2360549017905188'
-          maxLength: 2048
-          minLength: 1
-        Code:
-          $ref: '#/components/schemas/ExternalProxyAccountType1Code'
-        Type:
-          type: string
-          description: Type of the proxy identification.
-          maxLength: 35
-          minLength: 1
-      required:
-      - Code
-      - Identification
-    OBBranchAndFinancialInstitutionIdentification5_1:
-      type: object
-      description: 'Party that manages the account on behalf of the account owner, that is manages the registration and booking of entries on the account, calculates balances on the account and provides information about the account.
-
-        This is the servicer of the beneficiary account.'
-      properties:
-        SchemeName:
-          $ref: '#/components/schemas/OBInternalFinancialInstitutionIdentification4Code'
-        Identification:
-          $ref: '#/components/schemas/Identification_1'
-        Name:
-          $ref: '#/components/schemas/Name_1'
-        PostalAddress:
-          $ref: '#/components/schemas/OBPostalAddress7'
-        LEI:
-          $ref: '#/components/schemas/LEI'
-      required:
-      - Identification
-      - SchemeName
-    OBError1:
-      type: object
-      additionalProperties: false
-      minProperties: 1
-      properties:
-        ErrorCode:
-          $ref: '#/components/schemas/OBExternalStatusReason1Code'
-        Message:
-          type: string
-          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
-
-            OBL doesn''t standardise this field'
-          maxLength: 500
-          minLength: 1
-        Path:
-          type: string
-          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
-          maxLength: 500
-          minLength: 1
-        Url:
-          type: string
-          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
-      required:
-      - ErrorCode
-    Links:
-      type: object
-      additionalProperties: false
-      description: Links relevant to the payload
-      properties:
-        Self:
-          type: string
-          format: uri
-        First:
-          type: string
-          format: uri
-        Prev:
-          type: string
-          format: uri
-        Next:
-          type: string
-          format: uri
-        Last:
-          type: string
-          format: uri
-      required:
-      - Self
-    OBErrorResponse1:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
-      properties:
-        Id:
-          type: string
-          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
-          maxLength: 40
-          minLength: 1
-        Code:
-          type: string
-          description: Deprecated <br />High level textual error code, to help categorise the errors.
-          example: 400 BadRequest
-          maxLength: 40
-          minLength: 1
-        Message:
-          type: string
-          description: Deprecated <br />Brief Error message
-          example: There is something wrong with the request parameters provided
-          maxLength: 500
-          minLength: 1
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/OBError1'
-          maxItems: 99999
-          minItems: 1
-      required:
-      - Errors
-      nullable: false
     Identification_1:
       type: string
       description: Unique and unambiguous identification of the servicing institution.
       example: '80200112344562'
       maxLength: 35
-      minLength: 1
-    Name_1:
-      type: string
-      description: Name by which an agent is known and which is usually used to identify that agent.
-      example: Agent Name
-      maxLength: 140
-      minLength: 1
-    BuildingNumber:
-      type: string
-      description: Number that identifies the position of a building on a street.
-      example: '11'
-      maxLength: 16
-      minLength: 1
-    UnitNumber:
-      type: string
-      description: Number that identifies the unit of a specific address .
-      example: A88
-      maxLength: 16
-      minLength: 1
-    OBInternalAccountIdentification4Code:
-      type: string
-      description: Name of the identification scheme, in a coded form as published in an external list. <br /> For a full list of enumeration values refer to `OBInternalAccountIdentification4Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      x-namespaced-enum:
-      - UK.OBIE.BBAN
-      - UK.OBIE.IBAN
-      - UK.OBIE.PAN
-      - UK.OBIE.Paym
-      - UK.OBIE.SortCodeAccountNumber
-      - UK.OBIE.Wallet
-    ScheduledPaymentDateTime:
-      type: string
-      format: date-time
-      description: "The date on which the scheduled payment will be made. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-      example: '2017-07-12T00:00:00Z'
-    OBInternalScheduleType1Code:
-      type: string
-      description: Specifies the scheduled payment date type requested. For a full list of enumeration values refer to `OBInternalScheduleType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      enum:
-      - Arrival
-      - Execution
-      example: Arrival
-    ISODateTime:
-      type: string
-      format: date-time
-      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-    Room:
-      type: string
-      description: Information that locates and identifies a room to form part of an address
-      example: Basement 03
-      maxLength: 70
-      minLength: 1
-    CareOf:
-      type: string
-      description: The 'care of' address is used whenever sending mail to a person or organisation who does not actually live or work at the address. They will receive the mail for the individual.
-      example: Jane Smith
-      maxLength: 140
-      minLength: 1
-    OBExternalStatusReason1Code:
-      type: string
-      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      example: U001
-      maxLength: 4
-      minLength: 4
-    OBInternalFinancialInstitutionIdentification4Code:
-      type: string
-      description: Name of the identification scheme, in a coded form as published in an external list.<br/> For a full list of enumeration values refer to `OBInternalFinancialInstitutionIdentification4Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      example: UK.OBIE.BICFI
-      x-namespaced-enum:
-      - UK.OBIE.BICFI
-    ScheduledPaymentId:
-      type: string
-      description: A unique and immutable identifier used to identify the scheduled payment resource. This identifier has no meaning to the account owner.
-      example: SP03
-      maxLength: 40
-      minLength: 1
-    PostBox:
-      type: string
-      description: Information that locates and identifies a box in a post office assigned to a person or organization, where letters for them are kept until called for.
-      example: PO Box 123456
-      maxLength: 16
-      minLength: 1
-    DistrictName:
-      type: string
-      description: Number that of the regional area, known as a district, which forms part of an address
-      example: Greater London
-      maxLength: 140
-      minLength: 1
-    Name_0:
-      type: string
-      description: 'The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP''s online channels.
-
-        Note, the account name is not the product name or the nickname of the account.'
-      example: Jane Smith
-      maxLength: 350
-      minLength: 1
-    BuildingName:
-      type: string
-      description: Name of a referenced building.
-      maxLength: 140
-      minLength: 1
-    ExternalProxyAccountType1Code:
-      type: string
-      description: Specifies the external proxy account type code, as published in the proxy account type external code set.<br /> For more information and a full list of values see `ExternalProxyAccountType1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      enum:
-      - TELE
-      - EMAL
-      - DNAM
-      - CINC
-      - COTX
-      - COID
-      - CUST
-      - DRLC
-      - EIDN
-      - EWAL
-      - PVTX
-      - LEIC
-      - MBNO
-      - NIDN
-      - CCPT
-      - SHID
-      - SOSE
-      - TOKN
-      - UBIL
-      - VIPN
-      - BIID
-      example: TELE
-    AccountId:
-      type: string
-      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
-      example: '22289'
-      maxLength: 40
       minLength: 1
     StreetName:
       type: string
@@ -450,122 +563,34 @@ components:
       example: Bank Street
       maxLength: 140
       minLength: 1
-    SecondaryIdentification:
-      type: string
-      description: "This is secondary identification of the account, as assigned by the account servicing institution. \nThis can be used by building societies to additionally identify accounts with a roll number (in addition to a sort code and account number combination)."
-      example: '87562298675897'
-      maxLength: 34
-      minLength: 1
-    TownName:
-      type: string
-      description: Name of a built-up area, with defined boundaries, and a local government.
-      example: London
-      maxLength: 140
-      minLength: 1
-    Reference:
-      type: string
-      description: 'Unique reference, as assigned by the creditor, to unambiguously refer to the payment transaction.
-
-        Usage: If available, the initiating party should provide this reference in the structured remittance information, to enable reconciliation by the creditor upon receipt of the amount of money.
-
-        If the business context requires the use of a creditor reference or a payment remit identification, and only one identifier can be passed through the end-to-end chain, the creditor''s reference or payment remittance identification should be quoted in the end-to-end transaction identification.'
-      example: Towbar Club
-      maxLength: 35
-      minLength: 1
-    Floor:
-      type: string
-      description: Number that identifies the level within a building
-      example: '11'
-      maxLength: 70
-      minLength: 1
-    OBReadScheduledPayment3:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      properties:
-        Data:
-          type: object
-          properties:
-            ScheduledPayment:
-              type: array
-              items:
-                $ref: '#/components/schemas/OBScheduledPayment3'
-              maxItems: 99999
-              minItems: 0
-        Links:
-          $ref: '#/components/schemas/Links'
-        Meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - Data
-      nullable: false
-    OBScheduledPayment3:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      properties:
-        AccountId:
-          $ref: '#/components/schemas/AccountId'
-        ScheduledPaymentId:
-          $ref: '#/components/schemas/ScheduledPaymentId'
-        ScheduledPaymentDateTime:
-          $ref: '#/components/schemas/ScheduledPaymentDateTime'
-        ScheduledType:
-          $ref: '#/components/schemas/OBInternalScheduleType1Code'
-        Reference:
-          $ref: '#/components/schemas/Reference'
-        DebtorReference:
-          $ref: '#/components/schemas/DebtorReference'
-        InstructedAmount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_1'
-        CreditorAgent:
-          $ref: '#/components/schemas/OBBranchAndFinancialInstitutionIdentification5_1'
-        CreditorAccount:
-          $ref: '#/components/schemas/OBCashAccount5_1'
-      required:
-      - AccountId
-      - InstructedAmount
-      - ScheduledPaymentDateTime
-      - ScheduledType
-      nullable: false
-    PostCode:
-      type: string
-      description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
-      example: EC2N 4AG
-      maxLength: 16
-      minLength: 1
-    Meta:
-      type: object
-      additionalProperties: false
-      description: Meta Data relevant to the payload
-      properties:
-        TotalPages:
-          type: integer
-          format: int32
-          example: 42
-          maximum: 999999
-          minimum: 0
-        FirstAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-        LastAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-      title: MetaData
-    OBActiveOrHistoricCurrencyAndAmount_1:
-      type: object
-      description: 'Amount of money to be moved between the debtor and creditor, before deduction of charges, expressed in the currency as ordered by the initiating party.
-
-        Usage: This amount has to be transported unchanged through the transaction chain.'
-      properties:
-        Amount:
-          $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
-        Currency:
-          $ref: '#/components/schemas/ActiveOrHistoricCurrencyCode_1'
-      required:
-      - Amount
-      - Currency
   responses:
-    401Error:
-      description: Unauthorized
+    404Error:
+      description: Not found
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    405Error:
+      description: Method Not Allowed
       headers:
         x-fapi-interaction-id:
           description: An RFC4122 UID used as a correlation id.
@@ -633,8 +658,8 @@ components:
                   Message: Version supplied is not valid
                   Path: Data.Initiation.CreditorAccount
                   Url: <url to the api reference for Event Notification API>
-    404Error:
-      description: Not found
+    401Error:
+      description: Unauthorized
       headers:
         x-fapi-interaction-id:
           description: An RFC4122 UID used as a correlation id.
@@ -658,133 +683,6 @@ components:
             pattern: ^no-cache, no-store, must-revalidate$
             nullable: false
           example: no-cache, no-store, must-revalidate
-    406Error:
-      description: Not Acceptable
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    429Error:
-      description: Too Many Requests
-      headers:
-        Retry-After:
-          description: Number in seconds to wait
-          schema:
-            type: integer
-            deprecated: false
-            maximum: 9999999
-            minimum: 1
-            nullable: false
-          example: 120
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    405Error:
-      description: Method Not Allowed
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    400Error:
-      description: Bad request
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-          examples:
-            400ErrorResponse:
-              value:
-                Code: OB.BadRequest
-                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
-                Message: Invalid request parameters
-                Errors:
-                - ErrorCode: AC17
-                  Message: Version must be supplied
-                  Path: Data.Initiation
-                  Url: <url to the api reference for Event Notification API>
-                - ErrorCode: AC17
-                  Message: Version supplied is not valid
-                  Path: Data.Initiation.CreditorAccount
-                  Url: <url to the api reference for Event Notification API>
     200AccountsAccountIdScheduledPaymentsRead:
       description: Scheduled Payments Read
       headers:
@@ -875,32 +773,122 @@ components:
                   Message: Version supplied is not valid
                   Path: Data.Initiation.CreditorAccount
                   Url: <url to the api reference for Event Notification API>
+    429Error:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
+            deprecated: false
+            maximum: 9999999
+            minimum: 1
+            nullable: false
+          example: 120
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    406Error:
+      description: Not Acceptable
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    400Error:
+      description: Bad request
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            400ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
   parameters:
-    x-fapi-interaction-id:
-      name: x-fapi-interaction-id
-      in: header
-      description: An RFC4122 UID used as a correlation id.
-      required: false
+    AccountId:
+      name: accountId
+      in: path
+      description: AccountId
+      required: true
       schema:
         type: string
         deprecated: false
-        maxLength: 36
-        minLength: 32
-        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-        nullable: false
-      example: 93bac548-d2de-4546-b106-880a5018460d
-    x-customer-user-agent:
-      name: x-customer-user-agent
-      in: header
-      description: Indicates the user-agent that the PSU is using.
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 500
+        maxLength: 20
         minLength: 1
+        pattern: ^\d{1,20}$
         nullable: false
-      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
+      example: '12345678901234567890'
     x-fapi-auth-date:
       name: x-fapi-auth-date
       in: header
@@ -914,6 +902,19 @@ components:
         pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
         nullable: false
       example: Sun, 10 Sep 2017 19:43:31 UTC
+    x-fapi-interaction-id:
+      name: x-fapi-interaction-id
+      in: header
+      description: An RFC4122 UID used as a correlation id.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 36
+        minLength: 32
+        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+        nullable: false
+      example: 93bac548-d2de-4546-b106-880a5018460d
     x-fapi-customer-ip-address:
       name: x-fapi-customer-ip-address
       in: header
@@ -938,19 +939,18 @@ components:
         pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
         nullable: false
       example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
-    AccountId:
-      name: accountId
-      in: path
-      description: AccountId
-      required: true
+    x-customer-user-agent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the PSU is using.
+      required: false
       schema:
         type: string
         deprecated: false
-        maxLength: 20
+        maxLength: 500
         minLength: 1
-        pattern: ^\d{1,20}$
         nullable: false
-      example: '12345678901234567890'
+      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
   securitySchemes:
     TPPOAuth2Security:
       type: oauth2

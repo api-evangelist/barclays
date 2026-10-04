@@ -126,40 +126,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    BankAccountType:
-      type: string
-      deprecated: false
-      description: Account type of the bank account used as payment source
-      enum:
-      - CHECKING
-      - SAVINGS
-      example: CHECKING
-      nullable: false
-    BankName:
-      type: string
-      deprecated: false
-      description: Bank name of the bank account added as payment source
-      example: bankName
-      maxLength: 255
-      minLength: 1
-      pattern: ^([A-Za-z0-9 &,.'#+$=()_/-]{1,255})$
-    ExternalBankAccountDetailsLast4:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Bank account details
-      properties:
-        bankDetails:
-          $ref: '#/components/schemas/ExternalBankDetails'
-        bankAccountNickname:
-          $ref: '#/components/schemas/BankAccountNickname'
-        bankAccountId:
-          $ref: '#/components/schemas/BankAccountId'
-        bankAccountNumberLast4:
-          $ref: '#/components/schemas/BankAccountNumberLast4'
-        bankAccountType:
-          $ref: '#/components/schemas/BankAccountType'
-      nullable: false
     ExternalBankDetails:
       type: object
       additionalProperties: false
@@ -188,43 +154,37 @@ components:
       required:
       - data
       nullable: false
-    GetExternalAccountResponseDataLast4:
+    BankAccountNumberLast4:
+      type: string
+      deprecated: false
+      description: Last 4 digits of Bank account number to be added as a payment source
+      example: '1234'
+      maxLength: 4
+      minLength: 4
+      pattern: ^([a-zA-Z0-9]{4,4})$
+    ErrorResponseType:
       type: object
       additionalProperties: false
       deprecated: false
-      description: external bank account response data
+      description: 'An API error response.
+
+        '
       properties:
-        data:
-          $ref: '#/components/schemas/ExternalAccountLast4'
-      required:
-      - data
-      nullable: false
-    BankAccountNickname:
-      type: string
-      deprecated: false
-      description: Nickname for bank account added as payment source
-      example: ASHES
-      maxLength: 24
-      minLength: 1
-      pattern: ^([a-zA-Z0-9 .,&()#'-]{1,24})$
-      nullable: false
-    BankRoutingNumber:
-      type: string
-      deprecated: false
-      description: Bank routing number of the bank account added as payment source
-      example: '123455645'
-      maxLength: 9
-      minLength: 9
-      pattern: ^([0-9]{9})$
-    ExternalAccountListLast4:
-      type: array
-      additionalProperties: false
-      deprecated: false
-      description: Get all external account list
-      items:
-        $ref: '#/components/schemas/ExternalBankAccountDetailsLast4'
-      maxItems: 2000
-      minItems: 0
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
       nullable: false
     ErrorType:
       type: object
@@ -266,38 +226,15 @@ components:
       - code
       - id
       - title
-    ErrorResponseType:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'An API error response.
-
-        '
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-          description: Contains Non-standard meta information
-        errors:
-          type: array
-          description: 'Contains one or more error messages and is mutually exclusive with the data item.
-
-            This will not be returned in success scenarios.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorType'
-          maxItems: 50
-          minItems: 0
-      nullable: false
-    BankAccountNumberLast4:
+    BankAccountNickname:
       type: string
       deprecated: false
-      description: Last 4 digits of Bank account number to be added as a payment source
-      example: '1234'
-      maxLength: 4
-      minLength: 4
-      pattern: ^([a-zA-Z0-9]{4,4})$
+      description: Nickname for bank account added as payment source
+      example: ASHES
+      maxLength: 24
+      minLength: 1
+      pattern: ^([a-zA-Z0-9 .,&()#'-]{1,24})$
+      nullable: false
     BankAccountId:
       type: string
       deprecated: false
@@ -306,6 +243,52 @@ components:
       maxLength: 12
       minLength: 1
       pattern: ^([0-9]{1,12})$
+      nullable: false
+    BankRoutingNumber:
+      type: string
+      deprecated: false
+      description: Bank routing number of the bank account added as payment source
+      example: '123455645'
+      maxLength: 9
+      minLength: 9
+      pattern: ^([0-9]{9})$
+    BankName:
+      type: string
+      deprecated: false
+      description: Bank name of the bank account added as payment source
+      example: bankName
+      maxLength: 255
+      minLength: 1
+      pattern: ^([A-Za-z0-9 &,.'#+$=()_/-]{1,255})$
+    ExternalAccountListLast4:
+      type: array
+      additionalProperties: false
+      deprecated: false
+      description: Get all external account list
+      items:
+        $ref: '#/components/schemas/ExternalBankAccountDetailsLast4'
+      maxItems: 2000
+      minItems: 0
+      nullable: false
+    GetExternalAccountResponseDataLast4:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: external bank account response data
+      properties:
+        data:
+          $ref: '#/components/schemas/ExternalAccountLast4'
+      required:
+      - data
+      nullable: false
+    BankAccountType:
+      type: string
+      deprecated: false
+      description: Account type of the bank account used as payment source
+      enum:
+      - CHECKING
+      - SAVINGS
+      example: CHECKING
       nullable: false
     ExternalAccountLast4:
       type: object
@@ -324,7 +307,48 @@ components:
         bankAccountType:
           $ref: '#/components/schemas/BankAccountType'
       nullable: false
+    ExternalBankAccountDetailsLast4:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Bank account details
+      properties:
+        bankDetails:
+          $ref: '#/components/schemas/ExternalBankDetails'
+        bankAccountNickname:
+          $ref: '#/components/schemas/BankAccountNickname'
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        bankAccountNumberLast4:
+          $ref: '#/components/schemas/BankAccountNumberLast4'
+        bankAccountType:
+          $ref: '#/components/schemas/BankAccountType'
+      nullable: false
   responses:
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            NotFound:
+              $ref: '#/components/examples/example-error-404'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            ServiceUnavailable:
+              $ref: '#/components/examples/example-error-503'
     Unauthorized:
       description: 'The user could not be authenticated for this request.
 
@@ -363,30 +387,6 @@ components:
           examples:
             ExternalAccountRes:
               $ref: '#/components/examples/ExternalAccountResLast4'
-    ServiceUnavailable:
-      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            ServiceUnavailable:
-              $ref: '#/components/examples/example-error-503'
-    NotFound:
-      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            NotFound:
-              $ref: '#/components/examples/example-error-404'
     InternalServerError:
       description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
       headers:
@@ -400,18 +400,6 @@ components:
             InternalServerError:
               $ref: '#/components/examples/example-error-500'
   examples:
-    example-error-500:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: INTERNAL_SERVER_ERROR
-          title: The request failed due to an internal error.
-    example-error-503:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: SERVICE_UNAVAILABLE
-          title: The server is currently unavailable
     example-error-401:
       value:
         errors:
@@ -430,12 +418,12 @@ components:
           bankAccountId: '414'
           bankAccountNumberLast4: '4513'
           bankAccountType: SAVINGS
-    example-error-404:
+    example-error-503:
       value:
         errors:
         - id: 9709-4675-2456-7801
-          code: RESOURCE_NOT_FOUND
-          title: The requested operation failed because a resource associated with the request could not be found.
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
     AllExternalAccountsResLast4:
       value:
         data:
@@ -448,6 +436,18 @@ components:
           bankAccountId: 08
           bankAccountNumberLast4: '4110'
           bankAccountType: SAVINGS
+    example-error-404:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
+    example-error-500:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

@@ -154,6 +154,32 @@ components:
       - description
       - status
       - title
+    HeadUnsecuredSmeLoans408Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
+    HeadUnsecuredSmeLoans503Response:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+      required:
+      - description
+      - status
+      - title
     sme_lending_response:
       type: object
       properties:
@@ -1415,32 +1441,6 @@ components:
       - data
       - meta
     HeadUnsecuredSmeLoans400Response:
-      type: object
-      properties:
-        description:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-      required:
-      - description
-      - status
-      - title
-    HeadUnsecuredSmeLoans503Response:
-      type: object
-      properties:
-        description:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-      required:
-      - description
-      - status
-      - title
-    HeadUnsecuredSmeLoans408Response:
       type: object
       properties:
         description:

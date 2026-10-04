@@ -86,34 +86,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    StatementsListResponseBody:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Statements List Response
-      properties:
-        statements:
-          $ref: '#/components/schemas/StatementsListBody'
-      required:
-      - statements
-    StatementsListBody:
-      type: array
-      additionalProperties: false
-      deprecated: false
-      description: Statements List
-      items:
-        $ref: '#/components/schemas/Statements'
-      maxItems: 999
-      minItems: 0
-    StatementsResponseType:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Statement List Response
-      properties:
-        data:
-          $ref: '#/components/schemas/StatementsResponseObjectBody'
-      nullable: true
     Statements:
       type: object
       additionalProperties: false
@@ -138,6 +110,30 @@ components:
           maxLength: 36
           minLength: 36
           pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      nullable: false
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
       nullable: false
     ErrorType:
       type: object
@@ -179,30 +175,6 @@ components:
       - code
       - id
       - title
-    ErrorResponseType:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'An API error response.
-
-        '
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-          description: Contains Non-standard meta information
-        errors:
-          type: array
-          description: 'Contains one or more error messages and is mutually exclusive with the data item.
-
-            This will not be returned in success scenarios.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorType'
-          maxItems: 50
-          minItems: 0
-      nullable: false
     StatementsResponseObjectBody:
       type: object
       additionalProperties: false
@@ -224,47 +196,35 @@ components:
         attributes:
           $ref: '#/components/schemas/StatementsListResponseBody'
       nullable: false
+    StatementsResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Statement List Response
+      properties:
+        data:
+          $ref: '#/components/schemas/StatementsResponseObjectBody'
+      nullable: true
+    StatementsListResponseBody:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: Statements List Response
+      properties:
+        statements:
+          $ref: '#/components/schemas/StatementsListBody'
+      required:
+      - statements
+    StatementsListBody:
+      type: array
+      additionalProperties: false
+      deprecated: false
+      description: Statements List
+      items:
+        $ref: '#/components/schemas/Statements'
+      maxItems: 999
+      minItems: 0
   responses:
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
-    ServiceUnavailable:
-      description: 'Service Unavailable
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-503:
-              $ref: '#/components/examples/example-error-503'
-    StatementsResponseBody:
-      description: Document Details Response
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StatementsResponseType'
-          examples:
-            StatementListResponse:
-              $ref: '#/components/examples/StatementListResponse'
     NotFound:
       description: 'delivery not found, or delivery did not contain any articles
 
@@ -279,6 +239,34 @@ components:
           examples:
             example-error-404:
               $ref: '#/components/examples/example-error-404'
+    ServiceUnavailable:
+      description: 'Service Unavailable
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
     InternalServerError:
       description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
       headers:
@@ -291,6 +279,18 @@ components:
           examples:
             example-error-500:
               $ref: '#/components/examples/example-error-500'
+    StatementsResponseBody:
+      description: Document Details Response
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatementsResponseType'
+          examples:
+            StatementListResponse:
+              $ref: '#/components/examples/StatementListResponse'
     BadRequest:
       description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
       headers:
@@ -304,12 +304,22 @@ components:
             example-error-400-bad-request:
               $ref: '#/components/examples/example-error-400-bad-request'
   examples:
-    example-error-500:
+    example-error-401:
       value:
         errors:
         - id: 9709-4675-2456-7801
-          code: INTERNAL_SERVER_ERROR
-          title: The request failed due to an internal error.
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    StatementListResponse:
+      value:
+        data:
+          id: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+          type: STATEMENTS
+          attributes:
+            statements:
+            - statementDate: '2025-05-19'
+              statementReference: TmpneVl6WXhNV1UyTWpsak9USTJabVZtT0RnNVlURmxMRVpRVmtkQ05EUTBTVkZJUVVwbE1GTkxTVWxKVkZSUU5VVkVTRWMwTVVsU1RVeE5UMUZETURFeE9VbzJTak14TjB4UU5FcFI6c3RhdGVtZW50
+              accountId: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
     example-error-400-bad-request:
       value:
         errors:
@@ -322,28 +332,18 @@ components:
         - id: 9709-4675-2456-7801
           code: SERVICE_UNAVAILABLE
           title: The server is currently unavailable
-    example-error-401:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: AUTHENTICATION_ERROR
-          title: The user could not be authenticated for this request.
     example-error-404:
       value:
         errors:
         - id: 9709-4675-2456-7801
           code: RESOURCE_NOT_FOUND
           title: The requested operation failed because a resource associated with the request could not be found.
-    StatementListResponse:
+    example-error-500:
       value:
-        data:
-          id: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
-          type: STATEMENTS
-          attributes:
-            statements:
-            - statementDate: '2025-05-19'
-              statementReference: TmpneVl6WXhNV1UyTWpsak9USTJabVZtT0RnNVlURmxMRVpRVmtkQ05EUTBTVkZJUVVwbE1GTkxTVWxKVkZSUU5VVkVTRWMwTVVsU1RVeE5UMUZETURFeE9VbzJTak14TjB4UU5FcFI6c3RhdGVtZW50
-              accountId: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+        errors:
+        - id: 9709-4675-2456-7801
+          code: INTERNAL_SERVER_ERROR
+          title: The request failed due to an internal error.
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

@@ -93,54 +93,13 @@ paths:
       deprecated: false
 components:
   schemas:
-    ErrorType:
+    LoyaltyTierRequestData:
       type: object
-      description: Message details - additional operation execution information.
+      description: Loyalty Tier Update Request Data
       properties:
-        code:
-          type: string
-          description: Machine readable, unique code of the message related to particular case within operation execution.
-          example: ACCOUNT_NUMBER_NOT_FOUND
-        detail:
-          type: string
-          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying purposes.
-        id:
-          type: string
-          description: Generated message identifier for particular request, helping to locate server logs.
-          example: 1c4717c4-d4a5-e3f3-4a71-b868908763ff
-        title:
-          type: string
-          description: Short description of the error. Not for displaying purposes.
-          example: The authorization credentials required for this request are invalid.
-      required:
-      - code
-      - id
-      - title
-      title: ErrorType
-    ErrorDetails:
-      type: object
-      description: Contains error information if the requested upgrade/downgrade is declined.
-      properties:
-        code:
-          type: string
-          description: Error code describing the type of HTTP error.
-        detail:
-          type: string
-          description: A brief message describing the reason for failure to assist with troubleshooting.
-    LoyaltyTierRequest:
-      type: object
-      description: Loyalty Tier Request Data
-      properties:
-        tierUpdateRequestList:
-          type: array
-          items:
-            $ref: '#/components/schemas/TierUpdateRequest'
-        transactionReferenceId:
-          type: string
-      required:
-      - tierUpdateRequestList
-      - transactionReferenceId
-      title: LoyaltyTierRequest
+        data:
+          $ref: '#/components/schemas/LoyaltyTierRequest'
+      title: LoyaltyTierRequestData
     TierUpdateRequest:
       type: object
       description: Contains account information, current and new tier codes etc.
@@ -167,44 +126,6 @@ components:
       - last4OfCardNumber
       - newTierCode
       title: TierUpdateRequest
-    ErrorResponseType:
-      type: object
-      description: 'An API error response. '
-      properties:
-        errors:
-          type: array
-          description: Contains one or more error messages and is mutually exclusive with the data item. This will not be returned in success scenarios.
-          items:
-            $ref: '#/components/schemas/ErrorType'
-        meta:
-          type: object
-          description: Contains Non-standard meta information
-          properties: {}
-      title: ErrorResponseType
-    LoyaltyTierRequestData:
-      type: object
-      description: Loyalty Tier Update Request Data
-      properties:
-        data:
-          $ref: '#/components/schemas/LoyaltyTierRequest'
-      title: LoyaltyTierRequestData
-    LoyaltyTierResponse:
-      type: object
-      description: Loyalty Tier Response Data
-      properties:
-        tierUpdateStatusList:
-          type: array
-          description: List of tierUpdateStatus objects per unique EAID under one loyalty program, which contains information about the status of tier update request processed at Barclays.
-          items:
-            $ref: '#/components/schemas/TierUpdateStatus'
-      required:
-      - tierUpdateStatusList
-    LoyaltyTierResponseData:
-      type: object
-      description: Loyalty Tier Update Response Data
-      properties:
-        data:
-          $ref: '#/components/schemas/LoyaltyTierResponse'
     TierUpdateStatus:
       type: object
       description: Contains tier code update success/failure status for each account.
@@ -222,3 +143,82 @@ components:
       required:
       - externalAccountId
       - status
+    ErrorDetails:
+      type: object
+      description: Contains error information if the requested upgrade/downgrade is declined.
+      properties:
+        code:
+          type: string
+          description: Error code describing the type of HTTP error.
+        detail:
+          type: string
+          description: A brief message describing the reason for failure to assist with troubleshooting.
+    LoyaltyTierResponse:
+      type: object
+      description: Loyalty Tier Response Data
+      properties:
+        tierUpdateStatusList:
+          type: array
+          description: List of tierUpdateStatus objects per unique EAID under one loyalty program, which contains information about the status of tier update request processed at Barclays.
+          items:
+            $ref: '#/components/schemas/TierUpdateStatus'
+      required:
+      - tierUpdateStatusList
+    LoyaltyTierRequest:
+      type: object
+      description: Loyalty Tier Request Data
+      properties:
+        tierUpdateRequestList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TierUpdateRequest'
+        transactionReferenceId:
+          type: string
+      required:
+      - tierUpdateRequestList
+      - transactionReferenceId
+      title: LoyaltyTierRequest
+    ErrorResponseType:
+      type: object
+      description: 'An API error response. '
+      properties:
+        errors:
+          type: array
+          description: Contains one or more error messages and is mutually exclusive with the data item. This will not be returned in success scenarios.
+          items:
+            $ref: '#/components/schemas/ErrorType'
+        meta:
+          type: object
+          description: Contains Non-standard meta information
+          properties: {}
+      title: ErrorResponseType
+    ErrorType:
+      type: object
+      description: Message details - additional operation execution information.
+      properties:
+        code:
+          type: string
+          description: Machine readable, unique code of the message related to particular case within operation execution.
+          example: ACCOUNT_NUMBER_NOT_FOUND
+        detail:
+          type: string
+          description: Provides additional low-level details about the error to assist with troubleshooting. Not for displaying purposes.
+        id:
+          type: string
+          description: Generated message identifier for particular request, helping to locate server logs.
+          example: 1c4717c4-d4a5-e3f3-4a71-b868908763ff
+        title:
+          type: string
+          description: Short description of the error. Not for displaying purposes.
+          example: The authorization credentials required for this request are invalid.
+      required:
+      - code
+      - id
+      - title
+      title: ErrorType
+    LoyaltyTierResponseData:
+      type: object
+      description: Loyalty Tier Update Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/LoyaltyTierResponse'

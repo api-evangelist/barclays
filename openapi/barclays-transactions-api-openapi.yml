@@ -76,44 +76,68 @@ paths:
       deprecated: false
 components:
   schemas:
-    OBInternalTransactionMutability1Code:
+    ExternalEntryStatus1Code:
       type: string
-      description: 'Specifies the Mutability of the Transaction record. <br />
+      description: 'Status of a transaction entry on the books of the account servicer. <br />
 
-        For a full list of enumeration values refer to `OBInternalTransactionMutability1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
+        For a full list of enumeration values refer to `ExternalEntryStatus1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
       enum:
-      - Mutable
-      - Immutable
-    AddressLine:
-      type: string
-      description: Information that locates and identifies a specific address for a transaction entry, that is presented in free format text.
-      maxLength: 70
-      minLength: 1
-    ActiveOrHistoricCurrencyCode_1:
-      type: string
-      description: A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 "Codes for the representation of currencies and funds".
-      example: GBP
-      pattern: ^[A-Z]{3,3}$
-    OBProxy1:
+      - BOOK
+      - FUTR
+      - INFO
+      - PDNG
+      - RJCT
+    OBTransactionCashBalance:
       type: object
-      description: Specifies an alternate assumed name for the identification of the account.
+      additionalProperties: false
+      deprecated: false
+      description: Set of elements used to define the balance as a numerical representation of the net increases and decreases in an account after a transaction entry is applied to the account.
       properties:
-        Identification:
-          type: string
-          description: Identification used to indicate the account identification under another specified name.
-          example: '2360549017905188'
-          maxLength: 2048
-          minLength: 1
-        Code:
-          $ref: '#/components/schemas/ExternalProxyAccountType1Code'
+        CreditDebitIndicator:
+          $ref: '#/components/schemas/OBCreditDebitCode_2'
         Type:
+          $ref: '#/components/schemas/OBBalanceType1Code'
+        Amount:
+          type: object
+          description: Amount of money of the cash balance after a transaction entry is applied to the account..
+          properties:
+            Amount:
+              $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
+            Currency:
+              $ref: '#/components/schemas/ActiveOrHistoricCurrencyCode_1'
+          required:
+          - Amount
+          - Currency
+      required:
+      - Amount
+      - CreditDebitIndicator
+      - Type
+      nullable: false
+    OBBankTransactionCodeStructure1:
+      type: object
+      description: Set of elements used to fully identify the type of underlying transaction resulting in an entry.
+      properties:
+        Code:
           type: string
-          description: Type of the proxy identification.
-          maxLength: 35
-          minLength: 1
+          description: Specifies the family within a domain.
+        SubCode:
+          type: string
+          description: Specifies the sub-product family within a specific family.
       required:
       - Code
-      - Identification
+      - SubCode
+    OBReadDataTransaction6:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        Transaction:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBTransaction6'
+          maxItems: 99999
+          minItems: 0
+      nullable: false
     OBCashAccount6_0:
       type: object
       description: Unambiguous identification of the account of the creditor, in the case of a debit transaction.
@@ -128,94 +152,20 @@ components:
           $ref: '#/components/schemas/SecondaryIdentification'
         Proxy:
           $ref: '#/components/schemas/OBProxy1'
-    Name_1:
+    Room:
       type: string
-      description: Name by which an agent is known and which is usually used to identify that agent.
-      example: Agent Name
-      maxLength: 140
+      description: Information that locates and identifies a room to form part of an address
+      example: Basement 03
+      maxLength: 70
       minLength: 1
-    BuildingNumber:
+    OBInternalTransactionMutability1Code:
       type: string
-      description: Number that identifies the position of a building on a street.
-      example: '11'
-      maxLength: 16
-      minLength: 1
-    Name_0:
-      type: string
-      description: 'The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP''s online channels.
+      description: 'Specifies the Mutability of the Transaction record. <br />
 
-        Note, the account name is not the product name or the nickname of the account.'
-      example: Jane Smith
-      maxLength: 350
-      minLength: 1
-    SecondaryIdentification:
-      type: string
-      description: "This is secondary identification of the account, as assigned by the account servicing institution. \nThis can be used by building societies to additionally identify accounts with a roll number (in addition to a sort code and account number combination)."
-      example: '87562298675897'
-      maxLength: 34
-      minLength: 1
-    TownName:
-      type: string
-      description: Name of a built-up area, with defined boundaries, and a local government.
-      example: London
-      maxLength: 140
-      minLength: 1
-    ExternalEntryStatus1Code:
-      type: string
-      description: 'Status of a transaction entry on the books of the account servicer. <br />
-
-        For a full list of enumeration values refer to `ExternalEntryStatus1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
+        For a full list of enumeration values refer to `OBInternalTransactionMutability1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
       enum:
-      - BOOK
-      - FUTR
-      - INFO
-      - PDNG
-      - RJCT
-    OBCreditDebitCode_1:
-      type: string
-      description: 'Indicates whether the transaction is a credit or a debit entry. <br />
-
-        <br />
-
-        For a full list of enumeration values refer to `OBInternalCreditDebitCode` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
-      enum:
-      - Credit
-      - Debit
-    OBCashAccount6_1:
-      type: object
-      description: Unambiguous identification of the account of the debtor, in the case of a credit transaction.
-      properties:
-        SchemeName:
-          $ref: '#/components/schemas/OBInternalAccountIdentification4Code'
-        Identification:
-          $ref: '#/components/schemas/Identification_0'
-        Name:
-          $ref: '#/components/schemas/Name_0'
-        SecondaryIdentification:
-          $ref: '#/components/schemas/SecondaryIdentification'
-        Proxy:
-          $ref: '#/components/schemas/OBProxy1'
-    OBExtendedProprietaryBankTransactionCode:
-      type: object
-      description: Additional proprietary bank transaction codes used by the ASPSP for the underlying transaction
-      properties:
-        Code:
-          type: string
-          description: Proprietary bank transaction code to identify the underlying transaction.
-          maxLength: 35
-          minLength: 1
-        Issuer:
-          type: string
-          description: Identification of the issuer of the proprietary bank transaction code.
-          maxLength: 35
-          minLength: 1
-        Description:
-          type: string
-          description: Description of the code and its usage on the ASPSP channel
-          maxLength: 500
-          minLength: 1
-      required:
-      - Code
+      - Mutable
+      - Immutable
     LEI:
       type: string
       description: Legal entity identification as an alternate identification for a party. Legal Entity Identifier is a code allocated to a party as described in ISO 17442 "Financial Services - Legal Entity Identifier (LEI)".
@@ -223,21 +173,6 @@ components:
       maxLength: 20
       minLength: 1
       pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
-    OBBalanceType1Code:
-      type: string
-      description: Balance type, in a coded form. <br /> For a full list of enumeration values refer to `ExternalBalanceType1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets).
-      enum:
-      - CLAV
-      - CLBD
-      - FWAV
-      - INFO
-      - ITAV
-      - ITBD
-      - OPAV
-      - OPBD
-      - PRCD
-      - XPCD
-      example: CLAV
     OBIntermediaryAgent:
       type: object
       description: The intermediary agent associated with this transaction.
@@ -272,305 +207,11 @@ components:
           - UNKN
           - CANC
           example: ACSP
-    Links:
-      type: object
-      additionalProperties: false
-      description: Links relevant to the payload
-      properties:
-        Self:
-          type: string
-          format: uri
-        First:
-          type: string
-          format: uri
-        Prev:
-          type: string
-          format: uri
-        Next:
-          type: string
-          format: uri
-        Last:
-          type: string
-          format: uri
-      required:
-      - Self
-    OBTransaction6:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Provides further details on an entry in the report.
-      properties:
-        AccountId:
-          $ref: '#/components/schemas/AccountId'
-        TransactionId:
-          $ref: '#/components/schemas/TransactionId'
-        TransactionReference:
-          $ref: '#/components/schemas/TransactionReference'
-        StatementReference:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatementReference'
-          maxItems: 99999
-          minItems: 0
-        CreditDebitIndicator:
-          $ref: '#/components/schemas/OBCreditDebitCode_1'
-        Status:
-          $ref: '#/components/schemas/ExternalEntryStatus1Code'
-        TransactionMutability:
-          $ref: '#/components/schemas/OBInternalTransactionMutability1Code'
-        BookingDateTime:
-          $ref: '#/components/schemas/BookingDateTime'
-        ValueDateTime:
-          $ref: '#/components/schemas/ValueDateTime'
-        TransactionInformation:
-          $ref: '#/components/schemas/TransactionInformation'
-        AddressLine:
-          $ref: '#/components/schemas/AddressLine'
-        Amount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_9'
-        ChargeAmount:
-          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_10'
-        CurrencyExchange:
-          $ref: '#/components/schemas/OBCurrencyExchange5'
-        BankTransactionCode:
-          $ref: '#/components/schemas/OBBankTransactionCodeStructure1'
-        ProprietaryBankTransactionCode:
-          $ref: '#/components/schemas/ProprietaryBankTransactionCodeStructure1'
-        ExtendedProprietaryBankTransactionCodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/OBExtendedProprietaryBankTransactionCode'
-          maxItems: 99999
-          minItems: 0
-        Balance:
-          $ref: '#/components/schemas/OBTransactionCashBalance'
-        MerchantDetails:
-          $ref: '#/components/schemas/OBMerchantDetails1'
-        CreditorAgent:
-          $ref: '#/components/schemas/OBBranchAndFinancialInstitutionIdentification6_1'
-        CreditorAccount:
-          $ref: '#/components/schemas/OBCashAccount6_0'
-        DebtorAgent:
-          $ref: '#/components/schemas/OBBranchAndFinancialInstitutionIdentification6_2'
-        DebtorAccount:
-          $ref: '#/components/schemas/OBCashAccount6_1'
-        CardInstrument:
-          $ref: '#/components/schemas/OBTransactionCardInstrument1'
-        SupplementaryData:
-          $ref: '#/components/schemas/OBSupplementaryData1'
-        CategoryPurposeCode:
-          $ref: '#/components/schemas/ExternalCategoryPurpose1Code'
-        PaymentPurposeCode:
-          $ref: '#/components/schemas/OBExternalPurpose1Code'
-        UltimateCreditor:
-          $ref: '#/components/schemas/OBUltimateCreditor1'
-        UltimateDebtor:
-          $ref: '#/components/schemas/OBUltimateDebtor1'
-        IntermediaryAgent1:
-          $ref: '#/components/schemas/OBIntermediaryAgent'
-        IntermediaryAgent2:
-          $ref: '#/components/schemas/OBIntermediaryAgent'
-        IntermediaryAgent3:
-          $ref: '#/components/schemas/OBIntermediaryAgent'
-      required:
-      - AccountId
-      - Amount
-      - BookingDateTime
-      - CreditDebitIndicator
-      - Status
-      nullable: false
-    ExternalCategoryPurpose1Code:
+    Identification_0:
       type: string
-      description: Enumeration of codes that outlines the type of purpose behind a transaction, payment or risk.  For all enum values see `ExternalCategoryPurpose1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      enum:
-      - BONU
-      - CASH
-      - CBLK
-      - CCRD
-      - CGWV
-      - CIPC
-      - CONC
-      - CORT
-      - DCRD
-      - DIVI
-      - DVPM
-      - EPAY
-      - FCDT
-      - FCIN
-      - FCOL
-      - GOVT
-      - GP2P
-      - HEDG
-      - ICCP
-      - IDCP
-      - INTC
-      - INTE
-      - LBOX
-      - LOAN
-      - MP2B
-      - MP2P
-      - OTHR
-      - PENS
-      - RPRE
-      - RRCT
-      - RVPM
-      - SALA
-      - SECU
-      - SSBE
-      - SUPP
-      - SWEP
-      - TAXS
-      - TOPG
-      - TRAD
-      - TREA
-      - VATX
-      - VOST
-      - WHLD
-      - ZABA
-    TransactionId:
-      type: string
-      description: Unique identifier for the transaction within a servicing institution. This identifier is both unique and immutable.
-      maxLength: 210
-      minLength: 1
-    OBInternalFinancialInstitutionIdentification4Code:
-      type: string
-      description: Name of the identification scheme, in a coded form as published in an external list.<br/> For a full list of enumeration values refer to `OBInternalFinancialInstitutionIdentification4Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      example: UK.OBIE.BICFI
-      x-namespaced-enum:
-      - UK.OBIE.BICFI
-    OBMerchantDetails1:
-      type: object
-      description: Details of the merchant involved in the transaction.
-      properties:
-        MerchantName:
-          type: string
-          description: Name by which the merchant is known.
-          maxLength: 350
-          minLength: 1
-        MerchantCategoryCode:
-          type: string
-          description: Category code conform to ISO 18245, related to the type of services or goods the merchant provides for the transaction.
-          maxLength: 4
-          minLength: 3
-    ExternalProxyAccountType1Code:
-      type: string
-      description: Specifies the external proxy account type code, as published in the proxy account type external code set.<br /> For more information and a full list of values see `ExternalProxyAccountType1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      enum:
-      - TELE
-      - EMAL
-      - DNAM
-      - CINC
-      - COTX
-      - COID
-      - CUST
-      - DRLC
-      - EIDN
-      - EWAL
-      - PVTX
-      - LEIC
-      - MBNO
-      - NIDN
-      - CCPT
-      - SHID
-      - SOSE
-      - TOKN
-      - UBIL
-      - VIPN
-      - BIID
-      example: TELE
-    ProprietaryBankTransactionCodeStructure1:
-      type: object
-      additionalProperties: false
-      description: Set of elements to fully identify a proprietary bank transaction code.
-      properties:
-        Code:
-          type: string
-          description: Proprietary bank transaction code to identify the underlying transaction.
-          maxLength: 35
-          minLength: 1
-        Issuer:
-          type: string
-          description: Identification of the issuer of the proprietary bank transaction code.
-          maxLength: 35
-          minLength: 1
-      required:
-      - Code
-    Floor:
-      type: string
-      description: Number that identifies the level within a building
-      example: '11'
-      maxLength: 70
-      minLength: 1
-    PostCode:
-      type: string
-      description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
-      example: EC2N 4AG
-      maxLength: 16
-      minLength: 1
-    OBPostalAddress7:
-      type: object
-      description: Information that locates and identifies a specific address, as defined by postal services.
-      properties:
-        AddressType:
-          $ref: '#/components/schemas/OBAddressType2Code'
-        Department:
-          type: string
-          description: Identification of a division of a large organisation or building.
-          example: Finance
-          maxLength: 70
-          minLength: 1
-        SubDepartment:
-          type: string
-          description: Identification of a sub-division of a large organisation or building.
-          example: Payroll
-          maxLength: 70
-          minLength: 1
-        StreetName:
-          $ref: '#/components/schemas/StreetName'
-        BuildingNumber:
-          $ref: '#/components/schemas/BuildingNumber'
-        BuildingName:
-          $ref: '#/components/schemas/BuildingName'
-        Floor:
-          $ref: '#/components/schemas/Floor'
-        UnitNumber:
-          $ref: '#/components/schemas/UnitNumber'
-        Room:
-          $ref: '#/components/schemas/Room'
-        PostBox:
-          $ref: '#/components/schemas/PostBox'
-        TownLocationName:
-          $ref: '#/components/schemas/TownName'
-        DistrictName:
-          $ref: '#/components/schemas/DistrictName'
-        CareOf:
-          $ref: '#/components/schemas/CareOf'
-        PostCode:
-          $ref: '#/components/schemas/PostCode'
-        TownName:
-          $ref: '#/components/schemas/TownName'
-        CountrySubDivision:
-          type: string
-          description: Identifies a subdivision of a country such as state, region, county.
-          maxLength: 35
-          minLength: 1
-        Country:
-          type: string
-          description: Nation with its own government.
-          pattern: ^[A-Z]{2,2}$
-        AddressLine:
-          type: array
-          items:
-            type: string
-            description: Information that locates and identifies a specific address, as defined by postal services, presented in free format text.
-            maxLength: 70
-            minLength: 1
-          maxItems: 7
-          minItems: 0
-    Identification_2:
-      type: string
-      description: Unique and unambiguous identification of a financial institution or a branch of a financial institution.
-      maxLength: 35
+      description: Identification assigned by an institution to identify an account. This identification is known by the account owner.
+      example: '80200112344562'
+      maxLength: 256
       minLength: 1
     OBBranchAndFinancialInstitutionIdentification6_1:
       type: object
@@ -586,115 +227,6 @@ components:
           $ref: '#/components/schemas/LEI'
         PostalAddress:
           $ref: '#/components/schemas/OBPostalAddress7'
-    OBActiveCurrencyAndAmount_SimpleType:
-      type: string
-      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
-      example: '1209.06'
-      pattern: ^\d{1,13}$|^\d{1,13}\.\d{1,5}$
-    OBError1:
-      type: object
-      additionalProperties: false
-      minProperties: 1
-      properties:
-        ErrorCode:
-          $ref: '#/components/schemas/OBExternalStatusReason1Code'
-        Message:
-          type: string
-          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
-
-            OBL doesn''t standardise this field'
-          maxLength: 500
-          minLength: 1
-        Path:
-          type: string
-          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
-          maxLength: 500
-          minLength: 1
-        Url:
-          type: string
-          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
-      required:
-      - ErrorCode
-    Identification_0:
-      type: string
-      description: Identification assigned by an institution to identify an account. This identification is known by the account owner.
-      example: '80200112344562'
-      maxLength: 256
-      minLength: 1
-    OBErrorResponse1:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
-      properties:
-        Id:
-          type: string
-          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
-          maxLength: 40
-          minLength: 1
-        Code:
-          type: string
-          description: Deprecated <br />High level textual error code, to help categorise the errors.
-          example: 400 BadRequest
-          maxLength: 40
-          minLength: 1
-        Message:
-          type: string
-          description: Deprecated <br />Brief Error message
-          example: There is something wrong with the request parameters provided
-          maxLength: 500
-          minLength: 1
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/OBError1'
-          maxItems: 99999
-          minItems: 1
-      required:
-      - Errors
-      nullable: false
-    OBTransactionCardInstrument1:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'Set of elements to describe the card instrument used in the transaction. <br />
-
-        For a full list of enumeration values refer to `OBInternalCardSchemeType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
-      properties:
-        CardSchemeName:
-          type: string
-          description: 'Name of the card scheme. <br />
-
-            For a full list of enumeration values refer to `OBInternalCardSchemeType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
-          enum:
-          - AmericanExpress
-          - Diners
-          - Discover
-          - MasterCard
-          - VISA
-        AuthorisationType:
-          type: string
-          description: 'The card authorisation type. <br />
-
-            For a full list of enumeration values refer to `OBInternalCardAuthorisationType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
-          enum:
-          - ConsumerDevice
-          - Contactless
-          - None
-          - PIN
-        Name:
-          type: string
-          description: Name of the cardholder using the card instrument.
-          maxLength: 70
-          minLength: 1
-        Identification:
-          type: string
-          description: Identification assigned by an institution to identify the card instrument used in the transaction. This identification is known by the account owner, and may be masked.
-          maxLength: 34
-          minLength: 1
-      required:
-      - CardSchemeName
-      nullable: false
     OBCreditDebitCode_2:
       type: string
       description: "Indicates whether the balance is a credit or a debit balance. \nUsage: A zero balance is considered to be a credit balance.\n<br />\nFor a full list of enumeration values refer to `OBInternalCreditDebitCode` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)"
@@ -702,129 +234,44 @@ components:
       - Credit
       - Debit
       example: Credit
-    OBTransactionCashBalance:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: Set of elements used to define the balance as a numerical representation of the net increases and decreases in an account after a transaction entry is applied to the account.
-      properties:
-        CreditDebitIndicator:
-          $ref: '#/components/schemas/OBCreditDebitCode_2'
-        Type:
-          $ref: '#/components/schemas/OBBalanceType1Code'
-        Amount:
-          type: object
-          description: Amount of money of the cash balance after a transaction entry is applied to the account..
-          properties:
-            Amount:
-              $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
-            Currency:
-              $ref: '#/components/schemas/ActiveOrHistoricCurrencyCode_1'
-          required:
-          - Amount
-          - Currency
-      required:
-      - Amount
-      - CreditDebitIndicator
-      - Type
-      nullable: false
-    Room:
+    SecondaryIdentification:
       type: string
-      description: Information that locates and identifies a room to form part of an address
-      example: Basement 03
-      maxLength: 70
+      description: "This is secondary identification of the account, as assigned by the account servicing institution. \nThis can be used by building societies to additionally identify accounts with a roll number (in addition to a sort code and account number combination)."
+      example: '87562298675897'
+      maxLength: 34
       minLength: 1
-    OBExternalStatusReason1Code:
+    BuildingNumber:
       type: string
-      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      example: U001
-      maxLength: 4
-      minLength: 4
+      description: Number that identifies the position of a building on a street.
+      example: '11'
+      maxLength: 16
+      minLength: 1
     DistrictName:
       type: string
       description: Number that of the regional area, known as a district, which forms part of an address
       example: Greater London
       maxLength: 140
       minLength: 1
-    OBBranchAndFinancialInstitutionIdentification6_2:
-      type: object
-      description: Financial institution servicing an account for the debtor.
-      properties:
-        SchemeName:
-          $ref: '#/components/schemas/OBInternalFinancialInstitutionIdentification4Code'
-        Identification:
-          $ref: '#/components/schemas/Identification_2'
-        Name:
-          $ref: '#/components/schemas/Name_1'
-        LEI:
-          $ref: '#/components/schemas/LEI'
-        PostalAddress:
-          $ref: '#/components/schemas/OBPostalAddress7'
-    OBBankTransactionCodeStructure1:
-      type: object
-      description: Set of elements used to fully identify the type of underlying transaction resulting in an entry.
-      properties:
-        Code:
-          type: string
-          description: Specifies the family within a domain.
-        SubCode:
-          type: string
-          description: Specifies the sub-product family within a specific family.
-      required:
-      - Code
-      - SubCode
-    StreetName:
-      type: string
-      description: Name of a street or thoroughfare.
-      example: Bank Street
-      maxLength: 140
-      minLength: 1
-    OBUltimateDebtor1:
-      type: object
-      description: Ultimate party that owes an amount of money to the (ultimate) creditor.
-      properties:
-        Name:
-          type: string
-          description: Name by which a party is known and which is usually used to identify that party.
-          maxLength: 140
-          minLength: 1
-        Identification:
-          type: string
-          description: Identification assigned by an institution.
-          maxLength: 256
-          minLength: 1
-        LEI:
-          $ref: '#/components/schemas/LEI'
-        SchemeName:
-          $ref: '#/components/schemas/OBInternalAccountIdentification4Code'
-        PostalAddress:
-          $ref: '#/components/schemas/OBPostalAddress7'
-    BookingDateTime:
+    ValueDateTime:
       type: string
       format: date-time
-      description: "Date and time when a transaction entry is posted to an account on the account servicer's books.\nUsage: Booking date is the expected booking date, unless the status is booked, in which case it is the actual booking date. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-    Meta:
-      type: object
-      additionalProperties: false
-      description: Meta Data relevant to the payload
-      properties:
-        TotalPages:
-          type: integer
-          format: int32
-          example: 42
-          maximum: 999999
-          minimum: 0
-        FirstAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-        LastAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-      title: MetaData
+      description: "Date and time at which assets become available to the account owner in case of a credit entry, or cease to be available to the account owner in case of a debit transaction entry.\nUsage: If transaction entry status is pending and value date is present, then the value date refers to an expected/requested value date.\nFor transaction entries subject to availability/float and for which availability information is provided, the value date must not be used. In this case the availability component identifies the number of availability days. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
     OBSupplementaryData1:
       type: object
       additionalProperties: true
       deprecated: false
       description: Additional information that can not be captured in the structured fields and/or any other specific block.
       nullable: false
+    OBCreditDebitCode_1:
+      type: string
+      description: 'Indicates whether the transaction is a credit or a debit entry. <br />
+
+        <br />
+
+        For a full list of enumeration values refer to `OBInternalCreditDebitCode` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
+      enum:
+      - Credit
+      - Debit
     OBExternalPurpose1Code:
       type: string
       description: For a full list of enumeration values refer to `ExternalPurpose1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
@@ -1160,138 +607,112 @@ components:
       - CRYP
       maxLength: 4
       minLength: 1
-    ValueDateTime:
+    Floor:
       type: string
-      format: date-time
-      description: "Date and time at which assets become available to the account owner in case of a credit entry, or cease to be available to the account owner in case of a debit transaction entry.\nUsage: If transaction entry status is pending and value date is present, then the value date refers to an expected/requested value date.\nFor transaction entries subject to availability/float and for which availability information is provided, the value date must not be used. In this case the availability component identifies the number of availability days. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-    OBAddressType2Code:
-      type: string
-      description: Identifies the nature of the postal address. <br /> For a full set of codes see `OBAddressType2Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets).
-      enum:
-      - BIZZ
-      - DLVY
-      - MLTO
-      - PBOX
-      - ADDR
-      - HOME
-      - CORR
-      - STAT
-      example: BIZZ
-    OBActiveOrHistoricCurrencyAndAmount_9:
-      type: object
-      description: Amount of money in the cash transaction entry.
-      properties:
-        Amount:
-          $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
-        Currency:
-          $ref: '#/components/schemas/ActiveOrHistoricCurrencyCode_1'
-      required:
-      - Amount
-      - Currency
-    TransactionReference:
-      type: string
-      description: Unique reference for the transaction. This reference is optionally populated, and may as an example be the FPID in the Faster Payments context.
-      maxLength: 210
+      description: Number that identifies the level within a building
+      example: '11'
+      maxLength: 70
       minLength: 1
-    UnitNumber:
-      type: string
-      description: Number that identifies the unit of a specific address .
-      example: A88
-      maxLength: 16
-      minLength: 1
-    OBInternalAccountIdentification4Code:
-      type: string
-      description: Name of the identification scheme, in a coded form as published in an external list. <br /> For a full list of enumeration values refer to `OBInternalAccountIdentification4Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      x-namespaced-enum:
-      - UK.OBIE.BBAN
-      - UK.OBIE.IBAN
-      - UK.OBIE.PAN
-      - UK.OBIE.Paym
-      - UK.OBIE.SortCodeAccountNumber
-      - UK.OBIE.Wallet
-    CareOf:
-      type: string
-      description: The 'care of' address is used whenever sending mail to a person or organisation who does not actually live or work at the address. They will receive the mail for the individual.
-      example: Jane Smith
-      maxLength: 140
-      minLength: 1
-    OBUltimateCreditor1:
-      type: object
-      description: Ultimate party to which an amount of money is due.
-      properties:
-        Name:
-          type: string
-          description: Name by which a party is known and which is usually used to identify that party.
-          maxLength: 140
-          minLength: 1
-        Identification:
-          type: string
-          description: Identification assigned by an institution.
-          maxLength: 256
-          minLength: 1
-        LEI:
-          $ref: '#/components/schemas/LEI'
-        SchemeName:
-          $ref: '#/components/schemas/OBInternalAccountIdentification4Code'
-        PostalAddress:
-          $ref: '#/components/schemas/OBPostalAddress7'
-    ISODateTime:
-      type: string
-      format: date-time
-      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-    OBReadDataTransaction6:
+    OBTransaction6:
       type: object
       additionalProperties: false
       deprecated: false
+      description: Provides further details on an entry in the report.
       properties:
-        Transaction:
+        AccountId:
+          $ref: '#/components/schemas/AccountId'
+        TransactionId:
+          $ref: '#/components/schemas/TransactionId'
+        TransactionReference:
+          $ref: '#/components/schemas/TransactionReference'
+        StatementReference:
           type: array
           items:
-            $ref: '#/components/schemas/OBTransaction6'
+            $ref: '#/components/schemas/StatementReference'
           maxItems: 99999
           minItems: 0
+        CreditDebitIndicator:
+          $ref: '#/components/schemas/OBCreditDebitCode_1'
+        Status:
+          $ref: '#/components/schemas/ExternalEntryStatus1Code'
+        TransactionMutability:
+          $ref: '#/components/schemas/OBInternalTransactionMutability1Code'
+        BookingDateTime:
+          $ref: '#/components/schemas/BookingDateTime'
+        ValueDateTime:
+          $ref: '#/components/schemas/ValueDateTime'
+        TransactionInformation:
+          $ref: '#/components/schemas/TransactionInformation'
+        AddressLine:
+          $ref: '#/components/schemas/AddressLine'
+        Amount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_9'
+        ChargeAmount:
+          $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_10'
+        CurrencyExchange:
+          $ref: '#/components/schemas/OBCurrencyExchange5'
+        BankTransactionCode:
+          $ref: '#/components/schemas/OBBankTransactionCodeStructure1'
+        ProprietaryBankTransactionCode:
+          $ref: '#/components/schemas/ProprietaryBankTransactionCodeStructure1'
+        ExtendedProprietaryBankTransactionCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBExtendedProprietaryBankTransactionCode'
+          maxItems: 99999
+          minItems: 0
+        Balance:
+          $ref: '#/components/schemas/OBTransactionCashBalance'
+        MerchantDetails:
+          $ref: '#/components/schemas/OBMerchantDetails1'
+        CreditorAgent:
+          $ref: '#/components/schemas/OBBranchAndFinancialInstitutionIdentification6_1'
+        CreditorAccount:
+          $ref: '#/components/schemas/OBCashAccount6_0'
+        DebtorAgent:
+          $ref: '#/components/schemas/OBBranchAndFinancialInstitutionIdentification6_2'
+        DebtorAccount:
+          $ref: '#/components/schemas/OBCashAccount6_1'
+        CardInstrument:
+          $ref: '#/components/schemas/OBTransactionCardInstrument1'
+        SupplementaryData:
+          $ref: '#/components/schemas/OBSupplementaryData1'
+        CategoryPurposeCode:
+          $ref: '#/components/schemas/ExternalCategoryPurpose1Code'
+        PaymentPurposeCode:
+          $ref: '#/components/schemas/OBExternalPurpose1Code'
+        UltimateCreditor:
+          $ref: '#/components/schemas/OBUltimateCreditor1'
+        UltimateDebtor:
+          $ref: '#/components/schemas/OBUltimateDebtor1'
+        IntermediaryAgent1:
+          $ref: '#/components/schemas/OBIntermediaryAgent'
+        IntermediaryAgent2:
+          $ref: '#/components/schemas/OBIntermediaryAgent'
+        IntermediaryAgent3:
+          $ref: '#/components/schemas/OBIntermediaryAgent'
+      required:
+      - AccountId
+      - Amount
+      - BookingDateTime
+      - CreditDebitIndicator
+      - Status
       nullable: false
-    PostBox:
-      type: string
-      description: Information that locates and identifies a box in a post office assigned to a person or organization, where letters for them are kept until called for.
-      example: PO Box 123456
-      maxLength: 16
-      minLength: 1
     BuildingName:
       type: string
       description: Name of a referenced building.
       maxLength: 140
       minLength: 1
-    OBReadTransaction6:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      properties:
-        Data:
-          $ref: '#/components/schemas/OBReadDataTransaction6'
-        Links:
-          $ref: '#/components/schemas/Links'
-        Meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - Data
-      nullable: false
-    AccountId:
+    Identification_2:
       type: string
-      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
-      example: '22289'
-      maxLength: 40
-      minLength: 1
-    TransactionInformation:
-      type: string
-      description: "Further details of the transaction. \nThis is the transaction narrative, which is unstructured text."
-      maxLength: 500
-      minLength: 1
-    StatementReference:
-      type: string
-      description: Unique reference for the statement. This reference may be optionally populated if available.
-      example: '002'
+      description: Unique and unambiguous identification of a financial institution or a branch of a financial institution.
       maxLength: 35
+      minLength: 1
+    Name_1:
+      type: string
+      description: Name by which an agent is known and which is usually used to identify that agent.
+      example: Agent Name
+      maxLength: 140
       minLength: 1
     OBCurrencyExchange5:
       type: object
@@ -1337,6 +758,226 @@ components:
       required:
       - ExchangeRate
       - SourceCurrency
+    Links:
+      type: object
+      additionalProperties: false
+      description: Links relevant to the payload
+      properties:
+        Self:
+          type: string
+          format: uri
+        First:
+          type: string
+          format: uri
+        Prev:
+          type: string
+          format: uri
+        Next:
+          type: string
+          format: uri
+        Last:
+          type: string
+          format: uri
+      required:
+      - Self
+    OBErrorResponse1:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      properties:
+        Id:
+          type: string
+          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
+          maxLength: 40
+          minLength: 1
+        Code:
+          type: string
+          description: Deprecated <br />High level textual error code, to help categorise the errors.
+          example: 400 BadRequest
+          maxLength: 40
+          minLength: 1
+        Message:
+          type: string
+          description: Deprecated <br />Brief Error message
+          example: There is something wrong with the request parameters provided
+          maxLength: 500
+          minLength: 1
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBError1'
+          maxItems: 99999
+          minItems: 1
+      required:
+      - Errors
+      nullable: false
+    TransactionReference:
+      type: string
+      description: Unique reference for the transaction. This reference is optionally populated, and may as an example be the FPID in the Faster Payments context.
+      maxLength: 210
+      minLength: 1
+    OBUltimateDebtor1:
+      type: object
+      description: Ultimate party that owes an amount of money to the (ultimate) creditor.
+      properties:
+        Name:
+          type: string
+          description: Name by which a party is known and which is usually used to identify that party.
+          maxLength: 140
+          minLength: 1
+        Identification:
+          type: string
+          description: Identification assigned by an institution.
+          maxLength: 256
+          minLength: 1
+        LEI:
+          $ref: '#/components/schemas/LEI'
+        SchemeName:
+          $ref: '#/components/schemas/OBInternalAccountIdentification4Code'
+        PostalAddress:
+          $ref: '#/components/schemas/OBPostalAddress7'
+    PostBox:
+      type: string
+      description: Information that locates and identifies a box in a post office assigned to a person or organization, where letters for them are kept until called for.
+      example: PO Box 123456
+      maxLength: 16
+      minLength: 1
+    TownName:
+      type: string
+      description: Name of a built-up area, with defined boundaries, and a local government.
+      example: London
+      maxLength: 140
+      minLength: 1
+    AddressLine:
+      type: string
+      description: Information that locates and identifies a specific address for a transaction entry, that is presented in free format text.
+      maxLength: 70
+      minLength: 1
+    OBExternalStatusReason1Code:
+      type: string
+      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: U001
+      maxLength: 4
+      minLength: 4
+    TransactionId:
+      type: string
+      description: Unique identifier for the transaction within a servicing institution. This identifier is both unique and immutable.
+      maxLength: 210
+      minLength: 1
+    ExternalCategoryPurpose1Code:
+      type: string
+      description: Enumeration of codes that outlines the type of purpose behind a transaction, payment or risk.  For all enum values see `ExternalCategoryPurpose1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      enum:
+      - BONU
+      - CASH
+      - CBLK
+      - CCRD
+      - CGWV
+      - CIPC
+      - CONC
+      - CORT
+      - DCRD
+      - DIVI
+      - DVPM
+      - EPAY
+      - FCDT
+      - FCIN
+      - FCOL
+      - GOVT
+      - GP2P
+      - HEDG
+      - ICCP
+      - IDCP
+      - INTC
+      - INTE
+      - LBOX
+      - LOAN
+      - MP2B
+      - MP2P
+      - OTHR
+      - PENS
+      - RPRE
+      - RRCT
+      - RVPM
+      - SALA
+      - SECU
+      - SSBE
+      - SUPP
+      - SWEP
+      - TAXS
+      - TOPG
+      - TRAD
+      - TREA
+      - VATX
+      - VOST
+      - WHLD
+      - ZABA
+    StatementReference:
+      type: string
+      description: Unique reference for the statement. This reference may be optionally populated if available.
+      example: '002'
+      maxLength: 35
+      minLength: 1
+    ISODateTime:
+      type: string
+      format: date-time
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+    OBBalanceType1Code:
+      type: string
+      description: Balance type, in a coded form. <br /> For a full list of enumeration values refer to `ExternalBalanceType1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets).
+      enum:
+      - CLAV
+      - CLBD
+      - FWAV
+      - INFO
+      - ITAV
+      - ITBD
+      - OPAV
+      - OPBD
+      - PRCD
+      - XPCD
+      example: CLAV
+    BookingDateTime:
+      type: string
+      format: date-time
+      description: "Date and time when a transaction entry is posted to an account on the account servicer's books.\nUsage: Booking date is the expected booking date, unless the status is booked, in which case it is the actual booking date. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+    CareOf:
+      type: string
+      description: The 'care of' address is used whenever sending mail to a person or organisation who does not actually live or work at the address. They will receive the mail for the individual.
+      example: Jane Smith
+      maxLength: 140
+      minLength: 1
+    TransactionInformation:
+      type: string
+      description: "Further details of the transaction. \nThis is the transaction narrative, which is unstructured text."
+      maxLength: 500
+      minLength: 1
+    OBActiveOrHistoricCurrencyAndAmount_9:
+      type: object
+      description: Amount of money in the cash transaction entry.
+      properties:
+        Amount:
+          $ref: '#/components/schemas/OBActiveCurrencyAndAmount_SimpleType'
+        Currency:
+          $ref: '#/components/schemas/ActiveOrHistoricCurrencyCode_1'
+      required:
+      - Amount
+      - Currency
+    OBMerchantDetails1:
+      type: object
+      description: Details of the merchant involved in the transaction.
+      properties:
+        MerchantName:
+          type: string
+          description: Name by which the merchant is known.
+          maxLength: 350
+          minLength: 1
+        MerchantCategoryCode:
+          type: string
+          description: Category code conform to ISO 18245, related to the type of services or goods the merchant provides for the transaction.
+          maxLength: 4
+          minLength: 3
     OBActiveOrHistoricCurrencyAndAmount_10:
       type: object
       description: Transaction charges to be paid by the charge bearer.
@@ -1348,153 +989,476 @@ components:
       required:
       - Amount
       - Currency
+    OBInternalAccountIdentification4Code:
+      type: string
+      description: Name of the identification scheme, in a coded form as published in an external list. <br /> For a full list of enumeration values refer to `OBInternalAccountIdentification4Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      x-namespaced-enum:
+      - UK.OBIE.BBAN
+      - UK.OBIE.IBAN
+      - UK.OBIE.PAN
+      - UK.OBIE.Paym
+      - UK.OBIE.SortCodeAccountNumber
+      - UK.OBIE.Wallet
+    Meta:
+      type: object
+      additionalProperties: false
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+          example: 42
+          maximum: 999999
+          minimum: 0
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      title: MetaData
+    PostCode:
+      type: string
+      description: Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+      example: EC2N 4AG
+      maxLength: 16
+      minLength: 1
+    UnitNumber:
+      type: string
+      description: Number that identifies the unit of a specific address .
+      example: A88
+      maxLength: 16
+      minLength: 1
+    OBTransactionCardInstrument1:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'Set of elements to describe the card instrument used in the transaction. <br />
+
+        For a full list of enumeration values refer to `OBInternalCardSchemeType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
+      properties:
+        CardSchemeName:
+          type: string
+          description: 'Name of the card scheme. <br />
+
+            For a full list of enumeration values refer to `OBInternalCardSchemeType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
+          enum:
+          - AmericanExpress
+          - Diners
+          - Discover
+          - MasterCard
+          - VISA
+        AuthorisationType:
+          type: string
+          description: 'The card authorisation type. <br />
+
+            For a full list of enumeration values refer to `OBInternalCardAuthorisationType1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)'
+          enum:
+          - ConsumerDevice
+          - Contactless
+          - None
+          - PIN
+        Name:
+          type: string
+          description: Name of the cardholder using the card instrument.
+          maxLength: 70
+          minLength: 1
+        Identification:
+          type: string
+          description: Identification assigned by an institution to identify the card instrument used in the transaction. This identification is known by the account owner, and may be masked.
+          maxLength: 34
+          minLength: 1
+      required:
+      - CardSchemeName
+      nullable: false
+    StreetName:
+      type: string
+      description: Name of a street or thoroughfare.
+      example: Bank Street
+      maxLength: 140
+      minLength: 1
+    OBExtendedProprietaryBankTransactionCode:
+      type: object
+      description: Additional proprietary bank transaction codes used by the ASPSP for the underlying transaction
+      properties:
+        Code:
+          type: string
+          description: Proprietary bank transaction code to identify the underlying transaction.
+          maxLength: 35
+          minLength: 1
+        Issuer:
+          type: string
+          description: Identification of the issuer of the proprietary bank transaction code.
+          maxLength: 35
+          minLength: 1
+        Description:
+          type: string
+          description: Description of the code and its usage on the ASPSP channel
+          maxLength: 500
+          minLength: 1
+      required:
+      - Code
+    AccountId:
+      type: string
+      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
+      example: '22289'
+      maxLength: 40
+      minLength: 1
+    OBCashAccount6_1:
+      type: object
+      description: Unambiguous identification of the account of the debtor, in the case of a credit transaction.
+      properties:
+        SchemeName:
+          $ref: '#/components/schemas/OBInternalAccountIdentification4Code'
+        Identification:
+          $ref: '#/components/schemas/Identification_0'
+        Name:
+          $ref: '#/components/schemas/Name_0'
+        SecondaryIdentification:
+          $ref: '#/components/schemas/SecondaryIdentification'
+        Proxy:
+          $ref: '#/components/schemas/OBProxy1'
+    OBError1:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/OBExternalStatusReason1Code'
+        Message:
+          type: string
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBL doesn''t standardise this field'
+          maxLength: 500
+          minLength: 1
+        Path:
+          type: string
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          maxLength: 500
+          minLength: 1
+        Url:
+          type: string
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+      required:
+      - ErrorCode
+    Name_0:
+      type: string
+      description: 'The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP''s online channels.
+
+        Note, the account name is not the product name or the nickname of the account.'
+      example: Jane Smith
+      maxLength: 350
+      minLength: 1
+    ProprietaryBankTransactionCodeStructure1:
+      type: object
+      additionalProperties: false
+      description: Set of elements to fully identify a proprietary bank transaction code.
+      properties:
+        Code:
+          type: string
+          description: Proprietary bank transaction code to identify the underlying transaction.
+          maxLength: 35
+          minLength: 1
+        Issuer:
+          type: string
+          description: Identification of the issuer of the proprietary bank transaction code.
+          maxLength: 35
+          minLength: 1
+      required:
+      - Code
+    ActiveOrHistoricCurrencyCode_1:
+      type: string
+      description: A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 "Codes for the representation of currencies and funds".
+      example: GBP
+      pattern: ^[A-Z]{3,3}$
+    OBBranchAndFinancialInstitutionIdentification6_2:
+      type: object
+      description: Financial institution servicing an account for the debtor.
+      properties:
+        SchemeName:
+          $ref: '#/components/schemas/OBInternalFinancialInstitutionIdentification4Code'
+        Identification:
+          $ref: '#/components/schemas/Identification_2'
+        Name:
+          $ref: '#/components/schemas/Name_1'
+        LEI:
+          $ref: '#/components/schemas/LEI'
+        PostalAddress:
+          $ref: '#/components/schemas/OBPostalAddress7'
+    ExternalProxyAccountType1Code:
+      type: string
+      description: Specifies the external proxy account type code, as published in the proxy account type external code set.<br /> For more information and a full list of values see `ExternalProxyAccountType1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      enum:
+      - TELE
+      - EMAL
+      - DNAM
+      - CINC
+      - COTX
+      - COID
+      - CUST
+      - DRLC
+      - EIDN
+      - EWAL
+      - PVTX
+      - LEIC
+      - MBNO
+      - NIDN
+      - CCPT
+      - SHID
+      - SOSE
+      - TOKN
+      - UBIL
+      - VIPN
+      - BIID
+      example: TELE
+    OBProxy1:
+      type: object
+      description: Specifies an alternate assumed name for the identification of the account.
+      properties:
+        Identification:
+          type: string
+          description: Identification used to indicate the account identification under another specified name.
+          example: '2360549017905188'
+          maxLength: 2048
+          minLength: 1
+        Code:
+          $ref: '#/components/schemas/ExternalProxyAccountType1Code'
+        Type:
+          type: string
+          description: Type of the proxy identification.
+          maxLength: 35
+          minLength: 1
+      required:
+      - Code
+      - Identification
+    OBReadTransaction6:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        Data:
+          $ref: '#/components/schemas/OBReadDataTransaction6'
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - Data
+      nullable: false
+    OBPostalAddress7:
+      type: object
+      description: Information that locates and identifies a specific address, as defined by postal services.
+      properties:
+        AddressType:
+          $ref: '#/components/schemas/OBAddressType2Code'
+        Department:
+          type: string
+          description: Identification of a division of a large organisation or building.
+          example: Finance
+          maxLength: 70
+          minLength: 1
+        SubDepartment:
+          type: string
+          description: Identification of a sub-division of a large organisation or building.
+          example: Payroll
+          maxLength: 70
+          minLength: 1
+        StreetName:
+          $ref: '#/components/schemas/StreetName'
+        BuildingNumber:
+          $ref: '#/components/schemas/BuildingNumber'
+        BuildingName:
+          $ref: '#/components/schemas/BuildingName'
+        Floor:
+          $ref: '#/components/schemas/Floor'
+        UnitNumber:
+          $ref: '#/components/schemas/UnitNumber'
+        Room:
+          $ref: '#/components/schemas/Room'
+        PostBox:
+          $ref: '#/components/schemas/PostBox'
+        TownLocationName:
+          $ref: '#/components/schemas/TownName'
+        DistrictName:
+          $ref: '#/components/schemas/DistrictName'
+        CareOf:
+          $ref: '#/components/schemas/CareOf'
+        PostCode:
+          $ref: '#/components/schemas/PostCode'
+        TownName:
+          $ref: '#/components/schemas/TownName'
+        CountrySubDivision:
+          type: string
+          description: Identifies a subdivision of a country such as state, region, county.
+          maxLength: 35
+          minLength: 1
+        Country:
+          type: string
+          description: Nation with its own government.
+          pattern: ^[A-Z]{2,2}$
+        AddressLine:
+          type: array
+          items:
+            type: string
+            description: Information that locates and identifies a specific address, as defined by postal services, presented in free format text.
+            maxLength: 70
+            minLength: 1
+          maxItems: 7
+          minItems: 0
+    OBInternalFinancialInstitutionIdentification4Code:
+      type: string
+      description: Name of the identification scheme, in a coded form as published in an external list.<br/> For a full list of enumeration values refer to `OBInternalFinancialInstitutionIdentification4Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: UK.OBIE.BICFI
+      x-namespaced-enum:
+      - UK.OBIE.BICFI
+    OBAddressType2Code:
+      type: string
+      description: Identifies the nature of the postal address. <br /> For a full set of codes see `OBAddressType2Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets).
+      enum:
+      - BIZZ
+      - DLVY
+      - MLTO
+      - PBOX
+      - ADDR
+      - HOME
+      - CORR
+      - STAT
+      example: BIZZ
+    OBActiveCurrencyAndAmount_SimpleType:
+      type: string
+      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
+      example: '1209.06'
+      pattern: ^\d{1,13}$|^\d{1,13}\.\d{1,5}$
+    OBUltimateCreditor1:
+      type: object
+      description: Ultimate party to which an amount of money is due.
+      properties:
+        Name:
+          type: string
+          description: Name by which a party is known and which is usually used to identify that party.
+          maxLength: 140
+          minLength: 1
+        Identification:
+          type: string
+          description: Identification assigned by an institution.
+          maxLength: 256
+          minLength: 1
+        LEI:
+          $ref: '#/components/schemas/LEI'
+        SchemeName:
+          $ref: '#/components/schemas/OBInternalAccountIdentification4Code'
+        PostalAddress:
+          $ref: '#/components/schemas/OBPostalAddress7'
+  parameters:
+    x-fapi-auth-date:
+      name: x-fapi-auth-date
+      in: header
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 29
+        minLength: 29
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+        nullable: false
+      example: Sun, 10 Sep 2017 19:43:31 UTC
+    x-fapi-interaction-id:
+      name: x-fapi-interaction-id
+      in: header
+      description: An RFC4122 UID used as a correlation id.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 36
+        minLength: 32
+        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+        nullable: false
+      example: 93bac548-d2de-4546-b106-880a5018460d
+    FromBookingDateTimeParam:
+      name: fromBookingDateTime
+      in: query
+      description: 'The UTC ISO 8601 Date Time to filter transactions FROM.
+
+
+        Note: Time component is optional - set to 00:00:00 for just Date.
+
+
+        The value **must not** include the timezone component.
+
+        '
+      schema:
+        type: string
+        deprecated: false
+        nullable: false
+      example: '2026-01-01T00:00:00'
+    Authorization:
+      name: Authorization
+      in: header
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      required: true
+      schema:
+        type: string
+        maxLength: 4871
+        minLength: 1
+        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
+        nullable: false
+      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
+    x-customer-user-agent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 500
+        minLength: 1
+        nullable: false
+      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
+    ToBookingDateTimeParam:
+      name: toBookingDateTime
+      in: query
+      description: 'The UTC ISO 8601 Date Time to filter transactions TO.
+
+
+        Note: Time component is optional - set to 00:00:00 for just Date.
+
+
+        The value **must not** include the timezone component.
+
+        '
+      schema:
+        type: string
+        deprecated: false
+        nullable: false
+      example: '2026-12-31T23:59:59'
+    AccountId:
+      name: accountId
+      in: path
+      description: AccountId
+      required: true
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 20
+        minLength: 1
+        pattern: ^\d{1,20}$
+        nullable: false
+      example: '12345678901234567890'
+    x-fapi-customer-ip-address:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      required: false
+      schema:
+        type: string
+        maxLength: 40
+        minLength: 7
+        pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+        nullable: false
+      example: 104.25.212.99
   responses:
-    403Error:
-      description: Forbidden
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-          examples:
-            403ErrorResponse:
-              value:
-                Code: OB.BadRequest
-                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
-                Message: Invalid request parameters
-                Errors:
-                - ErrorCode: AC17
-                  Message: Version must be supplied
-                  Path: Data.Initiation
-                  Url: <url to the api reference for Event Notification API>
-                - ErrorCode: AC17
-                  Message: Version supplied is not valid
-                  Path: Data.Initiation.CreditorAccount
-                  Url: <url to the api reference for Event Notification API>
-    429Error:
-      description: Too Many Requests
-      headers:
-        Retry-After:
-          description: Number in seconds to wait
-          schema:
-            type: integer
-            deprecated: false
-            maximum: 9999999
-            minimum: 1
-            nullable: false
-          example: 120
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-    400Error:
-      description: Bad request
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-          examples:
-            400ErrorResponse:
-              value:
-                Code: OB.BadRequest
-                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
-                Message: Invalid request parameters
-                Errors:
-                - ErrorCode: AC17
-                  Message: Version must be supplied
-                  Path: Data.Initiation
-                  Url: <url to the api reference for Event Notification API>
-                - ErrorCode: AC17
-                  Message: Version supplied is not valid
-                  Path: Data.Initiation.CreditorAccount
-                  Url: <url to the api reference for Event Notification API>
-    406Error:
-      description: Not Acceptable
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
     401Error:
       description: Unauthorized
       headers:
@@ -1564,6 +1528,75 @@ components:
                   Message: Version supplied is not valid
                   Path: Data.Initiation.CreditorAccount
                   Url: <url to the api reference for Event Notification API>
+    400Error:
+      description: Bad request
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            400ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
+    405Error:
+      description: Method Not Allowed
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
     200AccountsAccountIdTransactionsRead:
       description: Transactions Read
       headers:
@@ -1593,8 +1626,41 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OBReadTransaction6'
-    405Error:
-      description: Method Not Allowed
+    429Error:
+      description: Too Many Requests
+      headers:
+        Retry-After:
+          description: Number in seconds to wait
+          schema:
+            type: integer
+            deprecated: false
+            maximum: 9999999
+            minimum: 1
+            nullable: false
+          example: 120
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    406Error:
+      description: Not Acceptable
       headers:
         x-fapi-interaction-id:
           description: An RFC4122 UID used as a correlation id.
@@ -1618,116 +1684,50 @@ components:
             pattern: ^no-cache, no-store, must-revalidate$
             nullable: false
           example: no-cache, no-store, must-revalidate
-  parameters:
-    x-fapi-interaction-id:
-      name: x-fapi-interaction-id
-      in: header
-      description: An RFC4122 UID used as a correlation id.
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 36
-        minLength: 32
-        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-        nullable: false
-      example: 93bac548-d2de-4546-b106-880a5018460d
-    Authorization:
-      name: Authorization
-      in: header
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      required: true
-      schema:
-        type: string
-        maxLength: 4871
-        minLength: 1
-        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
-        nullable: false
-      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
-    AccountId:
-      name: accountId
-      in: path
-      description: AccountId
-      required: true
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 20
-        minLength: 1
-        pattern: ^\d{1,20}$
-        nullable: false
-      example: '12345678901234567890'
-    ToBookingDateTimeParam:
-      name: toBookingDateTime
-      in: query
-      description: 'The UTC ISO 8601 Date Time to filter transactions TO.
-
-
-        Note: Time component is optional - set to 00:00:00 for just Date.
-
-
-        The value **must not** include the timezone component.
-
-        '
-      schema:
-        type: string
-        deprecated: false
-        nullable: false
-      example: '2026-12-31T23:59:59'
-    x-customer-user-agent:
-      name: x-customer-user-agent
-      in: header
-      description: Indicates the user-agent that the PSU is using.
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 500
-        minLength: 1
-        nullable: false
-      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
-    FromBookingDateTimeParam:
-      name: fromBookingDateTime
-      in: query
-      description: 'The UTC ISO 8601 Date Time to filter transactions FROM.
-
-
-        Note: Time component is optional - set to 00:00:00 for just Date.
-
-
-        The value **must not** include the timezone component.
-
-        '
-      schema:
-        type: string
-        deprecated: false
-        nullable: false
-      example: '2026-01-01T00:00:00'
-    x-fapi-customer-ip-address:
-      name: x-fapi-customer-ip-address
-      in: header
-      description: The PSU's IP address if the PSU is currently logged in with the TPP.
-      required: false
-      schema:
-        type: string
-        maxLength: 40
-        minLength: 7
-        pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
-        nullable: false
-      example: 104.25.212.99
-    x-fapi-auth-date:
-      name: x-fapi-auth-date
-      in: header
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 29
-        minLength: 29
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-        nullable: false
-      example: Sun, 10 Sep 2017 19:43:31 UTC
+    403Error:
+      description: Forbidden
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            403ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
   securitySchemes:
     TPPOAuth2Security:
       type: oauth2

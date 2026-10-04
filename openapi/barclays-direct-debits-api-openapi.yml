@@ -74,6 +74,170 @@ paths:
       deprecated: false
 components:
   schemas:
+    OBMandateRelatedInformation1:
+      type: object
+      description: Provides further details of the mandate signed between the creditor and the debtor.
+      properties:
+        MandateIdentification:
+          type: string
+          description: Unique identification, as assigned by the creditor, to unambiguously identify the mandate.
+          example: Golfers
+          maxLength: 35
+          minLength: 1
+        Classification:
+          $ref: '#/components/schemas/OBExternalMandateClassification1Code'
+        CategoryPurposeCode:
+          $ref: '#/components/schemas/ExternalCategoryPurpose1Code'
+        FirstPaymentDateTime:
+          type: string
+          format: date-time
+          description: The date on which the first payment for a recurrent credit transfer will be made.
+          example: '2024-04-25T12:46:49.425Z'
+        RecurringPaymentDateTime:
+          type: string
+          format: date-time
+          description: "The date on which the first recurring payment for a Standing Order schedule will be made. \nUsage: This must be populated only if the first recurring date is different to the first payment date. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+          example: '2024-04-25T12:46:49.425Z'
+        FinalPaymentDateTime:
+          type: string
+          format: date-time
+          description: The date on which the final payment for a recurrent credit transfer will be made.
+          example: '2024-04-25T12:46:49.425Z'
+        Frequency:
+          $ref: '#/components/schemas/OBFrequency6'
+        Reason:
+          type: string
+          description: Reason for the setup of the credit transfer mandate.
+          example: To pay monthly membership
+          maxLength: 256
+          minLength: 1
+      required:
+      - Frequency
+    AccountId:
+      type: string
+      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
+      example: '22289'
+      maxLength: 40
+      minLength: 1
+    Links:
+      type: object
+      additionalProperties: false
+      description: Links relevant to the payload
+      properties:
+        Self:
+          type: string
+          format: uri
+        First:
+          type: string
+          format: uri
+        Prev:
+          type: string
+          format: uri
+        Next:
+          type: string
+          format: uri
+        Last:
+          type: string
+          format: uri
+      required:
+      - Self
+    OBFrequency6:
+      type: object
+      description: Regularity with which credit transfer instructions are to be created and processed
+      properties:
+        Type:
+          $ref: '#/components/schemas/Frequency_1'
+        CountPerPeriod:
+          type: integer
+          format: int32
+          description: 'Number of instructions to be created and processed during the specified period. Specifies a frequency in terms of a count per period within a specified frequency type. Note: should not be used alongside `PointInTime`'
+          example: 1
+          maximum: 9999999
+          minimum: 0
+        PointInTime:
+          $ref: '#/components/schemas/PointInTime'
+      required:
+      - Type
+    OBExternalMandateClassification1Code:
+      type: string
+      description: Type of mandate instruction. For a full list of values see `OBExternalClassification1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      enum:
+      - FIXE
+      - USGB
+      - VARI
+      example: FIXE
+    OBErrorResponse1:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+      properties:
+        Id:
+          type: string
+          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
+          maxLength: 40
+          minLength: 1
+        Code:
+          type: string
+          description: Deprecated <br />High level textual error code, to help categorise the errors.
+          example: 400 BadRequest
+          maxLength: 40
+          minLength: 1
+        Message:
+          type: string
+          description: Deprecated <br />Brief Error message
+          example: There is something wrong with the request parameters provided
+          maxLength: 500
+          minLength: 1
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/OBError1'
+          maxItems: 99999
+          minItems: 1
+      required:
+      - Errors
+      nullable: false
+    Name_2:
+      type: string
+      description: Name of Service User.
+      maxLength: 70
+      minLength: 1
+    OBError1:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/OBExternalStatusReason1Code'
+        Message:
+          type: string
+          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
+
+            OBL doesn''t standardise this field'
+          maxLength: 500
+          minLength: 1
+        Path:
+          type: string
+          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
+          maxLength: 500
+          minLength: 1
+        Url:
+          type: string
+          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
+      required:
+      - ErrorCode
+    ActiveOrHistoricCurrencyCode_1:
+      type: string
+      description: A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 "Codes for the representation of currencies and funds".
+      example: GBP
+      pattern: ^[A-Z]{3,3}$
+    OBExternalStatusReason1Code:
+      type: string
+      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      example: U001
+      maxLength: 4
+      minLength: 4
     OBActiveOrHistoricCurrencyAndAmount_0:
       type: object
       description: The amount of the most recent direct debit collection.
@@ -85,11 +249,71 @@ components:
       required:
       - Amount
       - Currency
-    ActiveOrHistoricCurrencyCode_1:
+    ExternalMandateStatus1Code:
       type: string
-      description: A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 "Codes for the representation of currencies and funds".
-      example: GBP
-      pattern: ^[A-Z]{3,3}$
+      description: Specifies the status of the standing order in code form. For a full list of enumeration values refer to 'ExternalMandateStatus1Code' in *ISO_External_Codeset* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
+      enum:
+      - ACTV
+      - CANC
+      - EXPI
+      - SUSP
+      example: ACTV
+    OBReadDirectDebit2:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      properties:
+        Data:
+          type: object
+          properties:
+            DirectDebit:
+              type: array
+              items:
+                type: object
+                description: Account to or from which a cash entry is made.
+                properties:
+                  AccountId:
+                    $ref: '#/components/schemas/AccountId'
+                  DirectDebitId:
+                    $ref: '#/components/schemas/DirectDebitId'
+                  DirectDebitStatusCode:
+                    $ref: '#/components/schemas/ExternalMandateStatus1Code'
+                  MandateRelatedInformation:
+                    $ref: '#/components/schemas/OBMandateRelatedInformation1'
+                  Name:
+                    $ref: '#/components/schemas/Name_2'
+                  PreviousPaymentDateTime:
+                    $ref: '#/components/schemas/PreviousPaymentDateTime'
+                  PreviousPaymentAmount:
+                    $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_0'
+                required:
+                - AccountId
+                - Name
+              maxItems: 99999
+              minItems: 0
+        Links:
+          $ref: '#/components/schemas/Links'
+        Meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - Data
+      nullable: false
+    Meta:
+      type: object
+      additionalProperties: false
+      description: Meta Data relevant to the payload
+      properties:
+        TotalPages:
+          type: integer
+          format: int32
+          example: 42
+          maximum: 999999
+          minimum: 0
+        FirstAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+        LastAvailableDateTime:
+          $ref: '#/components/schemas/ISODateTime'
+      title: MetaData
     Frequency_1:
       type: string
       description: 'Individual Definitions:
@@ -213,102 +437,20 @@ components:
       maxLength: 35
       minLength: 1
       pattern: ^(NotKnown)$|^(EvryDay)$|^(EvryWorkgDay)$|^(IntrvlDay:((0[2-9])|([1-2][0-9])|3[0-1]))$|^(IntrvlWkDay:0[1-9]:0[1-7])$|^(WkInMnthDay:0[1-5]:0[1-7])$|^(IntrvlMnthDay:(0[1-6]|12|24):(-0[1-5]|0[1-9]|[12][0-9]|3[01]))$|^(QtrDay:(ENGLISH|SCOTTISH|RECEIVED))$|^(WEEK)$|^(FRTN)$|^(FOWK)$|^(MNTH)$|^(TWMH)$|^(FOMH)$|^(MIAN)$|^(YEAR)$|^(QURT)$|^(NONE)$|^(LWMH)$|^(LXMH)$|^(TWYR)$
+    PointInTime:
+      type: string
+      description: 'Exact2NumericText - Further information on the exact point in time the event should take place. Specifies a frequency in terms of an exact point in time or moment within a specified frequency type. Note: should not be used alongside `CountPerPeriod`.'
+      example: '00'
+      maxLength: 2
     DirectDebitId:
       type: string
       description: A unique and immutable identifier used to identify the direct debit resource. This identifier has no meaning to the account owner.
       maxLength: 40
       minLength: 1
-    OBActiveCurrencyAndAmount_SimpleType:
+    PreviousPaymentDateTime:
       type: string
-      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
-      example: '1209.06'
-      pattern: ^\d{1,13}$|^\d{1,13}\.\d{1,5}$
-    OBError1:
-      type: object
-      additionalProperties: false
-      minProperties: 1
-      properties:
-        ErrorCode:
-          $ref: '#/components/schemas/OBExternalStatusReason1Code'
-        Message:
-          type: string
-          description: 'A description of the error that occurred. e.g., ''A mandatory field isn''t supplied'' or ''RequestedExecutionDateTime must be in future''
-
-            OBL doesn''t standardise this field'
-          maxLength: 500
-          minLength: 1
-        Path:
-          type: string
-          description: Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency
-          maxLength: 500
-          minLength: 1
-        Url:
-          type: string
-          description: URL to help remediate the problem, or provide more information, or to API Reference, or help etc
-      required:
-      - ErrorCode
-    Links:
-      type: object
-      additionalProperties: false
-      description: Links relevant to the payload
-      properties:
-        Self:
-          type: string
-          format: uri
-        First:
-          type: string
-          format: uri
-        Prev:
-          type: string
-          format: uri
-        Next:
-          type: string
-          format: uri
-        Last:
-          type: string
-          format: uri
-      required:
-      - Self
-    OBErrorResponse1:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
-      properties:
-        Id:
-          type: string
-          description: A unique reference for the error instance, for audit purposes, in case of unknown/unclassified errors.
-          maxLength: 40
-          minLength: 1
-        Code:
-          type: string
-          description: Deprecated <br />High level textual error code, to help categorise the errors.
-          example: 400 BadRequest
-          maxLength: 40
-          minLength: 1
-        Message:
-          type: string
-          description: Deprecated <br />Brief Error message
-          example: There is something wrong with the request parameters provided
-          maxLength: 500
-          minLength: 1
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/OBError1'
-          maxItems: 99999
-          minItems: 1
-      required:
-      - Errors
-      nullable: false
-    OBExternalMandateClassification1Code:
-      type: string
-      description: Type of mandate instruction. For a full list of values see `OBExternalClassification1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      enum:
-      - FIXE
-      - USGB
-      - VARI
-      example: FIXE
+      format: date-time
+      description: "Date of most recent direct debit collection. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
     ExternalCategoryPurpose1Code:
       type: string
       description: Enumeration of codes that outlines the type of purpose behind a transaction, payment or risk.  For all enum values see `ExternalCategoryPurpose1Code` in *ISO_External_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
@@ -357,160 +499,43 @@ components:
       - VOST
       - WHLD
       - ZABA
-    PreviousPaymentDateTime:
-      type: string
-      format: date-time
-      description: "Date of most recent direct debit collection. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-    PointInTime:
-      type: string
-      description: 'Exact2NumericText - Further information on the exact point in time the event should take place. Specifies a frequency in terms of an exact point in time or moment within a specified frequency type. Note: should not be used alongside `CountPerPeriod`.'
-      example: '00'
-      maxLength: 2
     ISODateTime:
       type: string
       format: date-time
       description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-    Name_2:
+    OBActiveCurrencyAndAmount_SimpleType:
       type: string
-      description: Name of Service User.
-      maxLength: 70
-      minLength: 1
-    OBMandateRelatedInformation1:
-      type: object
-      description: Provides further details of the mandate signed between the creditor and the debtor.
-      properties:
-        MandateIdentification:
-          type: string
-          description: Unique identification, as assigned by the creditor, to unambiguously identify the mandate.
-          example: Golfers
-          maxLength: 35
-          minLength: 1
-        Classification:
-          $ref: '#/components/schemas/OBExternalMandateClassification1Code'
-        CategoryPurposeCode:
-          $ref: '#/components/schemas/ExternalCategoryPurpose1Code'
-        FirstPaymentDateTime:
-          type: string
-          format: date-time
-          description: The date on which the first payment for a recurrent credit transfer will be made.
-          example: '2024-04-25T12:46:49.425Z'
-        RecurringPaymentDateTime:
-          type: string
-          format: date-time
-          description: "The date on which the first recurring payment for a Standing Order schedule will be made. \nUsage: This must be populated only if the first recurring date is different to the first payment date. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
-          example: '2024-04-25T12:46:49.425Z'
-        FinalPaymentDateTime:
-          type: string
-          format: date-time
-          description: The date on which the final payment for a recurrent credit transfer will be made.
-          example: '2024-04-25T12:46:49.425Z'
-        Frequency:
-          $ref: '#/components/schemas/OBFrequency6'
-        Reason:
-          type: string
-          description: Reason for the setup of the credit transfer mandate.
-          example: To pay monthly membership
-          maxLength: 256
-          minLength: 1
-      required:
-      - Frequency
-    OBExternalStatusReason1Code:
-      type: string
-      description: Low level textual error code, for all enum values see `OBExternalStatusReason1Code` in *OB_Internal_CodeSet* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      example: U001
-      maxLength: 4
-      minLength: 4
-    AccountId:
-      type: string
-      description: A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
-      example: '22289'
-      maxLength: 40
-      minLength: 1
-    ExternalMandateStatus1Code:
-      type: string
-      description: Specifies the status of the standing order in code form. For a full list of enumeration values refer to 'ExternalMandateStatus1Code' in *ISO_External_Codeset* [here](https://github.com/OpenBankingUK/External_Internal_CodeSets)
-      enum:
-      - ACTV
-      - CANC
-      - EXPI
-      - SUSP
-      example: ACTV
-    OBReadDirectDebit2:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      properties:
-        Data:
-          type: object
-          properties:
-            DirectDebit:
-              type: array
-              items:
-                type: object
-                description: Account to or from which a cash entry is made.
-                properties:
-                  AccountId:
-                    $ref: '#/components/schemas/AccountId'
-                  DirectDebitId:
-                    $ref: '#/components/schemas/DirectDebitId'
-                  DirectDebitStatusCode:
-                    $ref: '#/components/schemas/ExternalMandateStatus1Code'
-                  MandateRelatedInformation:
-                    $ref: '#/components/schemas/OBMandateRelatedInformation1'
-                  Name:
-                    $ref: '#/components/schemas/Name_2'
-                  PreviousPaymentDateTime:
-                    $ref: '#/components/schemas/PreviousPaymentDateTime'
-                  PreviousPaymentAmount:
-                    $ref: '#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_0'
-                required:
-                - AccountId
-                - Name
-              maxItems: 99999
-              minItems: 0
-        Links:
-          $ref: '#/components/schemas/Links'
-        Meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - Data
-      nullable: false
-    OBFrequency6:
-      type: object
-      description: Regularity with which credit transfer instructions are to be created and processed
-      properties:
-        Type:
-          $ref: '#/components/schemas/Frequency_1'
-        CountPerPeriod:
-          type: integer
-          format: int32
-          description: 'Number of instructions to be created and processed during the specified period. Specifies a frequency in terms of a count per period within a specified frequency type. Note: should not be used alongside `PointInTime`'
-          example: 1
-          maximum: 9999999
-          minimum: 0
-        PointInTime:
-          $ref: '#/components/schemas/PointInTime'
-      required:
-      - Type
-    Meta:
-      type: object
-      additionalProperties: false
-      description: Meta Data relevant to the payload
-      properties:
-        TotalPages:
-          type: integer
-          format: int32
-          example: 42
-          maximum: 999999
-          minimum: 0
-        FirstAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-        LastAvailableDateTime:
-          $ref: '#/components/schemas/ISODateTime'
-      title: MetaData
+      description: A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.
+      example: '1209.06'
+      pattern: ^\d{1,13}$|^\d{1,13}\.\d{1,5}$
   responses:
-    401Error:
-      description: Unauthorized
+    404Error:
+      description: Not found
+      headers:
+        x-fapi-interaction-id:
+          description: An RFC4122 UID used as a correlation id.
+          required: true
+          schema:
+            type: string
+            deprecated: false
+            maxLength: 36
+            minLength: 32
+            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+            nullable: false
+          example: 93bac548-d2de-4546-b106-880a5018460d
+        Cache-Control:
+          description: GIS mandatory response header. This is added by the Cognac sidecar.
+          schema:
+            type: string
+            default: no-cache, no-store, must-revalidate
+            deprecated: false
+            maxLength: 35
+            minLength: 35
+            pattern: ^no-cache, no-store, must-revalidate$
+            nullable: false
+          example: no-cache, no-store, must-revalidate
+    405Error:
+      description: Method Not Allowed
       headers:
         x-fapi-interaction-id:
           description: An RFC4122 UID used as a correlation id.
@@ -578,8 +603,8 @@ components:
                   Message: Version supplied is not valid
                   Path: Data.Initiation.CreditorAccount
                   Url: <url to the api reference for Event Notification API>
-    404Error:
-      description: Not found
+    401Error:
+      description: Unauthorized
       headers:
         x-fapi-interaction-id:
           description: An RFC4122 UID used as a correlation id.
@@ -660,8 +685,8 @@ components:
                   Self: https://api.alphabank.com/open-banking/v4.0/aisp/accounts/22289/direct-debits/
                 Meta:
                   TotalPages: 1
-    406Error:
-      description: Not Acceptable
+    500Error:
+      description: Internal Server Error
       headers:
         x-fapi-interaction-id:
           description: An RFC4122 UID used as a correlation id.
@@ -685,6 +710,25 @@ components:
             pattern: ^no-cache, no-store, must-revalidate$
             nullable: false
           example: no-cache, no-store, must-revalidate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OBErrorResponse1'
+          examples:
+            500ErrorResponse:
+              value:
+                Code: OB.BadRequest
+                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
+                Message: Invalid request parameters
+                Errors:
+                - ErrorCode: AC17
+                  Message: Version must be supplied
+                  Path: Data.Initiation
+                  Url: <url to the api reference for Event Notification API>
+                - ErrorCode: AC17
+                  Message: Version supplied is not valid
+                  Path: Data.Initiation.CreditorAccount
+                  Url: <url to the api reference for Event Notification API>
     429Error:
       description: Too Many Requests
       headers:
@@ -718,8 +762,8 @@ components:
             pattern: ^no-cache, no-store, must-revalidate$
             nullable: false
           example: no-cache, no-store, must-revalidate
-    405Error:
-      description: Method Not Allowed
+    406Error:
+      description: Not Acceptable
       headers:
         x-fapi-interaction-id:
           description: An RFC4122 UID used as a correlation id.
@@ -787,113 +831,7 @@ components:
                   Message: Version supplied is not valid
                   Path: Data.Initiation.CreditorAccount
                   Url: <url to the api reference for Event Notification API>
-    500Error:
-      description: Internal Server Error
-      headers:
-        x-fapi-interaction-id:
-          description: An RFC4122 UID used as a correlation id.
-          required: true
-          schema:
-            type: string
-            deprecated: false
-            maxLength: 36
-            minLength: 32
-            pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-            nullable: false
-          example: 93bac548-d2de-4546-b106-880a5018460d
-        Cache-Control:
-          description: GIS mandatory response header. This is added by the Cognac sidecar.
-          schema:
-            type: string
-            default: no-cache, no-store, must-revalidate
-            deprecated: false
-            maxLength: 35
-            minLength: 35
-            pattern: ^no-cache, no-store, must-revalidate$
-            nullable: false
-          example: no-cache, no-store, must-revalidate
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OBErrorResponse1'
-          examples:
-            500ErrorResponse:
-              value:
-                Code: OB.BadRequest
-                Id: 2b5f0fb2-730b-11e8-adc0-fa7ae01bbebc
-                Message: Invalid request parameters
-                Errors:
-                - ErrorCode: AC17
-                  Message: Version must be supplied
-                  Path: Data.Initiation
-                  Url: <url to the api reference for Event Notification API>
-                - ErrorCode: AC17
-                  Message: Version supplied is not valid
-                  Path: Data.Initiation.CreditorAccount
-                  Url: <url to the api reference for Event Notification API>
   parameters:
-    x-fapi-interaction-id:
-      name: x-fapi-interaction-id
-      in: header
-      description: An RFC4122 UID used as a correlation id.
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 36
-        minLength: 32
-        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
-        nullable: false
-      example: 93bac548-d2de-4546-b106-880a5018460d
-    x-customer-user-agent:
-      name: x-customer-user-agent
-      in: header
-      description: Indicates the user-agent that the PSU is using.
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 500
-        minLength: 1
-        nullable: false
-      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
-    x-fapi-auth-date:
-      name: x-fapi-auth-date
-      in: header
-      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
-      required: false
-      schema:
-        type: string
-        deprecated: false
-        maxLength: 29
-        minLength: 29
-        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
-        nullable: false
-      example: Sun, 10 Sep 2017 19:43:31 UTC
-    Authorization:
-      name: Authorization
-      in: header
-      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
-      required: true
-      schema:
-        type: string
-        maxLength: 4871
-        minLength: 1
-        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
-        nullable: false
-      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
-    x-fapi-customer-ip-address:
-      name: x-fapi-customer-ip-address
-      in: header
-      description: The PSU's IP address if the PSU is currently logged in with the TPP.
-      required: false
-      schema:
-        type: string
-        maxLength: 40
-        minLength: 7
-        pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
-        nullable: false
-      example: 104.25.212.99
     AccountId:
       name: accountId
       in: path
@@ -907,6 +845,68 @@ components:
         pattern: ^\d{1,20}$
         nullable: false
       example: '12345678901234567890'
+    x-fapi-auth-date:
+      name: x-fapi-auth-date
+      in: header
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 29
+        minLength: 29
+        pattern: ^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$
+        nullable: false
+      example: Sun, 10 Sep 2017 19:43:31 UTC
+    x-fapi-interaction-id:
+      name: x-fapi-interaction-id
+      in: header
+      description: An RFC4122 UID used as a correlation id.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 36
+        minLength: 32
+        pattern: ^[A-Za-f0-9]{8}-?[A-Za-f0-9]{4}-?[1-5][A-Za-f0-9]{3}-?[89ab][A-Za-f0-9]{3}-?[A-Za-f0-9]{12}$
+        nullable: false
+      example: 93bac548-d2de-4546-b106-880a5018460d
+    x-fapi-customer-ip-address:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The PSU's IP address if the PSU is currently logged in with the TPP.
+      required: false
+      schema:
+        type: string
+        maxLength: 40
+        minLength: 7
+        pattern: ^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$
+        nullable: false
+      example: 104.25.212.99
+    Authorization:
+      name: Authorization
+      in: header
+      description: An Authorisation Token as per https://tools.ietf.org/html/rfc6750
+      required: true
+      schema:
+        type: string
+        maxLength: 4871
+        minLength: 1
+        pattern: ^Bearer [A-Za-z0-9-_=]{1,256}\.\.[A-Za-z0-9-_=]{1,100}\.[A-Za-z0-9-_=]{1,4096}\.[A-Za-z0-9-_=]{1,100}$
+        nullable: false
+      example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTk4NTA5NjUsInN1YiI6IkJhcmNsYXlzX1BheW1lbnRfU2VydmljZSIsInNjb3BlIjpbImlkcy5tYW5hZ2Vfa2V5IiwiaWRzLm1hbmFnZV9jbGllbnQiXSwiaXNzIjoiaHR0cDovL2lkZW50aXR5LXNlcnZpY2UvIiwiaWF0IjoxNDk5ODUwMDY1fQ.OX-u14YLs7iksl6gnZ9ZqMBu-ekFi4pSva5mzhuf2xU
+    x-customer-user-agent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the PSU is using.
+      required: false
+      schema:
+        type: string
+        deprecated: false
+        maxLength: 500
+        minLength: 1
+        nullable: false
+      example: Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405
   securitySchemes:
     TPPOAuth2Security:
       type: oauth2
