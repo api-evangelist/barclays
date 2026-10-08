@@ -10171,6 +10171,8 @@ apis:
     url: >-
       https://developer.barclays.com/apis/rewards-earn/556aab79-528f-41bf-b75e-29aa4874061a.bdn/documentation
 common:
+- type: FinOps
+  url: finops/barclays-finops.yml
 - type: CapabilityMap
   url: capabilities/barclays-capability-edges.yml
   name: Barclays Business Capability Map
