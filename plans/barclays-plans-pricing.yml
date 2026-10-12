@@ -1,3 +1,4 @@
+name: Barclays API Plans
 specification: API Commons Plans
 specificationVersion: '0.1'
 provider: Barclays
@@ -5,16 +6,14 @@ providerId: barclays
 generated: '2026-09-04'
 modified: '2026-09-04'
 method: searched
-source: https://developer.barclays.com/ (portal, sitemap and registry search) + https://developer.barclays.com/open-banking
+source: https://developer.barclays.com/
 plan_count: 0
 plans: []
 pricing_page: null
-note: Barclays publishes no plans, tiers or prices for the API Exchange. There is no pricing page in the portal
-  sitemap and a registry search for "pricing" returns no pricing document. The UK Open Banking and Barclays Bank
-  Ireland APIs are the regulated PSD2/CMA surface, which an authorised TPP consumes without a Barclays commercial
-  agreement; the Barclaycard and corporate APIs are contracted bilaterally after registration and access approval,
-  and those terms are not published. REPLACES a 2026-05-04 bulk-sweep scaffold that carried invented Free/Professional/Enterprise
-  tiers with fabricated 1,000 and 100,000 request quotas — none of which Barclays publishes.
+note: Barclays publishes no plans, tiers or prices for the API Exchange. There is no pricing page in the portal sitemap and a registry search for "pricing" returns no pricing document. The UK Open Banking
+  and Barclays Bank Ireland APIs are the regulated PSD2/CMA surface, which an authorised TPP consumes without a Barclays commercial agreement; the Barclaycard and corporate APIs are contracted bilaterally
+  after registration and access approval, and those terms are not published. REPLACES a 2026-05-04 bulk-sweep scaffold that carried invented Free/Professional/Enterprise tiers with fabricated 1,000 and
+  100,000 request quotas — none of which Barclays publishes.
 evidence:
 - url: https://developer.barclays.com/sitemap.xml
   status: 200
@@ -25,3 +24,8 @@ evidence:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+source_detail: https://developer.barclays.com/ (portal, sitemap and registry search) + https://developer.barclays.com/open-banking
+pricing_basis: none
+audience: unclear
+delivery:
+  delivery: managed

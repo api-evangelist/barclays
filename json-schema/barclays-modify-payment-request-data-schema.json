@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-modify-payment-request-data-schema.json",
+  "title": "ModifyPaymentRequestData",
+  "description": "Modify Payment Request Data",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-paymentproductexternalapi-onetimepayment-api-openapi.yml#/components/schemas/ModifyPaymentRequestData",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/ModifyPaymentRequest"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "Amount": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Payment Amount Object",
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/amt"
+        },
+        "currencyCode": {
+          "$ref": "#/$defs/currency"
+        }
+      },
+      "required": [
+        "amount",
+        "currencyCode"
+      ],
+      "nullable": false
+    },
+    "AmountOptionType": {
+      "type": "string",
+      "deprecated": false,
+      "description": "Payment amount option type",
+      "enum": [
+        "MINIMUM_DUE",
+        "STATEMENT_BALANCE",
+        "CURRENT_BALANCE",
+        "CUSTOM"
+      ],
+      "nullable": false
+    },
+    "AuthorizationText": {
+      "type": "string",
+      "deprecated": false,
+      "description": "Authorization text displayed on the subscription confirmation screen",
+      "maxLength": 4000,
+      "minLength": 0,
+      "pattern": "^([A-Za-z0-9\\s_().,$\"•“”\\/-]{0,4000})$",
+      "nullable": false
+    },
+    "BankAccountId": {
+      "type": "string",
+      "deprecated": false,
+      "description": "ID of bank account added as payment source",
+      "maxLength": 12,
+      "minLength": 1,
+      "pattern": "^([0-9]{1,12})$",
+      "nullable": false
+    },
+    "ModifyPaymentRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Modify Payment Request",
+      "properties": {
+        "action": {
+          "type": "string",
+          "deprecated": false,
+          "description": "Action describing whether the payment needs to be updated or canceled",
+          "enum": [
+            "UPDATE",
+            "CANCEL"
+          ],
+          "nullable": false
+        },
+        "modifyPaymentDetails": {
+          "$ref": "#/$defs/PaymentRequest"
+        }
+      },
+      "required": [
+        "action",
+        "modifyPaymentDetails"
+      ],
+      "nullable": false
+    },
+    "PaymentDate": {
+      "type": "string",
+      "format": "date",
+      "deprecated": false,
+      "description": "Date on which processing of the payment started",
+      "nullable": false
+    },
+    "PaymentRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Payment Request",
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/Amount"
+        },
+        "amountOptionType": {
+          "$ref": "#/$defs/AmountOptionType"
+        },
+        "bankAccountId": {
+          "$ref": "#/$defs/BankAccountId"
+        },
+        "paymentDate": {
+          "$ref": "#/$defs/PaymentDate"
+        },
+        "sessionLoginTime": {
+          "$ref": "#/$defs/sessionLoginTime"
+        },
+        "authorizationText": {
+          "$ref": "#/$defs/AuthorizationText"
+        },
+        "actionSubmittedTime": {
+          "$ref": "#/$defs/actionSubmittedTime"
+        }
+      },
+      "required": [
+        "actionSubmittedTime",
+        "amount",
+        "amountOptionType",
+        "authorizationText",
+        "bankAccountId",
+        "paymentDate",
+        "sessionLoginTime"
+      ],
+      "nullable": false
+    },
+    "actionSubmittedTime": {
+      "type": "string",
+      "format": "date-time",
+      "deprecated": false,
+      "description": "Timestamp when the submit button was clicked",
+      "nullable": false
+    },
+    "amt": {
+      "type": "number",
+      "deprecated": false,
+      "description": "Amount figure of payment amount",
+      "maximum": 999999.99,
+      "minimum": 0,
+      "nullable": false
+    },
+    "currency": {
+      "type": "string",
+      "deprecated": false,
+      "description": "Currency of payment amount",
+      "maxLength": 3,
+      "minLength": 3,
+      "pattern": "^(USD)$",
+      "nullable": false
+    },
+    "sessionLoginTime": {
+      "type": "string",
+      "format": "date-time",
+      "deprecated": false,
+      "description": "Timestamp when the customer login",
+      "nullable": false
+    }
+  }
+}

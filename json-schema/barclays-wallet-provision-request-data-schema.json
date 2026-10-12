@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-wallet-provision-request-data-schema.json",
+  "title": "WalletProvisionRequestData",
+  "description": "Request data for provisioning a credit card to a digital wallet.\n\n**Purpose:**\n- Provision credit cards to Apple Pay, Google Pay, or Samsung Pay\n- Includes eligibility criteria and device provisioning information\n- Supports both Mastercard and VISA card networks\n\n**Wallet-Specific Requirements:**\n- **Apple Pay**: Requires device certificates, nonce, and nonce signature from Apple SDK\n- **Google Pay**: Requires device information; VISA cards also need client wallet and device IDs\n- **Samsung Pay**: Requires device information; VISA cards also need client wallet and device IDs\n\n**Processing:**\n- Eligibility verification performed automatically\n- Fraud assessment based on account status and risk rules\n- Returns wallet-specific provisioning data for activation\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-digital-wallet-provision-api-openapi.yml#/components/schemas/WalletProvisionRequestData",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/ExternalWalletProvision"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "ExternalWalletProvision": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Wallet provisioning request with eligibility criteria and device information",
+      "properties": {
+        "walletId": {
+          "type": "string",
+          "description": "Wallet provider identifier:\n- 103: Apple Pay\n- 216: Google Pay\n- 217: Samsung Pay\n- 101: Apple Pay (deprecated, use 103)\n",
+          "enum": [
+            "101",
+            "103",
+            "216",
+            "217"
+          ]
+        },
+        "eligibility": {
+          "$ref": "#/$defs/WalletEligibility"
+        },
+        "provision": {
+          "$ref": "#/$defs/WalletProvision"
+        }
+      },
+      "required": [
+        "eligibility",
+        "provision",
+        "walletId"
+      ],
+      "nullable": false
+    },
+    "WalletEligibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Eligibility criteria for wallet provisioning",
+      "properties": {
+        "enrollmentIndicator": {
+          "type": "string",
+          "description": "Enrollment type (NEW for first-time enrollment, RE_ENROLL for re-enrollment)",
+          "enum": [
+            "NEW",
+            "RE_ENROLL"
+          ]
+        },
+        "sourceChannel": {
+          "type": "string",
+          "description": "Channel identifier (e.g., BCUS_Mobile, SAMSUNG_Mobile, GAP_Mobile)",
+          "maxLength": 20,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9\\-_]{1,20}$"
+        }
+      },
+      "required": [
+        "enrollmentIndicator",
+        "sourceChannel"
+      ],
+      "nullable": false
+    },
+    "WalletProvision": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Device and certificate information for wallet provisioning",
+      "properties": {
+        "leafCertificate": {
+          "type": "string",
+          "description": "Base64-encoded leaf certificate from Apple SDK (Apple Pay only)",
+          "maxLength": 10000,
+          "minLength": 0,
+          "pattern": "^[a-zA-Z0-9.\\/+=&']{0,10000}$"
+        },
+        "nonceId": {
+          "type": "string",
+          "description": "Hex-encoded nonce from Apple SDK (Apple Pay only)",
+          "maxLength": 10000,
+          "minLength": 0,
+          "pattern": "^[a-zA-Z0-9.\\/+=&']{0,10000}$"
+        },
+        "nonceSignature": {
+          "type": "string",
+          "description": "Hex-encoded nonce signature from Apple SDK (Apple Pay only)",
+          "maxLength": 10000,
+          "minLength": 0,
+          "pattern": "^[a-zA-Z0-9.\\/+=&']{0,10000}$"
+        },
+        "subCertificate": {
+          "type": "string",
+          "description": "Base64-encoded sub-certificate from Apple SDK (Apple Pay only)",
+          "maxLength": 10000,
+          "minLength": 0,
+          "pattern": "^[a-zA-Z0-9.\\/+=&']{0,10000}$"
+        },
+        "deviceName": {
+          "type": "string",
+          "description": "User-friendly device name (e.g., \"iPhone 14 Pro\", \"Galaxy S24\")",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9\\s+'-]{1,255}$"
+        },
+        "osName": {
+          "type": "string",
+          "description": "Device operating system (IOS for Apple Pay, ANDROID for Google Pay and Samsung Pay)",
+          "enum": [
+            "IOS",
+            "ANDROID"
+          ]
+        },
+        "osVersion": {
+          "type": "string",
+          "description": "Operating system version (e.g., \"17.2.1\", \"14.0.0\")",
+          "maxLength": 20,
+          "minLength": 1,
+          "pattern": "^[0-9.]{1,20}$"
+        },
+        "clientWalletAccountId": {
+          "type": "string",
+          "description": "Wallet account ID from wallet SDK (required for VISA cards only)",
+          "maxLength": 1000,
+          "minLength": 0,
+          "pattern": "^[a-zA-Z0-9.\\/+=&' ]{0,1000}$"
+        },
+        "clientDeviceId": {
+          "type": "string",
+          "description": "Device ID from wallet SDK (required for VISA cards only)",
+          "maxLength": 1000,
+          "minLength": 0,
+          "pattern": "^[a-zA-Z0-9.\\/+=&']{0,1000}$"
+        }
+      },
+      "required": [
+        "deviceName",
+        "osName",
+        "osVersion"
+      ],
+      "nullable": false
+    }
+  }
+}

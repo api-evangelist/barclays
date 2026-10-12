@@ -1,0 +1,21 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/barclays/integrations
+- https://n8n.io/integrations/barclays/
+- https://composio.dev/toolkits/barclays
+- https://monid.ai/tools/barclays
+checked:
+- https://composio.dev/toolkits/barclays
+- https://developer.barclays.com/
+- https://monid.ai/tools/barclays
+- https://n8n.io/integrations/barclays/
+- https://www.barclaycard.co.uk/business
+- https://www.barclaycard.co.uk/business/accepting-payments/card-readers/integrated-point-of-sale-solutions
+- https://zapier.com/apps/barclays/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
+note: Barclaycard business pages mention "strategic partners" but name none; no marketplace listings found (Zapier/n8n
+  absent).

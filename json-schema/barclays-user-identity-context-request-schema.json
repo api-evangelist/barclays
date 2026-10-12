@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-user-identity-context-request-schema.json",
+  "title": "UserIdentityContextRequest",
+  "description": "User identity context request.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-user-identity-context-api-openapi.yml#/components/schemas/UserIdentityContextRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/UserIdentityContextRequestData"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "CustomerProfile": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Customer's partner account relationship details",
+      "properties": {
+        "memberNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9]{1,17}$"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Customer's first name on partner account",
+          "maxLength": 32,
+          "minLength": 2,
+          "pattern": "^[-a-zA-Z'\\s]{2,32}$"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Customer's last name on partner account",
+          "maxLength": 32,
+          "minLength": 2,
+          "pattern": "^[-a-zA-Z'\\s]{2,32}$"
+        },
+        "email": {
+          "type": "string",
+          "description": "Customer's email on partner account",
+          "maxLength": 320,
+          "minLength": 6,
+          "pattern": "^(?=.{1,256}$)^([a-zA-Z0-9.\\x21#$\\x25&'\\x2A\\x2B\\/=\\x3F\\x5E_`\\x7E-]{1,64})@(([a-zA-Z0-9-]{1,180}(\\.[a-zA-Z0-9-]{1,62}){1,9}))$"
+        },
+        "nameChangeTimestamp": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Timestamp of customer name change in Unix timestamp (milliseconds since epoch)",
+          "maximum": 253402300799999,
+          "minimum": 0
+        },
+        "previousFirstName": {
+          "type": "string",
+          "description": "Customer's first name on partner account before last change",
+          "maxLength": 32,
+          "minLength": 2,
+          "pattern": "^[-a-zA-Z'\\s]{2,32}$"
+        },
+        "previousLastName": {
+          "type": "string",
+          "description": "Customer's last name on partner account before last change",
+          "maxLength": 32,
+          "minLength": 2,
+          "pattern": "^[-a-zA-Z'\\s]{2,32}$"
+        },
+        "emailChangeTimestamp": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Timestamp of customer email change in Unix timestamp (milliseconds since epoch)",
+          "maximum": 253402300799999,
+          "minimum": 0
+        },
+        "previousEmail": {
+          "type": "string",
+          "description": "Customer's email on partner account before last change",
+          "maxLength": 320,
+          "minLength": 6,
+          "pattern": "^(?=.{1,256}$)^([a-zA-Z0-9.\\x21#$\\x25&'\\x2A\\x2B\\/=\\x3F\\x5E_`\\x7E-]{1,64})@(([a-zA-Z0-9-]{1,180}(\\.[a-zA-Z0-9-]{1,62}){1,9}))$"
+        },
+        "numberOfAssociatedDevices": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of devices associated with the account",
+          "maximum": 100,
+          "minimum": 0
+        },
+        "digitalWalletLastLoginDate": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Last login date for digital wallet in Unix timestamp (milliseconds since epoch)",
+          "maximum": 253402300799999,
+          "minimum": 0
+        },
+        "digitalWalletLastLoginAuthMethod": {
+          "type": "string",
+          "description": "Authentication method used for last login to digital wallet",
+          "maxLength": 30,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9]{1,30}$"
+        },
+        "additionalAttributes": {
+          "$ref": "#/$defs/CustomerProfileAttributes"
+        }
+      },
+      "required": [
+        "email",
+        "firstName",
+        "lastName",
+        "memberNumber"
+      ]
+    },
+    "CustomerProfileAttributes": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Additional customer profile attributes useful for fraud risk assessment",
+      "items": {
+        "$ref": "#/$defs/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+    },
+    "DeviceAttributes": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Additional device attributes useful for fraud risk assessment",
+      "items": {
+        "$ref": "#/$defs/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+    },
+    "DeviceDetails": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Customer details",
+      "properties": {
+        "deviceType": {
+          "type": "string",
+          "enum": [
+            "PHONE",
+            "TABLET",
+            "LAPTOP"
+          ]
+        },
+        "deviceModel": {
+          "type": "string",
+          "maxLength": 25,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9-]{1,25}$"
+        },
+        "deviceOS": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9-]{1,50}$"
+        },
+        "deviceOSVersion": {
+          "type": "string",
+          "maxLength": 20,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9.\\-]{1,20}$"
+        },
+        "deviceFingerprintType": {
+          "type": "string",
+          "description": "Device fingerprint type",
+          "enum": [
+            "THREATMETRIX",
+            "CUSTOM"
+          ]
+        },
+        "deviceFingerprintId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier for device fingerprint",
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[a-fA-F0-9]{8}-([a-fA-F0-9]{4}-){3}[a-fA-F0-9]{12}$"
+        },
+        "deviceRegistrationDate": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Device registration date in Unix timestamp (milliseconds since epoch)",
+          "maximum": 253402300799999,
+          "minimum": 0
+        },
+        "deviceLastUsedDate": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Device last used date in Unix timestamp (milliseconds since epoch)",
+          "maximum": 253402300799999,
+          "minimum": 0
+        },
+        "deviceLockPresent": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Indicates whether device lock is present",
+          "enum": [
+            "Y",
+            "N"
+          ]
+        },
+        "deviceBiometricType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "FINGER",
+            "PIN",
+            "IRIS",
+            "FACE"
+          ]
+        },
+        "serviceCarrierName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 50,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9&-]{1,50}$"
+        },
+        "deviceIPAddress": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Client IP address (IPv4 or IPv6)",
+          "maxLength": 45,
+          "minLength": 7,
+          "pattern": "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$"
+        },
+        "deviceSim1PhoneNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Phone number associated with device SIM",
+          "maxLength": 40,
+          "minLength": 6,
+          "pattern": "^[0-9\\- ]{6,40}$"
+        },
+        "deviceSim2PhoneNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Phone number associated with second SIM for dual-SIM devices",
+          "maxLength": 40,
+          "minLength": 6,
+          "pattern": "^[0-9\\- ]{6,40}$"
+        },
+        "dateCurrentSimLinkedToDevice": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Date current SIM linked to device in Unix timestamp (milliseconds since epoch)",
+          "maximum": 253402300799999,
+          "minimum": 0
+        },
+        "additionalAttributes": {
+          "$ref": "#/$defs/DeviceAttributes"
+        }
+      }
+    },
+    "NameValueAttributePair": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Attribute name and value pair",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Attribute name",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_]{1,100}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Attribute value",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_\\-\\s\\@\\#\\$\\&\\*\\(\\)\\+\\=\\\"\\.\\,\\/]{1,200}$"
+        },
+        "type": {
+          "type": "string",
+          "default": "text",
+          "description": "Attribute data type",
+          "enum": [
+            "text",
+            "number",
+            "boolean",
+            "iso_date"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "nullable": false
+    },
+    "UserIdentityContextRequestData": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "User identity context request data.",
+      "properties": {
+        "product": {
+          "type": "string",
+          "description": "Product/CPC for the IDP.",
+          "maxLength": 20,
+          "minLength": 3,
+          "pattern": "^[A-Za-z0-9]{3,20}$"
+        },
+        "channel": {
+          "type": "string",
+          "description": "Channel field for the IDP page rendering.",
+          "enum": [
+            "WEB",
+            "MOBILE"
+          ]
+        },
+        "fraudSessionId": {
+          "type": "string",
+          "description": "Applicant Fraud Session ID.",
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[a-fA-F0-9]{8}-([a-fA-F0-9]{4}-){3}[a-fA-F0-9]{12}$"
+        },
+        "applicationId": {
+          "type": "number",
+          "description": "Applicant Application ID.",
+          "pattern": "^[0-9]{15,16}$"
+        },
+        "customerProfileDetails": {
+          "$ref": "#/$defs/CustomerProfile"
+        },
+        "deviceDetails": {
+          "$ref": "#/$defs/DeviceDetails"
+        }
+      },
+      "required": [
+        "channel",
+        "customerProfileDetails",
+        "deviceDetails",
+        "product"
+      ],
+      "nullable": false
+    }
+  }
+}

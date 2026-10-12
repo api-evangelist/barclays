@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-instant-credit-by-account-request-schema.json",
+  "title": "InstantCreditByAccountRequest",
+  "description": "InstantCredit look up by accountId API request",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-applyproductexternalapi-oas-api-openapi.yml#/components/schemas/InstantCreditByAccountRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/InstantCreditByAccountReqAttributes"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "Attributes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+    },
+    "InstantCreditByAccountReqAttributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Instant Credit look up account id request attributes",
+      "properties": {
+        "accountId": {
+          "type": "string",
+          "description": "UUID account id",
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "acceptCma": {
+          "type": "boolean",
+          "default": false,
+          "description": "Applicant's cma acceptance."
+        },
+        "attributes": {
+          "$ref": "#/$defs/Attributes"
+        }
+      },
+      "required": [
+        "accountId"
+      ],
+      "nullable": false
+    },
+    "NameValueAttributePair": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Name value attributes",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "name of key in <Key,Value> pair",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_]{1,100}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "value of key in <Key,Value> pair",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[\\w\\!\\@\\#\\$\\&\\*\\(\\)\\+\\=\\'\\\"\\.\\,\\s\\/\\-]{1,200}$"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "nullable": false
+    }
+  }
+}

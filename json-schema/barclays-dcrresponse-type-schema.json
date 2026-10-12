@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-dcrresponse-type-schema.json",
+  "title": "DCRResponseType",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-register-api-openapi.yml#/components/schemas/DCRResponseType",
+  "type": "object",
+  "properties": {
+    "token_endpoint_auth_signing_alg": {
+      "type": "string",
+      "enum": [
+        "PS256"
+      ]
+    },
+    "client_uri": {
+      "type": "string"
+    },
+    "jwks": {
+      "$ref": "#/$defs/JWKSObjectType"
+    },
+    "grant_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "client_credentials",
+          "authorization_code",
+          "implicit",
+          "refresh_token",
+          "urn:ietf:params:oauth:grant-type:jwt-bearer"
+        ]
+      }
+    },
+    "application_type": {
+      "type": "string",
+      "enum": [
+        "web",
+        "mobile"
+      ]
+    },
+    "logo_uri": {
+      "type": "string"
+    },
+    "tls_client_auth_subject_dn": {
+      "type": "string"
+    },
+    "redirect_uris": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "token_endpoint_auth_method": {
+      "type": "string",
+      "enum": [
+        "private_key_jwt"
+      ]
+    },
+    "client_id": {
+      "type": "string"
+    },
+    "software_id": {
+      "type": "string"
+    },
+    "client_secret_expires_at": {
+      "type": "number"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "jwks_uri": {
+      "type": "string"
+    },
+    "tos_uri": {
+      "type": "string"
+    },
+    "software_version": {
+      "type": "string"
+    },
+    "request_object_signing_alg": {
+      "type": "string",
+      "enum": [
+        "PS256"
+      ]
+    },
+    "client_secret": {
+      "type": "string"
+    },
+    "client_id_issued_at": {
+      "type": "number"
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "contacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "policy_uri": {
+      "type": "string"
+    },
+    "response_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "code",
+          "token",
+          "id_token",
+          "id_token token",
+          "code id_token",
+          "code token",
+          "code id_token token",
+          "none"
+        ]
+      }
+    },
+    "id_token_signed_response_alg": {
+      "type": "string",
+      "enum": [
+        "PS256"
+      ]
+    }
+  },
+  "required": [
+    "client_id",
+    "client_name",
+    "contacts",
+    "grant_types",
+    "redirect_uris",
+    "response_types",
+    "scope",
+    "token_endpoint_auth_method"
+  ],
+  "$defs": {
+    "JWKSObjectType": {
+      "type": "object",
+      "properties": {
+        "keys": {
+          "type": "array",
+          "items": {},
+          "maxItems": 100,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "keys"
+      ]
+    }
+  }
+}

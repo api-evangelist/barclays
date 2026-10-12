@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-prescreen-offers-capture-request-schema.json",
+  "title": "PrescreenOffersCaptureRequest",
+  "description": "Prescreen offer capture request",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-applyproductexternalapi-oas-api-openapi.yml#/components/schemas/PrescreenOffersCaptureRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/PrescreenOffersCaptureRequestAttributes"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "PrescreenOffersCaptureRequestAttributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Prescreen offer capture request",
+      "properties": {
+        "termsAcceptCode": {
+          "type": "string",
+          "description": "Terms & Condition Acceptance code",
+          "maxLength": 32,
+          "minLength": 2,
+          "pattern": "^[A-Z_]{2,32}$"
+        }
+      },
+      "required": [
+        "termsAcceptCode"
+      ],
+      "nullable": false
+    }
+  }
+}

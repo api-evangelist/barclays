@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-initiate-payment-response-schema.json",
+  "title": "initiate_payment_response",
+  "description": "Payment Initiation Response",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-payments-api-openapi.yml#/components/schemas/initiate_payment_response",
+  "type": "object",
+  "properties": {
+    "transactionStatus": {
+      "type": "string",
+      "description": "The transaction status is filled with codes of the ISO 20022 data table. Valid status values are:\n- ACCP: AcceptedCustomerProfile Preceding check of technical validation was successful. Customer profile check was also successful.\n- ACSP: AcceptedSettlementInProcess All preceding checks such as technical validation and customer profile were successful and therefore the payment initiation has been accepted for execution.\n- PDNG: Pending Payment initiation or individual transaction included in the payment initiation is pending. Further checks and status update will be performed.\n- RJCT: Rejected Payment initiation or individual transaction included in the payment initiation has been rejected.\n- CANC: Cancelled Payment initiation has been cancelled before execution. Remark Change Request to ISO20022 is still needed.\n",
+      "enum": [
+        "ACCP",
+        "ACSP",
+        "PDNG",
+        "RJCT",
+        "CANC"
+      ]
+    },
+    "_links": {
+      "type": "object",
+      "description": "Links that can be used by TPP for next steps",
+      "properties": {
+        "scaStatus": {
+          "type": "object",
+          "description": "Navigate to the SCA Status Page",
+          "properties": {
+            "href": {
+              "type": "string",
+              "description": "Endpoint URL",
+              "maxLength": 1000,
+              "minLength": 12,
+              "pattern": "^[hH][tT][tT][pP][sS]?:\\/\\/([wW]{3}\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&\\/\\\\={}()]*)$"
+            }
+          }
+        },
+        "scaRedirect": {
+          "type": "object",
+          "description": "Navigate to the SCA Redirect Page",
+          "properties": {
+            "href": {
+              "type": "string",
+              "description": "Endpoint URL",
+              "maxLength": 1000,
+              "minLength": 12,
+              "pattern": "^[hH][tT][tT][pP][sS]?:\\/\\/([wW]{3}\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&\\/\\\\={}()]*)$"
+            }
+          }
+        },
+        "self": {
+          "type": "object",
+          "description": "Navigate to the Same Page",
+          "properties": {
+            "href": {
+              "type": "string",
+              "description": "Endpoint URL",
+              "maxLength": 1000,
+              "minLength": 12,
+              "pattern": "^[hH][tT][tT][pP][sS]?:\\/\\/([wW]{3}\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&\\/\\\\={}()]*)$"
+            }
+          }
+        },
+        "startAuthorisation": {
+          "type": "object",
+          "description": "Navigate to the Authoriation Page",
+          "properties": {
+            "href": {
+              "type": "string",
+              "description": "Endpoint URL",
+              "maxLength": 1000,
+              "minLength": 12,
+              "pattern": "^[hH][tT][tT][pP][sS]?:\\/\\/([wW]{3}\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&\\/\\\\={}()]*)$"
+            }
+          }
+        },
+        "status": {
+          "type": "object",
+          "description": "Navigate to the status page",
+          "properties": {
+            "href": {
+              "type": "string",
+              "description": "Endpoint URL",
+              "maxLength": 1000,
+              "minLength": 12,
+              "pattern": "^[hH][tT][tT][pP][sS]?:\\/\\/([wW]{3}\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&\\/\\\\={}()]*)$"
+            }
+          }
+        }
+      }
+    },
+    "paymentId": {
+      "type": "string",
+      "description": "Resource identification of the generated payment initiation resource",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "psuMessage": {
+      "type": "string",
+      "description": "Text to be displayed to the PSU",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,512})$"
+    }
+  },
+  "required": [
+    "_links",
+    "paymentId",
+    "transactionStatus"
+  ]
+}

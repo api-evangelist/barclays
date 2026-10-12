@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-activate-card-request-data-schema.json",
+  "title": "ActivateCardRequestData",
+  "description": "Request data for activating one or more cards with verification details.\n\n**Purpose:**\n- Activate cards by providing card identifiers, CVV, and expiry date\n- Support batch activation of up to 100 cards in a single request\n- Record activation reason via memo text for audit trail\n\n**Validation:**\n- All card identifiers must be valid and associated with the account\n- CVV and expiry must match card records\n- Account must be eligible for card activation\n- Fraud verification may be required based on risk assessment\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-cards-activation-api-openapi.yml#/components/schemas/ActivateCardRequestData",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/ActivateCardRequestDataItem"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "ActivateCardRequestDataItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Card activation request payload containing one or more cards to activate",
+      "properties": {
+        "cardActivationRequests": {
+          "type": "array",
+          "description": "List of cards to activate with verification details (external customer ID, card last 4, CVV, expiry)",
+          "items": {
+            "$ref": "#/$defs/CardActivationRequests"
+          },
+          "maxItems": 100,
+          "minItems": 1
+        },
+        "memoText": {
+          "type": "string",
+          "description": "Optional memo text for audit trail (e.g., activation reason or context)",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9 ]{1,200}$"
+        }
+      },
+      "nullable": false
+    },
+    "CardActivationRequests": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Individual card activation request with verification details",
+      "properties": {
+        "cardIdentifiers": {
+          "$ref": "#/$defs/CardIdentifier"
+        },
+        "cvv": {
+          "type": "string",
+          "description": "Three-digit card verification value (CVV/CVC)",
+          "maxLength": 3,
+          "minLength": 3,
+          "pattern": "^[0-9]{3,3}$"
+        },
+        "expiry": {
+          "type": "string",
+          "description": "Card expiration date in MM/YY format",
+          "maxLength": 5,
+          "minLength": 5,
+          "pattern": "^(0[1-9]|1[0-2])\\/([0-9]{2})$"
+        }
+      }
+    },
+    "CardIdentifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Unique card identifier using external customer ID and last 4 digits",
+      "properties": {
+        "externalCustomerId": {
+          "type": "string",
+          "description": "External customer identifier in UUID format",
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "cardLast4": {
+          "type": "string",
+          "description": "Last 4 digits of the card number",
+          "maxLength": 4,
+          "minLength": 4,
+          "pattern": "^[0-9]{4}$"
+        }
+      },
+      "required": [
+        "cardLast4",
+        "externalCustomerId"
+      ]
+    }
+  }
+}

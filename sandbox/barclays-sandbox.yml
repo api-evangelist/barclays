@@ -2,11 +2,9 @@ generated: '2026-09-04'
 method: probed
 source: https://developer.barclays.com/api/apis/versions/{apiVersionId} (Barclays API Exchange registry, anonymous)
 sandbox_published: true
-note: 'Every API on the Barclays API Exchange carries a distinct sandbox endpoint alongside its production endpoint,
-  and the registry records both. The sandbox is NOT anonymous: SandboxAnonymousAccessAllowed is false and SandboxEndpointAccessAutoApproved
-  is false on all 30 published API versions, so a developer must register an app and have sandbox access approved
-  before a first call. No test credentials, test cards, test bank accounts, fixtures or time-simulation tooling
-  are published anonymously, so none are recorded here — Barclays publishes none that we could read without an account.'
+note: 'Every API on the Barclays API Exchange carries a distinct sandbox endpoint alongside its production endpoint, and the registry records both. The sandbox is NOT anonymous: SandboxAnonymousAccessAllowed
+  is false and SandboxEndpointAccessAutoApproved is false on all 30 published API versions, so a developer must register an app and have sandbox access approved before a first call. No test credentials,
+  test cards, test bank accounts, fixtures or time-simulation tooling are published anonymously, so none are recorded here — Barclays publishes none that we could read without an account.'
 access:
   anonymous: false
   auto_approved: false
@@ -200,3 +198,7 @@ apis:
   sandbox_scopes: null
   sandbox_anonymous_access: false
   sandbox_access_auto_approved: true
+description: 'Every API on the Barclays API Exchange carries a distinct sandbox endpoint alongside its production endpoint, and the registry records both. The sandbox is NOT anonymous: SandboxAnonymousAccessAllowed
+  is false and SandboxEndpointAccessAutoApproved is false on all 30 published API versions, so a developer must register an app and have sandbox access approved before a first call. No test credentials,
+  test cards, test bank accounts, fixtures or time-simulation tooling are published anonymously, so none are recorded here — Barclays publishes none that we could read without an account.'
+docs: https://developer.barclays.com/api/apis/versions/{apiVersionId} (Barclays API Exchange registry, anonymous)

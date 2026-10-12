@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-lock-card-request-data-schema.json",
+  "title": "LockCardRequestData",
+  "description": "Request data for locking a card with fraud assessment.\n\n**Purpose:**\n- Lock a card by providing card identifier (external customer ID and card last 4 digits)\n- Fraud verification is performed before the lock operation\n\n**Validation:**\n- Card identifier must be valid and associated with the account\n- Account must exist and have active customers\n- Fraud assessment must approve the operation before proceeding\n",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-card-controls-api-api-openapi.yml#/components/schemas/LockCardRequestData",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/LockCardRequestDataItem"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "CardIdentifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Unique card identifier using external customer ID and last 4 digits",
+      "properties": {
+        "externalCustomerId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "External customer identifier in UUID format",
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "cardLast4": {
+          "type": "string",
+          "description": "Last 4 digits of the card number",
+          "maxLength": 4,
+          "minLength": 4,
+          "pattern": "^[0-9]{4}$"
+        }
+      },
+      "required": [
+        "cardLast4",
+        "externalCustomerId"
+      ]
+    },
+    "LockCardRequestDataItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Card lock request payload containing the card to lock.\n\n**Purpose:**\n- Identify the card to lock using external customer ID and card last 4 digits\n- Used as input for fraud assessment and card lock operation\n",
+      "properties": {
+        "cardIdentifier": {
+          "$ref": "#/$defs/CardIdentifier"
+        }
+      },
+      "required": [
+        "cardIdentifier"
+      ],
+      "nullable": false
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-jwkskey-set-body-schema.json",
+  "title": "JWKSKeySetBody",
+  "description": "JWKS Response Body",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-key-exchange-fetch-json-web-keys-api-openapi.yml#/components/schemas/JWKSKeySetBody",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "keys": {
+      "type": "array",
+      "description": "List of JWKS keys",
+      "items": {
+        "$ref": "#/$defs/JWKSKey"
+      },
+      "maxItems": 10,
+      "minItems": 1
+    }
+  },
+  "required": [
+    "keys"
+  ],
+  "nullable": false,
+  "$defs": {
+    "JWKSKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Partner Entity",
+      "properties": {
+        "kty": {
+          "type": "string",
+          "description": "Key type value",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9]{1,100}$"
+        },
+        "use": {
+          "type": "string",
+          "description": "Use value",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9]{1,100}$"
+        },
+        "key_ops": {
+          "type": "array",
+          "description": "Operation(s) for which the key is intended to be used",
+          "items": {
+            "$ref": "#/$defs/KeyOperation"
+          },
+          "maxItems": 10,
+          "minItems": 1
+        },
+        "kid": {
+          "type": "string",
+          "description": "Kid value",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9\\-_]{1,100}$"
+        },
+        "x5c": {
+          "type": "array",
+          "description": "Certificate chain",
+          "items": {
+            "type": "string",
+            "description": "Certificate",
+            "maxLength": 3000,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9+/=._\\-]{1,3000}$"
+          },
+          "maxItems": 20,
+          "minItems": 1
+        },
+        "x5t#S256": {
+          "type": "string",
+          "description": "Certificate SHA-256 thumbprint",
+          "maxLength": 1000,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9+/=._\\-]{1,1000}$"
+        },
+        "x5t": {
+          "type": "string",
+          "description": "Base64 URL Encoded Certificate SHA-1 thumbprint",
+          "maxLength": 1000,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9+/=._\\-]{1,1000}$"
+        },
+        "e": {
+          "type": "string",
+          "description": "Exponential value",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9]{1,100}$"
+        },
+        "n": {
+          "type": "string",
+          "description": "Modulus value",
+          "maxLength": 1000,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9+/=._\\-]{1,1000}$"
+        },
+        "alg": {
+          "type": "string",
+          "description": "Algorithm intended for use with the key",
+          "maxLength": 50,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9-]{1,50}$"
+        },
+        "enc": {
+          "type": "string",
+          "description": "Algorithm intended for decryption",
+          "maxLength": 50,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9-]{1,50}$"
+        },
+        "iat": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Issued at",
+          "maximum": 2641905738,
+          "minimum": 1379601738
+        },
+        "nbf": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Not before",
+          "maximum": 2641905738,
+          "minimum": 1379601738
+        },
+        "exp": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Expiration time",
+          "maximum": 2641905738,
+          "minimum": 1379601738
+        },
+        "crv": {
+          "type": "string",
+          "description": "Elliptic curve intended for use with the EC public key",
+          "maxLength": 50,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9-]{1,50}$"
+        },
+        "x": {
+          "type": "string",
+          "description": "X Coordinate of the elliptic curve public key",
+          "maxLength": 1000,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9+/=._\\-]{1,1000}$"
+        },
+        "y": {
+          "type": "string",
+          "description": "Y Coordinate of the elliptic curve public key",
+          "maxLength": 1000,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9+/=._\\-]{1,1000}$"
+        }
+      },
+      "required": [
+        "exp",
+        "iat",
+        "kid",
+        "kty",
+        "nbf",
+        "use"
+      ],
+      "nullable": false
+    },
+    "KeyOperation": {
+      "type": "string",
+      "description": "key operation",
+      "enum": [
+        "sign",
+        "verify",
+        "encrypt",
+        "decrypt",
+        "wrapKey",
+        "unwrapKey",
+        "deriveKey",
+        "deriveBits"
+      ]
+    }
+  }
+}

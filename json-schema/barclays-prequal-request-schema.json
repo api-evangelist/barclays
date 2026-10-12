@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-prequal-request-schema.json",
+  "title": "PrequalRequest",
+  "description": "Prequal decision request for the customer",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-applyproductexternalapi-oas-api-openapi.yml#/components/schemas/PrequalRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/PrequalRequestAttributes"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Permanent address Info",
+      "properties": {
+        "zip": {
+          "type": "string",
+          "description": "Applicant’s Address Zip",
+          "maxLength": 9,
+          "minLength": 5,
+          "pattern": "^[0-9]{5,9}$"
+        },
+        "state": {
+          "$ref": "#/$defs/StateEnums"
+        },
+        "city": {
+          "type": "string",
+          "description": "Applicant's City",
+          "maxLength": 32,
+          "minLength": 1,
+          "pattern": "^(?!\\s)[a-zA-Z'\\s]{1,32}(?<!\\s)$"
+        },
+        "addressLine1": {
+          "type": "string",
+          "description": "Applicant's Address line 1",
+          "maxLength": 32,
+          "minLength": 2,
+          "pattern": "^[\\-\\w#&/`.,\\s]{2,32}$"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "Applicant's Address line 2",
+          "maxLength": 32,
+          "minLength": 0,
+          "pattern": "^[\\-\\w#&/`.,\\s]{0,32}$"
+        }
+      },
+      "required": [
+        "addressLine1",
+        "city",
+        "state",
+        "zip"
+      ]
+    },
+    "ApplicationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Prequal a customer against for an given offer",
+      "properties": {
+        "offerInstanceId": {
+          "type": "string",
+          "description": "List of Offer Instance Id against which customer needs to be prequal",
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Applicant's First name",
+          "maxLength": 32,
+          "minLength": 2,
+          "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Applicant's Last Name",
+          "maxLength": 32,
+          "minLength": 2,
+          "pattern": "^[\\-a-zA-Z'\\s]{2,32}$"
+        },
+        "primaryPhoneNumber": {
+          "type": "string",
+          "description": "Applicant's Phone Number",
+          "maxLength": 10,
+          "minLength": 10,
+          "pattern": "^[0-9]{10,10}$"
+        },
+        "emailAddress": {
+          "type": "string",
+          "description": "Applicant's Email Address",
+          "maxLength": 80,
+          "minLength": 5,
+          "pattern": "^(?=.{5,80}$)^((?![\\-\\_\\.])(?!.*[\\-\\_\\.]{2})(?!.*[\\-\\_\\.]$)[\\-\\w\\.]{1,})\\@(([a-zA-Z0-9\\.\\-]{1,}(\\.[a-zA-Z0-9]{1,4})))$"
+        },
+        "permanentAddress": {
+          "$ref": "#/$defs/Address"
+        },
+        "alternateAddress": {
+          "$ref": "#/$defs/Address"
+        },
+        "ssn": {
+          "type": "string",
+          "description": "Social Security Number",
+          "maxLength": 9,
+          "minLength": 5,
+          "pattern": "^[0-9]{5,9}$"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "description": "Date of birth of applicant",
+          "maxLength": 10,
+          "minLength": 10,
+          "pattern": "^([0-9]{4}[-]?((0[13-9]|1[012])[-]?(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])[-]?31|02[-]?(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00)[-]?02[-]?29)$"
+        },
+        "incomeOtherSource": {
+          "type": "string",
+          "description": "Income through other source",
+          "maxLength": 1,
+          "minLength": 1,
+          "pattern": "^[YNFT]$"
+        },
+        "annualIncome": {
+          "type": "string",
+          "description": "annual income of customer",
+          "maxLength": 7,
+          "minLength": 1,
+          "pattern": "^\\d{1,7}$"
+        },
+        "monthlyHousingPayment": {
+          "type": "string",
+          "description": "monthly housing payment for customer",
+          "maxLength": 7,
+          "minLength": 1,
+          "pattern": "^\\d{1,7}$"
+        },
+        "creditInquiryAuthorization": {
+          "type": "string",
+          "description": "Credit Inquiry Authorization Flag",
+          "maxLength": 1,
+          "minLength": 1,
+          "pattern": "^[Y]$"
+        },
+        "preQualElectronicDeliveryConsent": {
+          "type": "string",
+          "description": "PreQual electronic delivery consent flag",
+          "maxLength": 1,
+          "minLength": 1,
+          "pattern": "^[Y]$"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "offerInstanceId"
+      ],
+      "nullable": false
+    },
+    "DeviceProfiling": {
+      "type": "array",
+      "description": "List of DeviceProfiling",
+      "items": {
+        "$ref": "#/$defs/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+    },
+    "NameValueAttributePair": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Name value attributes",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "name of key in <Key,Value> pair",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_]{1,100}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "value of key in <Key,Value> pair",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[\\w\\!\\@\\#\\$\\&\\*\\(\\)\\+\\=\\'\\\"\\.\\,\\s\\/\\-]{1,200}$"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "nullable": false
+    },
+    "PartnerDataAttributes_1": {
+      "type": "array",
+      "description": "List of  partner data attributes",
+      "items": {
+        "$ref": "#/$defs/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+    },
+    "PrequalRequestAttributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "PrequalRequestAttributes object",
+      "properties": {
+        "applicationRequest": {
+          "$ref": "#/$defs/ApplicationRequest"
+        },
+        "trackingInfo": {
+          "$ref": "#/$defs/TrackingInfo"
+        },
+        "partnerDataAttributes": {
+          "$ref": "#/$defs/PartnerDataAttributes_1"
+        },
+        "deviceProfiling": {
+          "$ref": "#/$defs/DeviceProfiling"
+        }
+      }
+    },
+    "StateEnums": {
+      "type": "string",
+      "description": "Applicant's State",
+      "enum": [
+        "AL",
+        "AK",
+        "AA",
+        "AE",
+        "AP",
+        "AZ",
+        "AR",
+        "CA",
+        "CO",
+        "CT",
+        "DE",
+        "DC",
+        "FL",
+        "GA",
+        "HI",
+        "ID",
+        "IL",
+        "IN",
+        "IA",
+        "KS",
+        "KY",
+        "LA",
+        "ME",
+        "MD",
+        "MA",
+        "MI",
+        "MN",
+        "MS",
+        "MO",
+        "MT",
+        "NE",
+        "NV",
+        "NH",
+        "NJ",
+        "NM",
+        "NY",
+        "NC",
+        "ND",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VT",
+        "VA",
+        "VI",
+        "WA",
+        "WV",
+        "WI",
+        "WY"
+      ]
+    },
+    "TrackingInfo": {
+      "type": "array",
+      "description": "List of tracking information",
+      "items": {
+        "$ref": "#/$defs/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-dcrrequest-type-schema.json",
+  "title": "DCRRequestType",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-register-api-openapi.yml#/components/schemas/DCRRequestType",
+  "type": "object",
+  "properties": {
+    "token_endpoint_auth_signing_alg": {
+      "type": "string",
+      "enum": [
+        "PS256"
+      ]
+    },
+    "client_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+    },
+    "jwks": {
+      "$ref": "#/$defs/JWKSObjectType"
+    },
+    "grant_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "client_credentials",
+          "authorization_code",
+          "implicit",
+          "refresh_token",
+          "urn:ietf:params:oauth:grant-type:jwt-bearer"
+        ]
+      },
+      "maxItems": 10,
+      "minItems": 1
+    },
+    "application_type": {
+      "type": "string",
+      "enum": [
+        "web",
+        "mobile"
+      ]
+    },
+    "logo_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+    },
+    "tls_client_auth_subject_dn": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9.\\-\\s]{1,128})$"
+    },
+    "redirect_uris": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 263,
+        "minLength": 8,
+        "pattern": "^(?!\\s)(https|http)(\\:\\/\\/)([A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+    },
+    "token_endpoint_auth_method": {
+      "type": "string",
+      "enum": [
+        "private_key_jwt"
+      ]
+    },
+    "software_id": {
+      "type": "string",
+      "maxLength": 22,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w]{1,22})$"
+    },
+    "scope": {
+      "type": "string",
+      "maxLength": 256,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9.\\-\\s]{1,256})$"
+    },
+    "jwks_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+    },
+    "tos_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+    },
+    "software_version": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9.\\-\\s]{1,128})$"
+    },
+    "request_object_signing_alg": {
+      "type": "string",
+      "enum": [
+        "PS256"
+      ]
+    },
+    "client_name": {
+      "type": "string",
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([\\w\\s$£\"ÖÄÜß\"öäü!@#,.§$-]{1,64})$"
+    },
+    "contacts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 256,
+        "minLength": 5,
+        "pattern": "^(?=.{1,256}$)^([a-zA-Z0-9.!#$%&'*+\\/=?^_`~-]{1,64})@(([a-zA-Z0-9-]{1,180}(\\.[a-zA-Z0-9-]{1,62}){1,9}))$"
+      },
+      "maxItems": 10,
+      "minItems": 1
+    },
+    "policy_uri": {
+      "type": "string",
+      "maxLength": 263,
+      "minLength": 9,
+      "pattern": "^(?!\\s)(https\\:\\/\\/[A-Za-z0-9.#&=%\\?\\-:\\/_\\s]{1,255})$"
+    },
+    "response_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "code",
+          "token",
+          "id_token",
+          "id_token token",
+          "code id_token",
+          "code token",
+          "code id_token token",
+          "none"
+        ]
+      },
+      "maxItems": 10,
+      "minItems": 1
+    },
+    "id_token_signed_response_alg": {
+      "type": "string",
+      "enum": [
+        "PS256"
+      ]
+    }
+  },
+  "required": [
+    "client_name",
+    "contacts",
+    "grant_types",
+    "redirect_uris",
+    "response_types",
+    "scope",
+    "token_endpoint_auth_method"
+  ],
+  "$defs": {
+    "JWKSObjectType": {
+      "type": "object",
+      "properties": {
+        "keys": {
+          "type": "array",
+          "items": {},
+          "maxItems": 100,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "keys"
+      ]
+    }
+  }
+}

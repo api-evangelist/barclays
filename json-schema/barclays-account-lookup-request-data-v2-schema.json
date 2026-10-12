@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-account-lookup-request-data-v2-schema.json",
+  "title": "AccountLookupRequestDataV2",
+  "description": "Account Lookup Request Data.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-card-account-details-inquiry-external-api-api-openapi.yml#/components/schemas/AccountLookupRequestDataV2",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/AccountLookupRequestV2"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "AccountLookupRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Account Lookup Request",
+      "properties": {
+        "ssn": {
+          "type": "string",
+          "description": "Social Security Number",
+          "maxLength": 9,
+          "minLength": 9,
+          "pattern": "^[0-9]{9,9}$"
+        },
+        "posMetaData": {
+          "$ref": "#/$defs/POSMetaData"
+        }
+      },
+      "required": [
+        "posMetaData",
+        "ssn"
+      ],
+      "nullable": false
+    },
+    "POSMetaData": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Fraud Analysis Data",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "description": "Channel originating the request",
+          "maxLength": 30,
+          "minLength": 3,
+          "pattern": "^[a-zA-Z0-9\\-_]{3,30}$"
+        },
+        "storeId": {
+          "type": "string",
+          "description": "Store Id where the request made",
+          "maxLength": 30,
+          "minLength": 3,
+          "pattern": "^[a-zA-Z0-9\\-_]{3,30}$"
+        },
+        "terminalId": {
+          "type": "string",
+          "description": "POS terminal id where the request was made",
+          "maxLength": 30,
+          "minLength": 3,
+          "pattern": "^[a-zA-Z0-9\\-_]{3,30}$"
+        },
+        "zipCode": {
+          "type": "string",
+          "description": "ZipCode where the request originated",
+          "maxLength": 20,
+          "minLength": 5,
+          "pattern": "^[a-zA-Z0-9\\-_\\s]{5,20}$"
+        }
+      },
+      "required": [
+        "channel",
+        "storeId",
+        "terminalId",
+        "zipCode"
+      ]
+    }
+  }
+}

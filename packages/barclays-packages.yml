@@ -1,15 +1,12 @@
 generated: '2026-09-04'
-method: searched
-source: registry.npmjs.org search, pypi.org, api.github.com/orgs/Barclays and /orgs/Barclaycard, and the anonymous
-  surface of https://developer.barclays.com
+method: none
+source: registry.npmjs.org search, pypi.org, api.github.com/orgs/Barclays and /orgs/Barclaycard, and the anonymous surface of https://developer.barclays.com
 official_sdk_count: 0
 package_count: 0
 packages: []
-note: Barclays publishes no first-party client library on any registry. npm search for "barclays" returns only third-party
-  utilities (QIF converters, statement parsers); PyPI has no "barclays" project; the github.com/Barclays organisation
-  holds one public repository (research_data_science, a Python research tooling repo, not an API SDK) and github.com/Barclaycard
-  has none. The API Exchange itself links no SDK download. Every integration against these 184 operations is hand-rolled
-  from the OpenAPI.
+note: Barclays publishes no first-party client library on any registry. npm search for "barclays" returns only third-party utilities (QIF converters, statement parsers); PyPI has no "barclays" project;
+  the github.com/Barclays organisation holds one public repository (research_data_science, a Python research tooling repo, not an API SDK) and github.com/Barclaycard has none. The API Exchange itself links
+  no SDK download. Every integration against these 184 operations is hand-rolled from the OpenAPI.
 evidence:
 - url: https://registry.npmjs.org/-/v1/search?text=barclays&size=20
   status: 200

@@ -1,3 +1,4 @@
+name: Barclays API Rate Limits
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
 provider: Barclays
@@ -5,18 +6,15 @@ providerId: barclays
 generated: '2026-09-04'
 modified: '2026-09-04'
 method: searched
-source: openapi/ (26 first-party OpenAPI 3.1 documents) + https://developer.barclays.com portal search
+source: https://developer.barclays.com/
 limit_count: 0
 limits: []
 documented: false
-note: 'Barclays declares that throttling exists but never says what the limits are. 99 operations across the estate
-  declare an HTTP 429 "Too Many Requests" response — the Confirmation of Funds, Payment Initiation and Account and
-  Transactions contracts describe it as "Server received a large number of requests from a single party in a given
-  amount of time" — but no operation declares a RateLimit-*, X-RateLimit-* or Retry-After response header, and no
-  numeric limit, window, burst or quota is published anywhere on the anonymous surface. An agent can detect exhaustion
-  from the status code and nothing else: it cannot budget ahead of time, and it is not told how long to wait. REPLACES
-  a 2026-05-04 bulk-sweep scaffold that carried invented 10/100/1000 rpm tiers and an invented X-RateLimit-* header
-  set that these contracts do not declare.'
+note: 'Barclays declares that throttling exists but never says what the limits are. 99 operations across the estate declare an HTTP 429 "Too Many Requests" response — the Confirmation of Funds, Payment
+  Initiation and Account and Transactions contracts describe it as "Server received a large number of requests from a single party in a given amount of time" — but no operation declares a RateLimit-*, X-RateLimit-*
+  or Retry-After response header, and no numeric limit, window, burst or quota is published anywhere on the anonymous surface. An agent can detect exhaustion from the status code and nothing else: it cannot
+  budget ahead of time, and it is not told how long to wait. REPLACES a 2026-05-04 bulk-sweep scaffold that carried invented 10/100/1000 rpm tiers and an invented X-RateLimit-* header set that these contracts
+  do not declare.'
 signals:
   status_code: 429
   operations_declaring_429: 99
@@ -33,3 +31,4 @@ evidence:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+source_detail: openapi/ (26 first-party OpenAPI 3.1 documents) + https://developer.barclays.com portal search

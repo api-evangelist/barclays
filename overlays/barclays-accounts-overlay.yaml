@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for Barclays Accounts
   version: 1.0.0
-extends: openapi/barclays-accounts-openapi.yml
+extends: openapi/barclays-accounts-api-openapi.yml
 x-generated: '2026-09-04'
 x-method: generated
 x-source: https://developer.barclays.com/api/apis/versions/{apiVersionId}/design?specification=oas31
@@ -24,5 +24,5 @@ actions:
       data_model: data-model/barclays-data-model.yml
 - target: $
   update:
-    x-note: This overlay records API Evangelist annotations only. It never mutates the Barclays contract it extends;
-      the underlying document is the provider design export, saved verbatim in openapi/_original/.
+    x-note: This overlay records API Evangelist annotations only. It never mutates the Barclays contract it extends; the underlying document is
+      the provider design export, saved verbatim in openapi/_original/.

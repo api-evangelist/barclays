@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-obevent-subscription-response1-schema.json",
+  "title": "OBEventSubscriptionResponse1",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-event-subscriptions-api-openapi.yml#/components/schemas/OBEventSubscriptionResponse1",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "Data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "EventSubscriptionId": {
+          "type": "string",
+          "description": "Unique identification as assigned by the ASPSP to uniquely identify the callback URL resource.",
+          "maxLength": 25,
+          "minLength": 25,
+          "pattern": "^BARCLAYS-E-\\d{14}$",
+          "nullable": false
+        },
+        "CallbackUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Callback URL for a TPP hosted service. Will be used by ASPSPs, in conjunction with the resource name, to construct a URL to send event notifications to."
+        },
+        "Version": {
+          "$ref": "#/$defs/Version"
+        },
+        "EventTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Array of event types the subscription applies to.",
+            "enum": [
+              "UK.OBIE.Consent-Authorization-Revoked"
+            ]
+          },
+          "maxItems": 99999,
+          "minItems": 0
+        }
+      },
+      "required": [
+        "EventSubscriptionId",
+        "Version"
+      ]
+    },
+    "Links": {
+      "$ref": "#/$defs/Links"
+    },
+    "Meta": {
+      "$ref": "#/$defs/Meta"
+    }
+  },
+  "required": [
+    "Data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "ISODateTime": {
+      "type": "string",
+      "format": "date-time",
+      "deprecated": false,
+      "description": "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+    },
+    "Links": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Links relevant to the payload",
+      "properties": {
+        "Self": {
+          "type": "string",
+          "format": "uri"
+        },
+        "First": {
+          "type": "string",
+          "format": "uri"
+        },
+        "Prev": {
+          "type": "string",
+          "format": "uri"
+        },
+        "Next": {
+          "type": "string",
+          "format": "uri"
+        },
+        "Last": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "Self"
+      ]
+    },
+    "Meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Meta Data relevant to the payload",
+      "properties": {
+        "TotalPages": {
+          "type": "integer",
+          "format": "int32",
+          "maximum": 999999,
+          "minimum": 0
+        },
+        "FirstAvailableDateTime": {
+          "$ref": "#/$defs/ISODateTime"
+        },
+        "LastAvailableDateTime": {
+          "$ref": "#/$defs/ISODateTime"
+        }
+      },
+      "title": "MetaData"
+    },
+    "Version": {
+      "type": "string",
+      "deprecated": false,
+      "description": "Version for the event notification.",
+      "maxLength": 10,
+      "minLength": 1
+    }
+  }
+}

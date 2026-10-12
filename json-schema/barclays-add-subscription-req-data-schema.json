@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-add-subscription-req-data-schema.json",
+  "title": "AddSubscriptionReqData",
+  "description": "Enroll to a subscription request data",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-paymentproductexternalapi-autopay-api-openapi.yml#/components/schemas/AddSubscriptionReqData",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/SubscriptionRequest"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "AuthorizationText": {
+      "type": "string",
+      "deprecated": false,
+      "description": "Authorization text displayed on the subscription confirmation screen",
+      "maxLength": 4000,
+      "minLength": 0,
+      "pattern": "^([A-Za-z0-9\\s_().,$\"•“”\\/-]{0,4000})$",
+      "nullable": false
+    },
+    "BankAccountId": {
+      "type": "string",
+      "deprecated": false,
+      "description": "ID of bank account added as payment source",
+      "maxLength": 12,
+      "minLength": 1,
+      "pattern": "^([0-9]{1,12})$",
+      "nullable": false
+    },
+    "DaysBeforeDueDateToProcess": {
+      "type": "integer",
+      "default": 1,
+      "description": "Days from Due Date from which the subscription was set up",
+      "maximum": 99,
+      "minimum": 0
+    },
+    "RepeatPayOptions": {
+      "type": "string",
+      "description": "The amount options customer can choose to pay for the subscription",
+      "enum": [
+        "MINIMUM_DUE",
+        "STATEMENT_BALANCE",
+        "CUSTOM"
+      ]
+    },
+    "SubscriptionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Object holding the subscription information for creating/patching an AutoPay subscription",
+      "properties": {
+        "bankAccountId": {
+          "$ref": "#/$defs/BankAccountId"
+        },
+        "amount": {
+          "$ref": "#/$defs/amt"
+        },
+        "daysBeforeDueDateToProcess": {
+          "$ref": "#/$defs/DaysBeforeDueDateToProcess"
+        },
+        "repeatPayOptionType": {
+          "$ref": "#/$defs/RepeatPayOptions"
+        },
+        "sessionLoginTime": {
+          "$ref": "#/$defs/sessionLoginTime"
+        },
+        "authorizationText": {
+          "$ref": "#/$defs/AuthorizationText"
+        },
+        "actionSubmittedTime": {
+          "$ref": "#/$defs/actionSubmittedTime"
+        }
+      },
+      "required": [
+        "actionSubmittedTime",
+        "authorizationText",
+        "bankAccountId",
+        "daysBeforeDueDateToProcess",
+        "repeatPayOptionType"
+      ],
+      "nullable": false
+    },
+    "actionSubmittedTime": {
+      "type": "string",
+      "format": "date-time",
+      "deprecated": false,
+      "description": "Timestamp when the submit button was clicked",
+      "nullable": false
+    },
+    "amt": {
+      "type": "number",
+      "deprecated": false,
+      "description": "Amount figure of payment amount",
+      "maximum": 999999.99,
+      "minimum": 0,
+      "nullable": false
+    },
+    "sessionLoginTime": {
+      "type": "string",
+      "format": "date-time",
+      "deprecated": false,
+      "description": "Timestamp when the customer login",
+      "nullable": false
+    }
+  }
+}

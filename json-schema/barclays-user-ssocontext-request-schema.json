@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-user-ssocontext-request-schema.json",
+  "title": "UserSSOContextRequest",
+  "description": "SSO Request Data",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-user-sso-context-api-openapi.yml#/components/schemas/UserSSOContextRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/UserSSOContextRequestData"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "AdditionalSSOAttributes": {
+      "type": "array",
+      "description": "Additional attributes for SSO context",
+      "items": {
+        "$ref": "#/$defs/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+    },
+    "Identifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "An field for customer unique identifier.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "identifier id",
+          "maxLength": 36,
+          "minLength": 1,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "nullable": false
+        },
+        "type": {
+          "type": "string",
+          "description": "Type sent by customer for to identify allowed SSO activity",
+          "enum": [
+            "CUSTOMER_ID",
+            "ACCOUNT_ID"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "nullable": false
+    },
+    "NameValueAttributePair": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Attribute name and value pair",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Attribute name",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_]{1,100}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "Attribute value",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_\\-\\s\\@\\#\\$\\&\\*\\(\\)\\+\\=\\\"\\.\\,\\/]{1,200}$"
+        },
+        "type": {
+          "type": "string",
+          "default": "text",
+          "description": "Attribute data type",
+          "enum": [
+            "text",
+            "number",
+            "boolean",
+            "iso_date"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "nullable": false
+    },
+    "UserSSOContextRequestData": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Request payload for User SSO context.",
+      "properties": {
+        "identifier": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "activityType": {
+          "type": "string",
+          "description": "Activity type sent by customer for CWS/MOB to identify allowed SSO activity",
+          "enum": [
+            "ADD_EXTERNAL_ACCOUNT",
+            "MANAGE_EXTERNAL_ACCOUNT",
+            "VIEW_STATEMENT"
+          ]
+        },
+        "product": {
+          "type": "string",
+          "description": "Client product/brand",
+          "maxLength": 20,
+          "minLength": 3,
+          "pattern": "^[A-Za-z0-9]{3,20}$",
+          "nullable": false
+        },
+        "channel": {
+          "type": "string",
+          "description": "Channel field for the IDP page rendering.",
+          "enum": [
+            "WEB",
+            "MOBILE"
+          ]
+        },
+        "deviceIPAddress": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Client IP address (IPv4 or IPv6)",
+          "maxLength": 45,
+          "minLength": 7,
+          "pattern": "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$"
+        },
+        "additionalAttributes": {
+          "$ref": "#/$defs/AdditionalSSOAttributes"
+        }
+      },
+      "required": [
+        "activityType",
+        "channel",
+        "identifier",
+        "product"
+      ],
+      "nullable": false
+    }
+  }
+}

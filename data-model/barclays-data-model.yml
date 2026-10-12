@@ -1,126 +1,2522 @@
-generated: '2026-09-04'
+generated: '2026-10-12'
 method: derived
-source: openapi/ (26 first-party OpenAPI 3.1 documents harvested from developer.barclays.com)
-note: 946 component schemas across 26 contracts. The UK Open Banking APIs share one data model — the OBIE Read/Write
-  object graph, in which every resource hangs off AccountId, and every write is a two-step consent-then-execute
-  pair. The Barclaycard US APIs carry a separate, unrelated card-account model keyed on account and card identifiers.
-schema_total: 946
-id_conventions:
-- field: AccountId
-  domain: UK Open Banking account resources
-- field: ConsentId
-  domain: every OBIE consent resource (account-access, payment, funds-confirmation, VRP)
-- field: DomesticPaymentId / InternationalPaymentId / FilePaymentId
-  domain: executed payment resources
-- field: EventSubscriptionId
-  domain: Event Notification subscriptions
-- field: UK.OBIE.*
-  domain: namespaced code values for account identification, local instrument and financial-institution identification
-core_patterns:
-- name: consent-then-execute
-  description: 'Every UK Open Banking write is two resources: a *-consent the PSU authorises, then the execute resource
-    that references its ConsentId. /domestic-payment-consents -> /domestic-payments, /account-access-consents ->
-    /accounts, /domestic-vrp-consents -> /domestic-vrps, /funds-confirmation-consents -> /funds-confirmations.'
-- name: OBRead*/OBWrite* envelope
-  description: Requests wrap payloads in Data; responses return Data + Links + Meta. Errors return OBErrorResponse1
-    { Id, Code, Message, Errors[] }.
+generator: derive-data-model.py
+source:
+- openapi/barclays-account-access-consents-api-openapi.yml
+- openapi/barclays-accounts-api-openapi.yml
+- openapi/barclays-applyproductexternalapi-oas-api-openapi.yml
+- openapi/barclays-atms-api-openapi.yml
+- openapi/barclays-balances-api-openapi.yml
+- openapi/barclays-beneficiaries-api-openapi.yml
+- openapi/barclays-branches-api-openapi.yml
+- openapi/barclays-business-current-accounts-api-openapi.yml
+- openapi/barclays-card-account-details-inquiry-external-api-api-openapi.yml
+- openapi/barclays-card-controls-api-api-openapi.yml
+- openapi/barclays-cards-activation-api-openapi.yml
+- openapi/barclays-commercial-credit-cards-api-openapi.yml
+notation: has_one = property $ref; has_many = array of $ref; belongs_to = <entity>_id field
+summary:
+  entities: 400
+  entities_in_spec: 416
+  relationships: 354
+entities:
+- name: ACHDetails
+  fields: 3
+  description: Contains details of external bank account to which ACH was applied
+- name: AccountInfo
+  fields: 4
+  description: Holds Accounts data
+- name: AccountLookupRequestDataV2
+  fields: 1
+  description: Account Lookup Request Data.
+- name: AccountLookupRequestV2
+  fields: 2
+  description: Account Lookup Request
+- name: AccountLookupResponse
+  fields: 4
+  description: Account Lookup Response
+- name: AccountLookupResponseData
+  fields: 1
+  description: Account Lookup Response Data.
+- name: AccountSummaryResAttributesV2
+  fields: 10
+  description: Account Summary Response.
+- name: ActivateCardDetailType
+  fields: 4
+  description: Activation result details for a single card
+- name: ActivateCardRequestData
+  fields: 1
+  description: Request data for activating one or more cards with verification details.
+- name: ActivateCardRequestDataItem
+  fields: 2
+  description: Card activation request payload containing one or more cards to activate
+- name: ActivateCardResponseData
+  fields: 1
+  description: Response data containing activation results for each requested card.
+- name: ActivateCardResponseDataItem
+  fields: 1
+  description: Response containing activation results for each requested card
+- name: ActivationStatusDetailType
+  fields: 4
+  description: Activation status details for a single card
+- name: ActivationStatusResponseData
+  fields: 1
+  description: Response data containing activation status for all cards in the account.
+- name: ActivationStatusResponseDataItem
+  fields: 1
+  description: Response containing activation status for all cards in the account
+- name: AddSubscriptionDetails
+  fields: 6
+  description: Object holding the subscription information after enrollment
+- name: AddSubscriptionReqData
+  fields: 1
+  description: Enroll to a subscription request data
+- name: AddSubscriptionResData
+  fields: 1
+  description: Response for subscription enrollment
+- name: AddSubscriptionResponse
+  fields: 3
+  description: Object holding the response for enrollment for an AutoPay subscription
+- name: Address
+  fields: 5
+  description: Permanent address Info
+- name: Amount
+  fields: 2
+  description: Holds currency data
+- name: AmountOptions
+  fields: 7
+  description: amount options
+- name: AmountOptions_availableCredit
+  fields: 2
+  description: Credit available for the card account
+- name: AmountOptions_creditLimit
+  fields: 2
+  description: Credit limit for the card account
+- name: AmountOptions_currentBalance
+  fields: 2
+  description: Current balance i.e. total amount owed by the customer at the given moment
+- name: AmountOptions_minimumDue
+  fields: 2
+  description: Minimum due amount that customer needs to pay
+- name: AmountOptions_remainingMinimumDue
+  fields: 2
+  description: Remaining minimum due amount if some part of it is already paid
+- name: AmountOptions_remainingStatementBalance
+  fields: 2
+  description: Remaining statement balance if some part of it is already paid
+- name: AmountOptions_statementBalance
+  fields: 2
+  description: Statement balance i.e. the amount owed by the customer till the last billing cycle
+- name: ApplicationConsentRequest
+  fields: 1
+  description: App consent request data
+- name: ApplicationConsentRequestAttributes
+  fields: 4
+  description: Application Consent Request Attributes
+- name: ApplicationConsentResponse
+  fields: 1
+  description: App consent response data
+- name: ApplicationConsentResponseAttributes
+  fields: 11
+  description: Application Consent Response Attributes
+- name: ApplicationReq
+  fields: 1
+  description: Application Request Attributes
+- name: ApplicationReqAttributes
+  fields: 29
+  description: Application Request Attributes
+- name: ApplicationReqAttributes_secondaryApplicants
+  fields: 4
+  description: Secondary applicant details
+- name: ApplicationRequest
+  fields: 14
+  description: Prequal a customer against for an given offer
+- name: ApplicationRes
+  fields: 1
+  description: Application response data
+- name: ApplicationResAttributes
+  fields: 14
+  description: response
+- name: ApplicationStatusResponse
+  fields: 1
+  description: Application status for applicant
+- name: ApplicationStatusResponseAttributes
+  fields: 8
+  description: Application status for applicant
+- name: ApplicationVerificationRequest
+  fields: 1
+  description: Verification request data
+- name: ApplicationVerificationRequestAttributes
+  fields: 2
+  description: Verification Request Attributes
+- name: ApplicationVerificationResponse
+  fields: 1
+  description: Verification response data
+- name: ApplicationVerificationResponseAttributes
+  fields: 11
+  description: response
+- name: AuthorizationExt
+  fields: 1
+  description: Authorization record
+- name: AuthorizationExt_authTransInfoExt
+  fields: 8
+  description: Auth Trans Info
+- name: AuthorizationsExtData
+  fields: 1
+  description: Authorizations Response
+- name: AuthorizationsExtList
+  fields: 1
+  description: List of authorizations
+- name: BalanceTransfersAttributes
+  fields: 2
+  description: Balance transfer requests
+- name: CardActivationRequests
+  fields: 3
+  description: Individual card activation request with verification details
+- name: CardControlStatusDetailType
+  fields: 3
+  description: Lock/unlock status details for a single card
+- name: CardControlStatusResponseData
+  fields: 1
+  description: Response data containing lock/unlock status for all cards in the account.
+- name: CardControlStatusResponseDataItem
+  fields: 1
+  description: Response containing lock/unlock status for all cards in the account.
+- name: CardDetailAttributes
+  fields: 5
+  description: response
+- name: CardDetails
+  fields: 3
+  description: Card Details of the account
+- name: CardIdentifier
+  fields: 2
+  description: Unique card identifier using external customer ID and last 4 digits
+- name: CardNumberAttributes
+  fields: 3
+  description: response
+- name: CashBackACH
+  fields: 3
+  description: Cash Back ACH redemption eligibility information (only present if query parameter includeCashBackACHEligibility=true)
+- name: CashBackStmntCr
+  fields: 2
+  description: Cash Back Statement credit redemption eligibility information (only present if query parameter includeCashBackStmntCrEligibility=true)
+- name: CashCapability
+  fields: 5
+  description: Details about the cash-based redemption capability.
+- name: CreditBureauDetails
+  fields: 3
+  description: Offer Object
+- name: CustomAmountRange
+  fields: 2
+  description: Range allowed for the custom amount payment option
+- name: CustomerAddress
+  fields: 7
+  description: Customer billing address details
+- name: CustomerProfile
+  fields: 13
+  description: Customer's partner account relationship details
+- name: CycleDatesData
+  fields: 1
+  description: cycle dates response
+- name: CycleDatesList
+  fields: 1
+  description: cycle dates list
+- name: DCRRequestType
+  fields: 20
+- name: DCRResponseType
+  fields: 24
+- name: DateOptions
+  fields: 6
+  description: Date options available under payment options
+- name: DateOptions_customDateRange
+  fields: 2
+  description: Custom date range for future payments
+- name: DeleteConsentsConfirmationOfFundsConsentid409Response
+  fields: 5
+- name: DeleteConsentsConsentid409Response
+  fields: 5
+- name: DeletePaymentsSepaCreditTransfersPaymentid409Response
+  fields: 5
+- name: DeviceDetails
+  fields: 16
+  description: Customer details
+- name: DeviceVerificationContextAttributes
+  fields: 2
+  description: Device verification attributes
+- name: DownsellProductInfoAttributes
+  fields: 3
+  description: Downsell Product information will be sent in the response for the application status 'DOWNSELL_APPROVED_CONSENT_REQUIRED'
+    and 'DOWNSELL_PENDED_CONSENT_REQUIRED'.In case of these statuses, the downsell
+- name: EasypayInfo
+  fields: 2
+  description: Easy Pay installment plan information
+- name: Eligibility
+  fields: 2
+  description: Determines eligibility of redemption option
+- name: ErrorDetails
+  fields: 2
+  description: Contains error information if the requested upgrade/downgrade is declined.
+- name: ErrorResponseType
+  fields: 2
+  description: An API error response.
+- name: ErrorType
+  fields: 5
+  description: Message details - additional operation execution information.
+- name: ExternalAccount
+  fields: 5
+  description: Contains details of external bank accounts configured on an account for ACH
+- name: ExternalAccountLast4
+  fields: 5
+  description: Get all external account response
+- name: ExternalBankAccountDetailsLast4
+  fields: 5
+  description: Bank account details
+- name: ExternalBankDetails
+  fields: 4
+- name: ExternalWalletProvision
+  fields: 3
+  description: Wallet provisioning request with eligibility criteria and device information
+- name: ExternalWalletProvisionResponseData
+  fields: 1
+  description: Response data containing wallet provisioning information for card activation.
+- name: ExternalWalletResponse
+  fields: 5
+  description: Wallet provisioning response containing activation data and encrypted credentials
+- name: File
+  fields: 0
+- name: FulfillmentMethod
+  fields: 3
+  description: Fulfillment method for the redemption type.
+- name: GetAccountsAccountIdTransactionsTransactionid400Response
+  fields: 5
+- name: GetAccountsAccountIdTransactionsTransactionid401Response
+  fields: 5
+- name: GetAccountsAccountIdTransactionsTransactionid404Response
+  fields: 5
+- name: GetAllExternalAccountsResponseDataLast4
+  fields: 1
+  description: All external bank accounts response data
+- name: GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid400Response
+  fields: 5
+- name: GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response
+  fields: 5
+- name: GetExternalAccountResponseDataLast4
+  fields: 1
+  description: external bank account response data
+- name: GetPaymentsInstantSepaCreditTransfersPaymentidStatus400Response
+  fields: 5
+- name: GetPaymentsInstantSepaCreditTransfersPaymentidStatus404Response
+  fields: 5
+- name: HeadUnsecuredSmeLoans400Response
+  fields: 3
+- name: HeadUnsecuredSmeLoans408Response
+  fields: 3
+- name: HeadUnsecuredSmeLoans429Response
+  fields: 3
+- name: HeadUnsecuredSmeLoans500Response
+  fields: 3
+- name: HeadUnsecuredSmeLoans503Response
+  fields: 3
+- name: Identifier
+  fields: 2
+  description: An field for customer unique identifier.
+- name: InstantCreditByAccountReqAttributes
+  fields: 3
+  description: Instant Credit look up account id request attributes
+- name: InstantCreditByAccountRequest
+  fields: 1
+  description: InstantCredit look up by accountId API request
+- name: InstantCreditByAccountResAttributes
+  fields: 2
+  description: response
+- name: InstantCreditByAccountResponse
+  fields: 1
+  description: InstantCredit look up by accountId API response
+- name: JWKSKey
+  fields: 17
+  description: Partner Entity
+- name: JWKSKeySetBody
+  fields: 1
+  description: JWKS Response Body
+- name: JWKSObjectType
+  fields: 1
+- name: LineItem
+  fields: 12
+- name: Links
+  fields: 5
+  description: Links relevant to the payload
+- name: LockCardControlResponseDataItem
+  fields: 1
+  description: Response containing lock result for a single card.
+- name: LockCardRequestData
+  fields: 1
+  description: Request data for locking a card with fraud assessment.
+- name: LockCardRequestDataItem
+  fields: 1
+  description: Card lock request payload containing the card to lock.
+- name: LockCardResponseData
+  fields: 1
+  description: Response data containing the result of a card lock operation.
+- name: LockUnlockCardDetailType
+  fields: 3
+  description: Card lock/unlock result details for a single card
+- name: LoyaltyTierRequest
+  fields: 2
+  description: Loyalty Tier Request Data
+- name: LoyaltyTierRequestData
+  fields: 1
+  description: Loyalty Tier Update Request Data
+- name: LoyaltyTierResponse
+  fields: 1
+  description: Loyalty Tier Response Data
+- name: LoyaltyTierResponseData
+  fields: 1
+  description: Loyalty Tier Update Response Data
+- name: Meta
+  fields: 3
+  description: Meta Data relevant to the payload
+- name: ModifyAutoPaymentResponse
+  fields: 3
+  description: Modify AutoPay Response
+- name: ModifyAutoPaymentResponseData
+  fields: 1
+  description: Modify Current Cycle AutoPay Response Data
+- name: ModifyPaymentRequest
+  fields: 2
+  description: Modify Payment Request
+- name: ModifyPaymentRequestData
+  fields: 1
+  description: Modify Payment Request Data
+- name: ModifyPaymentResponse
+  fields: 3
+  description: Modify Payment Response
+- name: ModifyPaymentResponseData
+  fields: 1
+  description: Modify Payment Response Data
+- name: ModifySubscriptionDetails
+  fields: 8
+  description: Object holding the subscription information after enrollment
+- name: ModifySubscriptionReqData
+  fields: 1
+  description: Update a subscription
+- name: ModifySubscriptionRequest
+  fields: 2
+  description: Object holding the subscription information for updating an AutoPay subscription
+- name: ModifySubscriptionResData
+  fields: 1
+  description: Response for subscription update
+- name: ModifySubscriptionResponse
+  fields: 3
+  description: Object holding the response for updating an AutoPay subscription
+- name: MultiCardAccountSummaryResAttributesV2
+  fields: 1
+  description: Multi Card Account Summary Response.
+- name: MultiCardAccountSummaryResponseDataV2
+  fields: 1
+  description: Multi Card Account Summary Response Data.
+- name: NameValueAttributePair
+  fields: 2
+  description: Name value attributes
+- name: OBAccount6
+  fields: 14
+  description: 'Unambiguous identification of the account to which credit and debit entries are made. The following
+    fields are optional only for accounts that are switched:'
+- name: OBActiveOrHistoricCurrencyAndAmount
+  fields: 2
+  description: Amount of money associated with the charge type.
+- name: OBActiveOrHistoricCurrencyAndAmount_0
+  fields: 2
+  description: The amount of the most recent direct debit collection.
+- name: OBActiveOrHistoricCurrencyAndAmount_1
+  fields: 2
+  description: Amount of money to be moved between the debtor and creditor, before deduction of charges, expressed
+    in the currency as ordered by the initiating party.
+- name: OBActiveOrHistoricCurrencyAndAmount_10
+  fields: 2
+  description: Transaction charges to be paid by the charge bearer.
+- name: OBActiveOrHistoricCurrencyAndAmount_11
+  fields: 2
+  description: The amount of the last (most recent) Standing Order instruction.
+- name: OBActiveOrHistoricCurrencyAndAmount_2
+  fields: 2
+  description: The amount of the first Standing Order
+- name: OBActiveOrHistoricCurrencyAndAmount_3
+  fields: 2
+  description: The amount of the next Standing Order.
+- name: OBActiveOrHistoricCurrencyAndAmount_4
+  fields: 2
+  description: The amount of the final Standing Order
+- name: OBActiveOrHistoricCurrencyAndAmount_5
+  fields: 2
+  description: Amount of money associated with the statement benefit type.
+- name: OBActiveOrHistoricCurrencyAndAmount_6
+  fields: 2
+  description: Amount of money associated with the statement fee type.
+- name: OBActiveOrHistoricCurrencyAndAmount_7
+  fields: 2
+  description: Amount of money associated with the statement interest amount type.
+- name: OBActiveOrHistoricCurrencyAndAmount_9
+  fields: 2
+  description: Amount of money in the cash transaction entry.
+- name: OBBCAData1
+  fields: 4
+- name: OBBankTransactionCodeStructure1
+  fields: 2
+  description: Set of elements used to fully identify the type of underlying transaction resulting in an entry.
+- name: OBBeneficiary5
+  fields: 7
+- name: OBBranchAndFinancialInstitutionIdentification5_0
+  fields: 3
+  description: Party that manages the account on behalf of the account owner, that is manages the registration and
+    booking of entries on the account, calculates balances on the account and provides information about
+- name: OBBranchAndFinancialInstitutionIdentification5_1
+  fields: 5
+  description: Party that manages the account on behalf of the account owner, that is manages the registration and
+    booking of entries on the account, calculates balances on the account and provides information about
+- name: OBBranchAndFinancialInstitutionIdentification6_0
+  fields: 5
+  description: Party that manages the account on behalf of the account owner, that is manages the registration and
+    booking of entries on the account, calculates balances on the account and provides information about
+- name: OBBranchAndFinancialInstitutionIdentification6_1
+  fields: 5
+  description: Financial institution servicing an account for the creditor.
+- name: OBBranchAndFinancialInstitutionIdentification6_2
+  fields: 5
+  description: Financial institution servicing an account for the debtor.
+- name: OBCashAccount5_0
+  fields: 5
+  description: Provides the details to identify the beneficiary account.
+- name: OBCashAccount5_1
+  fields: 5
+  description: Provides the details to identify the beneficiary account.
+- name: OBCashAccount6_0
+  fields: 5
+  description: Unambiguous identification of the account of the creditor, in the case of a debit transaction.
+- name: OBCashAccount6_1
+  fields: 5
+  description: Unambiguous identification of the account of the debtor, in the case of a credit transaction.
+- name: OBCashAccountCreditor3
+  fields: 5
+- name: OBCashAccountDebtor4
+  fields: 5
+  description: ^ Only included in the response if `Data. ReadRefundAccount` is set to `Yes` in the consent.
+- name: OBCashAccountDebtorWithName
+  fields: 5
+- name: OBCurrencyExchange5
+  fields: 7
+  description: Set of elements used to provide details on the currency exchange.
+- name: OBDomesticRefundAccount1
+  fields: 1
+  description: Unambiguous identification of the refund account to which a refund will be made as a result of the
+    transaction.
+- name: OBDomesticVRPConsentRequest
+  fields: 2
+- name: OBDomesticVRPConsentResponse
+  fields: 4
+- name: OBDomesticVRPControlParameters
+  fields: 8
+- name: OBDomesticVRPDetails
+  fields: 1
+- name: OBDomesticVRPInitiation
+  fields: 7
+- name: OBDomesticVRPInstruction
+  fields: 9
+- name: OBDomesticVRPRequest
+  fields: 2
+- name: OBDomesticVRPResponse
+  fields: 4
+- name: OBError1
+  fields: 4
+- name: OBErrorResponse1
+  fields: 4
+  description: An array of detail error codes, and messages, and URLs to documentation to help remediation.
+- name: OBEventPolling1
+  fields: 4
+- name: OBEventPollingResponse1
+  fields: 2
+- name: OBEventSubscription1
+  fields: 1
+- name: OBEventSubscriptionResponse1
+  fields: 3
+- name: OBEventSubscriptionsResponse1
+  fields: 3
+- name: OBExtendedProprietaryBankTransactionCode
+  fields: 3
+  description: Additional proprietary bank transaction codes used by the ASPSP for the underlying transaction
+- name: OBFrequency6
+  fields: 3
+  description: Regularity with which credit transfer instructions are to be created and processed
+- name: OBFundsConfirmation1
+  fields: 1
+- name: OBFundsConfirmationConsent1
+  fields: 1
+- name: OBFundsConfirmationConsentResponse1
+  fields: 3
+- name: OBFundsConfirmationResponse1
+  fields: 3
+- name: OBIntermediaryAgent
+  fields: 6
+  description: The intermediary agent associated with this transaction.
+- name: OBMandateRelatedInformation1
+  fields: 8
+  description: Provides further details of the mandate signed between the creditor and the debtor.
+- name: OBMerchantDetails1
+  fields: 2
+  description: Details of the merchant involved in the transaction.
+- name: OBPAFundsAvailableResult1
+  fields: 2
+  description: Availability result, clearly indicating the availability of funds given the Amount in the request.
+- name: OBPCAData1
+  fields: 4
+- name: OBParty2
+  fields: 14
+- name: OBPartyRelationships1
+  fields: 1
+  description: The Party's relationships with other resources.
+- name: OBPostalAddress7
+  fields: 18
+  description: Information that locates and identifies a specific address, as defined by postal services.
+- name: OBProxy1
+  fields: 3
+  description: Specifies an alternate assumed name for the identification of the account.
+- name: OBReadAccount6
+  fields: 3
+- name: OBReadBalance1
+  fields: 3
+- name: OBReadBeneficiary5
+  fields: 3
+- name: OBReadConsent1
+  fields: 2
+- name: OBReadConsentResponse1
+  fields: 4
+- name: OBReadDataStatement2
+  fields: 1
+- name: OBReadDataTransaction6
+  fields: 1
+- name: OBReadDirectDebit2
+  fields: 3
+- name: OBReadOffer1
+  fields: 3
+- name: OBReadParty3
+  fields: 3
+- name: OBReadProduct2
+  fields: 3
+  description: Product details of Other Product which is not available in the standard list
+- name: OBReadScheduledPayment3
+  fields: 3
+- name: OBReadStandingOrder6
+  fields: 3
+- name: OBReadStatement2
+  fields: 3
+- name: OBReadTransaction6
+  fields: 3
+- name: OBReferredDocumentInformation
+  fields: 5
+- name: OBRegulatoryAuthority2
+  fields: 2
+  description: Entity requiring the regulatory reporting information.
+- name: OBRegulatoryReporting1
+  fields: 3
+  description: Information needed due to regulatory and statutory requirements
+- name: OBRemittanceInformation2
+  fields: 2
+  description: Information supplied to enable the matching of an entry with the items that the transfer is intended
+    to settle, such as commercial invoices in an accounts' receivable system
+- name: OBRemittanceInformationStructured
+  fields: 7
+- name: OBRisk1
+  fields: 9
+  description: The Risk section is sent by the initiating party to the ASPSP.
+- name: OBRisk2
+  fields: 0
+  description: The Risk section is sent by the initiating party to the ASPSP. <br />
+- name: OBSCASupportData1
+  fields: 3
+  description: Supporting Data provided by TPP, when requesting SCA Exemption.
+- name: OBScheduledPayment3
+  fields: 9
+- name: OBStandingOrder6
+  fields: 15
+- name: OBStatement2
+  fields: 16
+  description: Provides further details on a statement resource.
+- name: OBStatusReason
+  fields: 3
+- name: OBStructuredRegulatoryReporting3
+  fields: 5
+  description: Set of elements used to provide details on the regulatory reporting information.
+- name: OBSupplementaryData1
+  fields: 0
+  description: Additional information that can not be captured in the structured fields and/or any other specific
+    block.
+- name: OBTransaction6
+  fields: 32
+  description: Provides further details on an entry in the report.
+- name: OBTransactionCardInstrument1
+  fields: 4
+  description: Set of elements to describe the card instrument used in the transaction. <br />
+- name: OBTransactionCashBalance
+  fields: 3
+  description: Set of elements used to define the balance as a numerical representation of the net increases and
+    decreases in an account after a transaction entry is applied to the account.
+- name: OBUltimateCreditor1
+  fields: 5
+  description: Ultimate party to which an amount of money is due.
+- name: OBUltimateDebtor1
+  fields: 5
+  description: Ultimate party that owes an amount of money to the (ultimate) creditor.
+- name: OBVRPFundsConfirmationRequest
+  fields: 1
+  description: The OBVRPFundsConfirmationRequest object must be used to request funds availability for a specific
+    amount in the Debtor Account included in the VRP consents.
+- name: OBVRPFundsConfirmationResponse
+  fields: 1
+  description: The confirmation of funds response contains the result of a funds availability check.
+- name: OBWriteDomestic2
+  fields: 2
+- name: OBWriteDomesticConsent4
+  fields: 2
+- name: OBWriteDomesticConsentResponse5
+  fields: 4
+- name: OBWriteDomesticResponse5
+  fields: 3
+- name: OBWriteDomesticScheduled2
+  fields: 2
+- name: OBWriteDomesticScheduledConsent4
+  fields: 2
+- name: OBWriteDomesticScheduledConsentResponse5
+  fields: 4
+- name: OBWriteDomesticScheduledResponse5
+  fields: 3
+- name: OBWriteDomesticStandingOrder3
+  fields: 2
+- name: OBWriteDomesticStandingOrderConsent5
+  fields: 2
+- name: OBWriteDomesticStandingOrderConsentResponse6
+  fields: 4
+- name: OBWriteDomesticStandingOrderResponse6
+  fields: 3
+- name: OBWriteFile2
+  fields: 1
+- name: OBWriteFileConsent3
+  fields: 1
+- name: OBWriteFileConsent4
+  fields: 1
+- name: OBWriteFileConsent4Array
+  fields: 12
+- name: OBWriteFileConsentResponse4
+  fields: 3
+- name: OBWriteFileResponse3
+  fields: 3
+- name: OBWriteFileResponse4
+  fields: 3
+- name: OBWriteFundsConfirmationResponse1
+  fields: 3
+- name: OBWriteInternational3
+  fields: 2
+- name: OBWriteInternationalConsent5
+  fields: 2
+- name: OBWriteInternationalConsentResponse6
+  fields: 4
+- name: OBWriteInternationalResponse5
+  fields: 3
+- name: OBWriteInternationalScheduled3
+  fields: 2
+- name: OBWriteInternationalScheduledConsent5
+  fields: 2
+- name: OBWriteInternationalScheduledConsentResponse6
+  fields: 4
+- name: OBWriteInternationalScheduledResponse6
+  fields: 3
+- name: OBWriteInternationalStandingOrder4
+  fields: 2
+- name: OBWriteInternationalStandingOrderConsent6
+  fields: 2
+- name: OB_OtherCodeType1_0
+  fields: 3
+- name: OB_OtherCodeType1_1
+  fields: 3
+  description: Other application frequencies that are not available in the standard code list
+- name: OB_OtherCodeType1_2
+  fields: 3
+  description: Other calculation frequency which is not available in the standard code set.
+- name: OB_OtherCodeType1_3
+  fields: 3
+  description: Other Fee type which is not available in the standard code set
+- name: OB_OtherCodeType1_4
+  fields: 3
+  description: Other fee rate type code which is not available in the standard code set
+- name: OB_OtherCodeType1_5
+  fields: 3
+  description: Other fee rate type which is not in the standard rate type list
+- name: OB_OtherCodeType1_6
+  fields: 3
+  description: Other application frequencies not covered in the standard code list
+- name: OB_OtherCodeType1_7
+  fields: 3
+  description: Other calculation frequency which is not available in standard code set.
+- name: OB_OtherCodeType1_8
+  fields: 3
+  description: Other fee rate type which is not available in the standard code set
+- name: OB_OtherFeeChargeDetailType
+  fields: 4
+  description: Other Fee/charge type which is not available in the standard code set
+- name: Offer
+  fields: 11
+  description: Offer Object
+- name: OfferReqAttributes
+  fields: 10
+  description: Offer Request Attributes
+- name: OfferRequest
+  fields: 1
+  description: Offer API request
+- name: OfferResAttributes
+  fields: 4
+  description: response
+- name: OfferResponse
+  fields: 1
+  description: Offer API response
+- name: POSMetaData
+  fields: 4
+  description: Fraud Analysis Data
+- name: PayWithPoints
+  fields: 2
+  description: Pay With Points redemption eligibility information (only present if query parameter includePayWithPointsEligibility=true)
+- name: PaymentOptionsResponse
+  fields: 2
+  description: payment options fields
+- name: PaymentOptionsResponseData
+  fields: 1
+  description: Payment Options Response Data
+- name: PaymentRequest
+  fields: 7
+  description: Payment Request
+- name: PaymentSummary
+  fields: 13
+  description: Payment Summary fields
+- name: PaymentSummaryMetaResponse
+  fields: 2
+- name: PaymentSummaryResponseData
+  fields: 2
+  description: Payment Summary Data
+- name: PostRegister400Response
+  fields: 2
+- name: PostRegister429Response
+  fields: 2
+- name: PostRegister500Response
+  fields: 2
+- name: PrequalDecision
+  fields: 6
+  description: Decision object
+- name: PrequalRequest
+  fields: 1
+  description: Prequal decision request for the customer
+- name: PrequalRequestAttributes
+  fields: 4
+  description: PrequalRequestAttributes object
+- name: PrequalRes
+  fields: 3
+  description: Decision response for the customer prequal submission
+- name: PrequalResponse
+  fields: 1
+  description: Prequal decision response From apply screening
+- name: PrescreenOffersCaptureRequest
+  fields: 1
+  description: Prescreen offer capture request
+- name: PrescreenOffersCaptureRequestAttributes
+  fields: 1
+  description: Prescreen offer capture request
+- name: PrescreenOffersCaptureResponse
+  fields: 1
+  description: Prescreen offer capture response
+- name: PrescreenOffersCaptureResponseAttributes
+  fields: 1
+  description: Prescreen offer capture response
+- name: PrescreenOffersRequest
+  fields: 1
+  description: Prescreen a customer against an existing offer
+- name: PrescreenOffersRequestAttributes
+  fields: 7
+  description: Prescreen a customer against an existing offer
+- name: PrescreenOffersResponse
+  fields: 1
+  description: The best offer for which Prospect customer is eligible for
+- name: PrescreenOffersResponseAttributes
+  fields: 9
+  description: The best offer for which Prospect customer is eligible for
+- name: ProprietaryBankTransactionCodeStructure1
+  fields: 2
+  description: Set of elements to fully identify a proprietary bank transaction code.
+- name: PurchasedByOption
+  fields: 6
+  description: transactions purchased by options
+- name: Redemption
+  fields: 4
+  description: Contains redemption history information.
+- name: RedemptionAmount
+  fields: 2
+  description: Dollar value of rewards to be applied to the account via statement credit or ACH
+- name: RedemptionCapabilitiesResponse
+  fields: 7
+  description: Contains redemption eligibility information based on available redemption options for a specific
+    external account.
+- name: RedemptionCapabilitiesResponseData
+  fields: 1
+  description: Redemption Capabilities Response Data
+- name: RedemptionEligibilityResponse
+  fields: 4
+  description: Contains redemption eligibility information based on available redemption options for a specific
+    external account.
+- name: RedemptionEligibilityResponseData
+  fields: 1
+  description: Redemption Eligibility Response Data
+- name: RedemptionHistoryResponse
+  fields: 1
+  description: Redemption history Response
+- name: RedemptionHistoryResponseData
+  fields: 1
+  description: Redemption History Response Data
+- name: RedemptionRequestDataV3
+  fields: 1
+  description: Root object that holds redemption amount and related program attributes.
+- name: RedemptionRequestV3
+  fields: 9
+  description: Redemption amount and related program attributes.
+- name: RedemptionResponseDataV3
+  fields: 1
+  description: Root object that holds a redemption id and current rewards balance upon a successful redemption.
+- name: RedemptionResponseV3
+  fields: 3
+  description: Contains redemption id and status of redemption request.
+- name: RedemptionRule
+  fields: 5
+  description: Defined rule for the redemption type.
+- name: RemainingLimit
+  fields: 2
+  description: Contains the remaining amount for redemption if a cap amount is configured on redemption option
+- name: RetrieveCardDetailsRequest
+  fields: 3
+  description: Retrieve Card Details Request
+- name: RetrieveCardDetailsRequestData
+  fields: 1
+  description: Retrieve Card-Details Request Data
+- name: RetrieveCardDetailsResponseDataV2
+  fields: 1
+  description: Retrieve Card-Details Response Data
+- name: RetrieveCardDetailsResponseV2
+  fields: 3
+  description: Retrieve Card Details Response
+- name: RewardBalanceDataV3
+  fields: 1
+  description: Root object that holds rewards balance.
+- name: RewardBalanceV3
+  fields: 4
+  description: Contains rewards balance.
+- name: RewardInformation
+  fields: 3
+- name: RewardInformationSummaryResponse
+  fields: 4
+- name: RewardsEarnHistoryData
+  fields: 2
+- name: RewardsEarnHistoryResponse
+  fields: 1
+- name: RiskAssessmentDetails
+  fields: 1
+  description: Risk summary
+- name: SchedulePaymentRequestData
+  fields: 1
+  description: Schedule Payment Request Data
+- name: SchedulePaymentResponse
+  fields: 3
+  description: Schedule Payment Response
+- name: SchedulePaymentResponseData
+  fields: 1
+  description: Schedule Payment Response Data
+- name: ScheduledPaymentDetails
+  fields: 4
+  description: Schedule Payment Response
+- name: SearchOptions
+  fields: 4
+  description: transactions search options
+- name: SearchOptionsData
+  fields: 1
+  description: Transactions search options response
+- name: Statements
+  fields: 3
+  description: The document details list data
+- name: StatementsListResponseBody
+  fields: 1
+  description: Statements List Response
+- name: StatementsResponseObjectBody
+  fields: 3
+  description: Letters List Response
+- name: StatementsResponseType
+  fields: 1
+  description: Statement List Response
+- name: Subscription
+  fields: 8
+  description: Object holding the subscription information for an account
+- name: SubscriptionData
+  fields: 1
+  description: Subscription data
+- name: SubscriptionOptions
+  fields: 3
+  description: Object holding options for date, payment option type & range for custom amount
+- name: SubscriptionOptionsData
+  fields: 1
+  description: Subscription options data
+- name: SubscriptionOptions_dateOptions
+  fields: 2
+  description: Options for the dates on which the subscription can be set up for
+- name: SubscriptionOptions_dateOptions_daysBeforeDueDateRange
+  fields: 2
+  description: Interval from Due Date within the subscription can be set up
+- name: SubscriptionRequest
+  fields: 7
+  description: Object holding the subscription information for creating/patching an AutoPay subscription
+- name: TierUpdateRequest
+  fields: 7
+  description: Contains account information, current and new tier codes etc.
+- name: TierUpdateStatus
+  fields: 3
+  description: Contains tier code update success/failure status for each account.
+- name: TokenAttributes
+  fields: 3
+  description: response
+- name: TransactionInfo
+  fields: 2
+  description: Optional metadata supplied by partner for pay with points redemption.
+- name: TransactionV2
+  fields: 25
+  description: Transaction record
+- name: TransactionsDataV2
+  fields: 1
+  description: transactions Response
+- name: TransactionsListV2
+  fields: 1
+  description: transactions list
+- name: UnlockCardControlResponseDataItem
+  fields: 1
+  description: Response containing unlock result for a single card.
+- name: UnlockCardRequestData
+  fields: 1
+  description: Request data for unlocking a card with fraud assessment.
+- name: UnlockCardRequestDataItem
+  fields: 1
+  description: Card unlock request payload containing the card to unlock.
+- name: UnlockCardResponseData
+  fields: 1
+  description: Response data containing the result of a card unlock operation.
+- name: UpdatedAutoPaymentDetails
+  fields: 4
+  description: Update Auto Payment Response
+- name: UpdatedPaymentDetails
+  fields: 3
+  description: Update Payment Response
+- name: UserIdentityContextRequest
+  fields: 1
+  description: User identity context request.
+- name: UserIdentityContextRequestData
+  fields: 6
+  description: User identity context request data.
+- name: UserIdentityContextResponse
+  fields: 1
+  description: User identify context response.
+- name: UserIdentityContextResponseData
+  fields: 2
+  description: User identity context response data.
+- name: UserSSOContextRequest
+  fields: 1
+  description: SSO Request Data
+- name: UserSSOContextRequestData
+  fields: 6
+  description: Request payload for User SSO context.
+- name: UserSSOContextResponse
+  fields: 1
+  description: User SSO Response.
+- name: UserSSOContextResponseData
+  fields: 2
+  description: response payload for sso.
+- name: ValidationError
+  fields: 3
+  description: Validation Errors
+- name: WalletEligibility
+  fields: 2
+  description: Eligibility criteria for wallet provisioning
+- name: WalletProvision
+  fields: 9
+  description: Device and certificate information for wallet provisioning
+- name: WalletProvisionRequestData
+  fields: 1
+  description: Request data for provisioning a credit card to a digital wallet.
+- name: business_account_response
+  fields: 2
+- name: commercial_credit_cards_response
+  fields: 2
+- name: create_cof_consent_request
+  fields: 5
+- name: create_cof_consent_response
+  fields: 3
+- name: create_cof_request
+  fields: 4
+- name: create_cof_response
+  fields: 1
+- name: create_consent_request
+  fields: 5
+- name: create_consent_response
+  fields: 3
+- name: get__fca-service-metrics_bcaFault_400_schema_
+  fields: 3
+- name: get__fca-service-metrics_bcaFault_408_schema_
+  fields: 3
+- name: get__fca-service-metrics_bcaFault_429_schema_
+  fields: 3
+- name: get__fca-service-metrics_bcaFault_500_schema_
+  fields: 3
+- name: get__fca-service-metrics_bcaFault_503_schema_
+  fields: 3
+- name: get__fca-service-metrics_bcaFault_default_schema_
+  fields: 3
+- name: get__fca-service-metrics_bcaResponseMessage_200_schema_
+  fields: 2
+- name: get__fca-service-metrics_pcaFault_400_schema_
+  fields: 3
+- name: get__fca-service-metrics_pcaFault_408_schema_
+  fields: 3
+- name: get__fca-service-metrics_pcaFault_429_schema_
+  fields: 3
+- name: get__fca-service-metrics_pcaFault_500_schema_
+  fields: 3
+- name: get__fca-service-metrics_pcaFault_503_schema_
+  fields: 3
+- name: get__fca-service-metrics_pcaFault_default_schema_
+  fields: 3
+- name: get__fca-service-metrics_pcaResponseMessage_200_schema_
+  fields: 2
+- name: get_account_balance_details_response
+  fields: 2
+- name: get_account_details_response
+  fields: 7
+- name: get_account_transaction_details_response
+  fields: 4
+- name: get_account_transactions_response
+  fields: 2
+- name: get_accounts_response
+  fields: 1
 relationships:
-- from: Balance
-  to: Account
+- from: OBErrorResponse1
+  to: OBError1
+  type: has_many
+  via: Errors
+- from: OBReadConsent1
+  to: OBRisk2
+  type: has_one
+  via: Risk
+- from: OBReadConsentResponse1
+  to: OBRisk2
+  type: has_one
+  via: Risk
+- from: OBReadConsentResponse1
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadConsentResponse1
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBReadAccount6
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadAccount6
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBAccount6
+  to: OBBranchAndFinancialInstitutionIdentification5_0
+  type: has_one
+  via: Servicer
+- from: ApplicationConsentResponse
+  to: ApplicationConsentResponseAttributes
+  type: has_one
+  via: data
+- from: ApplicationStatusResponse
+  to: ApplicationStatusResponseAttributes
+  type: has_one
+  via: data
+- from: PrescreenOffersResponse
+  to: PrescreenOffersResponseAttributes
+  type: has_one
+  via: data
+- from: ApplicationVerificationRequest
+  to: ApplicationVerificationRequestAttributes
+  type: has_one
+  via: data
+- from: ApplicationReqAttributes_secondaryApplicants
+  to: Address
+  type: has_one
+  via: permanentAddress
+- from: PrescreenOffersRequest
+  to: PrescreenOffersRequestAttributes
+  type: has_one
+  via: data
+- from: ApplicationRes
+  to: ApplicationResAttributes
+  type: has_one
+  via: data
+- from: PrescreenOffersCaptureRequest
+  to: PrescreenOffersCaptureRequestAttributes
+  type: has_one
+  via: data
+- from: ApplicationReqAttributes
+  to: Address
+  type: has_one
+  via: permanentAddress
+- from: ApplicationReqAttributes
+  to: Address
+  type: has_one
+  via: alternateAddress
+- from: ApplicationReqAttributes
+  to: ApplicationReqAttributes_secondaryApplicants
+  type: has_many
+  via: secondaryApplicants
+- from: ApplicationReqAttributes
+  to: DeviceVerificationContextAttributes
+  type: has_one
+  via: deviceVerificationContext
+- from: InstantCreditByAccountRequest
+  to: InstantCreditByAccountReqAttributes
+  type: has_one
+  via: data
+- from: ApplicationRequest
+  to: Address
+  type: has_one
+  via: permanentAddress
+- from: ApplicationRequest
+  to: Address
+  type: has_one
+  via: alternateAddress
+- from: PrequalDecision
+  to: ValidationError
+  type: has_many
+  via: validationError
+- from: PrequalDecision
+  to: CreditBureauDetails
+  type: has_many
+  via: creditBureauDetails
+- from: PrequalDecision
+  to: Offer
+  type: has_many
+  via: approvedOffers
+- from: PrescreenOffersCaptureResponse
+  to: PrescreenOffersCaptureResponseAttributes
+  type: has_one
+  via: data
+- from: ApplicationVerificationResponseAttributes
+  to: CardDetailAttributes
+  type: has_one
+  via: cardDetail
+- from: PrescreenOffersRequestAttributes
+  to: Offer
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: Transaction
-  to: Account
+  via: offerIds
+- from: PrescreenOffersRequestAttributes
+  to: Address
+  type: has_one
+  via: address
+- from: PrescreenOffersRequestAttributes
+  to: NameValueAttributePair
+  type: has_many
+  via: prescreenAttributes
+- from: ApplicationConsentResponseAttributes
+  to: CardDetailAttributes
+  type: has_one
+  via: cardDetail
+- from: ErrorResponseType
+  to: ErrorType
+  type: has_many
+  via: errors
+- from: InstantCreditByAccountResponse
+  to: InstantCreditByAccountResAttributes
+  type: has_one
+  via: data
+- from: ApplicationVerificationResponse
+  to: ApplicationVerificationResponseAttributes
+  type: has_one
+  via: data
+- from: InstantCreditByAccountResAttributes
+  to: CardDetailAttributes
+  type: has_one
+  via: cardDetail
+- from: CardDetailAttributes
+  to: CardNumberAttributes
+  type: has_one
+  via: pan
+- from: CardDetailAttributes
+  to: CardNumberAttributes
+  type: has_one
+  via: vcn
+- from: CardDetailAttributes
+  to: TokenAttributes
+  type: has_one
+  via: token
+- from: OfferResponse
+  to: OfferResAttributes
+  type: has_one
+  via: data
+- from: PrequalRes
+  to: PrequalDecision
+  type: has_one
+  via: decision
+- from: ApplicationConsentRequest
+  to: ApplicationConsentRequestAttributes
+  type: has_one
+  via: data
+- from: PrescreenOffersResponseAttributes
+  to: Offer
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: Beneficiary
-  to: Account
+  via: offerId
+- from: OfferResAttributes
+  to: Offer
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: DirectDebit
-  to: Account
+  via: offerId
+- from: ApplicationReq
+  to: ApplicationReqAttributes
+  type: has_one
+  via: data
+- from: ApplicationResAttributes
+  to: CardDetailAttributes
+  type: has_one
+  via: cardDetail
+- from: ApplicationResAttributes
+  to: DownsellProductInfoAttributes
+  type: has_one
+  via: downsellProductInfo
+- from: OfferRequest
+  to: OfferReqAttributes
+  type: has_one
+  via: data
+- from: PrequalRequestAttributes
+  to: ApplicationRequest
+  type: has_one
+  via: applicationRequest
+- from: PrequalResponse
+  to: PrequalRes
+  type: has_one
+  via: data
+- from: PrequalRequest
+  to: PrequalRequestAttributes
+  type: has_one
+  via: data
+- from: OBReadBalance1
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadBalance1
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBCashAccount5_0
+  to: OBProxy1
+  type: has_one
+  via: Proxy
+- from: OBBranchAndFinancialInstitutionIdentification6_0
+  to: OBPostalAddress7
+  type: has_one
+  via: PostalAddress
+- from: OBBeneficiary5
+  to: OBSupplementaryData1
+  type: has_one
+  via: SupplementaryData
+- from: OBBeneficiary5
+  to: OBBranchAndFinancialInstitutionIdentification6_0
+  type: has_one
+  via: CreditorAgent
+- from: OBBeneficiary5
+  to: OBCashAccount5_0
+  type: has_one
+  via: CreditorAccount
+- from: OBReadBeneficiary5
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadBeneficiary5
+  to: Meta
+  type: has_one
+  via: Meta
+- from: AccountLookupRequestV2
+  to: POSMetaData
+  type: has_one
+  via: posMetaData
+- from: RetrieveCardDetailsResponseV2
+  to: CardDetails
+  type: has_one
+  via: cardDetails
+- from: RetrieveCardDetailsResponseDataV2
+  to: RetrieveCardDetailsResponseV2
+  type: has_one
+  via: data
+- from: AccountSummaryResAttributesV2
+  to: Amount
+  type: has_one
+  via: currentBalance
+- from: AccountSummaryResAttributesV2
+  to: Amount
+  type: has_one
+  via: availableCredit
+- from: AccountSummaryResAttributesV2
+  to: Amount
+  type: has_one
+  via: statementBalance
+- from: AccountSummaryResAttributesV2
+  to: Amount
+  type: has_one
+  via: creditLimit
+- from: AccountLookupResponse
+  to: AccountInfo
+  type: has_many
+  via: accounts
+- from: RetrieveCardDetailsRequestData
+  to: RetrieveCardDetailsRequest
+  type: has_one
+  via: data
+- from: AccountLookupResponseData
+  to: AccountLookupResponse
+  type: has_one
+  via: data
+- from: RetrieveCardDetailsRequest
+  to: POSMetaData
+  type: has_one
+  via: posMetaData
+- from: MultiCardAccountSummaryResAttributesV2
+  to: AccountSummaryResAttributesV2
+  type: has_many
+  via: summaryInfo
+- from: AccountLookupRequestDataV2
+  to: AccountLookupRequestV2
+  type: has_one
+  via: data
+- from: MultiCardAccountSummaryResponseDataV2
+  to: MultiCardAccountSummaryResAttributesV2
+  type: has_one
+  via: data
+- from: UnlockCardControlResponseDataItem
+  to: LockUnlockCardDetailType
+  type: has_one
+  via: lockUnlockCardDetailType
+- from: LockCardRequestData
+  to: LockCardRequestDataItem
+  type: has_one
+  via: data
+- from: LockUnlockCardDetailType
+  to: CardIdentifier
+  type: has_one
+  via: cardIdentifier
+- from: LockCardRequestDataItem
+  to: CardIdentifier
+  type: has_one
+  via: cardIdentifier
+- from: CardControlStatusResponseData
+  to: CardControlStatusResponseDataItem
+  type: has_one
+  via: data
+- from: LockCardResponseData
+  to: LockCardControlResponseDataItem
+  type: has_one
+  via: data
+- from: CardControlStatusDetailType
+  to: CardIdentifier
+  type: has_one
+  via: cardIdentifier
+- from: LockCardControlResponseDataItem
+  to: LockUnlockCardDetailType
+  type: has_one
+  via: lockUnlockCardDetailType
+- from: UnlockCardRequestData
+  to: UnlockCardRequestDataItem
+  type: has_one
+  via: data
+- from: UnlockCardResponseData
+  to: UnlockCardControlResponseDataItem
+  type: has_one
+  via: data
+- from: UnlockCardRequestDataItem
+  to: CardIdentifier
+  type: has_one
+  via: cardIdentifier
+- from: CardActivationRequests
+  to: CardIdentifier
+  type: has_one
+  via: cardIdentifiers
+- from: ActivateCardResponseData
+  to: ActivateCardResponseDataItem
+  type: has_one
+  via: data
+- from: ActivateCardRequestDataItem
+  to: CardActivationRequests
+  type: has_many
+  via: cardActivationRequests
+- from: ActivateCardRequestData
+  to: ActivateCardRequestDataItem
+  type: has_one
+  via: data
+- from: ActivationStatusDetailType
+  to: CardIdentifier
+  type: has_one
+  via: cardIdentifiers
+- from: ActivationStatusResponseData
+  to: ActivationStatusResponseDataItem
+  type: has_one
+  via: data
+- from: ActivateCardDetailType
+  to: CardIdentifier
+  type: has_one
+  via: cardIdentifiers
+- from: ExternalWalletProvision
+  to: WalletEligibility
+  type: has_one
+  via: eligibility
+- from: ExternalWalletProvision
+  to: WalletProvision
+  type: has_one
+  via: provision
+- from: ExternalWalletResponse
+  to: CustomerAddress
+  type: has_one
+  via: customerAddress
+- from: WalletProvisionRequestData
+  to: ExternalWalletProvision
+  type: has_one
+  via: data
+- from: OBMandateRelatedInformation1
+  to: OBFrequency6
+  type: has_one
+  via: Frequency
+- from: OBReadDirectDebit2
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadDirectDebit2
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBRemittanceInformationStructured
+  to: OBReferredDocumentInformation
+  type: has_many
+  via: ReferredDocumentInformation
+- from: OBRegulatoryReporting1
+  to: OBRegulatoryAuthority2
+  type: has_one
+  via: Authority
+- from: OBRegulatoryReporting1
+  to: OBStructuredRegulatoryReporting3
+  type: has_many
+  via: Details
+- from: OBStructuredRegulatoryReporting3
+  to: OBActiveOrHistoricCurrencyAndAmount
+  type: has_one
+  via: Amount
+- from: OBRisk1
+  to: OBPostalAddress7
+  type: has_one
+  via: DeliveryAddress
+- from: OBUltimateDebtor1
+  to: OBPostalAddress7
+  type: has_one
+  via: PostalAddress
+- from: OBRemittanceInformation2
+  to: OBRemittanceInformationStructured
+  type: has_many
+  via: Structured
+- from: OBWriteDomesticConsentResponse5
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteDomesticConsentResponse5
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteDomesticConsentResponse5
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteDomesticConsent4
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteDomesticResponse5
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteDomesticResponse5
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteDomestic2
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteFundsConfirmationResponse1
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteFundsConfirmationResponse1
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBUltimateCreditor1
+  to: OBPostalAddress7
+  type: has_one
+  via: PostalAddress
+- from: OBWriteDomesticScheduled2
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteDomesticScheduledConsent4
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteDomesticScheduledResponse5
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteDomesticScheduledResponse5
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteDomesticScheduledConsentResponse5
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteDomesticScheduledConsentResponse5
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteDomesticScheduledConsentResponse5
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteDomesticStandingOrder3
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteDomesticStandingOrderConsentResponse6
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteDomesticStandingOrderConsentResponse6
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteDomesticStandingOrderConsentResponse6
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteDomesticStandingOrderResponse6
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteDomesticStandingOrderResponse6
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteDomesticStandingOrderConsent5
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBDomesticVRPConsentRequest
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBDomesticVRPControlParameters
+  to: OBActiveOrHistoricCurrencyAndAmount
+  type: has_one
+  via: MaximumIndividualAmount
+- from: OBCashAccountDebtorWithName
+  to: OBProxy1
+  type: has_one
+  via: Proxy
+- from: OBCashAccountCreditor3
+  to: OBProxy1
+  type: has_one
+  via: Proxy
+- from: OBDomesticVRPConsentResponse
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBDomesticVRPConsentResponse
+  to: Links
+  type: has_one
+  via: Links
+- from: OBDomesticVRPConsentResponse
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBDomesticVRPInitiation
+  to: OBCashAccountDebtorWithName
+  type: has_one
+  via: DebtorAccount
+- from: OBDomesticVRPInitiation
+  to: OBCashAccountCreditor3
+  type: has_one
+  via: CreditorAccount
+- from: OBDomesticVRPInitiation
+  to: OBPostalAddress7
+  type: has_one
+  via: CreditorPostalAddress
+- from: OBDomesticVRPInitiation
+  to: OBUltimateCreditor1
+  type: has_one
+  via: UltimateCreditor
+- from: OBDomesticVRPInitiation
+  to: OBUltimateDebtor1
+  type: has_one
+  via: UltimateDebtor
+- from: OBDomesticVRPInitiation
+  to: OBRemittanceInformation2
+  type: has_one
+  via: RemittanceInformation
+- from: OBDomesticVRPInitiation
+  to: OBRegulatoryReporting1
+  type: has_many
+  via: RegulatoryReporting
+- from: OBDomesticVRPInstruction
+  to: OBRemittanceInformation2
+  type: has_one
+  via: RemittanceInformation
+- from: OBDomesticVRPInstruction
+  to: OBActiveOrHistoricCurrencyAndAmount
+  type: has_one
+  via: InstructedAmount
+- from: OBDomesticVRPInstruction
+  to: OBPostalAddress7
+  type: has_one
+  via: CreditorPostalAddress
+- from: OBDomesticVRPInstruction
+  to: OBCashAccountCreditor3
+  type: has_one
+  via: CreditorAccount
+- from: OBDomesticVRPInstruction
+  to: OBUltimateCreditor1
+  type: has_one
+  via: UltimateCreditor
+- from: OBDomesticVRPResponse
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBDomesticVRPResponse
+  to: Links
+  type: has_one
+  via: Links
+- from: OBDomesticVRPResponse
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBDomesticVRPRequest
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBEventSubscriptionsResponse1
+  to: Links
+  type: has_one
+  via: Links
+- from: OBEventSubscriptionsResponse1
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBEventSubscriptionResponse1
+  to: Links
+  type: has_one
+  via: Links
+- from: OBEventSubscriptionResponse1
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteFileResponse3
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteFileResponse3
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteFileResponse4
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteFileResponse4
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteFileConsentResponse4
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteFileConsentResponse4
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteFileConsent4Array
+  to: OBPostalAddress7
+  type: has_one
+  via: CreditorPostalAddress
+- from: OBWriteFileConsent4Array
+  to: OBUltimateCreditor1
+  type: has_one
+  via: UltimateCreditor
+- from: OBWriteFileConsent4Array
+  to: OBUltimateDebtor1
+  type: has_one
+  via: UltimateDebtor
+- from: OBWriteFileConsent4Array
+  to: OBRegulatoryReporting1
+  type: has_many
+  via: RegulatoryReporting
+- from: OBWriteFileConsent4Array
+  to: OBRemittanceInformation2
+  type: has_one
+  via: RemittanceInformation
+- from: OBFundsConfirmationConsentResponse1
+  to: Links
+  type: has_one
+  via: Links
+- from: OBFundsConfirmationConsentResponse1
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBFundsConfirmationResponse1
+  to: Links
+  type: has_one
+  via: Links
+- from: OBFundsConfirmationResponse1
+  to: Meta
+  type: has_one
+  via: Meta
+- from: AuthorizationsExtData
+  to: AuthorizationsExtList
+  type: has_one
+  via: data
+- from: AuthorizationExt_authTransInfoExt
+  to: Amount
+  type: has_one
+  via: amount
+- from: AuthorizationExt
+  to: AuthorizationExt_authTransInfoExt
+  type: has_one
+  via: authTransInfoExt
+- from: AuthorizationsExtList
+  to: AuthorizationExt
+  type: has_many
+  via: authorizations
+- from: OBWriteInternational3
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteInternationalResponse5
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteInternationalResponse5
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteInternationalConsent5
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteInternationalConsentResponse6
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteInternationalConsentResponse6
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteInternationalConsentResponse6
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteInternationalScheduled3
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteInternationalScheduledConsentResponse6
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteInternationalScheduledConsentResponse6
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteInternationalScheduledConsentResponse6
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteInternationalScheduledResponse6
+  to: Links
+  type: has_one
+  via: Links
+- from: OBWriteInternationalScheduledResponse6
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBWriteInternationalScheduledConsent5
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteInternationalStandingOrder4
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: OBWriteInternationalStandingOrderConsent6
+  to: OBRisk1
+  type: has_one
+  via: Risk
+- from: JWKSKeySetBody
+  to: JWKSKey
+  type: has_many
+  via: keys
+- from: OBReadOffer1
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadOffer1
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBParty2
+  to: OBPartyRelationships1
+  type: has_one
+  via: Relationships
+- from: OBParty2
+  to: OBPostalAddress7
+  type: has_many
+  via: Address
+- from: OBReadParty3
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadParty3
+  to: Meta
+  type: has_one
+  via: Meta
+- from: ModifySubscriptionResData
+  to: ModifySubscriptionResponse
+  type: has_one
+  via: data
+- from: SubscriptionOptionsData
+  to: SubscriptionOptions
+  type: has_one
+  via: data
+- from: AddSubscriptionReqData
+  to: SubscriptionRequest
+  type: has_one
+  via: data
+- from: AddSubscriptionDetails
+  to: Subscription
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: StandingOrder
-  to: Account
+  via: subscriptionId
+- from: AddSubscriptionResponse
+  to: AddSubscriptionDetails
+  type: has_one
+  via: subscriptionDetails
+- from: AddSubscriptionResponse
+  to: RiskAssessmentDetails
+  type: has_one
+  via: riskAssessmentDetails
+- from: SubscriptionData
+  to: Subscription
+  type: has_one
+  via: data
+- from: ModifySubscriptionRequest
+  to: SubscriptionRequest
+  type: has_one
+  via: modifySubscriptionDetails
+- from: ModifySubscriptionResponse
+  to: ModifySubscriptionDetails
+  type: has_one
+  via: subscriptionDetails
+- from: ModifySubscriptionResponse
+  to: RiskAssessmentDetails
+  type: has_one
+  via: riskAssessmentDetails
+- from: ModifySubscriptionReqData
+  to: ModifySubscriptionRequest
+  type: has_one
+  via: data
+- from: SubscriptionOptions_dateOptions
+  to: SubscriptionOptions_dateOptions_daysBeforeDueDateRange
+  type: has_one
+  via: daysBeforeDueDateRange
+- from: ModifySubscriptionDetails
+  to: Subscription
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: Statement
-  to: Account
+  via: subscriptionId
+- from: AddSubscriptionResData
+  to: AddSubscriptionResponse
+  type: has_one
+  via: data
+- from: SubscriptionOptions
+  to: SubscriptionOptions_dateOptions
+  type: has_one
+  via: dateOptions
+- from: SubscriptionOptions
+  to: CustomAmountRange
+  type: has_one
+  via: customAmountRange
+- from: GetExternalAccountResponseDataLast4
+  to: ExternalAccountLast4
+  type: has_one
+  via: data
+- from: ExternalAccountLast4
+  to: ExternalBankDetails
+  type: has_one
+  via: bankDetails
+- from: ExternalBankAccountDetailsLast4
+  to: ExternalBankDetails
+  type: has_one
+  via: bankDetails
+- from: ModifyPaymentResponseData
+  to: ModifyPaymentResponse
+  type: has_one
+  via: data
+- from: PaymentSummaryResponseData
+  to: PaymentSummaryMetaResponse
+  type: has_one
+  via: meta
+- from: SchedulePaymentResponseData
+  to: SchedulePaymentResponse
+  type: has_one
+  via: data
+- from: AmountOptions
+  to: AmountOptions_minimumDue
+  type: has_one
+  via: minimumDue
+- from: AmountOptions
+  to: AmountOptions_statementBalance
+  type: has_one
+  via: statementBalance
+- from: AmountOptions
+  to: AmountOptions_currentBalance
+  type: has_one
+  via: currentBalance
+- from: AmountOptions
+  to: AmountOptions_availableCredit
+  type: has_one
+  via: availableCredit
+- from: AmountOptions
+  to: AmountOptions_creditLimit
+  type: has_one
+  via: creditLimit
+- from: AmountOptions
+  to: AmountOptions_remainingStatementBalance
+  type: has_one
+  via: remainingStatementBalance
+- from: AmountOptions
+  to: AmountOptions_remainingMinimumDue
+  type: has_one
+  via: remainingMinimumDue
+- from: ModifyAutoPaymentResponseData
+  to: ModifyAutoPaymentResponse
+  type: has_one
+  via: data
+- from: UpdatedPaymentDetails
+  to: Amount
+  type: has_one
+  via: amount
+- from: PaymentOptionsResponse
+  to: DateOptions
+  type: has_one
+  via: dateOptions
+- from: PaymentOptionsResponse
+  to: AmountOptions
+  type: has_one
+  via: amountOptions
+- from: PaymentSummary
+  to: Amount
+  type: has_one
+  via: amount
+- from: PaymentSummary
+  to: Subscription
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: Party
-  to: Account
+  via: subscriptionId
+- from: DateOptions
+  to: DateOptions_customDateRange
+  type: has_one
+  via: customDateRange
+- from: ModifyAutoPaymentResponse
+  to: UpdatedAutoPaymentDetails
+  type: has_one
+  via: updatedPaymentDetails
+- from: ModifyAutoPaymentResponse
+  to: RiskAssessmentDetails
+  type: has_one
+  via: riskAssessmentDetails
+- from: ModifyPaymentResponse
+  to: UpdatedPaymentDetails
+  type: has_one
+  via: updatedPaymentDetails
+- from: ModifyPaymentResponse
+  to: RiskAssessmentDetails
+  type: has_one
+  via: riskAssessmentDetails
+- from: PaymentRequest
+  to: Amount
+  type: has_one
+  via: amount
+- from: PaymentOptionsResponseData
+  to: PaymentOptionsResponse
+  type: has_one
+  via: data
+- from: ModifyPaymentRequest
+  to: PaymentRequest
+  type: has_one
+  via: modifyPaymentDetails
+- from: SchedulePaymentResponse
+  to: ScheduledPaymentDetails
+  type: has_one
+  via: scheduledPaymentDetails
+- from: SchedulePaymentResponse
+  to: RiskAssessmentDetails
+  type: has_one
+  via: riskAssessmentDetails
+- from: SchedulePaymentRequestData
+  to: PaymentRequest
+  type: has_one
+  via: data
+- from: ScheduledPaymentDetails
+  to: Amount
+  type: has_one
+  via: amount
+- from: UpdatedAutoPaymentDetails
+  to: Amount
+  type: has_one
+  via: amount
+- from: ModifyPaymentRequestData
+  to: ModifyPaymentRequest
+  type: has_one
+  via: data
+- from: TransactionsListV2
+  to: TransactionV2
+  type: has_many
+  via: transactions
+- from: TransactionV2
+  to: Amount
+  type: has_one
+  via: transactionAmount
+- from: TransactionV2
+  to: EasypayInfo
+  type: has_one
+  via: easypayInfo
+- from: TransactionsDataV2
+  to: TransactionsListV2
+  type: has_one
+  via: data
+- from: OBReadProduct2
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadProduct2
+  to: Meta
+  type: has_one
+  via: Meta
+- from: DCRRequestType
+  to: JWKSObjectType
+  type: has_one
+  via: jwks
+- from: DCRResponseType
+  to: JWKSObjectType
+  type: has_one
+  via: jwks
+- from: RewardBalanceDataV3
+  to: RewardBalanceV3
+  type: has_one
+  via: data
+- from: RedemptionResponseV3
+  to: Redemption
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: Offer
-  to: Account
+  via: redemptionId
+- from: RedemptionRequestV3
+  to: TransactionInfo
+  type: has_one
+  via: transactionInfo
+- from: RedemptionRequestDataV3
+  to: RedemptionRequestV3
+  type: has_one
+  via: data
+- from: RedemptionResponseDataV3
+  to: RedemptionResponseV3
+  type: has_one
+  via: data
+- from: RedemptionCapabilitiesResponseData
+  to: RedemptionCapabilitiesResponse
+  type: has_one
+  via: data
+- from: RedemptionCapabilitiesResponse
+  to: CashCapability
+  type: has_many
+  via: cashCapabilities
+- from: CashCapability
+  to: FulfillmentMethod
+  type: has_many
+  via: fulfillmentMethods
+- from: CashCapability
+  to: RedemptionRule
+  type: has_many
+  via: rules
+- from: CashBackACH
+  to: Eligibility
+  type: has_one
+  via: eligibility
+- from: CashBackACH
+  to: RemainingLimit
+  type: has_one
+  via: remainingLimit
+- from: CashBackACH
+  to: ExternalAccount
+  type: has_many
+  via: externalAccounts
+- from: PayWithPoints
+  to: Eligibility
+  type: has_one
+  via: eligibility
+- from: PayWithPoints
+  to: RemainingLimit
+  type: has_one
+  via: remainingLimit
+- from: RedemptionEligibilityResponseData
+  to: RedemptionEligibilityResponse
+  type: has_one
+  via: data
+- from: CashBackStmntCr
+  to: Eligibility
+  type: has_one
+  via: eligibility
+- from: CashBackStmntCr
+  to: RemainingLimit
+  type: has_one
+  via: remainingLimit
+- from: RedemptionEligibilityResponse
+  to: CashBackACH
+  type: has_one
+  via: cashBackACH
+- from: RedemptionEligibilityResponse
+  to: CashBackStmntCr
+  type: has_one
+  via: cashBackStmntCr
+- from: RedemptionEligibilityResponse
+  to: PayWithPoints
+  type: has_one
+  via: payWithPoints
+- from: Redemption
+  to: LineItem
+  type: has_many
+  via: lineItems
+- from: RedemptionHistoryResponse
+  to: Redemption
+  type: has_many
+  via: redemptionHistory
+- from: LineItem
+  to: RedemptionAmount
+  type: has_one
+  via: redemptionAmount
+- from: LineItem
+  to: TransactionInfo
+  type: has_one
+  via: purchaseDetails
+- from: LineItem
+  to: ACHDetails
+  type: has_one
+  via: achDetails
+- from: RedemptionHistoryResponseData
+  to: RedemptionHistoryResponse
+  type: has_one
+  via: data
+- from: RewardsEarnHistoryData
+  to: RewardInformationSummaryResponse
+  type: has_many
+  via: rewardHistory
+- from: RewardsEarnHistoryResponse
+  to: RewardsEarnHistoryData
+  type: has_one
+  via: data
+- from: RewardInformationSummaryResponse
+  to: RewardInformation
+  type: has_many
+  via: rewardInformationList
+- from: OBCashAccount5_1
+  to: OBProxy1
+  type: has_one
+  via: Proxy
+- from: OBBranchAndFinancialInstitutionIdentification5_1
+  to: OBPostalAddress7
+  type: has_one
+  via: PostalAddress
+- from: OBScheduledPayment3
+  to: OBActiveOrHistoricCurrencyAndAmount_1
+  type: has_one
+  via: InstructedAmount
+- from: OBScheduledPayment3
+  to: OBBranchAndFinancialInstitutionIdentification5_1
+  type: has_one
+  via: CreditorAgent
+- from: OBScheduledPayment3
+  to: OBCashAccount5_1
+  type: has_one
+  via: CreditorAccount
+- from: OBReadScheduledPayment3
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadScheduledPayment3
+  to: Meta
+  type: has_one
+  via: Meta
+- from: SearchOptionsData
+  to: SearchOptions
+  type: has_one
+  via: data
+- from: SearchOptions
+  to: PurchasedByOption
+  type: has_many
+  via: purchasedByOptions
+- from: OBStandingOrder6
+  to: OBActiveOrHistoricCurrencyAndAmount_2
+  type: has_one
+  via: FirstPaymentAmount
+- from: OBStandingOrder6
+  to: OBActiveOrHistoricCurrencyAndAmount_3
+  type: has_one
+  via: NextPaymentAmount
+- from: OBStandingOrder6
+  to: OBActiveOrHistoricCurrencyAndAmount_11
+  type: has_one
+  via: LastPaymentAmount
+- from: OBStandingOrder6
+  to: OBActiveOrHistoricCurrencyAndAmount_4
+  type: has_one
+  via: FinalPaymentAmount
+- from: OBStandingOrder6
+  to: OBBranchAndFinancialInstitutionIdentification5_1
+  type: has_one
+  via: CreditorAgent
+- from: OBStandingOrder6
+  to: OBCashAccount5_1
+  type: has_one
+  via: CreditorAccount
+- from: OBStandingOrder6
+  to: OBSupplementaryData1
+  type: has_one
+  via: SupplementaryData
+- from: OBStandingOrder6
+  to: OBMandateRelatedInformation1
+  type: has_one
+  via: MandateRelatedInformation
+- from: OBStandingOrder6
+  to: OBRemittanceInformation2
+  type: has_one
+  via: RemittanceInformation
+- from: OBReadStandingOrder6
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadStandingOrder6
+  to: Meta
+  type: has_one
+  via: Meta
+- from: CycleDatesData
+  to: CycleDatesList
+  type: has_one
+  via: data
+- from: OBReadDataTransaction6
+  to: OBTransaction6
+  type: has_many
+  via: Transaction
+- from: OBCashAccount6_0
+  to: OBProxy1
+  type: has_one
+  via: Proxy
+- from: OBIntermediaryAgent
+  to: OBPostalAddress7
+  type: has_one
+  via: PostalAddress
+- from: OBBranchAndFinancialInstitutionIdentification6_1
+  to: OBPostalAddress7
+  type: has_one
+  via: PostalAddress
+- from: OBTransaction6
+  to: OBActiveOrHistoricCurrencyAndAmount_9
+  type: has_one
+  via: Amount
+- from: OBTransaction6
+  to: OBActiveOrHistoricCurrencyAndAmount_10
+  type: has_one
+  via: ChargeAmount
+- from: OBTransaction6
+  to: OBCurrencyExchange5
+  type: has_one
+  via: CurrencyExchange
+- from: OBTransaction6
+  to: OBBankTransactionCodeStructure1
+  type: has_one
+  via: BankTransactionCode
+- from: OBTransaction6
+  to: ProprietaryBankTransactionCodeStructure1
+  type: has_one
+  via: ProprietaryBankTransactionCode
+- from: OBTransaction6
+  to: OBExtendedProprietaryBankTransactionCode
+  type: has_many
+  via: ExtendedProprietaryBankTransactionCodes
+- from: OBTransaction6
+  to: OBTransactionCashBalance
+  type: has_one
+  via: Balance
+- from: OBTransaction6
+  to: OBMerchantDetails1
+  type: has_one
+  via: MerchantDetails
+- from: OBTransaction6
+  to: OBBranchAndFinancialInstitutionIdentification6_1
+  type: has_one
+  via: CreditorAgent
+- from: OBTransaction6
+  to: OBCashAccount6_0
+  type: has_one
+  via: CreditorAccount
+- from: OBTransaction6
+  to: OBBranchAndFinancialInstitutionIdentification6_2
+  type: has_one
+  via: DebtorAgent
+- from: OBTransaction6
+  to: OBCashAccount6_1
+  type: has_one
+  via: DebtorAccount
+- from: OBTransaction6
+  to: OBTransactionCardInstrument1
+  type: has_one
+  via: CardInstrument
+- from: OBTransaction6
+  to: OBSupplementaryData1
+  type: has_one
+  via: SupplementaryData
+- from: OBTransaction6
+  to: OBUltimateCreditor1
+  type: has_one
+  via: UltimateCreditor
+- from: OBTransaction6
+  to: OBUltimateDebtor1
+  type: has_one
+  via: UltimateDebtor
+- from: OBTransaction6
+  to: OBIntermediaryAgent
+  type: has_one
+  via: IntermediaryAgent1
+- from: OBTransaction6
+  to: OBIntermediaryAgent
+  type: has_one
+  via: IntermediaryAgent2
+- from: OBTransaction6
+  to: OBIntermediaryAgent
+  type: has_one
+  via: IntermediaryAgent3
+- from: OBReadDataStatement2
+  to: OBStatement2
+  type: has_many
+  via: Statement
+- from: OBReadStatement2
+  to: OBReadDataStatement2
+  type: has_one
+  via: Data
+- from: OBReadStatement2
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadStatement2
+  to: Meta
+  type: has_one
+  via: Meta
+- from: OBCashAccount6_1
+  to: OBProxy1
+  type: has_one
+  via: Proxy
+- from: OBBranchAndFinancialInstitutionIdentification6_2
+  to: OBPostalAddress7
+  type: has_one
+  via: PostalAddress
+- from: OBReadTransaction6
+  to: OBReadDataTransaction6
+  type: has_one
+  via: Data
+- from: OBReadTransaction6
+  to: Links
+  type: has_one
+  via: Links
+- from: OBReadTransaction6
+  to: Meta
+  type: has_one
+  via: Meta
+- from: StatementsResponseObjectBody
+  to: StatementsListResponseBody
+  type: has_one
+  via: attributes
+- from: StatementsResponseType
+  to: StatementsResponseObjectBody
+  type: has_one
+  via: data
+- from: LoyaltyTierRequestData
+  to: LoyaltyTierRequest
+  type: has_one
+  via: data
+- from: TierUpdateRequest
+  to: ExternalAccount
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: ScheduledPayment
-  to: Account
+  via: externalAccountId
+- from: TierUpdateStatus
+  to: ExternalAccount
   type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-- from: Product
-  to: Account
-  type: belongs_to
-  via: AccountId
-  api: Account and Transactions
-entities_by_api:
-- api: Account and Transactions
-  schema_count: 243
-- api: Payment Initiation
-  schema_count: 108
-- api: Payments
-  schema_count: 83
-- api: Variable Recurring Payment
-  schema_count: 83
-- api: Card Application
-  schema_count: 75
-- api: Product Details
-  schema_count: 44
-- api: Barclays Bank Ireland Payment Initiation
-  schema_count: 42
-- api: Barclays Bank Ireland Account Information
-  schema_count: 39
-- api: Benefits Redemption
-  schema_count: 28
-- api: Barclays Bank Ireland Confirmation of Funds
-  schema_count: 22
-- api: Accounts
-  schema_count: 22
-- api: Transactions
-  schema_count: 22
-- api: Authentication
-  schema_count: 17
-- api: FCA Service Metrics
-  schema_count: 16
-- api: Card Control
-  schema_count: 16
-- api: Confirmation of Funds
-  schema_count: 14
-- api: Account Management
-  schema_count: 14
-- api: Event Notification
-  schema_count: 12
-- api: Digital Wallet
-  schema_count: 10
-- api: Dynamic Client Registration
-  schema_count: 9
-- api: Rewards Loyalty Sync
-  schema_count: 9
-- api: Statements Retriever
-  schema_count: 7
-- api: Rewards Earn
-  schema_count: 6
-- api: Cryptography Key Exchange
-  schema_count: 5
+  via: externalAccountId
+- from: TierUpdateStatus
+  to: ErrorDetails
+  type: has_one
+  via: errors
+- from: LoyaltyTierResponse
+  to: TierUpdateStatus
+  type: has_many
+  via: tierUpdateStatusList
+- from: LoyaltyTierRequest
+  to: TierUpdateRequest
+  type: has_many
+  via: tierUpdateRequestList
+- from: LoyaltyTierResponseData
+  to: LoyaltyTierResponse
+  type: has_one
+  via: data
+- from: UserIdentityContextRequestData
+  to: CustomerProfile
+  type: has_one
+  via: customerProfileDetails
+- from: UserIdentityContextRequestData
+  to: DeviceDetails
+  type: has_one
+  via: deviceDetails
+- from: UserIdentityContextResponse
+  to: UserIdentityContextResponseData
+  type: has_one
+  via: data
+- from: UserIdentityContextRequest
+  to: UserIdentityContextRequestData
+  type: has_one
+  via: data
+- from: UserSSOContextResponse
+  to: UserSSOContextResponseData
+  type: has_one
+  via: data
+- from: UserSSOContextRequest
+  to: UserSSOContextRequestData
+  type: has_one
+  via: data
+- from: UserSSOContextRequestData
+  to: Identifier
+  type: has_one
+  via: identifier

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-create-cof-consent-response-schema.json",
+  "title": "create_cof_consent_response",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-consents-api-openapi.yml#/components/schemas/create_cof_consent_response",
+  "type": "object",
+  "properties": {
+    "consentId": {
+      "type": "string"
+    },
+    "_links": {
+      "type": "object",
+      "properties": {
+        "scaStatus": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string"
+            }
+          }
+        },
+        "scaRedirect": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string"
+            }
+          }
+        },
+        "self": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string"
+            }
+          }
+        },
+        "startAuthorisation": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string"
+            }
+          }
+        },
+        "status": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "consentStatus": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "_links",
+    "consentId",
+    "consentStatus"
+  ]
+}

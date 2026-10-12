@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-create-cof-request-schema.json",
+  "title": "create_cof_request",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-funds-confirmations-api-openapi.yml#/components/schemas/create_cof_request",
+  "type": "object",
+  "properties": {
+    "payee": {
+      "type": "string",
+      "maxLength": 70,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,70})$"
+    },
+    "instructedAmount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "maxLength": 19,
+          "minLength": 1,
+          "pattern": "^(?!\\s)-?[0-9]{1,14}(\\.[0-9]{1,3})?$"
+        },
+        "currency": {
+          "type": "string",
+          "maxLength": 3,
+          "minLength": 3,
+          "pattern": "^[A-Z]{3}$"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ]
+    },
+    "cardNumber": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^(?!\\s)([a-zA-Z0-9-., '()=\"_@£$#/]{1,20})$"
+    },
+    "account": {
+      "type": "object",
+      "properties": {
+        "bban": {
+          "type": "string",
+          "maxLength": 30,
+          "minLength": 0,
+          "pattern": "^[a-zA-Z0-9]{0,30}$"
+        },
+        "iban": {
+          "type": "string",
+          "maxLength": 34,
+          "minLength": 0,
+          "pattern": "^[a-zA-Z0-9]{0,34}$"
+        },
+        "currency": {
+          "type": "string",
+          "maxLength": 3,
+          "minLength": 3,
+          "pattern": "^[A-Z]{3}$"
+        }
+      }
+    }
+  },
+  "required": [
+    "account",
+    "instructedAmount"
+  ]
+}

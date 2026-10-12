@@ -1,10 +1,9 @@
 generated: '2026-09-04'
 method: derived
 source: openapi/ (26 first-party OpenAPI 3.1 documents harvested from developer.barclays.com)
-note: 'Barclays runs three distinct API conventions under one portal: UK Open Banking (OBIE Read/Write, x-fapi-*
-  headers), Barclays Bank Ireland (Berlin Group NextGenPSD2, PSU-*/TPP-* headers), and Barclaycard US (Correlation-ID
-  + bearer token). Nothing about the three is unified, so an agent has to detect which family it is calling before
-  it can build a request.'
+note: 'Barclays runs three distinct API conventions under one portal: UK Open Banking (OBIE Read/Write, x-fapi-* headers), Barclays Bank Ireland
+  (Berlin Group NextGenPSD2, PSU-*/TPP-* headers), and Barclaycard US (Correlation-ID + bearer token). Nothing about the three is unified, so
+  an agent has to detect which family it is calling before it can build a request.'
 auth:
   style: OAuth 2.0 bearer token
   families:
@@ -45,7 +44,7 @@ auth:
   see: authentication/barclays-authentication.yml, scopes/barclays-scopes.yml
 idempotency:
   coverage: partial
-  mechanism: x-idempotency-key request header
+  mechanism: request header / body token declared in the OpenAPI
   declared_as: components.parameters.x-idempotency-key
   scope:
   - 'Payment Initiation: CreateDomesticPayments'
@@ -73,17 +72,18 @@ idempotency:
     apis_covered: 2
     apis_total: 26
   retention: null
-  note: 19 of 64 mutating operations across the estate declare x-idempotency-key, and all 19 sit in the two UK Open
-    Banking payment APIs where OBIE mandates the header. The Barclays Bank Ireland payment writes and every Barclaycard
-    US write — card applications, card controls, payments, account management — declare no replay protection at
-    all. Barclays publishes no key-retention window.
+  note: 19 of 64 mutating operations across the estate declare x-idempotency-key, and all 19 sit in the two UK Open Banking payment APIs where
+    OBIE mandates the header. The Barclays Bank Ireland payment writes and every Barclaycard US write — card applications, card controls, payments,
+    account management — declare no replay protection at all. Barclays publishes no key-retention window.
+  header: x-idempotency-key
+  evidence: x-idempotency-key on 19 of 63 mutating operations
+  verified: derived
 reversibility:
   grade: documented
-  note: Every reversal Barclays publishes is a consent revocation, not a transaction reversal. A TPP can DELETE
-    a consent and stop future access or future payments; nothing in the 26 published contracts cancels, refunds,
-    voids or reverses a payment that has already executed, and no operation declares a window inside which a reversal
-    is accepted. Barclaycard US has no reversal operation of any kind. Grade is documented rather than verified
-    because no stated window exists.
+  note: Every reversal Barclays publishes is a consent revocation, not a transaction reversal. A TPP can DELETE a consent and stop future access
+    or future payments; nothing in the 26 published contracts cancels, refunds, voids or reverses a payment that has already executed, and no
+    operation declares a window inside which a reversal is accepted. Barclaycard US has no reversal operation of any kind. Grade is documented
+    rather than verified because no stated window exists.
   reversals:
   - operationId: DeleteAccountAccessConsentsConsentId
     api: Account and Transactions
@@ -121,8 +121,7 @@ reversibility:
     path: /payments/sepa-credit-transfers/{paymentId}
     reverses: a SEPA credit transfer that has not yet executed
     window: null
-    note: Berlin Group payment cancellation — the spec states no cut-off, and cancellation of an executed payment
-      is not offered.
+    note: Berlin Group payment cancellation — the spec states no cut-off, and cancellation of an executed payment is not offered.
   irreversible:
   - 'Payment Initiation: all Create*Payments operations once the payment reaches ACSC/ACCC'
   - 'Card Application: application submission'
@@ -130,10 +129,9 @@ reversibility:
   - 'Benefits Redemption: points redemption'
 dry_run_mode:
   supported: false
-  note: 'No operation accepts a dry-run/validate-only flag. The nearest rehearsal is the OBIE consent resource:
-    a TPP creates a *-consent first and can inspect its status before calling the matching execute operation, and
-    Payment Initiation offers GET /{type}-payment-consents/{consentId}/funds-confirmation to check funds before
-    executing.'
+  note: 'No operation accepts a dry-run/validate-only flag. The nearest rehearsal is the OBIE consent resource: a TPP creates a *-consent first
+    and can inspect its status before calling the matching execute operation, and Payment Initiation offers GET /{type}-payment-consents/{consentId}/funds-confirmation
+    to check funds before executing.'
 pagination:
   style: HAL-style links envelope (UK Open Banking)
   response_fields:
@@ -155,8 +153,7 @@ request_id_tracing:
   - X-Request-ID (Barclays Bank Ireland)
   - Correlation-ID (Barclaycard US)
   echoed_in_response: true
-  note: Three different correlation headers for three API families — an agent cannot use one convention across the
-    estate.
+  note: Three different correlation headers for three API families — an agent cannot use one convention across the estate.
 conditional_requests:
   supported: true
   request_headers:
@@ -182,8 +179,8 @@ rate_limit_signaling:
   documented_in_contract: true
   operations_declaring_429: 99
   response_headers: []
-  note: 99 operations declare a 429 "Too Many Requests" response, but no operation declares a RateLimit-*, X-RateLimit-*
-    or Retry-After response header, and Barclays publishes no numeric limits. See rate-limits/barclays-rate-limits.yml.
+  note: 99 operations declare a 429 "Too Many Requests" response, but no operation declares a RateLimit-*, X-RateLimit-* or Retry-After response
+    header, and Barclays publishes no numeric limits. See rate-limits/barclays-rate-limits.yml.
 field_expansion:
   supported: false
 metadata_fields:

@@ -1,0 +1,93 @@
+generated: '2026-10-12'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 7
+  own: 1
+  other_domain: 4
+  platform: 2
+  roles:
+  - api
+  - docs
+  - marketing
+  - other
+  - portal
+  - source
+  - website
+hosts:
+- host: developer.barclays.com
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Portal
+  - Documentation
+  - Support
+  - Login
+  - Knowledgebase
+  - TermsOfService
+  - PrivacyPolicy
+  - GettingStarted
+  serves:
+  - docs
+  registrable_domain: barclays.com
+  role: docs
+  relation: other-domain
+- host: drm.developer.barclays.com
+  found_by:
+  - pointer
+  types:
+  - Signup
+  serves: []
+  registrable_domain: barclays.com
+  role: portal
+  relation: other-domain
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: home.barclays
+  found_by:
+  - pointer
+  types:
+  - Blog
+  serves: []
+  registrable_domain: home.barclays
+  role: marketing
+  relation: other-domain
+- host: telesto.api.barclays
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: api.barclays
+  role: api
+  relation: other-domain
+- host: www.barclays.co.uk
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Website
+  serves:
+  - cdn
+  vendor: akamai
+  registrable_domain: barclays.co.uk
+  role: website
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-get-cof-consent-details-response-schema.json",
+  "title": "get_cof_consent_details_response",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-consents-api-openapi.yml#/components/schemas/get_cof_consent_details_response",
+  "type": "object",
+  "properties": {
+    "consentStatus": {
+      "type": "string"
+    },
+    "registrationInformation": {
+      "type": "string"
+    },
+    "cardInformation": {
+      "type": "string"
+    },
+    "account": {
+      "type": "object",
+      "properties": {
+        "bban": {
+          "type": "string"
+        },
+        "iban": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        }
+      }
+    },
+    "cardNumber": {
+      "type": "string"
+    },
+    "cardExpiryDate": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "account",
+    "consentStatus"
+  ]
+}

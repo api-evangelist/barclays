@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-get-payment-auth-status-response-schema.json",
+  "title": "get_payment-auth-status_response",
+  "description": "Get Payment Authorisation Status",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-payments-api-openapi.yml#/components/schemas/get_payment-auth-status_response",
+  "type": "object",
+  "properties": {
+    "scaStatus": {
+      "type": "string",
+      "description": "Body of the JSON response for a Start SCA authorisation request. Valid values are\n- received: An authorisation or cancellation-authorisation resource has been created successfully.\n- psuIdentified: The PSU related to the authorisation or cancellation-authorisation resource has been identified.\n- psuAuthenticated: The PSU related to the authorisation or cancellation-authorisation resource has been identified and authenticated e.g. by a password or by an access token.\n- scaMethodSelected: The PSU/TPP has selected the related SCA routine.\n- started: The addressed SCA routine has been started.\n- finalised: The SCA routine has been finalised successfully.\n- failed: The SCA routine failed.\n- exempted: SCA was exempted for the related transaction, the related authorisation is successful.\n",
+      "enum": [
+        "received",
+        "psuIdentified",
+        "psuAuthenticated",
+        "scaMethodSelected",
+        "started",
+        "finalised",
+        "failed",
+        "exempted"
+      ]
+    }
+  },
+  "required": [
+    "scaStatus"
+  ]
+}

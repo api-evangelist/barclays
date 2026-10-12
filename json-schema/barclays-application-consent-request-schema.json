@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-application-consent-request-schema.json",
+  "title": "ApplicationConsentRequest",
+  "description": "App consent request data",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-applyproductexternalapi-oas-api-openapi.yml#/components/schemas/ApplicationConsentRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/ApplicationConsentRequestAttributes"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "AdditionalAttributes": {
+      "type": "array",
+      "description": "Any additional attributes that needs to be sent with the request",
+      "items": {
+        "$ref": "#/$defs/NameValueAttributePair"
+      },
+      "maxItems": 100,
+      "minItems": 0
+    },
+    "ApplicationConsentRequestAttributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Application Consent Request Attributes",
+      "properties": {
+        "applicationId": {
+          "type": "string",
+          "description": "Application Id",
+          "maxLength": 16,
+          "minLength": 8,
+          "pattern": "^[0-9]{8,16}$"
+        },
+        "consentType": {
+          "type": "string",
+          "description": "Type of the consent",
+          "maxLength": 15,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_]{1,15}$"
+        },
+        "consentStatus": {
+          "type": "string",
+          "description": "Status of the applicants consent. This will give the information whether the applicant accepted the consent or not.",
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_]{1,16}$"
+        },
+        "additionalAttributes": {
+          "$ref": "#/$defs/AdditionalAttributes"
+        }
+      },
+      "required": [
+        "applicationId",
+        "consentStatus",
+        "consentType"
+      ],
+      "nullable": false
+    },
+    "NameValueAttributePair": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Name value attributes",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "name of key in <Key,Value> pair",
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_]{1,100}$"
+        },
+        "value": {
+          "type": "string",
+          "description": "value of key in <Key,Value> pair",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[\\w\\!\\@\\#\\$\\&\\*\\(\\)\\+\\=\\'\\\"\\.\\,\\s\\/\\-]{1,200}$"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "nullable": false
+    }
+  }
+}

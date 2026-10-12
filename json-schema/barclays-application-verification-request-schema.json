@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-application-verification-request-schema.json",
+  "title": "ApplicationVerificationRequest",
+  "description": "Verification request data",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-applyproductexternalapi-oas-api-openapi.yml#/components/schemas/ApplicationVerificationRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/ApplicationVerificationRequestAttributes"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "nullable": false,
+  "$defs": {
+    "ApplicationVerificationRequestAttributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "deprecated": false,
+      "description": "Verification Request Attributes",
+      "properties": {
+        "applicationId": {
+          "type": "string",
+          "description": "Application Id",
+          "maxLength": 16,
+          "minLength": 8,
+          "pattern": "^[0-9]{8,16}$"
+        },
+        "verificationContextId": {
+          "type": "string",
+          "description": "Verification ContextId (UUID)",
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        }
+      },
+      "required": [
+        "applicationId",
+        "verificationContextId"
+      ],
+      "nullable": false
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-create-cof-response-schema.json",
+  "title": "create_cof_response",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-funds-confirmations-api-openapi.yml#/components/schemas/create_cof_response",
+  "type": "object",
+  "properties": {
+    "fundsAvailable": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "fundsAvailable"
+  ]
+}

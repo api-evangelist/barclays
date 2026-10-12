@@ -1,0 +1,1892 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-sme-lending-response-schema.json",
+  "title": "sme_lending_response",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-unsecured-sme-loans-api-openapi.yml#/components/schemas/sme_lending_response",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Brand": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "BrandName": {
+                  "type": "string"
+                },
+                "SMELoan": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "SMELoanMarketingState": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "StateTenurePeriod": {
+                              "type": "string"
+                            },
+                            "FeaturesAndBenefits": {
+                              "type": "object",
+                              "properties": {
+                                "FeatureBenefitItem": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "Type": {
+                                        "type": "string"
+                                      },
+                                      "Textual": {
+                                        "type": "string"
+                                      },
+                                      "Amount": {
+                                        "type": "string"
+                                      },
+                                      "Identification": {
+                                        "type": "string"
+                                      },
+                                      "OtherType": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "FeatureBenefitEligibility": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "Type": {
+                                              "type": "string"
+                                            },
+                                            "Description": {
+                                              "type": "string"
+                                            },
+                                            "Textual": {
+                                              "type": "string"
+                                            },
+                                            "Amount": {
+                                              "type": "string"
+                                            },
+                                            "Period": {
+                                              "type": "string"
+                                            },
+                                            "OtherType": {
+                                              "type": "object",
+                                              "properties": {
+                                                "Description": {
+                                                  "type": "string"
+                                                },
+                                                "Code": {
+                                                  "type": "string"
+                                                },
+                                                "Name": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "Description",
+                                                "Name"
+                                              ]
+                                            },
+                                            "Indicator": {
+                                              "type": "boolean"
+                                            },
+                                            "Notes": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "Name": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "Name",
+                                            "Type"
+                                          ]
+                                        }
+                                      },
+                                      "Indicator": {
+                                        "type": "boolean"
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "Name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "Type"
+                                    ]
+                                  }
+                                },
+                                "FeatureBenefitGroup": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "Type": {
+                                        "type": "string"
+                                      },
+                                      "ApplicationFrequency": {
+                                        "type": "string"
+                                      },
+                                      "OtherCalculationFrequency": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "FeatureBenefitItem": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "Type": {
+                                              "type": "string"
+                                            },
+                                            "Textual": {
+                                              "type": "string"
+                                            },
+                                            "Amount": {
+                                              "type": "string"
+                                            },
+                                            "Identification": {
+                                              "type": "string"
+                                            },
+                                            "OtherType": {
+                                              "type": "object",
+                                              "properties": {
+                                                "Description": {
+                                                  "type": "string"
+                                                },
+                                                "Code": {
+                                                  "type": "string"
+                                                },
+                                                "Name": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "Description",
+                                                "Name"
+                                              ]
+                                            },
+                                            "FeatureBenefitEligibility": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "Type": {
+                                                    "type": "string"
+                                                  },
+                                                  "Description": {
+                                                    "type": "string"
+                                                  },
+                                                  "Textual": {
+                                                    "type": "string"
+                                                  },
+                                                  "Amount": {
+                                                    "type": "string"
+                                                  },
+                                                  "Period": {
+                                                    "type": "string"
+                                                  },
+                                                  "OtherType": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "Description": {
+                                                        "type": "string"
+                                                      },
+                                                      "Code": {
+                                                        "type": "string"
+                                                      },
+                                                      "Name": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "Description",
+                                                      "Name"
+                                                    ]
+                                                  },
+                                                  "Indicator": {
+                                                    "type": "boolean"
+                                                  },
+                                                  "Notes": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "Name": {
+                                                    "type": "string"
+                                                  }
+                                                },
+                                                "required": [
+                                                  "Name",
+                                                  "Type"
+                                                ]
+                                              }
+                                            },
+                                            "Indicator": {
+                                              "type": "boolean"
+                                            },
+                                            "Notes": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "Name": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "Type"
+                                          ]
+                                        }
+                                      },
+                                      "Fee": {
+                                        "type": "string"
+                                      },
+                                      "CalculationFrequency": {
+                                        "type": "string"
+                                      },
+                                      "BenefitGroupNominalValue": {
+                                        "type": "string"
+                                      },
+                                      "OtherType": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "FeatureBenefitEligibility": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "Type": {
+                                              "type": "string"
+                                            },
+                                            "Description": {
+                                              "type": "string"
+                                            },
+                                            "Textual": {
+                                              "type": "string"
+                                            },
+                                            "Amount": {
+                                              "type": "string"
+                                            },
+                                            "Period": {
+                                              "type": "string"
+                                            },
+                                            "OtherType": {
+                                              "type": "object",
+                                              "properties": {
+                                                "Description": {
+                                                  "type": "string"
+                                                },
+                                                "Code": {
+                                                  "type": "string"
+                                                },
+                                                "Name": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "Description",
+                                                "Name"
+                                              ]
+                                            },
+                                            "Indicator": {
+                                              "type": "boolean"
+                                            },
+                                            "Notes": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "Name": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "Name",
+                                            "Type"
+                                          ]
+                                        }
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "OtherApplicationFrequency": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "Name": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "PredecessorID": {
+                              "type": "string"
+                            },
+                            "Eligibility": {
+                              "type": "object",
+                              "properties": {
+                                "AgeEligibility": {
+                                  "type": "object",
+                                  "properties": {
+                                    "MinimumAge": {
+                                      "type": "number"
+                                    },
+                                    "MaximumAge": {
+                                      "type": "number"
+                                    },
+                                    "Notes": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "LegalStructureEligibility": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "OtherLegalStructure": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "LegalStructure": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "CreditCheckEligibility": {
+                                  "type": "object",
+                                  "properties": {
+                                    "ScoringType": {
+                                      "type": "string"
+                                    },
+                                    "Notes": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "OfficerEligibility": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "OfficerType": {
+                                        "type": "string"
+                                      },
+                                      "MinAmount": {
+                                        "type": "integer"
+                                      },
+                                      "OtherOfficerType": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "MaxAmount": {
+                                        "type": "integer"
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "IndustryEligibility": {
+                                  "type": "object",
+                                  "properties": {
+                                    "OtherSICCodeIncluded": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      }
+                                    },
+                                    "SICCodeIncluded": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "OtherSICCodeExluded": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      }
+                                    },
+                                    "SICCodeExcluded": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "Notes": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "SICCodeExcluded",
+                                    "SICCodeIncluded"
+                                  ]
+                                },
+                                "IDEligibility": {
+                                  "type": "object",
+                                  "properties": {
+                                    "URL": {
+                                      "type": "string"
+                                    },
+                                    "Notes": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "OtherEligibility": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "Type": {
+                                        "type": "string"
+                                      },
+                                      "Description": {
+                                        "type": "string"
+                                      },
+                                      "Textual": {
+                                        "type": "string"
+                                      },
+                                      "Amount": {
+                                        "type": "string"
+                                      },
+                                      "Period": {
+                                        "type": "string"
+                                      },
+                                      "OtherType": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "Indicator": {
+                                        "type": "boolean"
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "Name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "Name",
+                                      "Type"
+                                    ]
+                                  }
+                                },
+                                "ResidencyEligibility": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "ResidencyIncluded": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "OtherResidencyType": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "ResidencyType": {
+                                        "type": "string"
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "ResidencyIncluded"
+                                    ]
+                                  }
+                                },
+                                "TradingHistoryEligibility": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "TradingType": {
+                                        "type": "string"
+                                      },
+                                      "Textual": {
+                                        "type": "string"
+                                      },
+                                      "Amount": {
+                                        "type": "string"
+                                      },
+                                      "Period": {
+                                        "type": "string"
+                                      },
+                                      "OtherTradingType": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "MinMaxType": {
+                                        "type": "string"
+                                      },
+                                      "Indicator": {
+                                        "type": "boolean"
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "LastMarketedDate": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "LoanInterest": {
+                              "type": "object",
+                              "properties": {
+                                "LoanInterestTierBandSet": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "TierBandMethod": {
+                                        "type": "string"
+                                      },
+                                      "CalculationMethod": {
+                                        "type": "string"
+                                      },
+                                      "LoanInterestTierBand": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "FixedVariableInterestRateType": {
+                                              "type": "string"
+                                            },
+                                            "TierValueMaximum": {
+                                              "type": "string"
+                                            },
+                                            "MinTermPeriod": {
+                                              "type": "string"
+                                            },
+                                            "LoanInterestFeesCharges": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "LoanInterestFeeChargeDetail": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                        "NegotiableIndicator": {
+                                                          "type": "boolean"
+                                                        },
+                                                        "ApplicationFrequency": {
+                                                          "type": "string"
+                                                        },
+                                                        "OtherFeeType": {
+                                                          "type": "object",
+                                                          "properties": {
+                                                            "Description": {
+                                                              "type": "string"
+                                                            },
+                                                            "FeeCategory": {
+                                                              "type": "string"
+                                                            },
+                                                            "Code": {
+                                                              "type": "string"
+                                                            },
+                                                            "Name": {
+                                                              "type": "string"
+                                                            }
+                                                          },
+                                                          "required": [
+                                                            "Description",
+                                                            "Name"
+                                                          ]
+                                                        },
+                                                        "FeeType": {
+                                                          "type": "string"
+                                                        },
+                                                        "OtherCalculationFrequency": {
+                                                          "type": "object",
+                                                          "properties": {
+                                                            "Description": {
+                                                              "type": "string"
+                                                            },
+                                                            "Code": {
+                                                              "type": "string"
+                                                            },
+                                                            "Name": {
+                                                              "type": "string"
+                                                            }
+                                                          },
+                                                          "required": [
+                                                            "Description",
+                                                            "Name"
+                                                          ]
+                                                        },
+                                                        "FeeRate": {
+                                                          "type": "string"
+                                                        },
+                                                        "CalculationFrequency": {
+                                                          "type": "string"
+                                                        },
+                                                        "FeeRateType": {
+                                                          "type": "string"
+                                                        },
+                                                        "Notes": {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "string"
+                                                          }
+                                                        },
+                                                        "OtherApplicationFrequency": {
+                                                          "type": "object",
+                                                          "properties": {
+                                                            "Description": {
+                                                              "type": "string"
+                                                            },
+                                                            "Code": {
+                                                              "type": "string"
+                                                            },
+                                                            "Name": {
+                                                              "type": "string"
+                                                            }
+                                                          },
+                                                          "required": [
+                                                            "Description",
+                                                            "Name"
+                                                          ]
+                                                        },
+                                                        "FeeAmount": {
+                                                          "type": "string"
+                                                        },
+                                                        "OtherFeeRateType": {
+                                                          "type": "object",
+                                                          "properties": {
+                                                            "Description": {
+                                                              "type": "string"
+                                                            },
+                                                            "Code": {
+                                                              "type": "string"
+                                                            },
+                                                            "Name": {
+                                                              "type": "string"
+                                                            }
+                                                          },
+                                                          "required": [
+                                                            "Description",
+                                                            "Name"
+                                                          ]
+                                                        }
+                                                      },
+                                                      "required": [
+                                                        "ApplicationFrequency",
+                                                        "CalculationFrequency",
+                                                        "FeeType"
+                                                      ]
+                                                    }
+                                                  },
+                                                  "LoanInterestFeeChargeCap": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                        "CappingPeriod": {
+                                                          "type": "string"
+                                                        },
+                                                        "OtherFeeType": {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                              "Description": {
+                                                                "type": "string"
+                                                              },
+                                                              "Code": {
+                                                                "type": "string"
+                                                              },
+                                                              "Name": {
+                                                                "type": "string"
+                                                              }
+                                                            },
+                                                            "required": [
+                                                              "Description",
+                                                              "Name"
+                                                            ]
+                                                          }
+                                                        },
+                                                        "FeeType": {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "string"
+                                                          }
+                                                        },
+                                                        "FeeCapOccurrence": {
+                                                          "type": "number"
+                                                        },
+                                                        "MinMaxType": {
+                                                          "type": "string"
+                                                        },
+                                                        "Notes": {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "string"
+                                                          }
+                                                        },
+                                                        "FeeCapAmount": {
+                                                          "type": "string"
+                                                        }
+                                                      },
+                                                      "required": [
+                                                        "FeeType",
+                                                        "MinMaxType"
+                                                      ]
+                                                    }
+                                                  }
+                                                },
+                                                "required": [
+                                                  "LoanInterestFeeChargeDetail"
+                                                ]
+                                              }
+                                            },
+                                            "LoanProviderInterestRateType": {
+                                              "type": "string"
+                                            },
+                                            "Identification": {
+                                              "type": "string"
+                                            },
+                                            "TierValueMinTerm": {
+                                              "type": "number"
+                                            },
+                                            "TierValueMaxTerm": {
+                                              "type": "number"
+                                            },
+                                            "MaxTermPeriod": {
+                                              "type": "string"
+                                            },
+                                            "TierValueMinimum": {
+                                              "type": "string"
+                                            },
+                                            "RepAPR": {
+                                              "type": "string"
+                                            },
+                                            "OtherLoanProviderInterestRateType": {
+                                              "type": "object",
+                                              "properties": {
+                                                "Description": {
+                                                  "type": "string"
+                                                },
+                                                "Code": {
+                                                  "type": "string"
+                                                },
+                                                "Name": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "Description",
+                                                "Name"
+                                              ]
+                                            },
+                                            "LoanProviderInterestRate": {
+                                              "type": "string"
+                                            },
+                                            "Notes": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          },
+                                          "required": [
+                                            "FixedVariableInterestRateType",
+                                            "MinTermPeriod",
+                                            "RepAPR",
+                                            "TierValueMinTerm",
+                                            "TierValueMinimum"
+                                          ]
+                                        }
+                                      },
+                                      "LoanInterestFeesCharges": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "LoanInterestFeeChargeDetail": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "NegotiableIndicator": {
+                                                    "type": "boolean"
+                                                  },
+                                                  "ApplicationFrequency": {
+                                                    "type": "string"
+                                                  },
+                                                  "OtherFeeType": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "Description": {
+                                                        "type": "string"
+                                                      },
+                                                      "FeeCategory": {
+                                                        "type": "string"
+                                                      },
+                                                      "Code": {
+                                                        "type": "string"
+                                                      },
+                                                      "Name": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "Description",
+                                                      "Name"
+                                                    ]
+                                                  },
+                                                  "FeeType": {
+                                                    "type": "string"
+                                                  },
+                                                  "OtherCalculationFrequency": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "Description": {
+                                                        "type": "string"
+                                                      },
+                                                      "Code": {
+                                                        "type": "string"
+                                                      },
+                                                      "Name": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "Description",
+                                                      "Name"
+                                                    ]
+                                                  },
+                                                  "FeeRate": {
+                                                    "type": "string"
+                                                  },
+                                                  "CalculationFrequency": {
+                                                    "type": "string"
+                                                  },
+                                                  "FeeRateType": {
+                                                    "type": "string"
+                                                  },
+                                                  "Notes": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "OtherApplicationFrequency": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "Description": {
+                                                        "type": "string"
+                                                      },
+                                                      "Code": {
+                                                        "type": "string"
+                                                      },
+                                                      "Name": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "Description",
+                                                      "Name"
+                                                    ]
+                                                  },
+                                                  "FeeAmount": {
+                                                    "type": "string"
+                                                  },
+                                                  "OtherFeeRateType": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "Description": {
+                                                        "type": "string"
+                                                      },
+                                                      "Code": {
+                                                        "type": "string"
+                                                      },
+                                                      "Name": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "Description",
+                                                      "Name"
+                                                    ]
+                                                  }
+                                                },
+                                                "required": [
+                                                  "ApplicationFrequency",
+                                                  "CalculationFrequency",
+                                                  "FeeType"
+                                                ]
+                                              }
+                                            },
+                                            "LoanInterestFeeChargeCap": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "CappingPeriod": {
+                                                    "type": "string"
+                                                  },
+                                                  "OtherFeeType": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                        "Description": {
+                                                          "type": "string"
+                                                        },
+                                                        "Code": {
+                                                          "type": "string"
+                                                        },
+                                                        "Name": {
+                                                          "type": "string"
+                                                        }
+                                                      },
+                                                      "required": [
+                                                        "Description",
+                                                        "Name"
+                                                      ]
+                                                    }
+                                                  },
+                                                  "FeeType": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "FeeCapOccurrence": {
+                                                    "type": "number"
+                                                  },
+                                                  "MinMaxType": {
+                                                    "type": "string"
+                                                  },
+                                                  "Notes": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "FeeCapAmount": {
+                                                    "type": "string"
+                                                  }
+                                                },
+                                                "required": [
+                                                  "FeeType",
+                                                  "MinMaxType"
+                                                ]
+                                              }
+                                            }
+                                          },
+                                          "required": [
+                                            "LoanInterestFeeChargeDetail"
+                                          ]
+                                        }
+                                      },
+                                      "Identification": {
+                                        "type": "string"
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "CalculationMethod",
+                                      "LoanInterestTierBand",
+                                      "TierBandMethod"
+                                    ]
+                                  }
+                                },
+                                "Notes": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "required": [
+                                "LoanInterestTierBandSet"
+                              ]
+                            },
+                            "OtherFeesCharges": {
+                              "type": "object",
+                              "properties": {
+                                "FeeChargeCap": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "CappingPeriod": {
+                                        "type": "string"
+                                      },
+                                      "OtherFeeType": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "Description": {
+                                              "type": "string"
+                                            },
+                                            "Code": {
+                                              "type": "string"
+                                            },
+                                            "Name": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "Description",
+                                            "Name"
+                                          ]
+                                        }
+                                      },
+                                      "FeeType": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "FeeCapOccurrence": {
+                                        "type": "number"
+                                      },
+                                      "MinMaxType": {
+                                        "type": "string"
+                                      },
+                                      "Notes": {
+                                        "type": "string"
+                                      },
+                                      "FeeCapAmount": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "CappingPeriod",
+                                      "FeeCapAmount",
+                                      "FeeCapOccurrence",
+                                      "FeeType",
+                                      "MinMaxType",
+                                      "Notes",
+                                      "OtherFeeType"
+                                    ]
+                                  }
+                                },
+                                "FeeChargeDetail": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "FeeApplicableRange": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "FeeCategory": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "ApplicationFrequency": {
+                                        "type": "string"
+                                      },
+                                      "OtherFeeType": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "FeeCategory": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "FeeType": {
+                                        "type": "string"
+                                      },
+                                      "OtherCalculationFrequency": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "FeeRate": {
+                                        "type": "string"
+                                      },
+                                      "FeeRateType": {
+                                        "type": "string"
+                                      },
+                                      "OtherApplicationFrequency": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "OtherFeeRateType": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Description": {
+                                            "type": "string"
+                                          },
+                                          "Code": {
+                                            "type": "string"
+                                          },
+                                          "Name": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "Description",
+                                          "Name"
+                                        ]
+                                      },
+                                      "NegotiableIndicator": {
+                                        "type": "boolean"
+                                      },
+                                      "CalculationFrequency": {
+                                        "type": "string"
+                                      },
+                                      "FeeCategory": {
+                                        "type": "string"
+                                      },
+                                      "Notes": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "FeeAmount": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "ApplicationFrequency",
+                                      "CalculationFrequency",
+                                      "FeeType"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "FeeChargeDetail"
+                              ]
+                            },
+                            "Identification": {
+                              "type": "string"
+                            },
+                            "StateTenureLength": {
+                              "type": "number"
+                            },
+                            "Repayment": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "RepaymentFrequency": {
+                                    "type": "string"
+                                  },
+                                  "RepaymentType": {
+                                    "type": "string"
+                                  },
+                                  "OtherAmountType": {
+                                    "type": "object",
+                                    "properties": {
+                                      "Description": {
+                                        "type": "string"
+                                      },
+                                      "Code": {
+                                        "type": "string"
+                                      },
+                                      "Name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "Description",
+                                      "Name"
+                                    ]
+                                  },
+                                  "RepaymentHoliday": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "MaxHolidayPeriod": {
+                                          "type": "string"
+                                        },
+                                        "MaxHolidayLength": {
+                                          "type": "number"
+                                        },
+                                        "Notes": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "OtherRepaymentFrequency": {
+                                    "type": "object",
+                                    "properties": {
+                                      "Description": {
+                                        "type": "string"
+                                      },
+                                      "Code": {
+                                        "type": "string"
+                                      },
+                                      "Name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "Description",
+                                      "Name"
+                                    ]
+                                  },
+                                  "AmountType": {
+                                    "type": "string"
+                                  },
+                                  "RepaymentFeeCharges": {
+                                    "type": "object",
+                                    "properties": {
+                                      "RepaymentFeeChargeDetail": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "NegotiableIndicator": {
+                                              "type": "boolean"
+                                            },
+                                            "ApplicationFrequency": {
+                                              "type": "string"
+                                            },
+                                            "OtherFeeType": {
+                                              "type": "object",
+                                              "properties": {
+                                                "Description": {
+                                                  "type": "string"
+                                                },
+                                                "FeeCategory": {
+                                                  "type": "string"
+                                                },
+                                                "Code": {
+                                                  "type": "string"
+                                                },
+                                                "Name": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "Description",
+                                                "Name"
+                                              ]
+                                            },
+                                            "FeeType": {
+                                              "type": "string"
+                                            },
+                                            "OtherCalculationFrequency": {
+                                              "type": "object",
+                                              "properties": {
+                                                "Description": {
+                                                  "type": "string"
+                                                },
+                                                "Code": {
+                                                  "type": "string"
+                                                },
+                                                "Name": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "Description",
+                                                "Name"
+                                              ]
+                                            },
+                                            "FeeRate": {
+                                              "type": "string"
+                                            },
+                                            "CalculationFrequency": {
+                                              "type": "string"
+                                            },
+                                            "FeeRateType": {
+                                              "type": "string"
+                                            },
+                                            "Notes": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "OtherApplicationFrequency": {
+                                              "type": "object",
+                                              "properties": {
+                                                "Description": {
+                                                  "type": "string"
+                                                },
+                                                "Code": {
+                                                  "type": "string"
+                                                },
+                                                "Name": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "Description",
+                                                "Name"
+                                              ]
+                                            },
+                                            "FeeAmount": {
+                                              "type": "string"
+                                            },
+                                            "OtherFeeRateType": {
+                                              "type": "object",
+                                              "properties": {
+                                                "Description": {
+                                                  "type": "string"
+                                                },
+                                                "Code": {
+                                                  "type": "string"
+                                                },
+                                                "Name": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "Description",
+                                                "Name"
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "ApplicationFrequency",
+                                            "CalculationFrequency",
+                                            "FeeType"
+                                          ]
+                                        }
+                                      },
+                                      "RepaymentFeeChargeCap": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "CappingPeriod": {
+                                              "type": "string"
+                                            },
+                                            "OtherFeeType": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "Description": {
+                                                    "type": "string"
+                                                  },
+                                                  "Code": {
+                                                    "type": "string"
+                                                  },
+                                                  "Name": {
+                                                    "type": "string"
+                                                  }
+                                                },
+                                                "required": [
+                                                  "Description",
+                                                  "Name"
+                                                ]
+                                              }
+                                            },
+                                            "FeeType": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "FeeCapOccurrence": {
+                                              "type": "number"
+                                            },
+                                            "MinMaxType": {
+                                              "type": "string"
+                                            },
+                                            "Notes": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "FeeCapAmount": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "FeeType",
+                                            "MinMaxType"
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "RepaymentFeeChargeDetail"
+                                    ]
+                                  },
+                                  "Notes": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "OtherRepaymentType": {
+                                    "type": "object",
+                                    "properties": {
+                                      "Description": {
+                                        "type": "string"
+                                      },
+                                      "Code": {
+                                        "type": "string"
+                                      },
+                                      "Name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "Description",
+                                      "Name"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "MarketingState": {
+                              "type": "string"
+                            },
+                            "CoreProduct": {
+                              "type": "object",
+                              "properties": {
+                                "EarlyPaymentFeeApplicable": {
+                                  "type": "boolean"
+                                },
+                                "LoanApplicationFeeChargeType": {
+                                  "type": "string"
+                                },
+                                "OverPaymentFeeApplicable": {
+                                  "type": "boolean"
+                                },
+                                "OverpaymentAllowedIndicator": {
+                                  "type": "boolean"
+                                },
+                                "ServicingAccessChannels": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "ProductDescription": {
+                                  "type": "string"
+                                },
+                                "FullEarlyRepaymentAllowedIndicator": {
+                                  "type": "boolean"
+                                },
+                                "ProductURL": {
+                                  "type": "string"
+                                },
+                                "SalesAccessChannels": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "Notes": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "TcsAndCsURL": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "EarlyPaymentFeeApplicable",
+                                "LoanApplicationFeeChargeType",
+                                "OverPaymentFeeApplicable",
+                                "ProductURL",
+                                "SalesAccessChannels",
+                                "ServicingAccessChannels",
+                                "TcsAndCsURL"
+                              ]
+                            },
+                            "Notes": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "FirstMarketedDate": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          },
+                          "required": [
+                            "CoreProduct",
+                            "Eligibility",
+                            "FeaturesAndBenefits",
+                            "Identification",
+                            "LoanInterest",
+                            "MarketingState",
+                            "Repayment"
+                          ]
+                        }
+                      },
+                      "OtherSegment": {
+                        "type": "object",
+                        "properties": {
+                          "Description": {
+                            "type": "string"
+                          },
+                          "Code": {
+                            "type": "string"
+                          },
+                          "Name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "Description",
+                          "Name"
+                        ]
+                      },
+                      "Identification": {
+                        "type": "string"
+                      },
+                      "Segment": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "Name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "Identification",
+                      "Name",
+                      "SMELoanMarketingState",
+                      "Segment"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "BrandName",
+                "SMELoan"
+              ]
+            }
+          }
+        },
+        "required": [
+          "Brand"
+        ]
+      }
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "Agreement": {
+          "type": "string"
+        },
+        "TermsOfUse": {
+          "type": "string"
+        },
+        "License": {
+          "type": "string"
+        },
+        "TotalResults": {
+          "type": "integer"
+        },
+        "LastUpdated": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Agreement",
+        "LastUpdated",
+        "License",
+        "TermsOfUse",
+        "TotalResults"
+      ]
+    }
+  },
+  "required": [
+    "data",
+    "meta"
+  ]
+}

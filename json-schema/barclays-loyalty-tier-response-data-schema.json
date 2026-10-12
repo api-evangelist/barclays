@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-loyalty-tier-response-data-schema.json",
+  "title": "LoyaltyTierResponseData",
+  "description": "Loyalty Tier Update Response Data",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-tier-update-xapi-api-openapi.yml#/components/schemas/LoyaltyTierResponseData",
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/LoyaltyTierResponse"
+    }
+  },
+  "$defs": {
+    "ErrorDetails": {
+      "type": "object",
+      "description": "Contains error information if the requested upgrade/downgrade is declined.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Error code describing the type of HTTP error."
+        },
+        "detail": {
+          "type": "string",
+          "description": "A brief message describing the reason for failure to assist with troubleshooting."
+        }
+      }
+    },
+    "LoyaltyTierResponse": {
+      "type": "object",
+      "description": "Loyalty Tier Response Data",
+      "properties": {
+        "tierUpdateStatusList": {
+          "type": "array",
+          "description": "List of tierUpdateStatus objects per unique EAID under one loyalty program, which contains information about the status of tier update request processed at Barclays.",
+          "items": {
+            "$ref": "#/$defs/TierUpdateStatus"
+          }
+        }
+      },
+      "required": [
+        "tierUpdateStatusList"
+      ]
+    },
+    "TierUpdateStatus": {
+      "type": "object",
+      "description": "Contains tier code update success/failure status for each account.",
+      "properties": {
+        "externalAccountId": {
+          "type": "string",
+          "description": "Common card account identifier agreed between GAP and Barclays, unique per card. Generated at Barclays during card apply/conversion process and provided to GAP to be stored for further communication with Barclays."
+        },
+        "status": {
+          "type": "string",
+          "description": "Indicates whether tier update request specific to EAID has been processed successfully or declined due to any of the multiple errors mentioned in Error Codes sheet."
+        },
+        "errors": {
+          "$ref": "#/$defs/ErrorDetails"
+        }
+      },
+      "required": [
+        "externalAccountId",
+        "status"
+      ]
+    }
+  }
+}

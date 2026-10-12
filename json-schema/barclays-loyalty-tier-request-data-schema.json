@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/barclays/main/json-schema/barclays-loyalty-tier-request-data-schema.json",
+  "title": "LoyaltyTierRequestData",
+  "description": "Loyalty Tier Update Request Data",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/barclays-tier-update-xapi-api-openapi.yml#/components/schemas/LoyaltyTierRequestData",
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/LoyaltyTierRequest"
+    }
+  },
+  "$defs": {
+    "LoyaltyTierRequest": {
+      "type": "object",
+      "description": "Loyalty Tier Request Data",
+      "properties": {
+        "tierUpdateRequestList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TierUpdateRequest"
+          }
+        },
+        "transactionReferenceId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tierUpdateRequestList",
+        "transactionReferenceId"
+      ],
+      "title": "LoyaltyTierRequest"
+    },
+    "TierUpdateRequest": {
+      "type": "object",
+      "description": "Contains account information, current and new tier codes etc.",
+      "properties": {
+        "currentTierCode": {
+          "type": "string"
+        },
+        "externalAccountId": {
+          "type": "string"
+        },
+        "issueCard": {
+          "type": "boolean"
+        },
+        "last4OfCardNumber": {
+          "type": "string"
+        },
+        "memberId": {
+          "type": "string"
+        },
+        "newTierCode": {
+          "type": "string"
+        },
+        "newTierCodeExpiryDate": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "externalAccountId",
+        "last4OfCardNumber",
+        "newTierCode"
+      ],
+      "title": "TierUpdateRequest"
+    }
+  }
+}
