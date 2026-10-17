@@ -88,25 +88,121 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
       deprecated: false
 components:
+  responses:
+    TooManyRequests:
+      description: "When a server is under attack or just receiving a very \nlarge number of requests from a single party, responding \nto each with a 429 status code will consume resources. \nTherefore, servers may drop connections or take other steps\ninstead of responding with the 429 status code, when limiting\nresource usage.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-429:
+              $ref: '#/components/examples/example-error-429'
+    InternalServerError:
+      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-500:
+              $ref: '#/components/examples/example-error-500'
+    NotFound:
+      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-404:
+              $ref: '#/components/examples/example-error-404'
+    BadRequest:
+      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-400-bad-request:
+              $ref: '#/components/examples/example-error-400-bad-request'
+    Unauthorized:
+      description: 'The user could not be authenticated for this request.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-401:
+              $ref: '#/components/examples/example-error-401'
+    ServiceUnavailable:
+      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-503:
+              $ref: '#/components/examples/example-error-503'
+    Forbidden:
+      description: 'The user is not permitted to access the requested operation and it cannot be completed.
+
+        '
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseType'
+          examples:
+            example-error-403:
+              $ref: '#/components/examples/example-error-403'
+    RewardEarnHistoryRes:
+      description: Successful response.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RewardsEarnHistoryResponse'
+          examples:
+            multipleRewards:
+              summary: Multiple reward earned
+              $ref: '#/components/examples/rewards-earn-history'
   examples:
-    example-error-403:
+    example-error-429:
       value:
         errors:
         - id: 9709-4675-2456-7801
-          code: ACCESS_FORBIDDEN
-          title: The user is not permitted to access the requested operation and it cannot be completed.
-    example-error-401:
+          code: TOO_MANY_REQUESTS
+          title: Too many requests
+    example-error-404:
       value:
         errors:
         - id: 9709-4675-2456-7801
-          code: AUTHENTICATION_ERROR
-          title: The user could not be authenticated for this request.
-    example-error-400-bad-request:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: BAD_REQUEST
-          title: The request is invalid or not properly formed.
+          code: RESOURCE_NOT_FOUND
+          title: The requested operation failed because a resource associated with the request could not be found.
     rewards-earn-history:
       value:
         data:
@@ -146,156 +242,98 @@ components:
             - description: Adhoc Rewards
               type: ADJ
               earnedAwardValue: 20
-    example-error-429:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: TOO_MANY_REQUESTS
-          title: Too many requests
-    example-error-503:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: SERVICE_UNAVAILABLE
-          title: The server is currently unavailable
-    example-error-404:
-      value:
-        errors:
-        - id: 9709-4675-2456-7801
-          code: RESOURCE_NOT_FOUND
-          title: The requested operation failed because a resource associated with the request could not be found.
     example-error-500:
       value:
         errors:
         - id: 9709-4675-2456-7801
           code: INTERNAL_SERVER_ERROR
           title: The request failed due to an internal error.
-  responses:
-    Forbidden:
-      description: 'The user is not permitted to access the requested operation and it cannot be completed.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-403:
-              $ref: '#/components/examples/example-error-403'
-    NotFound:
-      description: "Server has not found a resource with that URI. This may be \ntemporary and permanent condition. This status code is \ncommonly used when the server does not wish to reveal \nexactly why the request has been refused, or when no other \nresponse is applicable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-404:
-              $ref: '#/components/examples/example-error-404'
-    ServiceUnavailable:
-      description: "temporary maintenance of service, try again later. The implication \nis that this is a temporary condition which will be alleviated \nafter some delay. If known, the length of the delay will be \nindicated in a Retry-After header. If no Retry-After is given, \nthe client SHOULD handle the response as it would for a 500 response. \nNote: The existence of the 503 status code does not imply that a \nserver will use it when becoming overloaded. Servers may simply \nrefuse the connection.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-503:
-              $ref: '#/components/examples/example-error-503'
-    TooManyRequests:
-      description: "When a server is under attack or just receiving a very \nlarge number of requests from a single party, responding \nto each with a 429 status code will consume resources. \nTherefore, servers may drop connections or take other steps\ninstead of responding with the 429 status code, when limiting\nresource usage.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-429:
-              $ref: '#/components/examples/example-error-429'
-    Unauthorized:
-      description: 'The user could not be authenticated for this request.
-
-        '
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-401:
-              $ref: '#/components/examples/example-error-401'
-    RewardEarnHistoryRes:
-      description: Successful response.
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RewardsEarnHistoryResponse'
-          examples:
-            multipleRewards:
-              summary: Multiple reward earned
-              $ref: '#/components/examples/rewards-earn-history'
-    InternalServerError:
-      description: "Server encountered an error processing request. This should not \nhappen normally, but it is a generic error message, given when \nno more specific message is suitable.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-500:
-              $ref: '#/components/examples/example-error-500'
-    BadRequest:
-      description: "The request could not be understood by the server due to malformed \nsyntax. The client SHOULD NOT repeat the request without \nmodifications.\n"
-      headers:
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponseType'
-          examples:
-            example-error-400-bad-request:
-              $ref: '#/components/examples/example-error-400-bad-request'
-  schemas:
-    ErrorResponseType:
-      type: object
-      additionalProperties: false
-      deprecated: false
-      description: 'An API error response.
-
-        '
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-          description: Contains Non-standard meta information
+    example-error-400-bad-request:
+      value:
         errors:
+        - id: 9709-4675-2456-7801
+          code: BAD_REQUEST
+          title: The request is invalid or not properly formed.
+    example-error-401:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: AUTHENTICATION_ERROR
+          title: The user could not be authenticated for this request.
+    example-error-503:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: SERVICE_UNAVAILABLE
+          title: The server is currently unavailable
+    example-error-403:
+      value:
+        errors:
+        - id: 9709-4675-2456-7801
+          code: ACCESS_FORBIDDEN
+          title: The user is not permitted to access the requested operation and it cannot be completed.
+  schemas:
+    RewardInformationSummaryResponse:
+      type: object
+      properties:
+        statementDate:
+          type: string
+          format: date
+          description: Statement date for the cycle
+          example: '2025-11-01'
+        isCurrent:
+          type: boolean
+          description: cycle type
+          example: true
+        totalEarnedAwardValue:
+          type: number
+          format: double
+          description: Reward amount
+          example: 10
+          maximum: 10000000
+          minimum: -10000000
+        rewardInformationList:
           type: array
-          description: 'Contains one or more error messages and is mutually exclusive with the data item.
-
-            This will not be returned in success scenarios.
-
-            '
+          description: summary of reward earned by award description
           items:
-            $ref: '#/components/schemas/ErrorType'
-          maxItems: 50
+            $ref: '#/components/schemas/RewardInformation'
+          maxItems: 200
           minItems: 0
+      required:
+      - isCurrent
+      - rewardInformationList
+      - statementDate
+      - totalEarnedAwardValue
+    RewardsEarnHistoryResponse:
+      type: object
+      deprecated: false
+      properties:
+        data:
+          $ref: '#/components/schemas/RewardsEarnHistoryData'
+      required:
+      - data
+      nullable: false
+    RewardsEarnHistoryData:
+      type: object
+      deprecated: false
+      properties:
+        rewardCurrency:
+          type: string
+          description: Currency type for the reward
+          example: cash rewards
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9®™$\s_\-\.]+$
+        rewardHistory:
+          type: array
+          description: List of reward earned by statementDate
+          items:
+            $ref: '#/components/schemas/RewardInformationSummaryResponse'
+          maxItems: 100
+          minItems: 0
+      required:
+      - rewardCurrency
+      - rewardHistory
       nullable: false
     ErrorType:
       type: object
@@ -337,68 +375,6 @@ components:
       - code
       - id
       - title
-    RewardsEarnHistoryData:
-      type: object
-      deprecated: false
-      properties:
-        rewardCurrency:
-          type: string
-          description: Currency type for the reward
-          example: cash rewards
-          maxLength: 255
-          minLength: 1
-          pattern: ^[a-zA-Z0-9®™$\s_\-\.]+$
-        rewardHistory:
-          type: array
-          description: List of reward earned by statementDate
-          items:
-            $ref: '#/components/schemas/RewardInformationSummaryResponse'
-          maxItems: 100
-          minItems: 0
-      required:
-      - rewardCurrency
-      - rewardHistory
-      nullable: false
-    RewardsEarnHistoryResponse:
-      type: object
-      deprecated: false
-      properties:
-        data:
-          $ref: '#/components/schemas/RewardsEarnHistoryData'
-      required:
-      - data
-      nullable: false
-    RewardInformationSummaryResponse:
-      type: object
-      properties:
-        statementDate:
-          type: string
-          format: date
-          description: Statement date for the cycle
-          example: '2025-11-01'
-        isCurrent:
-          type: boolean
-          description: cycle type
-          example: true
-        totalEarnedAwardValue:
-          type: number
-          format: double
-          description: Reward amount
-          example: 10
-          maximum: 10000000
-          minimum: -10000000
-        rewardInformationList:
-          type: array
-          description: summary of reward earned by award description
-          items:
-            $ref: '#/components/schemas/RewardInformation'
-          maxItems: 200
-          minItems: 0
-      required:
-      - isCurrent
-      - rewardInformationList
-      - statementDate
-      - totalEarnedAwardValue
     RewardInformation:
       type: object
       properties:
@@ -428,6 +404,30 @@ components:
       - description
       - earnedAwardValue
       - type
+    ErrorResponseType:
+      type: object
+      additionalProperties: false
+      deprecated: false
+      description: 'An API error response.
+
+        '
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+          description: Contains Non-standard meta information
+        errors:
+          type: array
+          description: 'Contains one or more error messages and is mutually exclusive with the data item.
+
+            This will not be returned in success scenarios.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorType'
+          maxItems: 50
+          minItems: 0
+      nullable: false
   headers:
     Cache-Control:
       description: GIS mandatory response header. This is added by the Cognac sidecar.

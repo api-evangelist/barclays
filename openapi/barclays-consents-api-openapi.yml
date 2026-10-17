@@ -1806,45 +1806,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    create_consent_response:
-      type: object
-      properties:
-        consentId:
-          type: string
-        _links:
-          type: object
-          properties:
-            scaStatus:
-              type: object
-              properties:
-                href:
-                  type: string
-            scaRedirect:
-              type: object
-              properties:
-                href:
-                  type: string
-            self:
-              type: object
-              properties:
-                href:
-                  type: string
-            startAuthorisation:
-              type: object
-              properties:
-                href:
-                  type: string
-            status:
-              type: object
-              properties:
-                href:
-                  type: string
-        consentStatus:
-          type: string
-      required:
-      - _links
-      - consentId
-      - consentStatus
     get_consent_details_response:
       type: object
       properties:
@@ -1905,7 +1866,7 @@ components:
       - lastActionDate
       - recurringIndicator
       - validUntil
-    GetAccountsAccountIdTransactionsTransactionid404Response:
+    GetAccountsAccountIdTransactionsTransactionid400Response:
       type: object
       properties:
         code:
@@ -1941,6 +1902,13 @@ components:
             type: string
       required:
       - authorisationIds
+    get_consent_status_response:
+      type: object
+      properties:
+        consentStatus:
+          type: string
+      required:
+      - consentStatus
     get_consent_authorisation_details_response:
       type: object
       properties:
@@ -1948,60 +1916,45 @@ components:
           type: string
       required:
       - scaStatus
-    DeleteConsentsConsentid409Response:
+    create_consent_response:
       type: object
       properties:
-        code:
+        consentId:
           type: string
-        additionalErrors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-            required:
-            - code
-        detail:
-          type: string
-        type:
-          type: string
-        title:
-          type: string
-      required:
-      - code
-      - type
-    GetAccountsAccountIdTransactionsTransactionid400Response:
-      type: object
-      properties:
-        code:
-          type: string
-        additionalErrors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-            required:
-            - code
-        detail:
-          type: string
-        type:
-          type: string
-        title:
+        _links:
+          type: object
+          properties:
+            scaStatus:
+              type: object
+              properties:
+                href:
+                  type: string
+            scaRedirect:
+              type: object
+              properties:
+                href:
+                  type: string
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+            startAuthorisation:
+              type: object
+              properties:
+                href:
+                  type: string
+            status:
+              type: object
+              properties:
+                href:
+                  type: string
+        consentStatus:
           type: string
       required:
-      - code
-      - type
+      - _links
+      - consentId
+      - consentStatus
     create_consent_request:
       type: object
       properties:
@@ -2095,60 +2048,7 @@ components:
       - frequencyPerDay
       - recurringIndicator
       - validUntil
-    get_consent_status_response:
-      type: object
-      properties:
-        consentStatus:
-          type: string
-      required:
-      - consentStatus
-    get_cof_consent_status_response:
-      type: object
-      properties:
-        consentStatus:
-          type: string
-      required:
-      - consentStatus
-    create_cof_consent_response:
-      type: object
-      properties:
-        consentId:
-          type: string
-        _links:
-          type: object
-          properties:
-            scaStatus:
-              type: object
-              properties:
-                href:
-                  type: string
-            scaRedirect:
-              type: object
-              properties:
-                href:
-                  type: string
-            self:
-              type: object
-              properties:
-                href:
-                  type: string
-            startAuthorisation:
-              type: object
-              properties:
-                href:
-                  type: string
-            status:
-              type: object
-              properties:
-                href:
-                  type: string
-        consentStatus:
-          type: string
-      required:
-      - _links
-      - consentId
-      - consentStatus
-    GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response:
+    DeleteConsentsConsentid409Response:
       type: object
       properties:
         code:
@@ -2175,7 +2075,67 @@ components:
       required:
       - code
       - type
-    DeleteConsentsConfirmationOfFundsConsentid409Response:
+    GetAccountsAccountIdTransactionsTransactionid404Response:
+      type: object
+      properties:
+        code:
+          type: string
+        additionalErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+      required:
+      - code
+      - type
+    get_cof_consent_status_response:
+      type: object
+      properties:
+        consentStatus:
+          type: string
+      required:
+      - consentStatus
+    get_cof_consent_details_response:
+      type: object
+      properties:
+        consentStatus:
+          type: string
+        registrationInformation:
+          type: string
+        cardInformation:
+          type: string
+        account:
+          type: object
+          properties:
+            bban:
+              type: string
+            iban:
+              type: string
+            currency:
+              type: string
+        cardNumber:
+          type: string
+        cardExpiryDate:
+          type: string
+          format: date-time
+      required:
+      - account
+      - consentStatus
+    GetConsentsConfirmationOfFundsConsentidAuthorisationsAuthorisationid404Response:
       type: object
       properties:
         code:
@@ -2229,6 +2189,15 @@ components:
       required:
       - code
       - type
+    get_cof_consent_authorisations_response:
+      type: object
+      properties:
+        authorisationIds:
+          type: array
+          items:
+            type: string
+      required:
+      - authorisationIds
     create_cof_consent_request:
       type: object
       properties:
@@ -2268,6 +2237,45 @@ components:
         cardExpiryDate:
           type: string
           format: date
+    create_cof_consent_response:
+      type: object
+      properties:
+        consentId:
+          type: string
+        _links:
+          type: object
+          properties:
+            scaStatus:
+              type: object
+              properties:
+                href:
+                  type: string
+            scaRedirect:
+              type: object
+              properties:
+                href:
+                  type: string
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+            startAuthorisation:
+              type: object
+              properties:
+                href:
+                  type: string
+            status:
+              type: object
+              properties:
+                href:
+                  type: string
+        consentStatus:
+          type: string
+      required:
+      - _links
+      - consentId
+      - consentStatus
     get_cof_consent_authorisation_details_response:
       type: object
       properties:
@@ -2275,41 +2283,33 @@ components:
           type: string
       required:
       - scaStatus
-    get_cof_consent_details_response:
+    DeleteConsentsConfirmationOfFundsConsentid409Response:
       type: object
       properties:
-        consentStatus:
+        code:
           type: string
-        registrationInformation:
-          type: string
-        cardInformation:
-          type: string
-        account:
-          type: object
-          properties:
-            bban:
-              type: string
-            iban:
-              type: string
-            currency:
-              type: string
-        cardNumber:
-          type: string
-        cardExpiryDate:
-          type: string
-          format: date-time
-      required:
-      - account
-      - consentStatus
-    get_cof_consent_authorisations_response:
-      type: object
-      properties:
-        authorisationIds:
+        additionalErrors:
           type: array
           items:
-            type: string
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+            required:
+            - code
+        detail:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
       required:
-      - authorisationIds
+      - code
+      - type
 x-refined-from:
 - barclays-bank-ireland-account-information-openapi.json
 - barclays-bank-ireland-confirmation-of-funds-openapi.json

@@ -93,13 +93,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    LoyaltyTierRequestData:
-      type: object
-      description: Loyalty Tier Update Request Data
-      properties:
-        data:
-          $ref: '#/components/schemas/LoyaltyTierRequest'
-      title: LoyaltyTierRequestData
     TierUpdateRequest:
       type: object
       description: Contains account information, current and new tier codes etc.
@@ -126,6 +119,33 @@ components:
       - last4OfCardNumber
       - newTierCode
       title: TierUpdateRequest
+    LoyaltyTierRequestData:
+      type: object
+      description: Loyalty Tier Update Request Data
+      properties:
+        data:
+          $ref: '#/components/schemas/LoyaltyTierRequest'
+      title: LoyaltyTierRequestData
+    LoyaltyTierRequest:
+      type: object
+      description: Loyalty Tier Request Data
+      properties:
+        tierUpdateRequestList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TierUpdateRequest'
+        transactionReferenceId:
+          type: string
+      required:
+      - tierUpdateRequestList
+      - transactionReferenceId
+      title: LoyaltyTierRequest
+    LoyaltyTierResponseData:
+      type: object
+      description: Loyalty Tier Update Response Data
+      properties:
+        data:
+          $ref: '#/components/schemas/LoyaltyTierResponse'
     TierUpdateStatus:
       type: object
       description: Contains tier code update success/failure status for each account.
@@ -164,34 +184,6 @@ components:
             $ref: '#/components/schemas/TierUpdateStatus'
       required:
       - tierUpdateStatusList
-    LoyaltyTierRequest:
-      type: object
-      description: Loyalty Tier Request Data
-      properties:
-        tierUpdateRequestList:
-          type: array
-          items:
-            $ref: '#/components/schemas/TierUpdateRequest'
-        transactionReferenceId:
-          type: string
-      required:
-      - tierUpdateRequestList
-      - transactionReferenceId
-      title: LoyaltyTierRequest
-    ErrorResponseType:
-      type: object
-      description: 'An API error response. '
-      properties:
-        errors:
-          type: array
-          description: Contains one or more error messages and is mutually exclusive with the data item. This will not be returned in success scenarios.
-          items:
-            $ref: '#/components/schemas/ErrorType'
-        meta:
-          type: object
-          description: Contains Non-standard meta information
-          properties: {}
-      title: ErrorResponseType
     ErrorType:
       type: object
       description: Message details - additional operation execution information.
@@ -216,9 +208,17 @@ components:
       - id
       - title
       title: ErrorType
-    LoyaltyTierResponseData:
+    ErrorResponseType:
       type: object
-      description: Loyalty Tier Update Response Data
+      description: 'An API error response. '
       properties:
-        data:
-          $ref: '#/components/schemas/LoyaltyTierResponse'
+        errors:
+          type: array
+          description: Contains one or more error messages and is mutually exclusive with the data item. This will not be returned in success scenarios.
+          items:
+            $ref: '#/components/schemas/ErrorType'
+        meta:
+          type: object
+          description: Contains Non-standard meta information
+          properties: {}
+      title: ErrorResponseType
