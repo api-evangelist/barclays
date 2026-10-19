@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/barclays/integrations
 - https://n8n.io/integrations/barclays/
@@ -8,14 +8,45 @@ source:
 checked:
 - https://composio.dev/toolkits/barclays
 - https://developer.barclays.com/
+- https://eservices.mas.gov.sg/fid
 - https://monid.ai/tools/barclays
 - https://n8n.io/integrations/barclays/
 - https://www.barclaycard.co.uk/business
 - https://www.barclaycard.co.uk/business/accepting-payments/card-readers/integrated-point-of-sale-solutions
+- https://www.bi.go.id/id/layanan/informasi-perizinan/sistem-pembayaran/default.aspx
+- https://www.bnm.gov.my/list-of-regulatees
+- https://www.ojk.go.id/id/kanal/iknb/data-dan-statistik/direktori/fintech/Default.aspx
 - https://zapier.com/apps/barclays/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: MAS Financial Institutions Directory
+  partner: null
+  partner_match: register
+  type: register
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://eservices.mas.gov.sg/fid
+  category: open finance (Singapore)
+  contract_reference:
+    register: MAS Financial Institutions Directory
+    spec_file: null
+    standard: MAS licensing (Banking Act / Payment Services Act, Singapore)
+    role: licensed-participant
+    registrations:
+    - registered_name: BARCLAYS BANK PLC
+      licences:
+      - Wholesale Bank
+      matched_domain: barclays.co.uk
+      matched_by: domain
+      evidence: https://eservices.mas.gov.sg/fid/institution/detail/3077-BARCLAYS-BANK-PLC
+      register_id: 3077-BARCLAYS-BANK-PLC
+    signal_note: 'participation only: a regulator licence; no API conformance is published by this register'
+    detected_by: sweep-gulf-asean-open-finance.py
+    detected: '2026-10-18'
+  detected_by: sweep-gulf-asean-open-finance.py
+  first_seen: '2026-10-18'
 templates: []
 note: Barclaycard business pages mention "strategic partners" but name none; no marketplace listings found (Zapier/n8n
   absent).
