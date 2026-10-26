@@ -1,0 +1,150 @@
+# Barclays (barclays)
+
+<!-- API-EVANGELIST-PROVENANCE:BEGIN -->
+> ### About this repository
+>
+> **This is not our API.** This repository is an independent, third-party profile of a company's
+> **publicly available** API surface, maintained by [API Evangelist](https://apievangelist.com).
+> API Evangelist does not operate, host, resell, or support this company's APIs, and is not
+> affiliated with or endorsed by the company unless stated on the profile.
+>
+> **Where the information came from.** Everything here is assembled from material a member of the
+> public can reach with a browser and no credentials — the company's own website, developer portal
+> and documentation, the specifications it publishes for public use (OpenAPI, AsyncAPI, JSON Schema,
+> `apis.json`, `llms.txt` and similar), its public repositories, and its public status, pricing and
+> changelog pages. **Nothing here is obtained by breaching a system, defeating an access control, or
+> using credentials of any kind.**
+>
+> **The rating is an independent assessment.** The Kin Score and Agent Readiness rating are
+> independently calculated scores of a company's *public* API artifacts, produced by API Evangelist
+> against a published rubric. They are not certifications, endorsements, security assessments, or
+> audits, and they score published artifacts — not the quality, safety, or security of the software.
+>
+> **Corrections, re-scores, and removal are free.** No partnership, contract, or purchase is
+> required, and you do not need to justify the request.
+>
+> - **Something wrong?** Open an issue on this repository, or email
+>   [info@apievangelist.com](mailto:info@apievangelist.com).
+> - **Published something new?** Ask for a re-score and we will re-run the rating.
+> - **Want the listing taken down?** Say so and we will honor it. The profile is reduced to your
+>   company name, a factual description, and a link to your own site, and the company is recorded as
+>   **unrated** — never scored zero for having asked.
+>
+> **Response times.** Acknowledgement within **one business day**; removal or restriction within
+> **two business days**; corrections and re-scores within **five business days**.
+>
+> **Not from the company, and here with a question?** You are welcome here — we would rather be the
+> front line and point you the right way than have a good report go nowhere. What this repository
+> can answer is narrow, though, so it is worth knowing who you are actually looking for:
+>
+> - **A question about how the API works, an account, billing, or a bug in the service** — that is
+>   the company's own support, not us. We profile this API; we do not operate it and cannot see
+>   your account.
+> - **A bug in an open-source project we only catalog** — file it on that project's own repository.
+>   This has happened with a real and correct bug report that reached us instead of the people who
+>   could fix it, which helped nobody.
+> - **Anything about this listing itself** — the description, the tags, the rating, a missing or
+>   wrong artifact — is ours. Open an issue here.
+> - **Not sure, or something general about API Evangelist or APIs.io** — open an issue on the
+>   [APIs.io Inbox](https://github.com/api-search/inbox) and we will route it.
+>
+> **This repository contains no software, and we will never ask you to download anything.** There is
+> no build, release, installer, or binary here — only text and machine-readable API descriptions, so
+> there is nothing here that can be "corrupt" or need "repairing". Any issue, comment, or email
+> claiming otherwise and offering a download link is not from us and is hostile. Do not follow the
+> link; it is a lure. Report it to GitHub and, if you like, tell us at
+> [info@apievangelist.com](mailto:info@apievangelist.com) so we can take it down.
+>
+> **On a security or compliance team?** Email
+> [info@apievangelist.com](mailto:info@apievangelist.com) with *security* in the subject line and
+> you will get a person, not a form. We will tell you exactly which public URLs this profile was
+> built from so your team can see the same surface we did, and we will take the listing down on
+> request while you work through it.
+>
+> Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
+<!-- API-EVANGELIST-PROVENANCE:END -->
+
+Barclays is a multinational financial services company providing retail and commercial banking, investment banking, wealth management, and credit cards. The Barclays API Exchange (developer.barclays.com) offers 22+ APIs covering open banking account information, payment initiation, confirmation of funds, ATM/branch location, rewards, digital wallet, and more, compliant with UK Open Banking and EU PSD2 standards.
+
+**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/barclays/refs/heads/main/apis.yml)
+
+## Tags:
+
+ - Banking, Credit Cards, Finance, Open Banking, Payments, PSD2, UK Banking
+
+## Timestamps
+
+- **Created:** 2025-02-21
+- **Modified:** 2026-04-21
+
+## APIs
+
+- [Barclays Smartpay Web Payment API](https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation)
+- [Barclays Bank Ireland Confirmation of Funds API](https://developer.barclays.com/apis/barclays-bank-ireland-confirmation-of-funds/8cd8be1f-4bdc-45fe-8fef-c7a569cfe603.bdn/documentation)
+- [Barclays Account and Transactions API](https://developer.barclays.com/apis/account-and-transactions/20e74071-13fb-44eb-b98f-2c89d6251ad8.bdn/documentation)
+- [Barclays Bank Ireland Account Information API](https://developer.barclays.com/apis/barclays-bank-ireland-account-information/696e2ef6-255f-481c-9546-4b5bda44b2e4.bdn/documentation)
+- [Barclays Bank Ireland Payment Initiation API](https://developer.barclays.com/apis/barclays-bank-ireland-payment-initiation/d41f070a-3b3b-4f2d-b28a-6afdc690a42d.bdn/documentation)
+- [Barclays Confirmation of Funds API](https://developer.barclays.com/apis/confirmation-of-funds/1c914db2-e592-4e5c-89c8-7b9e76d53303.bdn/documentation)
+- [Barclays Consent API](https://developer.barclays.com/apis/consent/41fde785-67a0-47e6-9a34-263d22a08028.bdn/documentation)
+- [Barclays Dynamic Client Registration API](https://developer.barclays.com/apis/dynamic-client-registration/ace18310-2523-49f0-a66d-4c6e37aae59f.bdn/documentation)
+- [Barclays Event Notification API](https://developer.barclays.com/apis/event-notification/d71a398f-620b-4a65-8b85-382ca1eb7ede.bdn/documentation)
+- [Barclays Payment Initiation API](https://developer.barclays.com/apis/payment-initiation/1f6ad5c5-e397-41c0-8d3b-c35446491402.bdn/documentation)
+- [Barclays ATM Locator API](https://developer.barclays.com/apis/atm-locator/c9e28aaa-51a1-4c9b-b8d4-f2b7ac090aa7.bdn/documentation)
+- [Barclays Branch Locator API](https://developer.barclays.com/apis/branch-locator/d9b83b29-42e2-4cb3-ad8f-100d2c9a6314.bdn/documentation)
+- [Barclays FCA Service Metrics API](https://developer.barclays.com/apis/fca-service-metrics/59f96026-03d6-4c4e-9567-c3db4dd83e3a.bdn/documentation)
+- [Barclays Product Details API](https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation)
+- [Barclays Accounts API](https://developer.barclays.com/apis/accounts/097976bb-311e-4bb1-89b1-c81e2f1de572.bdn/documentation)
+- [Barclays Authentication API](https://developer.barclays.com/apis/authentication/4f4800dd-6a0f-42fe-b6da-5cb2ba8891f5.bdn/documentation)
+- [Barclays Card Application API](https://developer.barclays.com/apis/card-application/372df8da-72cb-4fe5-b4fb-7e0bcaac7d20.bdn/documentation)
+- [Barclays Cryptography Key Exchange API](https://developer.barclays.com/apis/cryptography-key-exchange/15f2194b-7bda-4e81-b90e-f671efbc28c1.bdn/documentation)
+- [Barclays Digital Wallet API](https://developer.barclays.com/apis/digital-wallet/b55293c3-316f-4932-8ac6-b4e94641382a.bdn/documentation)
+- [Barclays Payments API](https://developer.barclays.com/apis/payments/5286713c-e65f-4c16-aceb-493115142bea.bdn/documentation)
+- [Barclays Rewards Loyalty Sync API](https://developer.barclays.com/apis/rewards-loyalty-sync/52e2b51b-9937-4f12-901b-3275b0aeb2a8.bdn/documentation)
+- [Barclays Rewards Pay with Points API](https://developer.barclays.com/apis/rewards-pay-with-points/1941d4a3-35e3-462c-a209-34101c518b7f.bdn/documentation)
+- [Barclays Transactions API](https://developer.barclays.com/apis/transactions/b3b4410d-56a7-403c-863c-3af1e939f1c2.bdn/documentation)
+
+## Common Properties
+
+- [API Exchange Portal](https://developer.barclays.com/)
+- [API Catalogue](https://developer.barclays.com/catalogue)
+- [Help Guides](https://developer.barclays.com/support/help-guides)
+- [Sign Up](https://drm.developer.barclays.com/s/registration)
+- [Knowledge Base](https://developer.barclays.com/support/knowledge-base)
+- [Terms of Use](https://developer.barclays.com/terms-of-use)
+- [Privacy Policy](https://developer.barclays.com/privacy-policy)
+- [Spectral Rules](rules/barclays-spectral-rules.yml)
+- [Vocabulary](vocabulary/barclays-vocabulary.yaml)
+- [Naftiko Capability](capabilities/open-banking.yaml)
+- [JSON-LD Context](json-ld/barclays-context.jsonld)
+
+## Features
+
+| Name | Description |
+|------|-------------|
+| Open Banking Account Information | PSD2 and UK Open Banking compliant account balance and transaction access. |
+| Payment Initiation | Secure third-party payment initiation from customer accounts. |
+| Confirmation of Funds | Real-time verification of available funds for payment authorization. |
+| ATM and Branch Locator | Location services for Barclays ATMs and branches worldwide. |
+| Event Notifications | Real-time webhook notifications for account and transaction events. |
+| Dynamic Client Registration | Automated TPP registration for Open Banking API access. |
+| Rewards and Loyalty | Loyalty program integration and pay-with-points capabilities. |
+| Digital Wallet | Mobile payment and digital wallet integration. |
+| Card Applications | Credit card application submission and status tracking. |
+| FCA Compliance Metrics | Mandated service performance metrics for regulatory reporting. |
+
+## Use Cases
+
+| Name | Description |
+|------|-------------|
+| Personal Finance Management | Aggregate Barclays account data in budgeting and financial planning apps. |
+| Open Banking Payments | Initiate payments directly from customer bank accounts via PSD2. |
+| E-Commerce Checkout | Accept Barclays-branded payments via Smartpay Web Payment API. |
+| Branch and ATM Finder | Embed ATM and branch location search in apps and websites. |
+| Loyalty Integration | Integrate Barclays Rewards with merchant loyalty programs. |
+| Credit Card Origination | Enable online credit card applications through partner platforms. |
+
+## Maintainers
+
+**FN:** Kin Lane
+
+**Email:** kin@apievangelist.com
