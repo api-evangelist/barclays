@@ -1,4 +1,4 @@
-# Barclays (barclays)
+# Barclays
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,87 +64,294 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Barclays is a multinational financial services company providing retail and commercial banking, investment banking, wealth management, and credit cards. The Barclays API Exchange (developer.barclays.com) offers 22+ APIs covering open banking account information, payment initiation, confirmation of funds, ATM/branch location, rewards, digital wallet, and more, compliant with UK Open Banking and EU PSD2 standards.
+Barclays is a British multinational bank providing retail and commercial banking, investment banking, wealth management and credit cards. Its developer surface is the Barclays API Exchange (developer.barclays.com), which publishes 30 API versions across three distinct families: UK Open Banking (OBIE Read/Write v3.1 and v4.0), Barclays Bank Ireland (Berlin Group NextGenPSD2), and Barclaycard US card servicing. 26 of them ship a first-party OpenAPI 3.1 contract covering 184 operations, served anonymously from the portal registry. Nothing is callable without registration, access approval, an OAuth 2.0 token and — on the UK Open Banking surface — an Open Banking-issued mTLS transport certificate.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/barclays/refs/heads/main/apis.yml)
+**Areas:** Banking · Credit Cards · FAPI · Finance · Open Banking · Open Data · PSD2 · Payments · UK Banking · Variable Recurring Payments
 
-## Tags:
+## Barclays on APIs.io
 
- - Banking, Credit Cards, Finance, Open Banking, Payments, PSD2, UK Banking
+Everything profiled for Barclays is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/barclays/](https://apis.io/providers/barclays/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (64)
 
-- **Created:** 2025-02-21
-- **Modified:** 2026-04-21
+- [Barclays Smartpay Web Payment API](https://apis.io/apis/barclays/barclaycard-smartpay-web-payment-api/) — Barclays Smartpay Web Payment API enables businesses to accept payments on their website with real-time processing, secure encryption, and fraud prevention.
+- [Barclaycard Smartpay Connect API](https://apis.io/apis/barclays/barclaycard-smartpay-connect-api/) — Barclaycard Smartpay Connect (v1.33.0) integrates card payment terminals and point-of-sale systems with Barclaycard acquiring. Listed in the Barclays API…
+- [Barclays Corporate Payment Initiation API](https://apis.io/apis/barclays/corporate-payment-initiation-api/) — Corporate, bank and PSP clients initiate payments in real time (v2.7). Listed in the Barclays API Exchange catalogue with no machine-readable contract…
+- [Barclays Balances and Transactions Reporting API](https://apis.io/apis/barclays/balances-and-transactions-reporting-api/) — Corporate, bank and PSP clients retrieve account balance and transaction reporting (v1.3). Listed in the Barclays API Exchange catalogue with no…
+- [Barclays Account Access Consents API](https://apis.io/apis/barclays/barclays-account-access-consents-api/) — Create Account Access Consents
+- [Barclays Accounts API](https://apis.io/apis/barclays/barclays-accounts-api/) — Get Accounts
+- [Barclays Apply Product External API OAS API](https://apis.io/apis/barclays/barclays-applyproductexternalapi-oas-api/) — Apply Product External API
+- [Barclays Atms API](https://apis.io/apis/barclays/barclays-atms-api/) — The Atms API from Barclays — 1 operation(s) for atms.
+- [Barclays Balances API](https://apis.io/apis/barclays/barclays-balances-api/) — Get Balances
+- [Barclays Beneficiaries API](https://apis.io/apis/barclays/barclays-beneficiaries-api/) — Get Beneficiaries
+- [Barclays Branches API](https://apis.io/apis/barclays/barclays-branches-api/) — The Branches API from Barclays — 1 operation(s) for branches.
+- [Barclays Business Current Accounts API](https://apis.io/apis/barclays/barclays-business-current-accounts-api/) — The Business Current Accounts API from Barclays — 1 operation(s) for business current accounts.
+- [Barclays Card Account Details Inquiry External API](https://apis.io/apis/barclays/barclays-card-account-details-inquiry-external-api-api/) — The card account details inquiry external API is Barclays US’s credit cards acquisitions solution which will orchestrate the Internal API calls providing…
+- [Barclays Card Controls API](https://apis.io/apis/barclays/barclays-card-controls-api-api/) — API for locking and unlocking cards and retrieving card lock/unlock status based on account ID with fraud verification.
+- [Barclays Cards Activation API](https://apis.io/apis/barclays/barclays-cards-activation-api/) — API for activating cards and retrieving activation status based on account ID with eligibility and fraud verification.
+- [Barclays Commercial Credit Cards API](https://apis.io/apis/barclays/barclays-commercial-credit-cards-api/) — The Commercial Credit Cards API from Barclays — 1 operation(s) for commercial credit cards.
+- [Barclays Consents API](https://apis.io/apis/barclays/barclays-consents-api/) — The Consents API from Barclays — 10 operation(s) for consents.
+- [Barclays Digital Wallet Provision API](https://apis.io/apis/barclays/barclays-digital-wallet-provision-api/) — Provisions credit cards to digital wallets with eligibility verification and fraud assessment
+- [Barclays Direct Debits API](https://apis.io/apis/barclays/barclays-direct-debits-api/) — Get Direct Debits
+- [Barclays Domestic Payments API](https://apis.io/apis/barclays/barclays-domestic-payments-api/) — Domestic Payments
+- [Barclays Domestic Scheduled Payments API](https://apis.io/apis/barclays/barclays-domestic-scheduled-payments-api/) — Domestic Scheduled Payments
+- [Barclays Domestic Standing Orders API](https://apis.io/apis/barclays/barclays-domestic-standing-orders-api/) — Domestic Standing Orders
+- [Barclays Domestic VRP Consents API](https://apis.io/apis/barclays/barclays-domestic-vrp-consents-api/) — Domestic VRP Consents
+- [Barclays Domestic VRPs API](https://apis.io/apis/barclays/barclays-domestic-vrps-api/) — Domestic VRP
+- [Barclays Event Subscriptions API](https://apis.io/apis/barclays/barclays-event-subscriptions-api/) — Event Subscriptions
+- [Barclays Events API](https://apis.io/apis/barclays/barclays-events-api/) — Events
+- [Barclays FCSSRVMBCA API](https://apis.io/apis/barclays/barclays-fcssrvmbca-api/) — Endpoint for getting FCA Business Current Accounts Service Metrics data
+- [Barclays FCSSRVMPCA API](https://apis.io/apis/barclays/barclays-fcssrvmpca-api/) — Endpoint for getting FCA Personal Current Accounts Service Metrics data
+- [Barclays File Payments API](https://apis.io/apis/barclays/barclays-file-payments-api/) — File Payments
+- [Barclays Funds Confirmation Consents API](https://apis.io/apis/barclays/barclays-funds-confirmation-consents-api/) — The Funds Confirmation Consents API from Barclays — 2 operation(s) for funds confirmation consents.
+- [Barclays Funds Confirmations API](https://apis.io/apis/barclays/barclays-funds-confirmations-api/) — The Funds Confirmations API from Barclays — 1 operation(s) for funds confirmations.
+- [Barclays Get Authorizations API](https://apis.io/apis/barclays/barclays-getauthorizations-api/) — Authorization transactions operations
+- [Barclays International Payments API](https://apis.io/apis/barclays/barclays-international-payments-api/) — International Payments
+- [Barclays International Scheduled Payments API](https://apis.io/apis/barclays/barclays-international-scheduled-payments-api/) — International Scheduled Payments
+- [Barclays International Standing Orders API](https://apis.io/apis/barclays/barclays-international-standing-orders-api/) — International Standing Orders
+- [Barclays Key Exchange Fetch JSON Web Keys API](https://apis.io/apis/barclays/barclays-key-exchange-fetch-json-web-keys-api/) — Key Exchange Fetch Operation APIs
+- [Barclays Offers API](https://apis.io/apis/barclays/barclays-offers-api/) — Get Offers
+- [Barclays Parties API](https://apis.io/apis/barclays/barclays-parties-api/) — Get Parties
+- [Barclays Payment Details API](https://apis.io/apis/barclays/barclays-payment-details-api/) — Payment Details
+- [Barclays Payment Product External API Auto Pay API](https://apis.io/apis/barclays/barclays-paymentproductexternalapi-autopay-api/) — OAS3 External AutoPay APIs
+- [Barclays Payment Product External API External Account API](https://apis.io/apis/barclays/barclays-paymentproductexternalapi-externalaccount-api/) — OAS3 External Account APIs
+- [Barclays Payment Product External API One Time Payment API](https://apis.io/apis/barclays/barclays-paymentproductexternalapi-onetimepayment-api/) — OAS3 External Onetime Payment APIs
+- [Barclays Payments API](https://apis.io/apis/barclays/barclays-payments-api/) — The Payments API from Barclays — 15 operation(s) for payments.
+- [Barclays Personal Current Accounts API](https://apis.io/apis/barclays/barclays-personal-current-accounts-api/) — The Personal Current Accounts API from Barclays — 1 operation(s) for personal current accounts.
+- [Barclays Posted Transaction API](https://apis.io/apis/barclays/barclays-postedtransactionapi-api/) — Posted transactions operations
+- [Barclays Products API](https://apis.io/apis/barclays/barclays-products-api/) — Get Products
+- [Barclays Register API](https://apis.io/apis/barclays/barclays-register-api/) — The Register API from Barclays — 1 operation(s) for register.
+- [Barclays Rewards Balance API](https://apis.io/apis/barclays/barclays-rewards-balance-api/) — The Rewards-Balance API from Barclays — 1 operation(s) for rewards-balance.
+- [Barclays Rewards Redemption API](https://apis.io/apis/barclays/barclays-rewards-redemption-api/) — The Rewards-Redemption API from Barclays — 1 operation(s) for rewards-redemption.
+- [Barclays Rewards Redemption Capabilities API](https://apis.io/apis/barclays/barclays-rewards-redemption-capabilities-api/) — The Rewards-Redemption-Capabilities API from Barclays — 1 operation(s) for rewards-redemption-capabilities.
+- [Barclays Rewards Redemption Eligibility API](https://apis.io/apis/barclays/barclays-rewards-redemption-eligibility-api/) — The Rewards-Redemption-Eligibility API from Barclays — 1 operation(s) for rewards-redemption-eligibility.
+- [Barclays Rewards Redemption History API](https://apis.io/apis/barclays/barclays-rewards-redemption-history-api/) — The Rewards-Redemption-History API from Barclays — 1 operation(s) for rewards-redemption-history.
+- [Barclays Rewards Earn History API](https://apis.io/apis/barclays/barclays-rewardsearnhistory-api/) — Rewards Earn History Details
+- [Barclays Scheduled Payments API](https://apis.io/apis/barclays/barclays-scheduled-payments-api/) — Get Scheduled Payments
+- [Barclays Search Options API](https://apis.io/apis/barclays/barclays-searchoptionsapi-api/) — Transaction search options operations
+- [Barclays Standing Orders API](https://apis.io/apis/barclays/barclays-standing-orders-api/) — Get Standing Orders
+- [Barclays Statement Cycle Dates API](https://apis.io/apis/barclays/barclays-statementcycledatesapi-api/) — Statement cycle dates operations
+- [Barclays Statements API](https://apis.io/apis/barclays/barclays-statements-api/) — Get Statements
+- [Barclays Statements List API](https://apis.io/apis/barclays/barclays-statements-list-api/) — Returns list of statements
+- [Barclays Tier Update Xapi API](https://apis.io/apis/barclays/barclays-tier-update-xapi-api/) — The tier-update-xapi API from Barclays — 1 operation(s) for tier-update-xapi.
+- [Barclays Transactions API](https://apis.io/apis/barclays/barclays-transactions-api/) — Get Transactions
+- [Barclays Unsecured Sme Loans API](https://apis.io/apis/barclays/barclays-unsecured-sme-loans-api/) — The Unsecured Sme Loans API from Barclays — 1 operation(s) for unsecured sme loans.
+- [Barclays User Identity Context API](https://apis.io/apis/barclays/barclays-user-identity-context-api/) — User identity context API
+- [Barclays User SSO Context API](https://apis.io/apis/barclays/barclays-user-sso-context-api/) — User sso context API
 
-## APIs
+### Published properties
 
-- [Barclays Smartpay Web Payment API](https://developer.barclays.com/apis/barclaycard-smartpay-web-payment/b82fda37-a434-4cc3-abde-0c6ba126fd2e.bdn/documentation)
-- [Barclays Bank Ireland Confirmation of Funds API](https://developer.barclays.com/apis/barclays-bank-ireland-confirmation-of-funds/8cd8be1f-4bdc-45fe-8fef-c7a569cfe603.bdn/documentation)
-- [Barclays Account and Transactions API](https://developer.barclays.com/apis/account-and-transactions/20e74071-13fb-44eb-b98f-2c89d6251ad8.bdn/documentation)
-- [Barclays Bank Ireland Account Information API](https://developer.barclays.com/apis/barclays-bank-ireland-account-information/696e2ef6-255f-481c-9546-4b5bda44b2e4.bdn/documentation)
-- [Barclays Bank Ireland Payment Initiation API](https://developer.barclays.com/apis/barclays-bank-ireland-payment-initiation/d41f070a-3b3b-4f2d-b28a-6afdc690a42d.bdn/documentation)
-- [Barclays Confirmation of Funds API](https://developer.barclays.com/apis/confirmation-of-funds/1c914db2-e592-4e5c-89c8-7b9e76d53303.bdn/documentation)
-- [Barclays Consent API](https://developer.barclays.com/apis/consent/41fde785-67a0-47e6-9a34-263d22a08028.bdn/documentation)
-- [Barclays Dynamic Client Registration API](https://developer.barclays.com/apis/dynamic-client-registration/ace18310-2523-49f0-a66d-4c6e37aae59f.bdn/documentation)
-- [Barclays Event Notification API](https://developer.barclays.com/apis/event-notification/d71a398f-620b-4a65-8b85-382ca1eb7ede.bdn/documentation)
-- [Barclays Payment Initiation API](https://developer.barclays.com/apis/payment-initiation/1f6ad5c5-e397-41c0-8d3b-c35446491402.bdn/documentation)
-- [Barclays ATM Locator API](https://developer.barclays.com/apis/atm-locator/c9e28aaa-51a1-4c9b-b8d4-f2b7ac090aa7.bdn/documentation)
-- [Barclays Branch Locator API](https://developer.barclays.com/apis/branch-locator/d9b83b29-42e2-4cb3-ad8f-100d2c9a6314.bdn/documentation)
-- [Barclays FCA Service Metrics API](https://developer.barclays.com/apis/fca-service-metrics/59f96026-03d6-4c4e-9567-c3db4dd83e3a.bdn/documentation)
-- [Barclays Product Details API](https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation)
-- [Barclays Accounts API](https://developer.barclays.com/apis/accounts/097976bb-311e-4bb1-89b1-c81e2f1de572.bdn/documentation)
-- [Barclays Authentication API](https://developer.barclays.com/apis/authentication/4f4800dd-6a0f-42fe-b6da-5cb2ba8891f5.bdn/documentation)
-- [Barclays Card Application API](https://developer.barclays.com/apis/card-application/372df8da-72cb-4fe5-b4fb-7e0bcaac7d20.bdn/documentation)
-- [Barclays Cryptography Key Exchange API](https://developer.barclays.com/apis/cryptography-key-exchange/15f2194b-7bda-4e81-b90e-f671efbc28c1.bdn/documentation)
-- [Barclays Digital Wallet API](https://developer.barclays.com/apis/digital-wallet/b55293c3-316f-4932-8ac6-b4e94641382a.bdn/documentation)
-- [Barclays Payments API](https://developer.barclays.com/apis/payments/5286713c-e65f-4c16-aceb-493115142bea.bdn/documentation)
-- [Barclays Rewards Loyalty Sync API](https://developer.barclays.com/apis/rewards-loyalty-sync/52e2b51b-9937-4f12-901b-3275b0aeb2a8.bdn/documentation)
-- [Barclays Rewards Pay with Points API](https://developer.barclays.com/apis/rewards-pay-with-points/1941d4a3-35e3-462c-a209-34101c518b7f.bdn/documentation)
-- [Barclays Transactions API](https://developer.barclays.com/apis/transactions/b3b4410d-56a7-403c-863c-3af1e939f1c2.bdn/documentation)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Common Properties
+#### AsyncAPI (1)
 
-- [API Exchange Portal](https://developer.barclays.com/)
-- [API Catalogue](https://developer.barclays.com/catalogue)
-- [Help Guides](https://developer.barclays.com/support/help-guides)
-- [Sign Up](https://drm.developer.barclays.com/s/registration)
-- [Knowledge Base](https://developer.barclays.com/support/knowledge-base)
-- [Terms of Use](https://developer.barclays.com/terms-of-use)
-- [Privacy Policy](https://developer.barclays.com/privacy-policy)
-- [Spectral Rules](rules/barclays-spectral-rules.yml)
-- [Vocabulary](vocabulary/barclays-vocabulary.yaml)
-- [Naftiko Capability](capabilities/open-banking.yaml)
-- [JSON-LD Context](json-ld/barclays-context.jsonld)
+Event-driven and webhook contracts.
 
-## Features
+- [Barclays Webhooks](https://apis.io/asyncapis/barclays/barclays-webhooks/)
 
-| Name | Description |
-|------|-------------|
-| Open Banking Account Information | PSD2 and UK Open Banking compliant account balance and transaction access. |
-| Payment Initiation | Secure third-party payment initiation from customer accounts. |
-| Confirmation of Funds | Real-time verification of available funds for payment authorization. |
-| ATM and Branch Locator | Location services for Barclays ATMs and branches worldwide. |
-| Event Notifications | Real-time webhook notifications for account and transaction events. |
-| Dynamic Client Registration | Automated TPP registration for Open Banking API access. |
-| Rewards and Loyalty | Loyalty program integration and pay-with-points capabilities. |
-| Digital Wallet | Mobile payment and digital wallet integration. |
-| Card Applications | Credit card application submission and status tracking. |
-| FCA Compliance Metrics | Mandated service performance metrics for regulatory reporting. |
+#### MCP servers (1)
 
-## Use Cases
+Model Context Protocol servers that expose the API to agents.
 
-| Name | Description |
-|------|-------------|
-| Personal Finance Management | Aggregate Barclays account data in budgeting and financial planning apps. |
-| Open Banking Payments | Initiate payments directly from customer bank accounts via PSD2. |
-| E-Commerce Checkout | Accept Barclays-branded payments via Smartpay Web Payment API. |
-| Branch and ATM Finder | Embed ATM and branch location search in apps and websites. |
-| Loyalty Integration | Integrate Barclays Rewards with merchant loyalty programs. |
-| Credit Card Origination | Enable online credit card applications through partner platforms. |
+- [barclays-mcp.yml](https://apis.io/servers/barclays/barclays-mcp-yml/)
 
-## Maintainers
+#### Agentic access (1)
 
-**FN:** Kin Lane
+Which operations an agent can call, which act, and which need a human in the loop.
 
-**Email:** kin@apievangelist.com
+- [Barclays Agentic Access](https://apis.io/agentic-access/barclays/barclays-agentic-access/)
+
+#### JSON Schema (72)
+
+The data models the API reads and writes.
+
+- [Account](https://apis.io/schemas/barclays/account/)
+- [AccountLookupRequestDataV2](https://apis.io/schemas/barclays/barclays-account-lookup-request-data-v2/)
+- [ActivateCardRequestData](https://apis.io/schemas/barclays/barclays-activate-card-request-data/)
+- [AddSubscriptionReqData](https://apis.io/schemas/barclays/barclays-add-subscription-req-data/)
+- [ApplicationConsentRequest](https://apis.io/schemas/barclays/barclays-application-consent-request/)
+- [ApplicationVerificationRequest](https://apis.io/schemas/barclays/barclays-application-verification-request/)
+- [business_account_response](https://apis.io/schemas/barclays/barclays-business-account-response/)
+- [commercial_credit_cards_response](https://apis.io/schemas/barclays/barclays-commercial-credit-cards-response/)
+- [create_cof_consent_request](https://apis.io/schemas/barclays/barclays-create-cof-consent-request/)
+- [create_cof_consent_response](https://apis.io/schemas/barclays/barclays-create-cof-consent-response/)
+- [create_cof_request](https://apis.io/schemas/barclays/barclays-create-cof-request/)
+- [create_cof_response](https://apis.io/schemas/barclays/barclays-create-cof-response/)
+- [create_consent_request](https://apis.io/schemas/barclays/barclays-create-consent-request/)
+- [create_consent_response](https://apis.io/schemas/barclays/barclays-create-consent-response/)
+- [DCRRequestType](https://apis.io/schemas/barclays/barclays-dcrrequest-type/)
+- [DCRResponseType](https://apis.io/schemas/barclays/barclays-dcrresponse-type/)
+- [get_account_balance_details_response](https://apis.io/schemas/barclays/barclays-get-account-balance-details-response/)
+- [get_account_details_response](https://apis.io/schemas/barclays/barclays-get-account-details-response/)
+- [get_account_transaction_details_response](https://apis.io/schemas/barclays/barclays-get-account-transaction-details-response/)
+- [get_account_transactions_response](https://apis.io/schemas/barclays/barclays-get-account-transactions-response/)
+- [get_cof_consent_details_response](https://apis.io/schemas/barclays/barclays-get-cof-consent-details-response/)
+- [get_consent_details_response](https://apis.io/schemas/barclays/barclays-get-consent-details-response/)
+- [get__fca-service-metrics_bcaResponseMessage_200_schema_](https://apis.io/schemas/barclays/barclays-get-fca-service-metrics-bca-response-message-200-schema/)
+- [get__fca-service-metrics_pcaResponseMessage_200_schema_](https://apis.io/schemas/barclays/barclays-get-fca-service-metrics-pca-response-message-200-schema/)
+- [get_payment-auth-status_response](https://apis.io/schemas/barclays/barclays-get-payment-auth-status-response/)
+- …and 47 more published on APIs.io
+
+#### JSON Structure (1)
+
+Data models expressed in JSON Structure.
+
+- [Barclays Json Structure](https://apis.io/json-structure/barclays/barclays-json-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Barclays Context](https://apis.io/jsonld/barclays/barclays-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Barclays API Vocabulary](https://apis.io/vocabularies/barclays/barclays-vocabulary/)
+
+#### Examples (2)
+
+Example requests and responses.
+
+- [Account Example](https://apis.io/examples/barclays/account-example/)
+- [Transaction Example](https://apis.io/examples/barclays/transaction-example/)
+
+#### Overlays (26)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Barclays Account And Transactions Overlay](https://apis.io/overlays/barclays/barclays-account-and-transactions-overlay/)
+- [Barclays Account Management Overlay](https://apis.io/overlays/barclays/barclays-account-management-overlay/)
+- [Barclays Accounts Overlay](https://apis.io/overlays/barclays/barclays-accounts-overlay/)
+- [Barclays Atm Locator Overlay](https://apis.io/overlays/barclays/barclays-atm-locator-overlay/)
+- [Barclays Authentication Overlay](https://apis.io/overlays/barclays/barclays-authentication-overlay/)
+- [Barclays Bank Ireland Account Information Overlay](https://apis.io/overlays/barclays/barclays-bank-ireland-account-information-overlay/)
+- [Barclays Bank Ireland Confirmation Of Funds Overlay](https://apis.io/overlays/barclays/barclays-bank-ireland-confirmation-of-funds-overlay/)
+- [Barclays Bank Ireland Payment Initiation Overlay](https://apis.io/overlays/barclays/barclays-bank-ireland-payment-initiation-overlay/)
+- [Barclays Benefits Redemption Overlay](https://apis.io/overlays/barclays/barclays-benefits-redemption-overlay/)
+- [Barclays Branch Locator Overlay](https://apis.io/overlays/barclays/barclays-branch-locator-overlay/)
+- [Barclays Card Application Overlay](https://apis.io/overlays/barclays/barclays-card-application-overlay/)
+- [Barclays Card Control Overlay](https://apis.io/overlays/barclays/barclays-card-control-overlay/)
+- [Barclays Confirmation Of Funds Overlay](https://apis.io/overlays/barclays/barclays-confirmation-of-funds-overlay/)
+- [Barclays Cryptography Key Exchange Overlay](https://apis.io/overlays/barclays/barclays-cryptography-key-exchange-overlay/)
+- [Barclays Digital Wallet Overlay](https://apis.io/overlays/barclays/barclays-digital-wallet-overlay/)
+- [Barclays Dynamic Client Registration Overlay](https://apis.io/overlays/barclays/barclays-dynamic-client-registration-overlay/)
+- [Barclays Event Notification Overlay](https://apis.io/overlays/barclays/barclays-event-notification-overlay/)
+- [Barclays Fca Service Metrics Overlay](https://apis.io/overlays/barclays/barclays-fca-service-metrics-overlay/)
+- [Barclays Payment Initiation Overlay](https://apis.io/overlays/barclays/barclays-payment-initiation-overlay/)
+- [Barclays Payments Overlay](https://apis.io/overlays/barclays/barclays-payments-overlay/)
+- [Barclays Product Details Overlay](https://apis.io/overlays/barclays/barclays-product-details-overlay/)
+- [Barclays Rewards Earn Overlay](https://apis.io/overlays/barclays/barclays-rewards-earn-overlay/)
+- [Barclays Rewards Loyalty Sync Overlay](https://apis.io/overlays/barclays/barclays-rewards-loyalty-sync-overlay/)
+- [Barclays Statements Retriever Overlay](https://apis.io/overlays/barclays/barclays-statements-retriever-overlay/)
+- [Barclays Transactions Overlay](https://apis.io/overlays/barclays/barclays-transactions-overlay/)
+- …and 1 more published on APIs.io
+
+#### Governance rules (3)
+
+Spectral rulesets for the provider's contracts.
+
+- [Barclays — jsonschema rules](https://apis.io/rules/barclays/barclays-jsonschema-spectral-rules/)
+- [Barclays API Rules](https://apis.io/rules/barclays/barclays-rules/)
+- [Barclays API Rules](https://apis.io/rules/barclays/barclays-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Barclays Authentication](https://apis.io/security/barclays/barclays-authentication/)
+- [Barclays Domain Security](https://apis.io/security/barclays/barclays-domain-security/)
+- [Barclays Vulnerability Disclosure](https://apis.io/security/barclays/barclays-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Barclays Scopes](https://apis.io/scopes/barclays/barclays-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Barclays Plans Pricing](https://apis.io/plans/barclays/barclays-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Barclays Rate Limits](https://apis.io/rate-limits/barclays/barclays-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Barclays Finops](https://apis.io/finops/barclays/barclays-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.barclays.co.uk/)
+- [Documentation](https://developer.barclays.com/catalogue)
+- [Getting started](https://developer.barclays.com/support/help-guides)
+- [Support](https://developer.barclays.com/support/help-guides)
+- [Blog](https://home.barclays/insights/barclays-insights/)
+- [Terms of service](https://developer.barclays.com/terms-of-use)
+- [Privacy policy](https://developer.barclays.com/privacy-policy)
+- [GitHub](https://github.com/Barclays)
+
+## API Evangelist rating
+
+**Kin Score 57.9** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 63.0 |
+| Contract governance | 31.8 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 42.1 |
+
+**Agent readiness 45.7** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | verified |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 55.9** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/barclays/](https://apis.io/providers/barclays/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Barclays: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/barclays/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
