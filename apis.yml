@@ -25,16 +25,23 @@ deliveryModel:
   generated: '2026-08-28'
   method: derived
 accessModel:
-  pricing: freemium
-  onboarding: unknown
+  pricing: unknown
+  onboarding: open
   trial: false
   try_now: false
-  public: false
-  label: Freemium
+  public: true
+  gated: none
+  gated_source:
+  - onboarding
+  label: Open access
   confidence: medium
   source:
-  - plans
-  generated: '2026-07-22'
+  - authentication
+  - scopes
+  - rate-limits
+  - security
+  - sandbox
+  generated: '2026-11-02'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/barclays.png
 access: 3rd-Party
