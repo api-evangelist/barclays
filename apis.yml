@@ -41,7 +41,7 @@ accessModel:
   - rate-limits
   - security
   - sandbox
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/barclays.png
 access: 3rd-Party
@@ -58,6 +58,8 @@ maintainers:
   email: kin@apievangelist.com
 specificationVersion: '0.23'
 common:
+- type: IntegrationEdges
+  url: integrations/barclays-integration-edges.yml
 - type: AgenticAccess
   url: agentic-access/barclays-agentic-access.yml
 - type: Spectral
@@ -76,8 +78,6 @@ common:
   url: well-known/barclays-www-barclays-co-uk-security.txt
 - type: SecurityTxt
   url: well-known/barclays-www-barclaycard-co-uk-security.txt
-- type: SecurityTxt
-  url: well-known/barclays-home-barclays-security.txt
 - type: Hosts
   url: hosts/barclays-hosts.yml
 - type: Vendors

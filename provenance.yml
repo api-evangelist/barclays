@@ -793,6 +793,9 @@ artifacts:
   packages/barclays-packages.yml:
     method: unknown
     evidence: no authorship recorded
+  patterns/barclays-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/barclays-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
