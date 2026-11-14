@@ -41,7 +41,7 @@ accessModel:
   - rate-limits
   - security
   - sandbox
-  generated: '2026-11-06'
+  generated: '2026-11-13'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/barclays.png
 access: 3rd-Party
@@ -258,6 +258,14 @@ common:
 - type: GettingStarted
   name: Help Guides — three steps to live
   url: https://developer.barclays.com/support/help-guides
+- type: UsageTerms
+  url: terms/barclays-terms-of-service.yml
+- type: DataProcessing
+  url: privacy/barclays-privacy-policy.yml
+- type: Eligibility
+  url: eligibility/barclays-eligibility.yml
+- type: DataLicense
+  url: data-license/barclays-data-license.yml
 apis:
 - aid: barclays:barclaycard-smartpay-web-payment-api
   name: Barclays Smartpay Web Payment API

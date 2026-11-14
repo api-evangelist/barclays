@@ -14,6 +14,12 @@ artifacts:
   capabilities/barclays-capability-edges.yml:
     method: unknown
     evidence: no authorship recorded
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/barclays-changelog.yml:
     method: derived
     evidence: declared in the artifact
@@ -23,8 +29,14 @@ artifacts:
   conventions/barclays-conventions.yml:
     method: derived
     evidence: declared in the artifact
+  data-license/barclays-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/barclays-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/barclays-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/barclays-problem-types.yml:
     method: derived
@@ -42,6 +54,12 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   heartbeat/2026-11-02.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-06.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
     method: unknown
     evidence: no authorship recorded
   hosts/barclays-hosts.yml:
@@ -278,7 +296,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -342,6 +360,9 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-11-02T082323.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/barclays-lifecycle.yml:
@@ -799,6 +820,9 @@ artifacts:
   plans/barclays-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
+  privacy/barclays-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/barclays-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -834,6 +858,9 @@ artifacts:
     evidence: declared in the artifact
   skills/barclays-open-data-lookup.md:
     method: generated
+    evidence: declared in the artifact
+  terms/barclays-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vendors/barclays-vendors.yml:
     method: unknown
